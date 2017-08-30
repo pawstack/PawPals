@@ -1,0 +1,26 @@
+{
+  "name": "pawpals",
+  "scripts": {
+  },
+  "env": {
+    "Google_clientID": {
+      "required": true
+    },
+    "Google_clientSecret": {
+      "required": true
+    },
+    "Google_callbackURL": {
+      "required": true
+    }
+  },
+  "formation": {
+  },
+  "addons": [
+
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}
