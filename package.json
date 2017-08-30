@@ -1,6 +1,9 @@
 {
   "name": "course.thesis",
   "version": "1.0.0",
+  "engines":{
+    "node": "6.11.2"
+  },
   "scripts": {
     "start": "nodemon server",
     "test": "NODE_ENV=test grunt test",
