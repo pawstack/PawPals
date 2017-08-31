@@ -8,4 +8,4 @@ cache:
 install: yarn install
 before_script:
   - npm install grunt-cli -g
-script: .travis-build.sh
+script: ./travis-build.sh
