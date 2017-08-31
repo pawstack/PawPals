@@ -7,5 +7,5 @@ cache:
     - node_modules
 install: yarn install
 before_script:
-  - npm install grunt-cli -g
-script: ./travis-build.sh
+  - yarn install grunt-cli -g
+script: yarn run test
