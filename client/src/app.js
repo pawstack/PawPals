@@ -16,11 +16,11 @@ class App extends React.Component {
             <li><Link to="/">Home</Link></li>
             <li><Link to='/signup'>Signup</Link></li>
           </ul>
-        
+
         <Route exact path="/" render={() => (
           <h1>Hello World from React</h1>
         )}/>
-        <Route path="/signup" component={SignUp}/>
+        <Route exact path="/signup" component={SignUp}/>
         </div>
       </Router>
     );
