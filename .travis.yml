@@ -8,8 +8,7 @@ cache:
 install: yarn install
 before_script:
 - yarn add grunt-cli -g
+script: yarn run test
+before_install:
 - openssl aes-256-cbc -K $encrypted_147a9dc5f750_key -iv $encrypted_147a9dc5f750_iv
   -in test.json.enc -out test.json -d
-script: yarn run test
-
-
