@@ -44,9 +44,9 @@ class WalkerRegister extends React.Component {
         file: file,
         imagePreviewUrl: reader.result
       });
-    }
+    };
 
-    reader.readAsDataURL(file)
+    reader.readAsDataURL(file);
   }
 
   handleSubmit() {
