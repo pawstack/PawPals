@@ -11,10 +11,10 @@ import WalkerRegister from './WalkerRegister';
 
 class SignUp extends React.Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
-    }
+    };
   }
 
 

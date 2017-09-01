@@ -20,17 +20,63 @@ class OwnerRegister extends React.Component {
     };
   }
 
+  handleNameChange(e) {
+    this.setState({
+      name: e.target.value
+    });
+  }
+
+  handleAgeChange(e) {
+    this.setState({
+      age: e.target.value
+    });
+  }
+
+  handleBreedChange(e) {
+    this.setState({
+      breed: e.target.value
+    });
+  }
+
+  handleWeightChange(e) {
+    this.setState({
+      weight: e.target.value
+    });
+  }
+
+  handlePicChange(e) {
+    this.setState({
+      profile_pic: e.target.src
+    });
+  }
+
+  handleExtraChange(e) {
+    this.setState({
+      extra: e.target.value
+    });
+  }
+
+
   render() {
     return (
       <div>
         <div>Step 2</div>
           Dog Profile
-        <div>Name <input></input></div>
-        <div>Age <input></input></div>
-        <div>Breed <input></input></div>
-        <div>Weight <input></input></div>
-        <div>Photo <img src="http://i.imgur.com/A8eQsll.jpg" width="200"></img></div>
-        <div>About Dog<input type="text" size="100" width="200"></input></div>
+        <div handleChange = {this.handleNameChange}>Name <input></input></div>
+        <div handleChange = {this.handleAgeChange}>Age <input></input></div>
+        <div handleChange = {this.handleBreedChange}>Breed <input></input></div>
+        <div handleChange = {this.handleWeightChange}>Weight <input></input></div>
+        <div>Photo <img
+          src="http://i.imgur.com/A8eQsll.jpg"
+          width="200"
+          handleChange = {this.handlePicChange}>
+        </img></div>
+        <div>About Dog<input
+          type="textbox"
+          size="100"
+          width="100"
+          handleChange = {this.handleExtraChange}>
+        </input></div>
         <button>Submit Profile</button>
       </div>
     );

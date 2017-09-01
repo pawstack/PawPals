@@ -16,13 +16,33 @@ class WalkerRegister extends React.Component {
     };
   }
 
+  handlePicChange(e) {
+    this.setState({
+      profile_pic: e.target.src
+    });
+  }
+
+  handleExtraChange(e) {
+    this.setState({
+      extra: e.target.value
+    });
+  }
+
   render() {
     return (
       <div>
         <div>Step 2</div>
           Walker Profile
-        <div>Photo  <img src="http://i.imgur.com/tm9TMPU.jpg" width="200"></img></div>
-        <div>About me  <input type="text" size="100" width="200"></input></div>
+        <div>Photo <img src="http://i.imgur.com/tm9TMPU.jpg"
+          width="200"
+          handleChange = {this.handlePicChange}>
+        </img></div>
+        <div>About me  <input
+          type="textbox"
+          size="100"
+          width="100"
+          handleChange = {this.handleExtraChange}>
+        </input></div>
         <button>Submit Profile</button>
       </div>
     );
