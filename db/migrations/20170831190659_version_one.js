@@ -13,12 +13,14 @@ exports.up = function (knex, Promise) {
 
     knex.schema.createTableIfNotExists('users', function (table) {
       table.increments('id').unsigned().primary();
-      table.string('name', 50).notNullable();
+      table.string('first', 50).notNullable();
+      table.string('last', 50);
+      table.string('display', 50);
       table.string('email', 50).notNullable().unique();
-      table.string('address', 200).notNullable();
-      table.string('phone', 20).notNullable().unique();
+      table.string('address', 200);
+      table.string('phone', 20).unique();
       table.string('profile_pic', 200).nullable();
-      table.string('venmo', 50).notNullable().unique();
+      table.string('venmo', 50).unique();
       table.string('about_me', 500).nullable();
       table.boolean('walker').defaultTo(false);
       table.boolean('owner').defaultTo(false);
@@ -26,9 +28,12 @@ exports.up = function (knex, Promise) {
       table.timestamps(true, true);
     }),
     knex.schema.table('auths', function(table) {
+      table.dropForeign('profile_id');
       table.dropColumn('profile_id');
       table.integer('user_id').references('users.id');
       table.renameColumn('user_id', 'profile_id');
+
+
       // table.integer('profile_id');
       // table.foreign('profile_id').references('users.id').onDelete('CASCADE');
     }),
@@ -62,7 +67,9 @@ exports.up = function (knex, Promise) {
       table.foreign('walker_id').references('users.id'); //foreign key
       table.integer('dog_id');
       table.foreign('dog_id').references('dogs.id'); //foreign key
-    })
+    }),
+    //knex.schema.cascade().dropTable('profiles')
+    //knex.raw('DROP TABLE profiles CASCADE')
   ]);
 };
 
@@ -73,6 +80,9 @@ exports.down = function (knex, Promise) {
     }),
     knex.schema.dropTable('walks'),
     knex.schema.dropTable('dogs'),
-    knex.schema.dropTable('users')
+    knex.schema.dropTable('users'),
+    knex.schema.createTableIfNotExists('profiles', function(table) {
+
+    })
   ]);
 };
