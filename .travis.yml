@@ -7,6 +7,7 @@ cache:
   - node_modules
 install: yarn install
 before_script:
+- psql -c 'create database thesis_test;' -U postgres
 - yarn add grunt-cli -g
 script: yarn run test
 env:
