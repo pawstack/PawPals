@@ -9,9 +9,6 @@ install: yarn install
 before_script:
 - yarn add grunt-cli -g
 script: yarn run test
-before_install:
-- openssl aes-256-cbc -K $encrypted_147a9dc5f750_key -iv $encrypted_147a9dc5f750_iv
-  -in test.json.enc -out test.json -d
 env:
   global:
   - secure: nKnaubk+mpxPZB/yimj+7HNAFGYKe61HP1M1Bvyxspnh6lQUFinfaMxmQ4gevdlACLK6JLVU9YEI+JjcsZD5Ntb90TC5K0u04BWsGFrc6sf/S0psVk0PADu6tjqMl1sr+SNm5t4YxJoIZU1EdysgVkjwjsqYOlUZkioCEqZ5ZDn5KWxcgiIFl5MPQuXF/dUnK47DKDD+X43jL+1EIc+/MQF5g0Fff5a57WL84MVYdhDr3mhlbFEGFSuFzALdlrP+nAvTIbkEkft045MS+YPcCo2Tt+SAVHZ5PIwryXK545Qy0NUDPc/DRPJJl9RfRccDcHnj/WzUFDBTXP7dEjWYPtccNrVR9IE0K+0qH/HauG3Xvev/gmiF5GLXFZiPBr09x99Ap12hc9NW9c6dBXv3kJ5qJM67yS+nGYCtat/LaOmpCJvMF0xu4XjK/kzd27I3O+yBQXjK4qGaODUp2C2yYbCMkwpemmzGCfrDkP6TI39pTq3QUvuEuk/QLao7YAIGdvvgtSRZ/mcQsAZ70btFZurgx1OZqGloEddJb4cXyJHN84v3Fcz3W7v/JBVeXH2QaUEgnk8yIPzaoqnbt78ULpy2ZywbAsJ59Q1hKXsISlvNm1pbLMj+jojweRrUwCX2iO8LoJMIfmlmmt/2++q7ce5tOXaw+JjLCpBcEU4NqYE=
