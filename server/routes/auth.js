@@ -18,15 +18,16 @@ router.route('/login')
     failureFlash: true
   }));
 
-router.route('/signup')
-  .get((req, res) => {
-    res.render('signup.ejs', { message: req.flash('signupMessage') });
-  })
-  .post(middleware.passport.authenticate('local-signup', {
-    successRedirect: '/profile',
-    failureRedirect: '/signup',
-    failureFlash: true
-  }));
+// new users/signups also go through /login, registration happens after if they are a new user
+// router.route('/signup')
+//   .get((req, res) => {
+//     res.render('signup.ejs', { message: req.flash('signupMessage') });
+//   })
+//   .post(middleware.passport.authenticate('local-signup', {
+//     successRedirect: '/profile',
+//     failureRedirect: '/signup',
+//     failureFlash: true
+//   }));
 
 router.route('/profile')
   .get(middleware.auth.verify, (req, res) => {
