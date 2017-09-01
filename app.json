@@ -3,13 +3,19 @@
   "scripts": {
   },
   "env": {
-    "Google_clientID": {
+    "CLIENTID": {
       "required": true
     },
-    "Google_clientSecret": {
+    "CLIENTSECRET": {
       "required": true
     },
-    "Google_callbackURL": {
+    "CALLBACK": {
+      "required": true
+    },
+    "DATABASE_URL": {
+      "required": true
+    },
+    "REDIS_URL": {
       "required": true
     }
   },

@@ -10,7 +10,7 @@ module.exports.verify = (req, res, next) => {
 };
 
 module.exports.session = session({
-  store: new RedisStore({
+  store: new RedisStore(process.env.REDIS_URL || {
     client: redisClient,
     host: 'localhost',
     port: 6379
