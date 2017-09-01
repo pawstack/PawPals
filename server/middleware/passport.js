@@ -107,11 +107,11 @@ passport.use('local-login', new LocalStrategy({
       });
   }));
 
-passport.use('google', new GoogleStrategy({
-  clientID: config.Google.clientID,
-  clientSecret: config.Google.clientSecret,
-  callbackURL: config.Google.callbackURL
-},
+var clientID = process.env.CLIENTID || config.Google.clientID;
+var clientSecret = process.env.CLIENTSECRET || config.Google.clientSecret;
+var callbackURL = process.env.CALLBACK || config.Google.callbackURL;
+
+passport.use('google', new GoogleStrategy({clientID, clientSecret, callbackURL},
   (accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('google', profile, done))
 );
 
