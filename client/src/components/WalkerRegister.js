@@ -11,23 +11,16 @@ class WalkerRegister extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      imagefile: '',
+      file: '',
       imagePreviewUrl: '',
-      profile_pic: 'http://i.imgur.com/tm9TMPU.jpg',
       extras: ''
     };
 
-    this.handleExtraChange = this.handleExtraChange.bind(this);
+    this.handleExtrasChange = this.handleExtrasChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  // handlePicChange(e) {
-  //   this.setState({
-  //     profile_pic: e.target.src
-  //   });
-  // }
-
-  handleExtraChange(e) {
+  handleExtrasChange(e) {
     this.setState({
       extras: e.target.value
     });
@@ -82,7 +75,7 @@ class WalkerRegister extends React.Component {
           type="textbox"
           size="100"
           width="100"
-          onChange = {this.handleExtraChange}>
+          onChange = {this.handleExtrasChange}>
         </input></div>
         <button onClick = {this.handleSubmit}>Submit Profile</button>
       </div>

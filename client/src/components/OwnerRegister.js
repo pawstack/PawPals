@@ -15,7 +15,8 @@ class OwnerRegister extends React.Component {
       age: null,
       breed: '',
       weight: '',
-      profile_pic: '',
+      file: '',
+      imagePreviewUrl: '',
       extras: ''
     };
   }
@@ -50,14 +51,37 @@ class OwnerRegister extends React.Component {
     });
   }
 
-  handleExtraChange(e) {
+  handleExtrasChange(e) {
     this.setState({
       extra: e.target.value
     });
   }
 
+  handleImageChange(e) {
+    e.preventDefault();
+
+    let reader = new FileReader();
+    let file = e.target.files[0];
+
+    reader.onloadend = () => {
+      this.setState({
+        file: file,
+        imagePreviewUrl: reader.result
+      });
+    };
+
+    reader.readAsDataURL(file);
+  }
 
   render() {
+    let {imagePreviewUrl} = this.state;
+    let imagePreview = null;
+    if (imagePreviewUrl) {
+      imagePreview = (<img src={imagePreviewUrl} width="200"/>);
+    } else {
+      imagePreview = (<div>Please select an Image for Preview</div>);
+    }
+
     return (
       <div>
         <div>Step 2</div>
@@ -66,16 +90,22 @@ class OwnerRegister extends React.Component {
         <div handleChange = {this.handleAgeChange}>Age <input></input></div>
         <div handleChange = {this.handleBreedChange}>Breed <input></input></div>
         <div handleChange = {this.handleWeightChange}>Weight <input></input></div>
-        <div>Photo <img
-          src="http://i.imgur.com/A8eQsll.jpg"
-          width="200"
-          handleChange = {this.handlePicChange}>
-        </img></div>
+        <div>
+          <form onSubmit={(e)=>this.handleSubmit(e)}>
+            <input
+              className="fileInput"
+              type="file"
+              onChange={(e)=>this.handleImageChange(e)} />
+          </form>
+          <div>
+            {imagePreview}
+          </div>
+        </div>
         <div>About Dog<input
           type="textbox"
           size="100"
           width="100"
-          handleChange = {this.handleExtraChange}>
+          handleChange = {this.handleExtrasChange}>
         </input></div>
         <button>Submit Profile</button>
       </div>
