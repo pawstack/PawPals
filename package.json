@@ -7,6 +7,7 @@
   "scripts": {
     "start": "nodemon server",
     "test": "NODE_ENV=test grunt test",
+    "travis-test": "NODE_ENV=travis-test grunt test",
     "build": "webpack --watch"
   },
   "author": "Hack Reactor",
