@@ -25,4 +25,10 @@ app.use('/api', routes.api);
 app.use('/api/profiles', routes.profiles);
 app.use('/*', routes.auth);
 
+app.post('/owner-registry-post', function (req, res){
+  let name = req.body.name;
+  console.log(name);
+  res.send(200);
+});
+
 module.exports = app;
