@@ -59,7 +59,7 @@ class WalkerRegister extends React.Component {
     } else {
       console.log(this.state);
       $.ajax({
-        url: '/walker-registry-post',
+        url: '/api/signup/walker',
         type: 'POST',
         data: {
           profile_pic: this.state.imagePreviewUrl,
