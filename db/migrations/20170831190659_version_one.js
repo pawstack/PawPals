@@ -11,31 +11,13 @@ exports.up = function (knex, Promise) {
     //   table.timestamps(true, true);
     // }),
 
-    knex.schema.createTableIfNotExists('users', function (table) {
-      table.increments('id').unsigned().primary();
-      table.string('first', 50).notNullable();
-      table.string('last', 50);
-      table.string('display', 50);
-      table.string('email', 50).notNullable().unique();
-      table.string('address', 200);
-      table.string('phone', 20).unique();
+    knex.schema.table('profiles', function (table) {
       table.string('profile_pic', 200).nullable();
       table.string('venmo', 50).unique();
       table.string('about_me', 500).nullable();
       table.boolean('walker').defaultTo(false);
       table.boolean('owner').defaultTo(false);
       table.decimal('avg_walker_rating').nullable();
-      table.timestamps(true, true);
-    }),
-    knex.schema.table('auths', function(table) {
-      table.dropForeign('profile_id');
-      table.dropColumn('profile_id');
-      table.integer('user_id').references('users.id');
-      table.renameColumn('user_id', 'profile_id');
-
-
-      // table.integer('profile_id');
-      // table.foreign('profile_id').references('users.id').onDelete('CASCADE');
     }),
     knex.schema.createTableIfNotExists('dogs', function(table) {
       table.increments('id').unsigned().primary();
@@ -47,7 +29,7 @@ exports.up = function (knex, Promise) {
       table.string('extras', 500).nullable();
       table.decimal('avg_rating').nullable();
       table.integer('owner_id').notNullable();
-      table.foreign('owner_id').references('users.id'); //foreign key
+      table.foreign('owner_id').references('profiles.id'); //foreign key
     }),
     knex.schema.createTableIfNotExists('walks', function(table) {
       table.increments('id').unsigned().primary();
@@ -62,11 +44,12 @@ exports.up = function (knex, Promise) {
       table.integer('rating_walker');
       table.integer('rating_dog');
       table.integer('owner_id');
-      table.foreign('owner_id').references('users.id'); //foreign key
+      table.foreign('owner_id').references('profiles.id'); //foreign key
       table.integer('walker_id').notNullable();
-      table.foreign('walker_id').references('users.id'); //foreign key
+      table.foreign('walker_id').references('profiles.id'); //foreign key
       table.integer('dog_id');
       table.foreign('dog_id').references('dogs.id'); //foreign key
+
     }),
     //knex.schema.cascade().dropTable('profiles')
     //knex.raw('DROP TABLE profiles CASCADE')
@@ -75,12 +58,8 @@ exports.up = function (knex, Promise) {
 
 exports.down = function (knex, Promise) {
   return Promise.all([
-    knex.schema.table('auths', function(table) {
-      table.dropColumn('profile_id');
-    }),
     knex.schema.dropTable('walks'),
     knex.schema.dropTable('dogs'),
-    knex.schema.dropTable('users'),
     knex.schema.createTableIfNotExists('profiles', function(table) {
 
     })

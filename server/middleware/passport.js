@@ -107,13 +107,13 @@ passport.use('local-login', new LocalStrategy({
       });
   }));
 
-console.log('clientid', process.env.CLIENTID);
+
 
 var clientID = process.env.CLIENTID || config.Google.clientID;
 var clientSecret = process.env.CLIENTSECRET || config.Google.clientSecret;
 var callbackURL = process.env.CALLBACK || config.Google.callbackURL;
 
-console.log('clientid', config.Google.clientID)
+
 
 passport.use('google', new GoogleStrategy({clientID, clientSecret, callbackURL},
   (accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('google', profile, done))
@@ -139,15 +139,13 @@ passport.use('google', new GoogleStrategy({clientID, clientSecret, callbackURL},
 // );
 
 const getOrCreateOAuthProfile = (type, oauthProfile, done) => {
-  return models.Auth.where({ type, oauth_id: oauthProfile.id }).fetch({
+  return models.Auth.where({ oauth_id: oauthProfile.id }).fetch({
     withRelated: ['profile']
   })
     .then(oauthAccount => {
-
       if (oauthAccount) {
         throw oauthAccount;
       }
-
       if (!oauthProfile.emails || !oauthProfile.emails.length) {
         // FB users can register with a phone number, which is not exposed by Passport
         throw null;
@@ -155,7 +153,6 @@ const getOrCreateOAuthProfile = (type, oauthProfile, done) => {
       return models.Profile.where({ email: oauthProfile.emails[0].value }).fetch();
     })
     .then(profile => {
-
       let profileInfo = {
         first: oauthProfile.name.givenName,
         last: oauthProfile.name.familyName,
