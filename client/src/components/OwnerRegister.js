@@ -5,6 +5,7 @@ import {
   Route,
   Link
 } from 'react-router-dom';
+import $ from 'jquery';
 
 class OwnerRegister extends React.Component {
 
@@ -19,6 +20,13 @@ class OwnerRegister extends React.Component {
       imagePreviewUrl: '',
       extras: ''
     };
+
+    this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleAgeChange = this.handleAgeChange.bind(this);
+    this.handleBreedChange = this.handleBreedChange.bind(this);
+    this.handleWeightChange = this.handleWeightChange.bind(this);
+    this.handleExtrasChange = this.handleExtrasChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleNameChange(e) {
@@ -45,12 +53,6 @@ class OwnerRegister extends React.Component {
     });
   }
 
-  handlePicChange(e) {
-    this.setState({
-      profile_pic: e.target.src
-    });
-  }
-
   handleExtrasChange(e) {
     this.setState({
       extra: e.target.value
@@ -73,6 +75,34 @@ class OwnerRegister extends React.Component {
     reader.readAsDataURL(file);
   }
 
+  handleSubmit() {
+    for (let key in this.state) {
+      if (this.state[key] === '' || this.state[key] === null) {
+        alert('Please complete your profile');
+        break;
+      }
+    }
+    console.log(this.state);
+
+    $.ajax({
+      url: '/owner-registry-post',
+      type: 'POST',
+      data: {
+        name: this.state.name,
+        age: this.state.age,
+        breed: this.state.breed,
+        weight: this.state.weight,
+        profile_pic: this.state.imagePreviewUrl,
+        extras: this.state.extra
+      },
+      success: (res) => {
+        console.log('data sent');
+      },
+      error: function(data) {
+      }
+    });
+  }
+
   render() {
     let {imagePreviewUrl} = this.state;
     let imagePreview = null;
@@ -86,10 +116,10 @@ class OwnerRegister extends React.Component {
       <div>
         <div>Step 2</div>
           Dog Profile
-        <div handleChange = {this.handleNameChange}>Name <input></input></div>
-        <div handleChange = {this.handleAgeChange}>Age <input></input></div>
-        <div handleChange = {this.handleBreedChange}>Breed <input></input></div>
-        <div handleChange = {this.handleWeightChange}>Weight <input></input></div>
+        <div>Name <input onChange = {this.handleNameChange}></input></div>
+        <div>Age <input onChange = {this.handleAgeChange}></input></div>
+        <div>Breed <input onChange = {this.handleBreedChange}></input></div>
+        <div>Weight <input onChange = {this.handleWeightChange}></input></div>
         <div>
           <form onSubmit={(e)=>this.handleSubmit(e)}>
             <input
@@ -101,13 +131,13 @@ class OwnerRegister extends React.Component {
             {imagePreview}
           </div>
         </div>
-        <div>About Dog<input
+        <div>About Dog <input
           type="textbox"
           size="100"
           width="100"
-          handleChange = {this.handleExtrasChange}>
+          onChange = {this.handleExtrasChange}>
         </input></div>
-        <button>Submit Profile</button>
+        <button onClick = {this.handleSubmit}>Submit Profile</button>
       </div>
     );
   }

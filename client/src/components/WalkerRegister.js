@@ -5,6 +5,7 @@ import {
   Route,
   Link
 } from 'react-router-dom';
+import $ from 'jquery';
 
 class WalkerRegister extends React.Component {
 
@@ -44,7 +45,22 @@ class WalkerRegister extends React.Component {
 
   handleSubmit() {
     console.log(this.state.extras);
-    console.log(this.state.file);
+    console.log(this.state.imagePreviewUrl);
+
+    $.ajax({
+      url: '/walker-registry-post',
+      type: 'POST',
+      data: {
+        profile_pic: this.state.imagePreviewUrl,
+        extras: this.state.extra
+      },
+      success: (res) => {
+        console.log('data sent');
+      },
+      error: function(data) {
+      }
+    });
+
   }
 
   render() {
