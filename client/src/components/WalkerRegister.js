@@ -7,6 +7,15 @@ import {
 } from 'react-router-dom';
 import $ from 'jquery';
 
+var checkEmptyEntry = function(obj) {
+  for (let key in obj) {
+    if (obj[key] === '' || obj[key] === null) {
+      return true;
+    }
+  }
+  return false;
+};
+
 class WalkerRegister extends React.Component {
 
   constructor(props) {
@@ -44,22 +53,25 @@ class WalkerRegister extends React.Component {
   }
 
   handleSubmit() {
-    console.log(this.state.extras);
-    console.log(this.state.imagePreviewUrl);
-
-    $.ajax({
-      url: '/walker-registry-post',
-      type: 'POST',
-      data: {
-        profile_pic: this.state.imagePreviewUrl,
-        extras: this.state.extra
-      },
-      success: (res) => {
-        console.log('data sent');
-      },
-      error: function(data) {
-      }
-    });
+    if (checkEmptyEntry(this.state)) {
+      console.log(this.state);
+      alert('please complete profile');
+    } else {
+      console.log(this.state);
+      $.ajax({
+        url: '/walker-registry-post',
+        type: 'POST',
+        data: {
+          profile_pic: this.state.imagePreviewUrl,
+          extras: this.state.extra
+        },
+        success: (res) => {
+          console.log('data sent');
+        },
+        error: function(data) {
+        }
+      });
+    }
 
   }
 
