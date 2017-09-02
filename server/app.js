@@ -25,13 +25,13 @@ app.use('/api', routes.api);
 app.use('/api/profiles', routes.profiles);
 app.use('/*', routes.auth);
 
-app.post('/owner-registry-post', function (req, res){
+app.post('/api/signup/owner', function (req, res){
   let dog_name = req.body.name;
   console.log(dog_name);
   res.send(200);
 });
 
-app.post('/walker-registry-post', function (req, res){
+app.post('/api/signup/walker', function (req, res){
   let extras = req.body.extras;
   console.log(extras);
   res.send(200);

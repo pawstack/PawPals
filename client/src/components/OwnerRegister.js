@@ -85,6 +85,7 @@ class OwnerRegister extends React.Component {
     reader.readAsDataURL(file);
   }
 
+
   handleSubmit() {
     if (checkEmptyEntry(this.state)) {
       console.log(this.state);
@@ -92,7 +93,7 @@ class OwnerRegister extends React.Component {
     } else {
       console.log(this.state);
       $.ajax({
-        url: '/owner-registry-post',
+        url: '/api/signup/owner',
         type: 'POST',
         data: {
           name: this.state.name,
