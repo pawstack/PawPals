@@ -63,7 +63,7 @@ class WalkerRegister extends React.Component {
         type: 'POST',
         data: {
           profile_pic: this.state.imagePreviewUrl,
-          extras: this.state.extra
+          extras: this.state.extras
         },
         success: (res) => {
           console.log('data sent');
