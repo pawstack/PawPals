@@ -26,9 +26,16 @@ app.use('/api/profiles', routes.profiles);
 app.use('/*', routes.auth);
 
 app.post('/owner-registry-post', function (req, res){
-  let name = req.body.name;
-  console.log(name);
+  let dog_name = req.body.name;
+  console.log(dog_name);
   res.send(200);
 });
+
+app.post('/walker-registry-post', function (req, res){
+  let extras = req.body.extras;
+  console.log(extras);
+  res.send(200);
+});
+
 
 module.exports = app;

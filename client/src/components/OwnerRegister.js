@@ -7,6 +7,16 @@ import {
 } from 'react-router-dom';
 import $ from 'jquery';
 
+
+var checkEmptyEntry = function(obj) {
+  for (let key in obj) {
+    if (obj[key] === '' || obj[key] === null) {
+      return true;
+    }
+  }
+  return false;
+};
+
 class OwnerRegister extends React.Component {
 
   constructor(props) {
@@ -15,8 +25,8 @@ class OwnerRegister extends React.Component {
       name: '',
       age: null,
       breed: '',
-      weight: '',
       file: '',
+      weight: '',
       imagePreviewUrl: '',
       extras: ''
     };
@@ -55,7 +65,7 @@ class OwnerRegister extends React.Component {
 
   handleExtrasChange(e) {
     this.setState({
-      extra: e.target.value
+      extras: e.target.value
     });
   }
 
@@ -76,31 +86,29 @@ class OwnerRegister extends React.Component {
   }
 
   handleSubmit() {
-    for (let key in this.state) {
-      if (this.state[key] === '' || this.state[key] === null) {
-        alert('Please complete your profile');
-        break;
-      }
+    if (checkEmptyEntry(this.state)) {
+      console.log(this.state);
+      alert('please complete profile');
+    } else {
+      console.log(this.state);
+      $.ajax({
+        url: '/owner-registry-post',
+        type: 'POST',
+        data: {
+          name: this.state.name,
+          age: this.state.age,
+          breed: this.state.breed,
+          weight: this.state.weight,
+          profile_pic: this.state.imagePreviewUrl,
+          extras: this.state.extra
+        },
+        success: (res) => {
+          console.log('data sent');
+        },
+        error: function(data) {
+        }
+      });
     }
-    console.log(this.state);
-
-    $.ajax({
-      url: '/owner-registry-post',
-      type: 'POST',
-      data: {
-        name: this.state.name,
-        age: this.state.age,
-        breed: this.state.breed,
-        weight: this.state.weight,
-        profile_pic: this.state.imagePreviewUrl,
-        extras: this.state.extra
-      },
-      success: (res) => {
-        console.log('data sent');
-      },
-      error: function(data) {
-      }
-    });
   }
 
   render() {
@@ -119,7 +127,7 @@ class OwnerRegister extends React.Component {
         <div>Name <input onChange = {this.handleNameChange}></input></div>
         <div>Age <input onChange = {this.handleAgeChange}></input></div>
         <div>Breed <input onChange = {this.handleBreedChange}></input></div>
-        <div>Weight <input onChange = {this.handleWeightChange}></input></div>
+        <div>Weight in lb <input onChange = {this.handleWeightChange}></input></div>
         <div>
           <form onSubmit={(e)=>this.handleSubmit(e)}>
             <input
