@@ -139,7 +139,7 @@ passport.use('google', new GoogleStrategy({clientID, clientSecret, callbackURL},
 // );
 
 const getOrCreateOAuthProfile = (type, oauthProfile, done) => {
-  return models.Auth.where({type: type, oauth_id: oauthProfile.id }).fetch({
+  return models.Auth.where({type, oauth_id: oauthProfile.id }).fetch({
     withRelated: ['profile']
   })
     .then(oauthAccount => {
