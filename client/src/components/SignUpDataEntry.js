@@ -13,6 +13,14 @@ class SignUpDataEntry extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      phone: ''
+    };
+  }
+
+  updatePhone(e) {
+    this.setState({phone: e.target.value}),
+    ()=>{
+      this.props.handlePhoneUpdate( this );
     };
   }
 
@@ -21,7 +29,7 @@ class SignUpDataEntry extends React.Component {
       <Router>
         <div>
           <div>Step 1</div>
-          <div>Phone # <input></input></div>
+          <div>Phone # <input onChange = {this.updatePhone.bind(this)}></input></div>
           <div>Address <input></input></div>
         </div>
       </Router>

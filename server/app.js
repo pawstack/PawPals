@@ -4,6 +4,7 @@ const path = require('path');
 const middleware = require('./middleware');
 const routes = require('./routes');
 const app = express();
+const database = require('../db/index');
 
 app.use(middleware.morgan('dev'));
 app.use(middleware.cookieParser());
@@ -24,16 +25,12 @@ app.use('/api', routes.api);
 app.use('/api/profiles', routes.profiles);
 app.use('/*', routes.auth);
 
-app.post('/api/signup/owner', function (req, res){
-  let dog_name = req.body.name;
-  console.log(dog_name);
-  res.send(200);
+app.post('/api/signup/owner', function (req, res) {
+  database.saveDog(req.body, req.user.id, function() { res.send(200); });
 });
 
-app.post('/api/signup/walker', function (req, res){
-  let extras = req.body.extras;
-  console.log(extras);
-  res.send(200);
+app.post('/api/signup/walker', function (req, res) {
+  database.saveWalker(req.body, req.user.id, function() { res.send(200); });
 });
 
 module.exports = app;
