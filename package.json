@@ -45,6 +45,7 @@
     "react": "^15.6.1",
     "react-big-calendar": "^0.11.1",
     "react-dom": "^15.6.1",
+    "react-overlays": "^0.8.0",
     "react-router-dom": "^4.2.2",
     "redis": "^2.7.1",
     "style-loader": "^0.18.2",
