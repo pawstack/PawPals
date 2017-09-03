@@ -6,12 +6,12 @@ import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import Subheader from 'material-ui/Subheader';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class BrowseFilter extends React.Component {
   constructor(props) {
     super(props);
     const minDate = new Date();
-    minDate.setFullYear(minDate.getFullYear() - 1);
     minDate.setHours(0, 0, 0, 0);
 
     this.state = {
@@ -106,7 +106,7 @@ class BrowseFilter extends React.Component {
           value={this.state.price}
           onChange={this.handleChangeAdditional.bind(this, 'price')}
         />
-        <button onClick={this.props.handleFilter.bind(this, this.state)}>Apply Filter</button>
+        <RaisedButton label="Apply Filter" primary={true} onClick={this.props.getWalks.bind(this, this.state)} />
       </div>
     );
   }

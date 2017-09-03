@@ -1,6 +1,6 @@
 import React from 'react';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class BrowseListItem extends React.Component {
   constructor(props) {
@@ -8,18 +8,6 @@ class BrowseListItem extends React.Component {
     this.state = {
     };
   }
-  // {this.props.walk.walkzonePt}
-
-  // walks: [{
-  //   id: 1,
-  //   ownerId: 1,
-  //   walkerId: 2,
-  //   dogId: 1,
-  //   walkzonePt: '944 Market St, San Francisco, CA 94102',
-  //   pickupAddress: '1655 Mission St, San Francisco, CA, 94103',
-  //   walkzoneRadius: 3,
-  //   price: 40
-  // }]
 
   render() {
     return (
@@ -34,7 +22,7 @@ class BrowseListItem extends React.Component {
           About me
         </CardText>
         <CardActions>
-          <FlatButton label="Book this walk" />
+          <RaisedButton label="Book this walk" primary={true} />
         </CardActions>
       </Card>
     );
