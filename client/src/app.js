@@ -10,6 +10,7 @@ import {
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import SignUpStart from './components/SignUpStart';
 import Browse from './components/Browse';
+import Calendar from './components/Calendar';
 
 class App extends React.Component {
   render() {
@@ -21,6 +22,7 @@ class App extends React.Component {
               <li><Link to="/home">Home</Link></li>
               <li><Link to='/signup/start'>Signup</Link></li>
               <li><Link to='/browse'>Browse Walks</Link></li>
+	      <li><Link to='/walker'>Walker</Link></li>
             </ul>
 
             <Route exact path="/home" render={() => (
@@ -28,6 +30,7 @@ class App extends React.Component {
             )}/>
             <Route exact path="/signup/start" component={SignUpStart}/>
             <Route exact path="/browse" component={Browse}/>
+            <Route exact path="/walker" component={Calendar}/>
           </div>
         </Router>
       </MuiThemeProvider>
