@@ -28,7 +28,8 @@ class OwnerRegister extends React.Component {
       file: '',
       weight: '',
       imagePreviewUrl: '',
-      extras: ''
+      extras: '',
+      owner: true
     };
 
     this.handleNameChange = this.handleNameChange.bind(this);
