@@ -3,6 +3,11 @@ const express = require('express');
 const path = require('path');
 const middleware = require('./middleware');
 const routes = require('./routes');
+
+//const stripe = require('./stripeAPI.js');
+var stripe = require('stripe')('sk_test_2slmpAIrhlZSnWP7KSMNp6HX');
+
+
 const app = express();
 const database = require('../db/index');
 
@@ -23,6 +28,7 @@ app.use(express.static(path.join(__dirname, '../public')));
 app.use('/', routes.auth);
 app.use('/api', routes.api);
 app.use('/api/profiles', routes.profiles);
+app.use('/api/payment', routes.payment);
 app.use('/*', routes.auth);
 
 module.exports = app;

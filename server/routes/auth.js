@@ -6,6 +6,11 @@ const router = express.Router();
 
 router.route('/')
   .get(middleware.auth.verify, (req, res) => {
+    console.log('the req query is ', req.query);
+    if (req.query.code) {
+      console.log('****** retrieved the temporary token.  will invoke step4 to finalize the stripe_user_id');
+      res.redirect('/tokenize/?code=' + req.query.code);
+    }
     res.render('index.ejs');
   });
 
@@ -21,6 +26,7 @@ router.route('/login')
 
 router.route('/tokenize')
   .get((req, res) => {
+    debugger;
     // req.flash('client_secret', 'sk_test_2U8Pw3mVMwmqXjdSHbiBfFSm');
     // req.flash('code', 'ac_BKpjN5v1m4YCxeoG2ompHv9qbNILoLLc');
     // req.flash('grant_type', 'authorization_code');
@@ -31,7 +37,8 @@ router.route('/tokenize')
       url: 'https://connect.stripe.com/oauth/token',
       data: {
         'client_secret': 'sk_test_2slmpAIrhlZSnWP7KSMNp6HX', // need to change this periodically
-        'code': 'ac_BKsaTwnHCkr35PsZawlOsHpeG3JTOAuE', // will need to pull this in from the query data
+        'code': req.query.code,
+        //'code': 'ac_BKskFL5z0e7rB4OySIe0EKWVFiD1wFVw', // will need to pull this in from the query data of the ajax get request.
         'grant_type': 'authorization_code'
       }
     }, function(err, stdout, meta) {
@@ -41,6 +48,14 @@ router.route('/tokenize')
       console.log('the type of stdout is ', typeof stdout);
       console.log('meta ', meta);
       console.log('the stripe users id that should be saved to the db is ', JSON.parse(stdout).stripe_user_id);
+      res.send(JSON.parse(stdout).stripe_user_id);
+      //now save the stripe_user_id in the database under the user!
+      //create a customer object - Customer objects allow you to perform recurring charges and
+      //  track multiple charges that are associated with the same customer.
+      //  The API allows you to create, delete, and update your customers.
+      //  You can retrieve individual customers as well as a list of all your customers.
+      //then redirect back to the home page?  res.redirect('/home');
+      //res.send(200);
     });
   });
 
