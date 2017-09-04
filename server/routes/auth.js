@@ -1,5 +1,6 @@
 const express = require('express');
 const middleware = require('../middleware');
+var curl = require('curlrequest');
 
 const router = express.Router();
 
@@ -17,6 +18,29 @@ router.route('/login')
     failureRedirect: '/login',
     failureFlash: true
   }));
+
+router.route('/tokenize')
+  .get((req, res) => {
+    // req.flash('client_secret', 'sk_test_2U8Pw3mVMwmqXjdSHbiBfFSm');
+    // req.flash('code', 'ac_BKpjN5v1m4YCxeoG2ompHv9qbNILoLLc');
+    // req.flash('grant_type', 'authorization_code');
+    //
+    // res.redirect('https://connect.stripe.com/oauth/token');
+
+    curl.request({
+      url: 'https://connect.stripe.com/oauth/token',
+      data: {
+        'client_secret': 'sk_test_2U8Pw3mVMwmqXjdSHbiBfFSm',
+        'code': 'ac_BKpjN5v1m4YCxeoG2ompHv9qbNILoLLc',
+        'grant_type': 'authorization_code'
+      }
+    }, function(err, stdout, meta) {
+      console.log('curl request completed...');
+      console.log('err ', err);
+      console.log('stdout ', stdout);
+      console.log('meta ', meta);
+    });
+  });
 
 // new users/signups also go through /login, registration happens after if they are a new user
 // router.route('/signup')
