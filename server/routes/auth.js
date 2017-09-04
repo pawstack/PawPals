@@ -30,15 +30,17 @@ router.route('/tokenize')
     curl.request({
       url: 'https://connect.stripe.com/oauth/token',
       data: {
-        'client_secret': 'sk_test_2U8Pw3mVMwmqXjdSHbiBfFSm',
-        'code': 'ac_BKpjN5v1m4YCxeoG2ompHv9qbNILoLLc',
+        'client_secret': 'sk_test_2slmpAIrhlZSnWP7KSMNp6HX', // need to change this periodically
+        'code': 'ac_BKsaTwnHCkr35PsZawlOsHpeG3JTOAuE', // will need to pull this in from the query data
         'grant_type': 'authorization_code'
       }
     }, function(err, stdout, meta) {
       console.log('curl request completed...');
       console.log('err ', err);
       console.log('stdout ', stdout);
+      console.log('the type of stdout is ', typeof stdout);
       console.log('meta ', meta);
+      console.log('the stripe users id that should be saved to the db is ', JSON.parse(stdout).stripe_user_id);
     });
   });
 
