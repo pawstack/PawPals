@@ -1,39 +1,10 @@
 'use strict';
 const express = require('express');
 const router = express.Router();
+const ApiController = require('../controllers').Api;
 
 router.route('/walks/search')
-  .post((req, res) => {
-    var filters = req.body;
-    res.status(201).json({
-      walks: [
-        {
-          id: 1,
-          walkerId: 2,
-          walkerName: 'Paw Walker',
-          walkzonePt: '944 Market St, San Francisco, CA 94102',
-          walkzoneRadius: 3,
-          price: 40
-        },
-        {
-          id: 2,
-          walkerId: 3,
-          walkerName: 'Vin Beagle',
-          walkzonePt: '611 Mission St, San Francisco, CA 94105',
-          walkzoneRadius: 3,
-          price: 45
-        },
-        {
-          id: 4,
-          walkerId: 5,
-          walkerName: 'Michelle Ruffriguez',
-          walkzonePt: '1655 Mission St, San Francisc, CA 94103',
-          walkzoneRadius: 3,
-          price: 38
-        }
-      ]
-    });
-  });
+  .post(ApiController.getFilteredWalks);
 
 router.route('/')
   .get((req, res) => {

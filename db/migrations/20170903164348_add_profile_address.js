@@ -1,7 +1,7 @@
 
 exports.up = function (knex, Promise) {
   return knex.schema.table('profiles', function (table) {
-    table.string('address', 200).notNullable();
+    table.string('address', 200);
   });
 };
 
