@@ -4,7 +4,7 @@ import moment from 'moment'
 import BigCalendar from 'react-big-calendar'
 import DialogForm from './DialogForm'
 import EventDialog from './EventDialog'
-  
+
 BigCalendar.momentLocalizer(moment)
 require('style-loader!css-loader!react-big-calendar/lib/css/react-big-calendar.css')
 
@@ -55,12 +55,13 @@ class Calendar extends React.Component {
   }
 
   getEvents(callback) {
-    var url = `/api/walkers/fetch?walker_id=${this.state.profile_id}`
-    fetch(url, {
-      method: 'GET'
+    fetch('/api/walks/fetch', {
+      method: 'GET',
+      credentials: 'include'
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log(data.location, 'address');
         var events = [];
         for (var i = 0; i < data.walks.length; i++) {
           var event = {'title': 'walk'};
@@ -74,7 +75,7 @@ class Calendar extends React.Component {
           events: events,
           location: data.location
         };
-        callback(events);
+        callback(states);
       })
       .catch((err) => {
         console.log('error:',err)
@@ -87,7 +88,7 @@ class Calendar extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    fetch('/api/walkers/create', {
+    fetch('/api/walks/create', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -111,8 +112,8 @@ class Calendar extends React.Component {
   }
 
   componentDidMount () {
-    this.getEvents((events) => {
-      this.setState({events})
+    this.getEvents((states) => {
+      this.setState(states)
     })
   }
   render () {
