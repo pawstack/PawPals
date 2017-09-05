@@ -5,11 +5,14 @@ module.exports.getAll = (req, res) => {
     walker_id: req.query.walker_id
   })
     .then(data => {
+      var response = {};
       var walks = [];
       for (var i = 0; i < data.models.length; i++) {
         walks.push(data.models[i].attributes);
       }
-    res.status(200).send(walks);
+      response['walks'] = walks;
+      response['location'] = req.user.address;
+    res.status(200).send(response);
   })
   .catch(err => {
     res.status(503).send(err);
