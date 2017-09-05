@@ -20,6 +20,7 @@ var checkEmptyEntry = function(obj) {
 class OwnerRegister extends React.Component {
 
   constructor(props) {
+
     super(props);
     this.state = {
       name: '',
@@ -88,6 +89,7 @@ class OwnerRegister extends React.Component {
 
 
   handleSubmit() {
+    console.log('phone is', this.props.phoneInfo);
     if (checkEmptyEntry(this.state)) {
       console.log(this.state);
       alert('please complete profile');
@@ -102,7 +104,8 @@ class OwnerRegister extends React.Component {
           breed: this.state.breed,
           weight: this.state.weight,
           profile_pic: this.state.imagePreviewUrl,
-          extras: this.state.extras
+          extras: this.state.extras,
+          phone: this.props.phoneInfo
         },
         success: (res) => {
           console.log('data sent');

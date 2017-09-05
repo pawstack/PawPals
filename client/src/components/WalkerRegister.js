@@ -54,7 +54,7 @@ class WalkerRegister extends React.Component {
 
   handleSubmit() {
     if (checkEmptyEntry(this.state)) {
-      console.log(this.state);
+      console.log(this.props.phoneInfo);
       alert('please complete profile');
     } else {
       console.log(this.state);
@@ -63,7 +63,8 @@ class WalkerRegister extends React.Component {
         type: 'POST',
         data: {
           profile_pic: this.state.imagePreviewUrl,
-          extras: this.state.extras
+          extras: this.state.extras,
+          phone: this.props.phoneInfo
         },
         success: (res) => {
           console.log('data sent');

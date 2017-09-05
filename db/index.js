@@ -7,7 +7,8 @@ var saveDog = function(req_body, req_user_id, callback) {
 
   var dogToDB = new Promise(
     (resolve, reject) => {
-      knex('dogs').insert({ name: req_body.name,
+      knex('dogs').insert({
+        name: req_body.name,
         age: req_body.age,
         weight: req_body.weight,
         breed: req_body.breed,
@@ -24,7 +25,14 @@ var saveDog = function(req_body, req_user_id, callback) {
     }
   );
 
-  Promise.all([dogToDB, ownerBoolToDB]).then(responses => {
+  var ownerPhoneToDB = new Promise(
+    (resolve, reject) => {
+      knex('profiles').where('id', req_user_id).update({phone: req_body.phone})
+        .then(resolve());
+    }
+  );
+
+  Promise.all([dogToDB, ownerBoolToDB, ownerPhoneToDB]).then(responses => {
     callback();
   })
     .catch(e => {
@@ -48,7 +56,14 @@ var saveWalker = function(req_body, req_user_id, callback) {
     }
   );
 
-  Promise.all([extrasToDB, walkerBoolToDB]).then(responses => {
+  var walkerPhoneToDB = new Promise(
+    (resolve, reject) => {
+      knex('profiles').where('id', req_user_id).update({phone: req_body.phone})
+        .then(resolve());
+    }
+  );
+
+  Promise.all([extrasToDB, walkerBoolToDB, walkerPhoneToDB]).then(responses => {
     callback();
   })
     .catch(e => {
