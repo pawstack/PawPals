@@ -12,17 +12,12 @@ class Browse extends React.Component {
     this.getWalks = this.getWalks.bind(this);
   }
 
-  componentWillMount() {
-    this.getWalks();
-  }
-
   getWalks(filters) {
-    filters = filters || {};
     $.post('/api/walks/search', filters)
       .done((data) => {
-        console.log('SUCCESS getWalks in Browse ', data);        
+        // console.log('SUCCESS getWalks in Browse ', data);        
         this.setState({
-          walks: data.walks
+          walks: data
         });
       }).fail((err) => {
         console.log('ERROR getWalks in Browse ', error);

@@ -11,20 +11,23 @@ import RaisedButton from 'material-ui/RaisedButton';
 class BrowseFilter extends React.Component {
   constructor(props) {
     super(props);
-    const minDate = new Date();
-    minDate.setHours(0, 0, 0, 0);
+    const minDate = new Date(new Date().setHours(0, 0, 0, 0));
 
     this.state = {
       location: '',
       minDate: minDate,
-      startDate: null,
-      endDate: null,
+      startDate: minDate,
+      endDate: new Date(minDate.getTime() + (1000 * 60 * 60 * 24 * 14 + 86399000)),
       duration: null,
       pickupTime: null,
-      price: 50
+      price: 100
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSelectDuration = this.handleSelectDuration.bind(this);
+  }
+
+  componentWillMount() {
+    this.props.getWalks(this.state);
   }
 
   handleChange(event) {
@@ -94,6 +97,7 @@ class BrowseFilter extends React.Component {
           format="ampm"
           floatingLabelText="Pickup Time"
           minutesStep={5}
+          autoOk={true}
           value={this.state.pickupTime}
           onChange={this.handleChangeAdditional.bind(this, 'pickupTime')}
         />

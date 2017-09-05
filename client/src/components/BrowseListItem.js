@@ -17,7 +17,7 @@ class BrowseListItem extends React.Component {
           subtitle="Subtitle"
           avatar={this.props.walk.walkerProfilePic}
         />
-        <CardTitle title={`$${this.props.walk.price}/hour`} subtitle={`Near ${this.props.walk.walkzonePt}`} />
+        <CardTitle title={`$${this.props.walk.price}/hour`} subtitle={`Near ${this.props.walk.walk_zone_pt}`} />
         <CardText>
           About me
         </CardText>
