@@ -1,4 +1,6 @@
 const models = require('../../db/models');
+const knex = require('knex')(require('../../knexfile'));
+const db = require('bookshelf')(knex);
 
 module.exports.getAll = (req, res) => {
   models.Profile.fetchAll()
@@ -59,6 +61,39 @@ module.exports.update = (req, res) => {
       res.sendStatus(404);
     });
 };
+
+module.exports.saveStripeUserID = function(userID, stripeUserID) {
+  return knex('profiles')
+    .where({id: 1})
+    .update({stripe_user_id: 'test7'})
+    .then(function(result) {
+      if (result === 0) { //id does not exist.  no update made.
+        throw result;
+      }
+      console.log('updated db with stripe data ', result);
+    })
+    .catch(function(err) {
+      console.log('error updating db with stripe data - id does not exist', err);
+    });
+};
+
+module.exports.saveTokenizedCC = function(userID, token) {
+  return knex('profiles')
+    .where({id: 1})
+    .update({customer_id_cc_Token: 'test_token'})
+    .then(function(result) {
+      if (result === 0) { //id does not exist.  no update made.
+        throw result;
+      }
+      console.log('updated db with tokenized cc data ', result);
+    })
+    .catch(function(err) {
+      console.log('error updating db with tokenized cc data - id does not exist', err);
+    });
+};
+
+
+
 
 // module.exports.deleteOne = (req, res) => {
 //   models.Profile.where({ id: req.params.id }).fetch()
