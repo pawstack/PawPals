@@ -46,7 +46,7 @@ exports.up = function (knex, Promise) {
       table.integer('owner_id');
       table.foreign('owner_id').references('profiles.id'); //foreign key
       table.integer('walker_id').notNullable();
-      table.foreign('walker_id').references('profiles.id'); //foreign key
+      table.foreign('walker_id').references('profiles.id').onDelete('CASCADE'); //foreign key
       table.integer('dog_id');
       table.foreign('dog_id').references('dogs.id'); //foreign key
 
