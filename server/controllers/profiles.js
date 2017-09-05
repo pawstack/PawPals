@@ -64,8 +64,8 @@ module.exports.update = (req, res) => {
 
 module.exports.saveStripeUserID = function(userID, stripeUserID) {
   return knex('profiles')
-    .where({id: 1})
-    .update({stripe_user_id: 'test7'})
+    .where({id: userID})
+    .update({stripe_user_id: stripeUserID})
     .then(function(result) {
       if (result === 0) { //id does not exist.  no update made.
         throw result;
