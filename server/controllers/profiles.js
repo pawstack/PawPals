@@ -64,7 +64,7 @@ module.exports.update = (req, res) => {
 
 module.exports.saveStripeUserID = function(userID, stripeUserID) {
   return knex('profiles')
-    .where({id: userID})
+    .where({email: userID})
     .update({stripe_user_id: stripeUserID})
     .then(function(result) {
       if (result === 0) { //id does not exist.  no update made.
@@ -79,16 +79,16 @@ module.exports.saveStripeUserID = function(userID, stripeUserID) {
 
 module.exports.saveTokenizedCC = function(userID, token) {
   return knex('profiles')
-    .where({id: 1})
-    .update({customer_id_cc_Token: 'test_token'})
+    .where({email: userID})
+    .update({customer_id_cc_Token: token})
     .then(function(result) {
       if (result === 0) { //id does not exist.  no update made.
         throw result;
       }
-      console.log('updated db with tokenized cc data ', result);
+      console.log('********updated db with tokenized cc data ', result);
     })
     .catch(function(err) {
-      console.log('error updating db with tokenized cc data - id does not exist', err);
+      console.log('********error updating db with tokenized cc data - email does not exist', err);
     });
 };
 
