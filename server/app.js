@@ -3,7 +3,7 @@ const express = require('express');
 const path = require('path');
 const middleware = require('./middleware');
 const routes = require('./routes');
-
+const walks = require('./controllers/walks');
 const app = express();
 
 app.use(middleware.morgan('dev'));
@@ -23,6 +23,7 @@ app.use(express.static(path.join(__dirname, '../public')));
 app.use('/', routes.auth);
 app.use('/api', routes.api);
 app.use('/api/profiles', routes.profiles);
+app.use('/api/walkers', routes.walkers);
 app.use('/*', routes.auth);
 
 app.post('/api/signup/owner', function (req, res){
@@ -36,6 +37,5 @@ app.post('/api/signup/walker', function (req, res){
   console.log(extras);
   res.send(200);
 });
-
 
 module.exports = app;
