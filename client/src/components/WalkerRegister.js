@@ -78,7 +78,6 @@ class WalkerRegister extends React.Component {
   render() {
     let {imagePreviewUrl} = this.state;
     let imagePreview = null;
-    console.log('walker image:', imagePreviewUrl);
     if (imagePreviewUrl) {
       imagePreview = (<img src={imagePreviewUrl} width="200"/>);
     } else {
