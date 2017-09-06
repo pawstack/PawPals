@@ -28,7 +28,6 @@ router.route('/login')
   }));
 
 
-
 // new users/signups also go through /login, registration happens after if they are a new user
 // router.route('/signup')
 //   .get((req, res) => {

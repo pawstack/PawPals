@@ -4,6 +4,8 @@ const db = require('bookshelf')(knex);
 var curl = require('curlrequest');
 var stripe = require('stripe')('sk_test_2slmpAIrhlZSnWP7KSMNp6HX');
 var controllers = require('./');
+const knex = require('knex')(require('../../knexfile'));
+const db = require('bookshelf')(knex);
 
 db.plugin('registry');
 
@@ -208,23 +210,80 @@ module.exports.getAndsaveCardToken = (req, res) => {
 
 
 module.exports.processPayments = (req, res) => {
-  console.log('***INSIDE OF PROCESS PAYMENT - the req body is ', req.body);
-  stripe.charges.create({
-    amount: req.body.amount, // amount that the owner is charged
-    description: req.body.description,
-    currency: 'usd',
-    //When it's time to charge the customer again, retrieve the customer ID.
-    customer: req.body.customerId, // eventually retrieve this from the db by looking up the email.
-    destination: {
-      amount: 400, // amount to be transferred to the destination account.  calculated by subtracting platform fees from charge amount.
-      account: req.body.accountDestination // retrieved from db. need to know destination. account number of the destination created at login.
-    }
-  })
-    .then(charge => {
-      console.log('the charge details are ', charge);
-      if (charge.paid === true) {
-        //save charge.id to the walk db table, which can be used if refund is needed.
+  controllers.Profiles.getCCToken(req.user.id)
+    .then((tokenizedCC) => {
+      controllers.Profiles.getStripeID(req.body.walkerUserID)
+        .then((destinationStripeID) => {
+          stripe.charges.create({
+            amount: req.body.amount, // amount that the owner is charged
+            description: req.body.description,
+            currency: 'USD',
+            customer: tokenizedCC, // retrieved from DB
+            destination: {
+              amount: req.body.amount * (1 - (req.body.percentRetainedByPlatform / 100)), // amount to be transferred to the destination account.t.
+              account: destinationStripeID // Retrieved from db. This is the account where funds will be deposited.
+            }
+          })
+            .then(charge => {
+              console.log('the charge details are ', charge);
+              if (charge.paid === true) {
+                saveChargeTransactionToDB(req.body.walkID, charge.id);
+              }
+              res.redirect('/payment'); //update this later!!!
+            });
+        });
+    });
+};
+
+var saveChargeTransactionToDB = (walkID, transactionNumber) => {
+  return knex('walks')
+    .where({id: walkID, paid: false})
+    .update({
+      paid: true,
+      payment_transaction_id: transactionNumber
+    })
+    .then(result => {
+      if (result === 0) {
+        console.log('error saving charge transaction to DB');
       }
-      res.redirect('/payment'); //update this later!!!
+    });
+};
+
+var getTransactionID = (walkID) => {
+  console.log('in get transaction id function');
+  return knex('walks')
+    .select('payment_transaction_id')
+    .where({id: walkID, paid: true})
+    .then(result => {
+      if (result.length === 0) {
+        console.log('error retireiving transaction id from db');
+        throw result;
+      } else {
+        console.log('the resulting transaction id is ', result);
+        return result.payment_transaction_id;
+      }
+    })
+    .catch(() => {
+      console.log('there is no transaction stored in the db for this walk');
+    });
+};
+
+var reverseChargeTransctionInDB = (walkID) => {
+  return knex('walks')
+    .where({id: walkID, paid: true})
+    .update({
+      paid: false,
+      payment_transaction_id: NULL
+    })
+    .then(result => {
+      if (result === 0) {
+        throw result;
+      } else {
+        console.log('the charge for walkid ', walkID, ' has been reversed');
+        return result;
+      }
+    })
+    .catch(result => {
+      console.log('error updating transaction details from DB');
     });
 };

@@ -18,8 +18,8 @@ class Payment extends React.Component {
     this.state = {
 
     };
-    this.handleTestPayClick = this.handleTestPayClick.bind(this);
-    this.createDestinationCharge = this.createDestinationCharge.bind(this);
+
+    this.processPayment = this.processPayment.bind(this);
     this.requestRefundForCancellation = this.requestRefundForCancellation.bind(this);
     this.handleStripeRegistration = this.handleStripeRegistration.bind(this);
   }
@@ -51,35 +51,19 @@ class Payment extends React.Component {
     }
   }
 
-  handleTestPayClick() {
-    console.log('payment button clicked');
-    $.ajax({
-      type: 'GET',
-      url: '/api/payment/',
-      data: {
-        test: 'test'
-      },
-      success: function() {
-        console.log('client - successful get request completed');
-      },
-      error: function() {
-        console.log('client - error in get request');
-      }
-    });
-  }
 
-  createDestinationCharge() {
+  processPayment() {
     console.log('client - /api/walks/payment create a destination charge button clicked');
     $.ajax({
       type: 'POST',
       url: '/api/walks/payment',
       data: {
-        amount: 1200,
-        stripeEmail: 'tiffany.c.choy@gmail.com',
-        stripeToken: 'tok_visa',
+        amount: 1200,  //TBD WHEN BOOKED
+        walkerUserID: 1, //TBD WHEN BOOKED.  This will come from a selected walk state.
+        walkID: 1, //TBD WHEN BOOKED.
         description: 'testing the destination charge functionality',
-        accountDestination: 'acct_1AxqcZDNt3jy6C6m',
-        customerId: 'cus_BLaAQSJIeO8zHL'//generated when a new customer registers at the site.
+        customerId: 'cus_BLaAQSJIeO8zHL', //CC token generated when a new customer registers at the site.
+        percentRetainedByPlatform: 10
       },
       success: function() {
         console.log('client - successful destination charge post request completed');
@@ -143,7 +127,7 @@ class Payment extends React.Component {
               </a>
             </div>
             <div>
-              <RaisedButton onClick = {this.createDestinationCharge} label="Create a Destination Charge" primary ={true}/>
+              <RaisedButton onClick = {this.processPayment} label="Create a Destination Charge" primary ={true}/>
             </div>
             <div>
               <RaisedButton onClick = {this.requestRefundForCancellation} label = "Request Refund for Cancellation" primary = {true}/>
@@ -172,7 +156,6 @@ export default Payment;
   </MuiThemeProvider>
   <h1>Payment</h1>
 
-  <button onClick = {this.handleTestPayClick}>connect with stripe</button>
   <div>
     <a href = 'https://connect.stripe.com/express/oauth/authorize?redirect_uri=https://stripe.com/connect/default/oauth/test&client_id=ca_BKKqX6IKWv2zjuHsLKdReiYfTfnaNPIE&state=testing123'>TRY 9 - Default Redirect</a>
   </div>
@@ -187,7 +170,7 @@ export default Payment;
   </div>
   <a href = 'https://connect.stripe.com/oauth/authorize?response_type=code&client_id=ca_BKKqX6IKWv2zjuHsLKdReiYfTfnaNPIE&scope=read_write&redirect_uri=http://localhost:3000/&stripe_user[email]=test@gmail.com'>BUTTON 5</a>
 
-  <div><button onClick = {this.createDestinationCharge}>Create a Destination Charge</button></div>
+  <div><button onClick = {this.processPayment}>Create a Destination Charge</button></div>
   <div><button onClick = {this.requestRefundForCancellation}>Request Refund for Cancellation</button></div>
 
 
