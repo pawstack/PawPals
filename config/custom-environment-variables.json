@@ -18,6 +18,7 @@
       "callbackURL": "TWITTER_CALLBACK_URL"
     }
   },
+  
   "stripe": {
     "secretKey": "STRIPE_SECRET_KEY",
     "publishableKey": "STRIPE_PUBLISHABLE_KEY"

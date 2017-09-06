@@ -22,9 +22,12 @@ module.exports.getFilteredWalks = (req, res) => {
     .query((qb) => {
       qb.where('price', '<=', filters.price)
         .whereBetween('session_start', [filters.startDate, filters.endDate])
-        .whereBetween('session_end', [filters.startDate, filters.endDate]);
+        .whereBetween('session_end', [filters.startDate, filters.endDate])
+        .limit(20);
     })
-    .fetchAll()
+    .fetchAll({
+      withRelated: ['walker']
+    })
     .then(walks => {
       res.status(200).send(walks);
     })

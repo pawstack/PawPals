@@ -13,13 +13,13 @@ class BrowseListItem extends React.Component {
     return (
       <Card>
         <CardHeader
-          title={this.props.walk.walkerName}
-          subtitle="Subtitle"
-          avatar={this.props.walk.walkerProfilePic}
+          title={this.props.walk.walker.display}
+          subtitle={`Rating: ${this.props.walk.walker.avg_walker_rating}`}
+          avatar={this.props.walk.walker.profile_pic}
         />
         <CardTitle title={`$${this.props.walk.price}/hour`} subtitle={`Near ${this.props.walk.walk_zone_pt}`} />
         <CardText>
-          About me
+          {this.props.walk.walker.about_me}
         </CardText>
         <CardActions>
           <RaisedButton label="Book this walk" primary={true} />
