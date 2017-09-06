@@ -87,6 +87,9 @@ class Payment extends React.Component {
         <MuiThemeProvider>
           <div>
             <div>
+              <RaisedButton onClick = {this.handleStripeRegistration} label="Connect with Stripe - AJAX" primary={true}/>
+            </div>
+            <div>
               <a href = 'https://connect.stripe.com/express/oauth/authorize?redirect_uri=http://localhost:3000/&client_id=ca_BKKqX6IKWv2zjuHsLKdReiYfTfnaNPIE&state=testing123'>
                 <RaisedButton label="Connect with Stripe" primary={true}/>
               </a>
@@ -99,6 +102,11 @@ class Payment extends React.Component {
             </div>
           </div>
         </MuiThemeProvider>
+        <h1>Payment</h1>
+        <div>
+          <a href = 'https://connect.stripe.com/express/oauth/authorize?redirect_uri=https://stripe.com/connect/default/oauth/test&client_id=ca_BKKqX6IKWv2zjuHsLKdReiYfTfnaNPIE&state=testing123'>TRY 9 - Default Redirect</a>
+        </div>
+        <button onClick = {this.handleTestPayClick}>connect with stripe</button>
       </div>
     );
   }
