@@ -62,7 +62,9 @@ class WalkerRegister extends React.Component {
         data: {
           profile_pic: this.state.imagePreviewUrl,
           extras: this.state.extras,
-          phone: this.props.phoneInfo
+          phone: this.props.phoneInfo,
+          address: this.props.addressInfo
+
         },
         success: (res) => {
           console.log('data sent');

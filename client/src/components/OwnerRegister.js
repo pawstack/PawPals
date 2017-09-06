@@ -106,7 +106,8 @@ class OwnerRegister extends React.Component {
           weight: this.state.weight,
           profile_pic: this.state.imagePreviewUrl,
           extras: this.state.extras,
-          phone: this.props.phoneInfo
+          phone: this.props.phoneInfo,
+          address: this.props.addressInfo
         },
         success: (res) => {
           console.log('data sent');
@@ -121,6 +122,7 @@ class OwnerRegister extends React.Component {
     let {imagePreviewUrl} = this.state;
     let imagePreview = null;
     if (imagePreviewUrl) {
+      console.log('URL is', imagePreviewUrl);
       imagePreview = (<img src={imagePreviewUrl} width="200"/>);
     } else {
       imagePreview = (<div>Please select an Image for Preview</div>);

@@ -1,4 +1,8 @@
 const models = require('../../db/models');
+const knex = require('knex')(require('../../knexfile'));
+const db = require('bookshelf')(knex);
+
+db.plugin('registry');
 
 module.exports.getFilteredWalks = (req, res) => {
   var filters = req.body;
@@ -26,6 +30,7 @@ module.exports.getFilteredWalks = (req, res) => {
       res.status(503).send(err);
     });
 };
+
 
 module.exports.getAll = (req, res) => {
   models.Walk.fetchAll({
@@ -72,3 +77,75 @@ module.exports.create = (req, res) => {
       res.status(500).send(err);
     });
 };
+
+
+module.exports.saveDog = (req, res) => {
+
+  var dogToDB = new Promise(
+    (resolve, reject) => {
+      knex('dogs').insert({
+        name: req.body.name,
+        age: req.body.age,
+        weight: req.body.weight,
+        breed: req.body.breed,
+        extras: req.body.extras,
+        owner_id: req.user.id})
+        .then(resolve());
+    }
+  );
+
+  var ownerBoolToDB = new Promise(
+    (resolve, reject) => {
+      knex('profiles').where('id', req.user.id).update({owner: true})
+        .then(resolve());
+    }
+  );
+
+  var ownerPhoneToDB = new Promise(
+    (resolve, reject) => {
+      knex('profiles').where('id', req.user.id).update({phone: req.body.phone})
+        .then(resolve());
+    }
+  );
+
+  Promise.all([dogToDB, ownerBoolToDB, ownerPhoneToDB]).then(responses => {
+    res.send(200);
+  })
+    .catch(e => {
+      console.log(e);
+    });
+};
+
+
+module.exports.saveWalker = function(req, res) {
+  var extrasToDB = new Promise(
+    (resolve, reject) => {
+      knex('profiles').where('id', req.user.id).update({ about_me: req.body.extras})
+        .then(resolve());
+    }
+  );
+
+  var walkerBoolToDB = new Promise(
+    (resolve, reject) => {
+      knex('profiles').where('id', req.user.id).update({walker: true})
+        .then(resolve());
+    }
+  );
+
+  var walkerPhoneToDB = new Promise(
+    (resolve, reject) => {
+      knex('profiles').where('id', req.user.id).update({phone: req.body.phone})
+        .then(resolve());
+    }
+  );
+
+  Promise.all([extrasToDB, walkerBoolToDB, walkerPhoneToDB]).then(responses => {
+    res.send(200);
+  })
+    .catch(e => {
+      console.log(e);
+    });
+};
+
+
+>>>>>>> setup stepper and refactor request handler
