@@ -25,12 +25,4 @@ app.use('/api', routes.api);
 app.use('/api/profiles', routes.profiles);
 app.use('/*', routes.auth);
 
-// app.post('/api/signup/owner', function (req, res) {
-//   database.saveDog(req.body, req.user.id, function() { res.send(200); });
-// });
-
-// app.post('/api/signup/walker', function (req, res) {
-//   database.saveWalker(req.body, req.user.id, function() { res.send(200); });
-// });
-
 module.exports = app;
