@@ -1,16 +1,16 @@
-import React from 'react'
-import { render } from 'react-dom'
-import moment from 'moment'
-import BigCalendar from 'react-big-calendar'
-import DialogForm from './DialogForm'
-import EventDialog from './EventDialog'
+import React from 'react';
+import { render } from 'react-dom';
+import moment from 'moment';
+import BigCalendar from 'react-big-calendar';
+import DialogForm from './DialogForm';
+import EventDialog from './EventDialog';
 
-BigCalendar.momentLocalizer(moment)
-require('style-loader!css-loader!react-big-calendar/lib/css/react-big-calendar.css')
+BigCalendar.momentLocalizer(moment);
+require('style-loader!css-loader!react-big-calendar/lib/css/react-big-calendar.css');
 
 class Calendar extends React.Component {
   constructor (props) {
-    super(props)
+    super(props);
     this.state = {
       events: [],
       formOpen: false,
@@ -26,7 +26,7 @@ class Calendar extends React.Component {
       }
     };
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleFormOpen =  this.handleFormOpen.bind(this);
+    this.handleFormOpen = this.handleFormOpen.bind(this);
     this.handleFormClose = this.handleFormClose.bind(this);
     this.handleTextInputChange = this.handleTextInputChange.bind(this);
     this.handleEventOpen = this.handleEventOpen.bind(this);
@@ -36,11 +36,11 @@ class Calendar extends React.Component {
 
   handleEventOpen() {
     this.setState({eventOpen: true});
-  };
+  }
 
   handleEventClose() {
     this.setState({eventOpen: false});
-  };
+  }
 
   handleFormOpen(start, end) {
     this.setState({formOpen: true, start, end});
@@ -77,13 +77,13 @@ class Calendar extends React.Component {
         callback(states);
       })
       .catch((err) => {
-        console.log('error:', err)
-      })
+        console.log('error:', err);
+      });
   }
 
   handleCancel() {
-    console.log('event should cancel')
-  };
+    console.log('event should cancel');
+  }
 
   handleSubmit(e) {
     fetch('/api/walks/create', {
@@ -120,8 +120,8 @@ class Calendar extends React.Component {
 
   componentDidMount () {
     this.getEvents((states) => {
-      this.setState(states)
-    })
+      this.setState(states);
+    });
   }
   render () {
     return (
@@ -132,7 +132,7 @@ class Calendar extends React.Component {
           defaultView='week'
           scrollToTime={new Date(1970, 1, 1, 6)}
           defaultDate={new Date()}
-          onSelectEvent={event => {this.setState({selectedEvent: event, eventOpen: true})}}
+          onSelectEvent={event => { this.setState({selectedEvent: event, eventOpen: true}); }}
           onSelectSlot={(slotInfo) => {
             this.handleFormOpen(slotInfo.start, slotInfo.end);
           }}
@@ -140,7 +140,7 @@ class Calendar extends React.Component {
         <DialogForm handleTextInputChange={this.handleTextInputChange} open={this.state.formOpen} handleClose={this.handleFormClose} handleOpen={this.handleFormOpen} handleSubmit={this.handleSubmit} start={this.state.start} end={this.state.end} price={this.state.price} location={this.state.location}/>
         < EventDialog handleCancel={this.handleCancel} open={this.state.eventOpen} handleClose={this.handleEventClose} handleOpen={this.handleEventOpen} selectedEvent={this.state.selectedEvent}/>
       </div>
-    )
+    );
   }
 }
 

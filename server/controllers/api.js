@@ -45,11 +45,11 @@ module.exports.getAll = (req, res) => {
       response['walks'] = walks;
       console.log(req.user.address, 'address');
       response['location'] = req.user.address;
-    res.status(200).send(response);
-  })
-  .catch(err => {
-    res.status(503).send(err);
-  });
+      res.status(200).send(response);
+    })
+    .catch(err => {
+      res.status(503).send(err);
+    });
 };
 
 module.exports.create = (req, res) => {
@@ -64,7 +64,7 @@ module.exports.create = (req, res) => {
     .then((model) => {
       return models.Walk.fetchAll({
         walker_id: req.user.id
-      })
+      });
     })
     .then(data => {
       var walks = [];
@@ -94,21 +94,18 @@ module.exports.saveDog = (req, res) => {
     }
   );
 
-  var ownerBoolToDB = new Promise(
+  var ownerToDB = new Promise(
     (resolve, reject) => {
-      knex('profiles').where('id', req.user.id).update({owner: true})
+      knex('profiles').where('id', req.user.id).update({ owner: true,
+        phone: req.body.phone,
+        address: req.body.address
+      })
         .then(resolve());
     }
   );
 
-  var ownerPhoneToDB = new Promise(
-    (resolve, reject) => {
-      knex('profiles').where('id', req.user.id).update({phone: req.body.phone})
-        .then(resolve());
-    }
-  );
 
-  Promise.all([dogToDB, ownerBoolToDB, ownerPhoneToDB]).then(responses => {
+  Promise.all([dogToDB, ownerToDB]).then(responses => {
     res.send(200);
   })
     .catch(e => {
@@ -118,34 +115,14 @@ module.exports.saveDog = (req, res) => {
 
 
 module.exports.saveWalker = function(req, res) {
-  var extrasToDB = new Promise(
-    (resolve, reject) => {
-      knex('profiles').where('id', req.user.id).update({ about_me: req.body.extras})
-        .then(resolve());
-    }
-  );
 
-  var walkerBoolToDB = new Promise(
-    (resolve, reject) => {
-      knex('profiles').where('id', req.user.id).update({walker: true})
-        .then(resolve());
-    }
-  );
-
-  var walkerPhoneToDB = new Promise(
-    (resolve, reject) => {
-      knex('profiles').where('id', req.user.id).update({phone: req.body.phone})
-        .then(resolve());
-    }
-  );
-
-  Promise.all([extrasToDB, walkerBoolToDB, walkerPhoneToDB]).then(responses => {
-    res.send(200);
+  knex('profiles').where('id', req.user.id).update({ about_me: req.body.extras,
+    walker: true,
+    phone: req.body.phone,
+    address: req.body.address
   })
-    .catch(e => {
-      console.log(e);
-    });
+    .then(res.send(200));
 };
 
 
->>>>>>> setup stepper and refactor request handler
+
