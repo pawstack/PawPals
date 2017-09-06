@@ -69,7 +69,7 @@ router.route('/signup/payment/stripeid')
 router.route('/signup/payment/tokenizecard')
   .get((req, res) => {
     console.log('*****Inside of api/signup/tokenizecard');
-    res.render('testpayment.ejs');
+    res.render('cardtoken.ejs');
     // res.status(200).send('Hello World!');
   });
 
