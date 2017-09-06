@@ -46,12 +46,9 @@ class SignUpStart extends React.Component {
     this.setState( { [valueType]: value } );
   }
 
-  ComponentDidMount() {
-    updateRoleState();
-  }
 
   updateRoleState(e) {
-
+    console.log('owner is ', e.state.owner);
     if (e.state.owner) {
       this.setState({
         owner: true,
@@ -68,12 +65,12 @@ class SignUpStart extends React.Component {
   getStepContent(stepIndex) {
     switch (stepIndex) {
     case 0:
-      return (<SignUpDataEntry updateRoleState={this.updateRoleState.bind(this)} entriesChanged = {this.handleEntriesChanged.bind(this)}/>);
+      return (<SignUpDataEntry updateRoleState = {this.updateRoleState.bind(this)} entriesChanged = {this.handleEntriesChanged.bind(this)}/>);
     case 1:
       if (this.state.owner) {
-        return (<OwnerRegister phoneInfo = {this.state.phone}/>);
+        return (<OwnerRegister phoneInfo = {this.state.phone} addressInfo = {this.state.address}/>);
       } else if (this.state.walker) {
-        return (<WalkerRegister phoneInfo = {this.state.phone}/>);
+        return (<WalkerRegister phoneInfo = {this.state.phone} addressInfo = {this.state.address}/>);
       }
     default:
       return 'Payment Info here!';
