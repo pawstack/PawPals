@@ -61,13 +61,17 @@ class Calendar extends React.Component {
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log(data, 'response');
         var events = [];
         for (var i = 0; i < data.walks.length; i++) {
-          var event = {'title': 'walk'};
+          var event = {'title': 'Walk with ' + data.walks[i].dog.name};
           event['start'] = new Date(data.walks[i].session_start);
           event['end'] = new Date(data.walks[i].session_end);
           event['price'] = data.walks[i].price;
-          event['neighbourhood'] = data.walks[i].walk_zone_pt;
+          event['pickup_address'] = data.walks[i].pickup_address || data.walks[i].owner.address;
+          event['owner_name'] = data.walks[i].owner.first;
+          event['owner_phone'] = data.walks[i].owner.phone;
+          event['dog_extras'] = data.walks[i].dog.extras;
           events.push(event);
         }
         var states = {

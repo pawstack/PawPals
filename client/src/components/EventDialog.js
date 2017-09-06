@@ -49,17 +49,19 @@ export default class EventDialog extends React.Component {
     return (
       <div>
         <Dialog
-          title="Walk Details"
+          title= {this.props.selectedEvent.title}
           actions={actions}
           modal={false}
           open={this.props.open}
           onRequestClose={this.props.handleClose}
         >
           <ul>
-            <li> Area: {this.props.selectedEvent.neighbourhood}</li>
-            <li> Attendees: Currently not a feature </li>
+            <li> Pickup Address: {this.props.selectedEvent.pickup_address}</li>
+            <li> Owner: {this.props.selectedEvent.owner_name} </li>
+            <li> Contact: {this.props.selectedEvent.owner_phone} </li>
             <li> Price: ${this.props.selectedEvent.price} </li>
             <li> Time: {start} to {end} </li>
+            <li> About the Dog: {this.props.selectedEvent.dog_extras} </li>
           </ul>
         </Dialog>
       </div>
