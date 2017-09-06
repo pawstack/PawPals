@@ -3,10 +3,8 @@ const knex = require('knex')(require('../../knexfile'));
 const db = require('bookshelf')(knex);
 var curl = require('curlrequest');
 var config = require('config')['stripe'];
-var stripe = require('stripe')(config.secretTestKey);
+var stripe = require('stripe')(config.secretKey);
 var controllers = require('./');
-const knex = require('knex')(require('../../knexfile'));
-const db = require('bookshelf')(knex);
 
 db.plugin('registry');
 
@@ -165,7 +163,7 @@ module.exports.getAndSaveStripeID = (req, res) => {
   curl.request({
     url: 'https://connect.stripe.com/oauth/token',
     data: {
-      'client_secret': config.secretTestKey,
+      'client_secret': config.secretKey,
       'code': req.query.code, //'ac_BKskFL5z0e7rB4OySIe0EKWVFiD1wFVw', pull this in from the query data of the ajax get request.
       'grant_type': 'authorization_code'
     }

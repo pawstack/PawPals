@@ -11,6 +11,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import SignUpDataEntry from './SignUpDataEntry';
 import OwnerRegister from './OwnerRegister';
 import WalkerRegister from './WalkerRegister';
+import Payment from './Payment.jsx';
 
 class SignUpStart extends React.Component {
 
@@ -73,7 +74,11 @@ class SignUpStart extends React.Component {
         return (<WalkerRegister phoneInfo = {this.state.phone} addressInfo = {this.state.address}/>);
       }
     default:
-      return 'Payment Info here!';
+      return (
+        <div>
+          <Payment />
+        </div>
+      );
     }
   }
 
@@ -134,4 +139,3 @@ class SignUpStart extends React.Component {
 }
 
 export default SignUpStart;
-
