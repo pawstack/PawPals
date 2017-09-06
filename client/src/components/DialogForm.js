@@ -5,7 +5,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import {orange500, blue500} from 'material-ui/styles/colors';
 import Checkbox from 'material-ui/Checkbox';
-import moment from 'moment'
+import moment from 'moment';
 
 const styles = {
   radioButton: {
@@ -23,7 +23,7 @@ const styles = {
       color: blue500,
     },
   }
-}
+};
 
 const WalkerConfirmationTextField = (props) => (
   <div>
@@ -45,8 +45,7 @@ const WalkerConfirmationTextField = (props) => (
       max="100"
       floatingLabelStyle={styles.floatingLabelStyle}
       floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
-      onChange={(e, v) =>
-        {props.handleTextInputChange('price', v)}}
+      onChange={(e, v) => { props.handleTextInputChange('price', v); }}
     />
   </div>
 );
@@ -56,7 +55,7 @@ export default class DialogExampleScrollable extends React.Component {
     super(props);
   }
 
-    render() {
+  render() {
     const actions = [
       <FlatButton
         label="Cancel"
@@ -84,7 +83,7 @@ export default class DialogExampleScrollable extends React.Component {
           onRequestClose={this.props.handleClose}
           autoScrollBodyContent={true}
         >
-        <WalkerConfirmationTextField price={this.props.price} handleTextInputChange={this.props.handleTextInputChange} location={this.props.location} end={end} start={start} />
+          <WalkerConfirmationTextField price={this.props.price} handleTextInputChange={this.props.handleTextInputChange} location={this.props.location} end={end} start={start} />
         </Dialog>
       </div>
     );

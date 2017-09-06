@@ -5,7 +5,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import {orange500, blue500} from 'material-ui/styles/colors';
 import Checkbox from 'material-ui/Checkbox';
-import moment from 'moment'
+import moment from 'moment';
 
 const styles = {
   radioButton: {
@@ -23,11 +23,11 @@ const styles = {
       color: blue500,
     },
   }
-}
+};
 
 export default class EventDialog extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
   }
 
   render() {
@@ -62,7 +62,7 @@ export default class EventDialog extends React.Component {
             <li> Price: ${this.props.selectedEvent.price} </li>
             <li> Time: {start} to {end} </li>
           </ul>
-      </Dialog>
+        </Dialog>
       </div>
     );
   }

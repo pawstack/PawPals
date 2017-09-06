@@ -8,17 +8,16 @@ router.route('/walks/search')
 
 
 router.route('/walks/fetch')
-  .get(ApiController.getAll)
+  .get(ApiController.getAll);
 
 router.route('/walks/create')
-  .post(ApiController.create)
+  .post(ApiController.create);
 
 router.route('/signup/owner')
   .post(ApiController.saveDog);
 
 router.route('/signup/walker')
   .post(ApiController.saveWalker);
-
 
 router.route('/')
   .get((req, res) => {
