@@ -33,24 +33,26 @@ module.exports.getFilteredWalks = (req, res) => {
 
 
 module.exports.getAll = (req, res) => {
-  models.Walk.fetchAll({
-    walker_id: req.user.id
-  })
-    .then(data => {
-      var response = {};
-      var walks = [];
-      for (var i = 0; i < data.models.length; i++) {
-        walks.push(data.models[i].attributes);
-      }
-      response['walks'] = walks;
-      console.log(req.user.address, 'address');
-      response['location'] = req.user.address;
-      res.status(200).send(response);
-    })
-    .catch(err => {
-      res.status(503).send(err);
+  models.Walk
+    .fetchAll({walker_id: req.user.id})
+    .then((collection) => {
+      collection.fetch({withRelated: ['owner', 'dog']})
+        .then((join) => {
+          console.log(join)
+          var response = {};
+          var walks = [];
+          for (var i = 0; i < join.models.length; i++) {
+            walks.push(join.models[i]);
+          }
+          response['walks'] = walks;
+          response['location'] = req.user.address;
+          res.status(200).send(response);
+        })
+        .catch(err => {
+          res.status(503).send(err);
+        });
     });
-};
+}
 
 module.exports.create = (req, res) => {
   models.Walk.forge({
