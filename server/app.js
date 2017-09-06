@@ -4,12 +4,8 @@ const path = require('path');
 const middleware = require('./middleware');
 const routes = require('./routes');
 const cors = require('cors');
-var stripe = require('stripe')('sk_test_2slmpAIrhlZSnWP7KSMNp6HX');
-
-
 const app = express();
 const database = require('../db/index');
-
 
 
 app.use(middleware.morgan('dev'));

@@ -23,12 +23,8 @@ class App extends React.Component {
               <li><Link to="/home">Home</Link></li>
               <li><Link to='/signup/start'>Signup</Link></li>
               <li><Link to='/browse'>Browse Walks</Link></li>
-<<<<<<< HEAD
-	      <li><Link to='/walker'>Walker</Link></li>
-||||||| merged common ancestors
-=======
+              <li><Link to='/walker'>Walker</Link></li>
               <li><Link to ='/payment'>Payment</Link></li>
->>>>>>> adding a temporary link to payment
             </ul>
 
             <Route exact path="/home" render={() => (
@@ -36,12 +32,8 @@ class App extends React.Component {
             )}/>
             <Route exact path="/signup/start" component={SignUpStart}/>
             <Route exact path="/browse" component={Browse}/>
-<<<<<<< HEAD
             <Route exact path="/walker" component={Calendar}/>
-||||||| merged common ancestors
-=======
             <Route exact path="/payment" component={Payment}/>
->>>>>>> adding a temporary link to payment
           </div>
         </Router>
       </MuiThemeProvider>
