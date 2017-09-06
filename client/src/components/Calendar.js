@@ -8,6 +8,28 @@ import EventDialog from './EventDialog';
 BigCalendar.momentLocalizer(moment);
 require('style-loader!css-loader!react-big-calendar/lib/css/react-big-calendar.css');
 
+let parseEvents = (data) => {
+  var events = [];
+  for (var i = 0; i < data.walks.length; i++) {
+    var event = {};
+    if (!!data.walks[i].dog.name) {
+      event['title'] = 'Walk with ' + data.walks[i].dog.name;
+    } else {
+      event['title'] = 'Unbooked Walk';
+    }
+    event['start'] = new Date(data.walks[i].session_start);
+    event['owner_name'] = data.walks[i].owner.first;
+    event['owner_phone'] = data.walks[i].owner.phone;
+    event['dog_extras'] = data.walks[i].dog.extras;
+    event['end'] = new Date(data.walks[i].session_end);
+    event['price'] = data.walks[i].price;
+    event['pickup_address'] = data.walks[i].pickup_address || data.walks[i].owner.address;
+    event['id'] = data.walks[i].id;
+    events.push(event);
+  }
+  return events;
+}
+
 class Calendar extends React.Component {
   constructor (props) {
     super(props);
@@ -61,19 +83,7 @@ class Calendar extends React.Component {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data, 'response');
-        var events = [];
-        for (var i = 0; i < data.walks.length; i++) {
-          var event = {'title': 'Walk with ' + data.walks[i].dog.name};
-          event['start'] = new Date(data.walks[i].session_start);
-          event['end'] = new Date(data.walks[i].session_end);
-          event['price'] = data.walks[i].price;
-          event['pickup_address'] = data.walks[i].pickup_address || data.walks[i].owner.address;
-          event['owner_name'] = data.walks[i].owner.first;
-          event['owner_phone'] = data.walks[i].owner.phone;
-          event['dog_extras'] = data.walks[i].dog.extras;
-          events.push(event);
-        }
+        var events = parseEvents(data);
         var states = {
           events: events,
           location: data.location
@@ -86,8 +96,26 @@ class Calendar extends React.Component {
   }
 
   handleCancel() {
-    console.log('event should cancel');
-  }
+    fetch('/api/walks/destroy', {
+      method: 'DELETE',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify({
+        'walk_id': this.state.selectedEvent.id
+      })
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        var events = parseEvents(data);
+        this.setState({events, ['eventOpen']: false})
+      })
+      .catch((err) => {
+        console.log('error:', err)
+      })
+  };
 
   handleSubmit(e) {
     fetch('/api/walks/create', {
@@ -106,15 +134,7 @@ class Calendar extends React.Component {
     })
       .then((response) => response.json())
       .then((data) => {
-        var events = [];
-        for (var i = 0; i < data.length; i++) {
-          var event = {'title': 'walk'};
-          event['start'] = new Date(data[i].session_start);
-          event['end'] = new Date(data[i].session_end);
-          event['price'] = data[i].price;
-          event['neighbourhood'] = data[i].walk_zone_pt;
-          events.push(event);
-        }
+        var events = parseEvents(data);
         this.setState({events, formOpen: false});
       })
       .catch((error) => {

@@ -38,7 +38,6 @@ module.exports.getAll = (req, res) => {
     .then((collection) => {
       collection.fetch({withRelated: ['owner', 'dog']})
         .then((join) => {
-          console.log(join)
           var response = {};
           var walks = [];
           for (var i = 0; i < join.models.length; i++) {
@@ -63,22 +62,52 @@ module.exports.create = (req, res) => {
     walker_id: req.user.id
   })
     .save()
-    .then((model) => {
-      return models.Walk.fetchAll({
-        walker_id: req.user.id
-      });
-    })
-    .then(data => {
-      var walks = [];
-      for (var i = 0; i < data.models.length; i++) {
-        walks.push(data.models[i].attributes);
-      }
-      res.status(201).send(walks);
-    })
-    .catch(err => {
-      res.status(500).send(err);
+    .then(() => {
+      models.Walk
+        .fetchAll({walker_id: req.user.id})
+        .then((collection) => {
+          collection.fetch({withRelated: ['owner', 'dog']})
+            .then((join) => {
+              var response = {};
+              var walks = [];
+              for (var i = 0; i < join.models.length; i++) {
+                walks.push(join.models[i]);
+              }
+              response['walks'] = walks;
+              response['location'] = req.user.address;
+              res.status(200).send(response);
+            })
+            .catch(err => {
+              res.status(503).send(err);
+            });
+        });
     });
 };
+
+module.exports.destroy = (req, res) => {
+  new models.Walk({id: req.body.walk_id})
+    .destroy()
+    .then(() => {
+      models.Walk
+        .fetchAll({walker_id: req.user.id})
+        .then((collection) => {
+          collection.fetch({withRelated: ['owner', 'dog']})
+            .then((join) => {
+              var response = {};
+              var walks = [];
+              for (var i = 0; i < join.models.length; i++) {
+                walks.push(join.models[i]);
+              }
+              response['walks'] = walks;
+              response['location'] = req.user.address;
+              res.status(200).send(response);
+            })
+            .catch(err => {
+              res.status(503).send(err);
+            });
+        });
+    });
+}
 
 
 module.exports.saveDog = (req, res) => {
@@ -125,6 +154,4 @@ module.exports.saveWalker = function(req, res) {
   })
     .then(res.send(200));
 };
-
-
 
