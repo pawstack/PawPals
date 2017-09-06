@@ -4,6 +4,9 @@ const Profile = db.Model.extend({
   tableName: 'profiles',
   auths: function() {
     return this.hasMany('Auth');
+  },
+  walks: function() {
+    return this.hasMany('Walk');
   }
 });
 
