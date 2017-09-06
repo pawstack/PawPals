@@ -51,7 +51,7 @@ class Calendar extends React.Component {
   }
 
   handleTextInputChange(key, value) {
-    this.setState({key: value}, () => { console.log(this.state.price, 'state price') });
+    this.setState({[key]: value});
   }
 
   getEvents(callback) {
@@ -61,7 +61,6 @@ class Calendar extends React.Component {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data.location, 'address');
         var events = [];
         for (var i = 0; i < data.walks.length; i++) {
           var event = {'title': 'walk'};
@@ -78,7 +77,7 @@ class Calendar extends React.Component {
         callback(states);
       })
       .catch((err) => {
-        console.log('error:',err)
+        console.log('error:', err)
       })
   }
 
@@ -87,7 +86,6 @@ class Calendar extends React.Component {
   };
 
   handleSubmit(event) {
-    event.preventDefault();
     fetch('/api/walks/create', {
       method: 'POST',
       headers: {
@@ -103,8 +101,17 @@ class Calendar extends React.Component {
       })
     })
       .then((response) => response.json())
-      .then((events) => {
-        this.setState({events, open: false}, () => {console.log(this.state.events, 'events')});
+      .then((data) => {
+        var events = [];
+        for (var i = 0; i < data.length; i++) {
+          var event = {'title': 'walk'};
+          event['start'] = new Date(data[i].session_start);
+          event['end'] = new Date(data[i].session_end);
+          event['price'] = data[i].price;
+          event['neighbourhood'] = data[i].walk_zone_pt;
+          events.push(event);
+        }
+        this.setState({events, formOpen: false});
       })
       .catch((error) => {
         console.error(error);
@@ -116,6 +123,7 @@ class Calendar extends React.Component {
       this.setState(states)
     })
   }
+
   render () {
     return (
       <div>

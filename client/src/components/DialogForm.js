@@ -57,7 +57,6 @@ export default class DialogExampleScrollable extends React.Component {
   }
 
     render() {
-      console.log(this.props.price, 'price')
     const actions = [
       <FlatButton
         label="Cancel"
