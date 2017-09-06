@@ -161,7 +161,6 @@ module.exports.saveWalker = function(req, res) {
 };
 
 module.exports.getAndSaveStripeID = (req, res) => {
-  console.log('*********** inside of controller of /signup/stripeid');
   curl.request({
     url: 'https://connect.stripe.com/oauth/token',
     data: {
@@ -192,8 +191,6 @@ module.exports.getAndSaveStripeID = (req, res) => {
 };
 
 module.exports.getAndsaveCardToken = (req, res) => {
-  console.log('******* INSIDE OF CONTORLLER SIGNUP/PAYMENT/SAVECARDTOKEN');
-  console.log('the req body is ', req.body);
   stripe.customers.create({
     email: req.body.stripeEmail,
     source: req.body.stripeToken //stripe checkout creates a token for the CC
@@ -209,7 +206,7 @@ module.exports.getAndsaveCardToken = (req, res) => {
 };
 
 
-module.exports.processPayments = (req, res) => {
+module.exports.processPayment = (req, res) => {
   controllers.Profiles.getCCToken(req.user.id)
     .then((tokenizedCC) => {
       controllers.Profiles.getStripeID(req.body.walkerUserID)
@@ -235,6 +232,25 @@ module.exports.processPayments = (req, res) => {
     });
 };
 
+
+module.exports.refundPayment = (req, res) => {
+  getTransactionID(req.body.walkID)
+    .then((transactionID) => {
+      console.log('transactionID is ', transactionID);
+      stripe.refunds.create({
+        charge: transactionID,
+        reverse_transfer: true
+      })
+        .then(function(refund) {
+          console.log('refund completed ', refund);
+          reverseChargeTransctionInDB(req.body.walkID);
+        });
+    })
+    .then(() => {
+      res.send(200);
+    });
+};
+
 var saveChargeTransactionToDB = (walkID, transactionNumber) => {
   return knex('walks')
     .where({id: walkID, paid: false})
@@ -250,7 +266,6 @@ var saveChargeTransactionToDB = (walkID, transactionNumber) => {
 };
 
 var getTransactionID = (walkID) => {
-  console.log('in get transaction id function');
   return knex('walks')
     .select('payment_transaction_id')
     .where({id: walkID, paid: true})
@@ -260,7 +275,7 @@ var getTransactionID = (walkID) => {
         throw result;
       } else {
         console.log('the resulting transaction id is ', result);
-        return result.payment_transaction_id;
+        return result[0].payment_transaction_id;
       }
     })
     .catch(() => {
@@ -273,7 +288,7 @@ var reverseChargeTransctionInDB = (walkID) => {
     .where({id: walkID, paid: true})
     .update({
       paid: false,
-      payment_transaction_id: NULL
+      payment_transaction_id: null
     })
     .then(result => {
       if (result === 0) {

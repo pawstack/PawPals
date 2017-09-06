@@ -46,9 +46,10 @@ router.route('/signup/payment/savecardtoken') //post request from the ejs file..
   .post(ApiController.getAndsaveCardToken);
 
 router.route('/walks/payment')
-  .post(ApiController.processPayments);
+  .post(ApiController.processPayment);
 
-
+router.route('/walks/refund')
+  .post(ApiController.refundPayment);
 
 
 
