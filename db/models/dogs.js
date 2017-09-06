@@ -2,8 +2,11 @@ const db = require('../');
 
 const Dog = db.Model.extend({
   tableName: 'dogs',
-  profile: function() {
-    return this.belongsTo('Profile');
+  walk: function() {
+    return this.hasMany('Walk', 'dog_id');
+  },
+  owner: function() {
+    return this.belongsTo('Profile', 'owner_id');
   }
 });
 

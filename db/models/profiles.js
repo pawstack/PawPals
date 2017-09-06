@@ -5,12 +5,16 @@ const Profile = db.Model.extend({
   auths: function() {
     return this.hasMany('Auth');
   },
-  dogs: function() {
-    return this.hasOne('Dog');
+  dog: function() {
+    return this.hasMany('Dog', 'owner_id');
   },
-  walks: function() {
-    return this.hasMany('Walk');
+  walker: function() {
+    return this.hasMany('Walk', 'walker_id');
+  },
+  owner: function() {
+    return this.hasMany('Walk', 'owner_id');
   }
 });
 
 module.exports = db.model('Profile', Profile);
+
