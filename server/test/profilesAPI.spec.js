@@ -24,7 +24,7 @@ describe('Profiles API', function () {
         };
       })
       .expect(200, {
-        length: 3
+        length: 200
       })
       .end(done);
   });
@@ -47,7 +47,7 @@ describe('Profiles API', function () {
 
   it('sends 404 if id on GET requests to /api/profiles/:id does not exist', function (done) {
     request(app)
-      .get('/api/profiles/123')
+      .get('/api/profiles/999')
       .expect(404)
       .end(done);
   });
@@ -103,7 +103,7 @@ describe('Profiles API', function () {
 
   it('sends 404 if id on PUT requests to /api/profiles/:id does not exist', function (done) {
     request(app)
-      .put('/api/profiles/123')
+      .put('/api/profiles/999')
       .expect(404)
       .end(done);
   });
