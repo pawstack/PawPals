@@ -1,7 +1,6 @@
 import Dialog from 'material-ui/Dialog';
 import React from 'react';
 import FlatButton from 'material-ui/FlatButton';
-import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import {orange500, blue500} from 'material-ui/styles/colors';
 import Checkbox from 'material-ui/Checkbox';
@@ -43,6 +42,7 @@ const WalkerConfirmationTextField = (props) => (
       min="20"
       step="1.00"
       max="100"
+      defaultValue="20"
       floatingLabelStyle={styles.floatingLabelStyle}
       floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
       onChange={(e, v) => { props.handleTextInputChange('price', v); }}
