@@ -11,7 +11,6 @@ router.route('/walks/fetch')
   .get(ApiController.getAll);
 
 router.route('/walks/create')
-<<<<<<< HEAD
   .post(ApiController.create);
 
 router.route('/signup/owner')
@@ -19,11 +18,6 @@ router.route('/signup/owner')
 
 router.route('/signup/walker')
   .post(ApiController.saveWalker);
-||||||| merged common ancestors
-  .post(ApiController.create)
-=======
-  .post(ApiController.create);
->>>>>>> rebase and update config file with stripe keys
 
 router.route('/walks/destroy')
   .delete(ApiController.destroy)
