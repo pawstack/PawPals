@@ -45,6 +45,8 @@ router.route('/signup/payment/tokenizecard')
 router.route('/signup/payment/savecardtoken') //post request from the ejs file.... need to update
   .post(ApiController.getAndsaveCardToken);
 
+router.route('/walks/payment')
+  .post(ApiController.processPayments);
 
 
 

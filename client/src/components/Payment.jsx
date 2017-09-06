@@ -69,17 +69,17 @@ class Payment extends React.Component {
   }
 
   createDestinationCharge() {
-    console.log('create a destination charge button clicked');
+    console.log('client - /api/walks/payment create a destination charge button clicked');
     $.ajax({
       type: 'POST',
-      url: '/destinationcharge',
+      url: '/api/walks/payment',
       data: {
         amount: 1200,
         stripeEmail: 'tiffany.c.choy@gmail.com',
         stripeToken: 'tok_visa',
         description: 'testing the destination charge functionality',
         accountDestination: 'acct_1AxqcZDNt3jy6C6m',
-        customerId: 'placeholder'//generated when a new customer registers at the site.
+        customerId: 'cus_BLaAQSJIeO8zHL'//generated when a new customer registers at the site.
       },
       success: function() {
         console.log('client - successful destination charge post request completed');

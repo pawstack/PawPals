@@ -205,3 +205,26 @@ module.exports.getAndsaveCardToken = (req, res) => {
         });
     });
 };
+
+
+module.exports.processPayments = (req, res) => {
+  console.log('***INSIDE OF PROCESS PAYMENT - the req body is ', req.body);
+  stripe.charges.create({
+    amount: req.body.amount, // amount that the owner is charged
+    description: req.body.description,
+    currency: 'usd',
+    //When it's time to charge the customer again, retrieve the customer ID.
+    customer: req.body.customerId, // eventually retrieve this from the db by looking up the email.
+    destination: {
+      amount: 400, // amount to be transferred to the destination account.  calculated by subtracting platform fees from charge amount.
+      account: req.body.accountDestination // retrieved from db. need to know destination. account number of the destination created at login.
+    }
+  })
+    .then(charge => {
+      console.log('the charge details are ', charge);
+      if (charge.paid === true) {
+        //save charge.id to the walk db table, which can be used if refund is needed.
+      }
+      res.redirect('/payment'); //update this later!!!
+    });
+};
