@@ -19,6 +19,9 @@ router.route('/signup/owner')
 router.route('/signup/walker')
   .post(ApiController.saveWalker);
 
+router.route('/walks/destroy')
+  .delete(ApiController.destroy)
+
 router.route('/')
   .get((req, res) => {
     res.status(200).send('Hello World!');
