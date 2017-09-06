@@ -24,12 +24,12 @@ exports.up = function (knex, Promise) {
       table.string('name', 20).notNullable();
       table.integer('age').notNullable();
       table.integer('weight').notNullable();
-      table.string('profile_pic', 200).nullable();
+      table.string('profile_pic', 400).nullable();
       table.string('breed', 100).nullable();
       table.string('extras', 500).nullable();
       table.decimal('avg_rating').nullable();
       table.integer('owner_id').notNullable();
-      table.foreign('owner_id').references('profiles.id'); //foreign key
+      table.foreign('owner_id').references('profiles.id').onDelete('CASCADE'); //foreign key
     }),
     knex.schema.createTableIfNotExists('walks', function(table) {
       table.increments('id').unsigned().primary();

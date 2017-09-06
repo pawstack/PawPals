@@ -5,6 +5,9 @@ const Profile = db.Model.extend({
   auths: function() {
     return this.hasMany('Auth');
   },
+  dogs: function() {
+    return this.hasOne('Dog');
+  },
   walks: function() {
     return this.hasMany('Walk');
   }
