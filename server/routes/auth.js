@@ -8,10 +8,7 @@ const router = express.Router();
 router.route('/')
   .get(middleware.auth.verify, (req, res) => {
     console.log('the req query is ', req.query);
-    if (req.query.code) {
-      console.log('*****the user ID from passport is includes ', req.user.id);
-      console.log('****** retrieved the temporary token.  will invoke step4 to finalize the stripe_user_id');
-      console.log('******** THE USER INFO IS ', req.user.email);
+    if (req.query.code) { //temp token retrieved from stripe and used to finalize stripe_user_id
       res.redirect('/api/signup/payment/stripeid/?code=' + req.query.code + '&userid=' + req.user.email);
     }
     res.render('index.ejs');
