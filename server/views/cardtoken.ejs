@@ -1,0 +1,16 @@
+<% include head.ejs%>
+
+
+<form action="/api/signup/payment/savecardtoken" method="POST">
+  <script
+    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+    data-key="pk_test_Z3xCgscbhBJLWc5Vt7Zks12h"
+    data-name="PawPals"
+    data-description=""
+    data-panel-label="Save Card Details"
+    data-label="Save Card Details"
+    data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+    data-locale="auto">
+  </script>
+</form>
+<% include foot.ejs%>
