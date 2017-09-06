@@ -48,7 +48,6 @@ export default class EventDialog extends React.Component {
     const end = moment(this.props.selectedEvent.end, 'YYYY-YY-DD hh:mm:ss').format('LT');
     return (
       <div>
-        <RaisedButton label="Dialog" onClick={this.props.handleOpen} />
         <Dialog
           title="Walk Details"
           actions={actions}
