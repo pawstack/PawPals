@@ -85,7 +85,7 @@ class Calendar extends React.Component {
     console.log('event should cancel')
   };
 
-  handleSubmit(event) {
+  handleSubmit(e) {
     fetch('/api/walks/create', {
       method: 'POST',
       headers: {
@@ -123,7 +123,6 @@ class Calendar extends React.Component {
       this.setState(states)
     })
   }
-
   render () {
     return (
       <div>
