@@ -31,7 +31,7 @@ for (let i = 0; i < 500; i++) {
     price: 20 + faker.random.number(30),
     session_start: startEnd[0],
     session_end: startEnd[1],
-    walker_id: faker.random.number(200) 
+    walker_id: 1 + faker.random.number(199) 
   });
 }
 

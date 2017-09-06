@@ -1,5 +1,6 @@
 const Promise = require('bluebird');
 const profiles = require('./data/sample_users');
+const dogs = require('./data/sample_dogs');
 
 exports.seed = function (knex, Promise) {
   let promises = [];
@@ -26,12 +27,26 @@ const createProfile = (knex, profile) => {
       walker: profile.walker,
       owner: profile.owner
     })
-    .then((userIds) => {
+    .tap((userIds) => {
       return knex('auths')
         .insert({
           type: 'google',
           oauth_id: userIds[0],
           profile_id: userIds[0]
+        });
+    })
+    .then((userIds) => {
+      let dog = dogs[userIds[0]];
+      return knex('dogs')
+        .insert({
+          name: dog.name,
+          age: dog.age,
+          weight: dog.weight,
+          breed: dog.breed,
+          profile_pic: dog.profile_pic,
+          extras: dog.extras,
+          avg_rating: dog.avg_rating,
+          owner_id: userIds[0]
         });
     });
 };
