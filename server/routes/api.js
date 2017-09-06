@@ -2,9 +2,6 @@
 const express = require('express');
 const router = express.Router();
 const ApiController = require('../controllers').Api;
-var curl = require('curlrequest');
-var controllers = require('../controllers');
-var stripe = require('stripe')('sk_test_2slmpAIrhlZSnWP7KSMNp6HX');
 
 router.route('/walks/search')
   .post(ApiController.getFilteredWalks);
@@ -14,6 +11,7 @@ router.route('/walks/fetch')
   .get(ApiController.getAll);
 
 router.route('/walks/create')
+<<<<<<< HEAD
   .post(ApiController.create);
 
 router.route('/signup/owner')
@@ -21,6 +19,11 @@ router.route('/signup/owner')
 
 router.route('/signup/walker')
   .post(ApiController.saveWalker);
+||||||| merged common ancestors
+  .post(ApiController.create)
+=======
+  .post(ApiController.create);
+>>>>>>> rebase and update config file with stripe keys
 
 router.route('/walks/destroy')
   .delete(ApiController.destroy)

@@ -2,7 +2,8 @@ const models = require('../../db/models');
 const knex = require('knex')(require('../../knexfile'));
 const db = require('bookshelf')(knex);
 var curl = require('curlrequest');
-var stripe = require('stripe')('sk_test_2slmpAIrhlZSnWP7KSMNp6HX');
+var config = require('config')['stripe'];
+var stripe = require('stripe')(config.secretTestKey);
 var controllers = require('./');
 const knex = require('knex')(require('../../knexfile'));
 const db = require('bookshelf')(knex);
@@ -164,7 +165,7 @@ module.exports.getAndSaveStripeID = (req, res) => {
   curl.request({
     url: 'https://connect.stripe.com/oauth/token',
     data: {
-      'client_secret': 'sk_test_2slmpAIrhlZSnWP7KSMNp6HX', // need to change this periodically
+      'client_secret': config.secretTestKey,
       'code': req.query.code, //'ac_BKskFL5z0e7rB4OySIe0EKWVFiD1wFVw', pull this in from the query data of the ajax get request.
       'grant_type': 'authorization_code'
     }
@@ -177,16 +178,6 @@ module.exports.getAndSaveStripeID = (req, res) => {
         console.log('redirecting to api/payment');
         res.redirect('/api/signup/payment/tokenizecard'); //redirect to the page where the user will input their CC info.
       });
-
-    //res.send(JSON.parse(stdout).stripe_user_id);
-    //now save the stripe_user_id in the database under the user!
-    //res.redirect('/api/payment');//redirect to the page where the user will input their CC info.
-    //create a customer object - Customer objects allow you to perform recurring charges and
-    //  track multiple charges that are associated with the same customer.
-    //  The API allows you to create, delete, and update your customers.
-    //  You can retrieve individual customers as well as a list of all your customers.
-    //then redirect back to the home page?  res.redirect('/home');
-    //res.send(200);
   });
 };
 
@@ -198,7 +189,7 @@ module.exports.getAndsaveCardToken = (req, res) => {
     .then((customer) => {
       console.log('the (tokenized) customer id for this new card is ', customer.id);
       var tokenizedCard = customer.id;
-      controllers.Profiles.saveTokenizedCC(req.user.email, tokenizedCard) //SAVE THE CUSTOMER ID TO THE DB! userid, token
+      controllers.Profiles.saveTokenizedCC(req.user.email, tokenizedCard)
         .then(() => {
           res.redirect('/');
         });
@@ -212,13 +203,13 @@ module.exports.processPayment = (req, res) => {
       controllers.Profiles.getStripeID(req.body.walkerUserID)
         .then((destinationStripeID) => {
           stripe.charges.create({
-            amount: req.body.amount, // amount that the owner is charged
+            amount: req.body.amount, // Amount that the Customer is charged
             description: req.body.description,
             currency: 'USD',
-            customer: tokenizedCC, // retrieved from DB
+            customer: tokenizedCC,
             destination: {
-              amount: req.body.amount * (1 - (req.body.percentRetainedByPlatform / 100)), // amount to be transferred to the destination account.t.
-              account: destinationStripeID // Retrieved from db. This is the account where funds will be deposited.
+              amount: req.body.amount * (1 - (req.body.percentRetainedByPlatform / 100)), // amount transferred to the destination account.t.
+              account: destinationStripeID // Account where funds will be deposited.
             }
           })
             .then(charge => {
@@ -226,7 +217,7 @@ module.exports.processPayment = (req, res) => {
               if (charge.paid === true) {
                 saveChargeTransactionToDB(req.body.walkID, charge.id);
               }
-              res.redirect('/payment'); //update this later!!!
+              res.redirect('/payment'); //update this later!
             });
         });
     });

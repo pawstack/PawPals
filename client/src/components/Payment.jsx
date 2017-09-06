@@ -59,7 +59,7 @@ class Payment extends React.Component {
     });
   }
 
-  handleStripeRegistration() { // AJAX - doesn't work
+  handleStripeRegistration() { // AJAX - doesn't work.  Work around. Fix Later.
     console.log('button clicked to handle stripe registration');
     $.ajax({
       type: 'POST',
