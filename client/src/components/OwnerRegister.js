@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {
-  BrowserRouter as Router,
-  Route,
-  Link
-} from 'react-router-dom';
 import $ from 'jquery';
+import Slider from 'material-ui/Slider';
+import TextField from 'material-ui/TextField';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
+import Subheader from 'material-ui/Subheader';
+import RaisedButton from 'material-ui/RaisedButton';
 
 
 var checkEmptyEntry = function(obj) {
@@ -24,10 +25,10 @@ class OwnerRegister extends React.Component {
     super(props);
     this.state = {
       name: '',
-      age: null,
+      age: 0,
       breed: '',
       file: '',
-      weight: '',
+      weight: 0,
       imagePreviewUrl: '',
       extras: '',
       owner: true
@@ -47,9 +48,9 @@ class OwnerRegister extends React.Component {
     });
   }
 
-  handleAgeChange(e) {
+  handleAgeChange(e, value) {
     this.setState({
-      age: e.target.value
+      age: value
     });
   }
 
@@ -59,9 +60,9 @@ class OwnerRegister extends React.Component {
     });
   }
 
-  handleWeightChange(e) {
+  handleWeightChange(e, value) {
     this.setState({
-      weight: e.target.value
+      weight: value
     });
   }
 
@@ -127,30 +128,69 @@ class OwnerRegister extends React.Component {
 
     return (
       <div>
-        <div>Step 2</div>
-          Dog Profile
-        <div>Name <input onChange = {this.handleNameChange}></input></div>
-        <div>Age <input onChange = {this.handleAgeChange}></input></div>
-        <div>Breed <input onChange = {this.handleBreedChange}></input></div>
-        <div>Weight in lb <input onChange = {this.handleWeightChange}></input></div>
+        <TextField
+          id="dog-name"
+          floatingLabelText="Dog's Name"
+          name="dogName"
+          onChange={this.handleNameChange}
+        />
         <div>
-          <form onSubmit={(e)=>this.handleSubmit(e)}>
-            <input
-              className="fileInput"
-              type="file"
-              onChange={(e)=>this.handleImageChange(e)} />
-          </form>
-          <div>
-            {imagePreview}
-          </div>
+          <TextField
+            id="dog-breed"
+            floatingLabelText="Dog's Breed"
+            name="dogBreed"
+            onChange={this.handleBreedChange}
+          />
         </div>
-        <div>About Dog <input
-          type="textbox"
-          size="100"
-          width="100"
-          onChange = {this.handleExtrasChange}>
-        </input></div>
-        <button onClick = {this.handleSubmit}>Submit Profile</button>
+        <div>
+          <h5>Dog's age in year: {this.state.age}</h5>
+          <Slider
+            min={0}
+            max={20}
+            step={0.5}
+            value={this.state.age}
+            onChange={this.handleAgeChange}
+          />
+        </div>
+        <div>
+          <h5>Dog's weight in lb: {this.state.weight}</h5>
+          <Slider
+            min={0}
+            max={200}
+            step={2}
+            value={this.state.weight}
+            onChange={this.handleWeightChange}
+          />
+        </div>
+        <h5>Upload a photo of your dog</h5>
+        <form onSubmit={(e)=>this.handleSubmit(e)}>
+          <input
+            className="fileInput"
+            type="file"
+            onChange={(e)=>this.handleImageChange(e)} />
+        </form>
+        <div>
+          {imagePreview}
+        </div>
+
+        <div>
+          <TextField
+            id="dog-extra"
+            hintText="e.g. Bruce loves the woods. But please don't let him chase squirrels."
+            floatingLabelText="About dog"
+            name="dogExtras"
+            multiLine={true}
+            rows={2}
+            rowsMax={5}
+            style={{
+              width: '400px'
+            }}
+            onChange={this.handleExtrasChange}
+          />
+        </div>
+
+        <RaisedButton label="Submit Profile" primary={true} onClick={this.handleSubmit} />
+
       </div>
     );
   }

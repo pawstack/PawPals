@@ -1,11 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {
-  BrowserRouter as Router,
-  Route,
-  Link
-} from 'react-router-dom';
 import $ from 'jquery';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
+
 
 var checkEmptyEntry = function(obj) {
   for (let key in obj) {
@@ -54,7 +52,7 @@ class WalkerRegister extends React.Component {
 
   handleSubmit() {
     if (checkEmptyEntry(this.state)) {
-      console.log(this.props.phoneInfo);
+      console.log('phone number is', this.props.phoneInfo);
       alert('please complete profile');
     } else {
       console.log(this.state);
@@ -87,8 +85,9 @@ class WalkerRegister extends React.Component {
 
     return (
       <div>
-        <div>Step 2</div>
-          Walker Profile
+        <h4>Step 2 Complete profile as a walker</h4>
+        <div><br></br></div>
+        <div><h5>Upload your profile photo</h5></div>
         <div>
           <form onSubmit={(e)=>this.handleSubmit(e)}>
             <input
@@ -100,13 +99,22 @@ class WalkerRegister extends React.Component {
             {imagePreview}
           </div>
         </div>
-        <div>About me  <input
-          type="textbox"
-          size="100"
-          width="100"
-          onChange = {this.handleExtrasChange}>
-        </input></div>
-        <button onClick = {this.handleSubmit}>Submit Profile</button>
+        <div>
+          <TextField
+            id="walker-extra"
+            hintText="e.g. I grew up with 5 dogs and have had more than 20 years' experience with puppies, adult and elderly dogs."
+            floatingLabelText="About me"
+            name="walkerExtras"
+            multiLine={true}
+            rows={2}
+            rowsMax={5}
+            style={{
+              width: '400px'
+            }}
+            onChange={this.handleExtrasChange}
+          />
+        </div>
+        <RaisedButton label="Submit Profile" primary={true} onClick={this.handleSubmit} />
       </div>
     );
   }
