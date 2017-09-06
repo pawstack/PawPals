@@ -15,42 +15,11 @@ class Payment extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-
-    };
 
     this.processPayment = this.processPayment.bind(this);
     this.requestRefundForCancellation = this.requestRefundForCancellation.bind(this);
     this.handleStripeRegistration = this.handleStripeRegistration.bind(this);
   }
-
-
-  handleSubmit() {
-    if (checkEmptyEntry(this.state)) {
-      console.log(this.state);
-      alert('please complete profile');
-    } else {
-      console.log(this.state);
-      $.ajax({
-        url: '/api/signup/owner',
-        type: 'POST',
-        data: {
-          name: this.state.name,
-          age: this.state.age,
-          breed: this.state.breed,
-          weight: this.state.weight,
-          profile_pic: this.state.imagePreviewUrl,
-          extras: this.state.extra
-        },
-        success: (res) => {
-          console.log('data sent');
-        },
-        error: function(data) {
-        }
-      });
-    }
-  }
-
 
   processPayment() {
     console.log('client - /api/walks/payment create a destination charge button clicked');
@@ -59,10 +28,9 @@ class Payment extends React.Component {
       url: '/api/walks/payment',
       data: {
         amount: 1200,  //TBD WHEN BOOKED
-        walkerUserID: 1, //TBD WHEN BOOKED.  This will come from a selected walk state.
+        walkerUserID: 1, //TBD WHEN BOOKED.  This will come from the selected walk state.
         walkID: 1, //TBD WHEN BOOKED.
         description: 'testing the destination charge functionality',
-        customerId: 'cus_BLaAQSJIeO8zHL', //CC token generated when a new customer registers at the site.
         percentRetainedByPlatform: 10
       },
       success: function() {
@@ -78,9 +46,9 @@ class Payment extends React.Component {
     console.log('button clicked to request a refund for cancellation');
     $.ajax({
       type: 'POST',
-      url: '/cancellationrefund',
+      url: '/api/walks/refund',
       data: {
-        chargeId: 'ch_1AyOtaITvzEYPq0XhUJqSZKV' // later to be retrieved from database, walk table.  (this was saved when a payment was successful)
+        walkID: 1, //TBD WHEN BOOKED.
       },
       success: function() {
         console.log('client - successful cancellation refund completed');
@@ -91,7 +59,7 @@ class Payment extends React.Component {
     });
   }
 
-  handleStripeRegistration() {
+  handleStripeRegistration() { // AJAX - doesn't work
     console.log('button clicked to handle stripe registration');
     $.ajax({
       type: 'POST',
@@ -145,36 +113,3 @@ class Payment extends React.Component {
 }
 
 export default Payment;
-
-
-
-/*
-
-<div>
-  <MuiThemeProvider>
-    <RaisedButton label="Primary" primary={true}/>
-  </MuiThemeProvider>
-  <h1>Payment</h1>
-
-  <div>
-    <a href = 'https://connect.stripe.com/express/oauth/authorize?redirect_uri=https://stripe.com/connect/default/oauth/test&client_id=ca_BKKqX6IKWv2zjuHsLKdReiYfTfnaNPIE&state=testing123'>TRY 9 - Default Redirect</a>
-  </div>
-  <div>
-    <a href = 'https://connect.stripe.com/express/oauth/authorize?redirect_uri=http://localhost:3000/&client_id=ca_BKKqX6IKWv2zjuHsLKdReiYfTfnaNPIE&state=testing123'>TRY 10 - back to local host (STEP 1-4)</a>
-  </div>
-  <a href = 'https://connect.stripe.com/express/oauth/authorize?redirect_uri=http://google.com&client_id=ca_BKKqX6IKWv2zjuHsLKdReiYfTfnaNPIE&state=tiffany'>BUTTON 2</a>
-  <a href = 'https://connect.stripe.com/oauth/authorize?response_type=code&client_id=ca_BKKqX6IKWv2zjuHsLKdReiYfTfnaNPIE&scope=read_write&redirect_uri=https://google.com'>BUTTON 3</a>
-  <div>
-    <a href = 'https://connect.stripe.com/oauth/authorize?response_type=code&client_id=ca_BKKqX6IKWv2zjuHsLKdReiYfTfnaNPIE&scope=read_write&redirect_uri=http://localhost:3000/'>CREATE A NEW ACCOUNT</a>
-
-  </div>
-  <a href = 'https://connect.stripe.com/oauth/authorize?response_type=code&client_id=ca_BKKqX6IKWv2zjuHsLKdReiYfTfnaNPIE&scope=read_write&redirect_uri=http://localhost:3000/&stripe_user[email]=test@gmail.com'>BUTTON 5</a>
-
-  <div><button onClick = {this.processPayment}>Create a Destination Charge</button></div>
-  <div><button onClick = {this.requestRefundForCancellation}>Request Refund for Cancellation</button></div>
-
-
-
-</div>
-
-*/
