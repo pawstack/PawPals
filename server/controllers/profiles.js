@@ -92,6 +92,25 @@ module.exports.saveTokenizedCC = function(userID, token) {
     });
 };
 
+module.exports.getStripeID = function(userID) {
+  return knex('profiles')
+    .select('stripe_user_id')
+    .where({id: userID})
+    .then((result) => {
+      console.log(' db retrieved the stripe ID of ', userID, ' is ', result[0].stripe_user_id);
+      return result[0].stripe_user_id;
+    });
+};
+
+module.exports.getCCToken = function(userID) {
+  return knex('profiles')
+    .select('customer_id_cc_Token')
+    .where({id: userID})
+    .then((result) => {
+      console.log(' db retrieved the CC Token of userID ', userID, ' is ', result[0].customer_id_cc_Token);
+      return result[0].customer_id_cc_Token;
+    });
+};
 
 
 
