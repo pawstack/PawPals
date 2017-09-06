@@ -35,7 +35,7 @@ class SignUpDataEntry extends React.Component {
   }
 
   getOwnerValue(e, value) {
-    console.log('Owner is', value.returnValue);
+    //console.log('Owner is', value.returnValue);
     this.setState({
       owner: true,
       walker: false
@@ -45,7 +45,7 @@ class SignUpDataEntry extends React.Component {
   }
 
   getWalkerValue(e, value) {
-    console.log('Walker is', value.returnValue);
+    //console.log('Walker is', value.returnValue);
     this.setState({
       owner: false,
       walker: true
