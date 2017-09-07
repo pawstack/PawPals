@@ -244,7 +244,7 @@ module.exports.refundPayment = (req, res) => {
         });
     })
     .then(() => {
-      res.send(200);
+      res.sendStatus(200);
     });
 };
 
