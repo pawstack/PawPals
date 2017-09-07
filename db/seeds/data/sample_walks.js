@@ -26,7 +26,7 @@ let startEnd;
 for (let i = 0; i < 500; i++) {
   startEnd = generateSessionDateTime();
   users.push({
-    walk_zone_pt: addresses[faker.random.number(12000)],
+    walk_zone_pt: addresses[faker.random.number(addresses.length - 1)],
     walk_zone_radius: faker.random.number(2) + 2,
     price: 20 + faker.random.number(30),
     session_start: startEnd[0],

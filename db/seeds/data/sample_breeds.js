@@ -1,3 +1,4 @@
+// Pulled from https://en.wikipedia.org/wiki/List_of_dog_breeds
 module.exports = [
   ['Affenpinscher', 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Affenpinscher.jpg/200px-Affenpinscher.jpg'],
   ['Afghan Hound', 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Afghan_Hound.jpg/200px-Afghan_Hound.jpg'],

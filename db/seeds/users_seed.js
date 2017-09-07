@@ -25,7 +25,9 @@ const createProfile = (knex, profile) => {
       avg_walker_rating: profile.avg_walker_rating,
       address: profile.address,
       walker: profile.walker,
-      owner: profile.owner
+      owner: profile.owner,
+      stripe_user_id: profile.stripe_user_id,
+      customer_id_cc_Token: profile.customer_id_cc_Token
     })
     .tap((userIds) => {
       return knex('auths')

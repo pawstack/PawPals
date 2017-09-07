@@ -70,16 +70,6 @@ class BrowseFilter extends React.Component {
           onChange={this.handleChangeAdditional.bind(this, 'startDate')}
         />
 
-        <DatePicker 
-          floatingLabelText="End Date"
-          hintText="End Date"
-          autoOk={true}
-          minDate={this.state.startDate}
-          disableYearSelection={true}
-          value={this.state.endDate}
-          onChange={this.handleChangeAdditional.bind(this, 'endDate')}
-        />
-
         <SelectField
           floatingLabelText="Walk Duration"
           value={this.state.duration}
