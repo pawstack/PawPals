@@ -66,13 +66,23 @@ class BrowseFilter extends React.Component {
           </MenuItem>
           <MenuItem> 
             <DatePicker 
-              floatingLabelText="Start Date"
-              hintText="Start Date"
+              floatingLabelText="Pickup Date"
+              hintText="Pickup Date"
               autoOk={true}
               minDate={this.state.minDate}
               disableYearSelection={true}
               value={this.state.startDate}
               onChange={this.handleChangeAdditional.bind(this, 'startDate')}
+            />
+          </MenuItem>
+          <MenuItem> 
+            <TimePicker
+              format="ampm"
+              floatingLabelText="Pickup Time"
+              minutesStep={5}
+              autoOk={true}
+              value={this.state.pickupTime}
+              onChange={this.handleChangeAdditional.bind(this, 'pickupTime')}
             />
           </MenuItem>
           <MenuItem> 
@@ -87,16 +97,6 @@ class BrowseFilter extends React.Component {
               <MenuItem value={90} primaryText="1 hour 30 minutes" />
               <MenuItem value={120} primaryText="2 hours" />
             </SelectField>
-          </MenuItem>
-          <MenuItem> 
-            <TimePicker
-              format="ampm"
-              floatingLabelText="Pickup Time"
-              minutesStep={5}
-              autoOk={true}
-              value={this.state.pickupTime}
-              onChange={this.handleChangeAdditional.bind(this, 'pickupTime')}
-            />
           </MenuItem>
           <MenuItem> 
             <Subheader>Price per hour: {this.state.price}</Subheader>
