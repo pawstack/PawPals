@@ -24,7 +24,7 @@ class App extends React.Component {
               <li><Link to='/signup/start'>Signup</Link></li>
               <li><Link to='/browse'>Browse Walks</Link></li>
               <li><Link to='/walker'>Walker</Link></li>
-              <li><Link to ='/payment'>Payment</Link></li>
+
             </ul>
 
             <Route exact path="/home" render={() => (
@@ -33,7 +33,7 @@ class App extends React.Component {
             <Route exact path="/signup/start" component={SignUpStart}/>
             <Route exact path="/browse" component={Browse}/>
             <Route exact path="/walker" component={Calendar}/>
-            <Route exact path="/payment" component={Payment}/>
+            
           </div>
         </Router>
       </MuiThemeProvider>
