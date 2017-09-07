@@ -4,6 +4,10 @@ import moment from 'moment';
 import BigCalendar from 'react-big-calendar';
 import DialogForm from './DialogForm';
 import EventDialog from './EventDialog';
+import $ from 'jquery';
+import Snackbar from 'material-ui/Snackbar';
+import RaisedButton from 'material-ui/RaisedButton';
+import SnackBarCom from './SnackBar';
 
 BigCalendar.momentLocalizer(moment);
 require('style-loader!css-loader!react-big-calendar/lib/css/react-big-calendar.css');
@@ -18,6 +22,7 @@ let parseEvents = (data) => {
       event['title'] = 'Unbooked Walk';
     }
     event['start'] = new Date(data.walks[i].session_start);
+    event['paid'] = data.walks[i].paid;
     event['owner_name'] = data.walks[i].owner.first;
     event['owner_phone'] = data.walks[i].owner.phone;
     event['dog_extras'] = data.walks[i].dog.extras;
@@ -37,6 +42,7 @@ class Calendar extends React.Component {
       events: [],
       formOpen: false,
       eventOpen: false,
+      snackBarOpen: false,
       start: null,
       end: null,
       price: 20,
@@ -54,6 +60,8 @@ class Calendar extends React.Component {
     this.handleEventOpen = this.handleEventOpen.bind(this);
     this.handleEventClose = this.handleEventClose.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
+    this.handleSnackBarClose = this.handleSnackBarClose.bind(this);
+    this.requestRefundForCancellation = this.requestRefundForCancellation.bind(this);
   }
 
   handleEventOpen() {
@@ -76,6 +84,12 @@ class Calendar extends React.Component {
     this.setState({[key]: value});
   }
 
+  handleSnackBarClose() {
+    this.setState({
+      snackBarOpen: false,
+    });
+  };
+
   getEvents(callback) {
     fetch('/api/walks/fetch', {
       method: 'GET',
@@ -96,6 +110,9 @@ class Calendar extends React.Component {
   }
 
   handleCancel() {
+    if (this.state.selectedEvent.paid) {
+      this.requestRefundForCancellation(this.state.selectedEvent.id);
+    }
     fetch('/api/walks/destroy', {
       method: 'DELETE',
       headers: {
@@ -115,6 +132,23 @@ class Calendar extends React.Component {
       .catch((err) => {
         console.log('error:', err);
       });
+  }
+
+  requestRefundForCancellation(walk_id) {
+    fetch('api/walks/refund', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({walkID: walk_id})
+    })
+      .then(() => {
+        this.setState({['snackBarOpen']: true})
+      })
+      .catch((err) => {
+        console.log('refund failed');
+      })
   }
 
   handleSubmit(e) {
@@ -163,6 +197,7 @@ class Calendar extends React.Component {
         />
         <DialogForm handleTextInputChange={this.handleTextInputChange} open={this.state.formOpen} handleClose={this.handleFormClose} handleOpen={this.handleFormOpen} handleSubmit={this.handleSubmit} start={this.state.start} end={this.state.end} price={this.state.price} location={this.state.location}/>
         < EventDialog handleCancel={this.handleCancel} open={this.state.eventOpen} handleClose={this.handleEventClose} handleOpen={this.handleEventOpen} selectedEvent={this.state.selectedEvent}/>
+      < SnackBarCom open={this.state.snackBarOpen} handleSnackBarClose={this.handleSnackBarClose} message={'Refund successful'} />
       </div>
     );
   }
