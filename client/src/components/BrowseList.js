@@ -5,7 +5,7 @@ const BrowseList = (props) => (
   <div>
     <h2>Search Results</h2>
     {props.walks.map((walk) => (
-      <BrowseListItem key={`walk-${walk.id}`} walk={walk}/>
+      <BrowseListItem key={`walk-${walk.id}`} walk={walk} selectWalk={props.selectWalk} />
     ))}
   </div>
 );

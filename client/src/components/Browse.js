@@ -7,9 +7,11 @@ class Browse extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      walks: []
+      walks: [],
+      selectedWalk: {}
     };
     this.getWalks = this.getWalks.bind(this);
+    this.selectWalk = this.selectWalk.bind(this);
   }
 
   getWalks(filters) {
@@ -24,11 +26,17 @@ class Browse extends React.Component {
       }); 
   }
 
+  selectWalk(walk) {
+    this.setState({
+      selectedWalk: walk
+    });
+  }
+
   render() {
     return (
       <div>
         <BrowseFilter getWalks={this.getWalks} />
-        <BrowseList walks={this.state.walks} />
+        <BrowseList walks={this.state.walks} selectWalk={this.selectWalk} />
       </div>
     );
   }
