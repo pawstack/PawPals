@@ -17,5 +17,10 @@
       "consumerSecret": "TWITTER_CLIENT_SECRET",
       "callbackURL": "TWITTER_CALLBACK_URL"
     }
+  },
+  "stripe": {
+    "secretKey": "STRIPE_SECRET_KEY",
+    "publishableKey": "STRIPE_PUBLISHABLE_KEY"
   }
+
 }
