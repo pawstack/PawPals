@@ -55,7 +55,7 @@ module.exports.getAll = (req, res) => {
           res.status(503).send(err);
         });
     });
-}
+};
 
 module.exports.create = (req, res) => {
   models.Walk.forge({
@@ -111,7 +111,7 @@ module.exports.destroy = (req, res) => {
             });
         });
     });
-}
+};
 
 
 module.exports.saveDog = (req, res) => {
