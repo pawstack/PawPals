@@ -64,6 +64,7 @@ router.route('/walks/payment')
 router.route('/walks/refund')
   .post(ApiController.refundPayment);
 
-
+router.route('/walks/confirmation')
+  .get(ApiController.confirmation);
 
 module.exports = router;

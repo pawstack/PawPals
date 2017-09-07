@@ -14,6 +14,7 @@ import Calendar from './components/Calendar';
 import Payment from './components/Payment.jsx';
 import ProfileOwner from './components/ProfileOwner';
 import ProfileWalker from './components/ProfileWalker';
+import Confirmation from './components/Confirmation.jsx';
 
 
 class App extends React.Component {

@@ -367,5 +367,13 @@ var getUserType = (userID) => {
       return result[0].owner;
     });
 };
+<<<<<<< HEAD
 
 
+||||||| merged common ancestors
+=======
+
+module.exports.confirmation = (req, res) => {
+
+};
+>>>>>>> confirmation page in work
