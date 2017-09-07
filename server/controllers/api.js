@@ -14,9 +14,9 @@ module.exports.getFilteredWalks = (req, res) => {
   filters.minDate = new Date(filters.minDate);
   filters.location = !!filters.location ? filters.location : req.user.address;
   filters.startDate = new Date(filters.startDate);
-  // filters.endDate = new Date(filters.endDate); // Removed unitl date range functionality is needed
+  filters.endDate = new Date(filters.endDate); // Removed unitl date range functionality is needed
   filters.duration = !!filters.duration ? filters.duration : 30;
-  filters.pickUpTime = !!filters.pickupTime ? filters.pickupTime.getTime() - filters.pickupTime.setHours(0, 0, 0, 0) : filters.pickupTime;
+  filters.pickUpTime = !!filters.pickupTime ? new Date(filters.pickupTime).getTime() - new Date(filters.pickupTime).setHours(0, 0, 0, 0) : filters.pickupTime;
 
   models.Walk
     .query((qb) => {
