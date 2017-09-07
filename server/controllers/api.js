@@ -15,14 +15,14 @@ module.exports.getFilteredWalks = (req, res) => {
   filters.location = !!filters.location ? filters.location : req.user.address;
   filters.startDate = new Date(filters.startDate);
   filters.endDate = new Date(filters.endDate); // Removed unitl date range functionality is needed
-  filters.duration = !!filters.duration ? filters.duration : 30;
-  filters.pickUpTime = !!filters.pickupTime ? new Date(filters.pickupTime).getTime() - new Date(filters.pickupTime).setHours(0, 0, 0, 0) : filters.pickupTime;
-
+  filters.duration = !!filters.duration ? filters.duration : -(((11 * 60 + 59) * 60 + 59) * 1000);
+  filters.pickupTime = !!filters.pickupTime ? new Date(filters.pickupTime).getTime() - new Date(filters.pickupTime).setHours(0, 0, 0, 0) : ((11 * 60 + 59) * 60 + 59) * 1000;
+  console.log('PICKUP TIME ', filters.pickupTime);
   models.Walk
     .query((qb) => {
       qb.where('price', '<=', filters.price)
-        .whereBetween('session_start', [filters.startDate, filters.endDate])
-        .whereBetween('session_end', [filters.startDate, filters.endDate])
+        .where('session_start', '<=', new Date(filters.startDate.getTime() + filters.pickupTime))
+        .where('session_end', '>=', new Date(filters.startDate.getTime() + filters.pickupTime + filters.duration * 60 * 1000))
         .limit(20);
     })
     .fetchAll({
