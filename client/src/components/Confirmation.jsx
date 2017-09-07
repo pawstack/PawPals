@@ -11,6 +11,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
+import moment from 'moment';
 
 
 class Confirmation extends React.Component {
@@ -55,57 +56,61 @@ class Confirmation extends React.Component {
             Confirmation Page
             <Card>
 
-    <CardMedia
-      overlay={<CardTitle title="Confirm your Selection!"  />}
-    >
-      <img src="" alt="" />
-    </CardMedia>
-    <CardTitle title="Monday, January 5, 2017" subtitle="Cosmo's upcoming walk with Joe Doe" />
+              <CardMedia
+                overlay={<CardTitle title="Confirm your Selection!"/>}
+              >
+                <img src="" alt="" />
+              </CardMedia>
+              <CardTitle
+                title={`${(moment(this.props.selectedWalk.session_start)
+                  .format('dddd, MMMM Do'))} at ${(moment(this.props.selectedWalk.session_start)
+                  .format('h:mm A'))}`
+                }
 
-      <CardHeader
-        title="John Doe"
-        subtitle="ABOUT ME: Est aut autem et deserunt dolorum temporibus ut "
-        avatar="https://s3.amazonaws.com/uifaces/faces/twitter/shaneIxD/128.jpg"
-        titleStyle={{'fontSize':'30px', 'fontWeight':'bold'}}
-        subtitleStyle={{'fontSize':'20px'}}
-        avatarStyle={{size:100}}
+                subtitle= {`Cosmos upcoming walk with ${this.props.selectedWalk.walker.display}`}
+              />
 
+              <CardHeader
+                title={this.props.selectedWalk.walker.display}
+                subtitle={this.props.selectedWalk.walker.about_me}
+                avatar={this.props.selectedWalk.walker.profile_pic}
+                titleStyle={{'fontSize': '30px', 'fontWeight': 'bold'}}
+                subtitleStyle={{'fontSize': '20px'}}
+              />
 
-      />
+              <div>
+                <TextField
+                  defaultValue={moment(this.props.selectedWalk.session_start).format('h:mm A')}
+                  floatingLabelText="Pick-Up Time"
+                  disabled={true}
+                  style = {{padding: 20, width: 160, fontSize: 20}}
+                />
+              </div>
+              <div>
+                <TextField
+                  defaultValue={moment(this.props.selectedWalk.session_end).format('h:mm A')}
+                  floatingLabelText="Drop-Off Time"
+                  disabled={true}
+                  style = {{padding: 20, width: 160, fontSize: 20}}
+                />
+              </div>
+              <div>
+                <TextField
+                  defaultValue="944 Market Street, San Francisco, CA"
+                  floatingLabelText="Pick-Up Location"
+                  disabled={true}
+                  style = {{padding: 20, width: 450, fontSize: 20}}
+                />
+              </div>
 
-    <div>
-      <TextField
-        defaultValue="8:00 AM"
-        floatingLabelText="Pick-Up Time"
-        disabled={true}
-        style = {{padding: 20, width: 160, fontSize: 20}}
-      />
-    </div>
-    <div>
-      <TextField
-        defaultValue="9:00 AM"
-        floatingLabelText="Drop-Off Time"
-         disabled={true}
-         style = {{padding: 20, width: 160, fontSize: 20}}
-      />
-    </div>
-    <div>
-      <TextField
-        defaultValue="944 Market Street, San Francisco, CA"
-        floatingLabelText="Pick-Up Location"
-        disabled={true}
-        style = {{padding: 20, width: 450, fontSize: 20}}
-      />
-    </div>
-
-    <CardText>
-      The total price for this walk will be <b>$30.00 USD</b>.
-    </CardText>
-    <CardActions>
-      <RaisedButton label="BACK TO BROWSE" primary={true}/>
-      <RaisedButton label="BOOK NOW" primary={true}/>
-    </CardActions>
-  </Card>
+              <CardText>
+                The total price for this walk will be <b>${this.props.selectedWalk.price} USD</b>.
+              </CardText>
+              <CardActions>
+                <RaisedButton label="BACK TO BROWSE" primary={true}/>
+                <RaisedButton label="BOOK NOW" primary={true}/>
+              </CardActions>
+            </Card>
           </div>
         </MuiThemeProvider>
       </div>
