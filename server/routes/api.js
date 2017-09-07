@@ -29,6 +29,15 @@ router.route('/profile/owner')
 router.route('/profile/dog')
   .get(ApiController.getDogProfile);
 
+router.route('/profileupdate/owner')
+  .post(ApiController.updateOwnerProfile);
+
+router.route('/profile/walker')
+  .get(ApiController.getWalkerProfile);
+
+router.route('/profileupdate/walker')
+  .post(ApiController.updateWalkerProfile);
+
 router.route('/')
   .get((req, res) => {
     res.status(200).send('Hello World!');

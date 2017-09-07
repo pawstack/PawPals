@@ -14,18 +14,19 @@ class ProfileOwner extends React.Component {
       phone: '',
       address: '',
       dogphoto: '',
-      dogname: '',
-      dogage: '',
-      dogbreed: '',
-      dogweight: '',
-      dogextras: ''
+      id: 0,
+      name: '',
+      age: '',
+      breed: '',
+      weight: 0,
+      extras: ''
     };
 
     this.getOwnerProfile = this.getOwnerProfile.bind(this);
     this.getDogProfile = this.getDogProfile.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleUpdateProfile = this.handleUpdateProfile.bind(this);
   }
-
 
 
   getOwnerProfile() {
@@ -53,10 +54,11 @@ class ProfileOwner extends React.Component {
       success: (res) => {
         console.log('DOG PROFILE ', res[0]);
         this.setState({
-          dogname: res[0].name,
-          dogbreed: res[0].breed,
-          dogweight: res[0].weight,
-          dogextras: res[0].extras,
+          id: res[0].id,
+          name: res[0].name,
+          breed: res[0].breed,
+          weight: res[0].weight,
+          extras: res[0].extras,
         });
       },
       error: function(err) {
@@ -67,13 +69,34 @@ class ProfileOwner extends React.Component {
   componentDidMount() {
     this.getOwnerProfile();
     this.getDogProfile();
-
   }
 
   handleChange (event, value) {
     const name = event.target.name;
     this.setState({
       [name]: event.target.value
+    });
+  }
+
+  handleUpdateProfile() {
+    $.ajax({
+      url: '/api/profileupdate/owner',
+      type: 'POST',
+      data: {
+        name: this.state.name,
+        age: this.state.age,
+        id: this.state.id,
+        breed: this.state.breed,
+        weight: this.state.weight,
+        extras: this.state.extras,
+        phone: this.state.phone,
+        address: this.state.address
+      },
+      success: (res) => {
+        console.log('data sent');
+      },
+      error: function(data) {
+      }
     });
   }
 
@@ -86,57 +109,88 @@ class ProfileOwner extends React.Component {
           subtitle="Owner"
           avatar='https://s.imgur.com/images/404/cat3weyes.png'
         />
-        <CardHeader title="Phone: "/>
-        <TextField
-          name = "phone"
-          value={this.state.phone}
-          onChange={this.handleChange}
-        />
-        <CardHeader title="Address: "/>
-        <TextField
-          name = "address"
-          multiLine={true}
-          rows={2}
-          value={this.state.address}
-          onChange={this.handleChange}
-        />
+        <table>
+          <tbody>
+            <tr>
+              <td><CardHeader title="Phone: "/></td>
+              <td>
+                <TextField
+                  name = "phone"
+                  value={this.state.phone}
+                  onChange={this.handleChange}
+                />
+              </td>
+            </tr>
+            <tr>
+              <td><CardHeader title="Address: "/></td>
+              <td>
+                <TextField
+                  name = "address"
+                  multiLine={true}
+                  rows={2}
+                  value={this.state.address}
+                  onChange={this.handleChange}
+                />
+              </td>
+            </tr>
+          </tbody>
+        </table>
         <div>
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Japaneseakita.jpg/200px-Japaneseakita.jpg" alt="" width="250" style={{'borderRadius': '10px', 'marginLeft': '20px', 'marginTop': '30px'}}/>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Japaneseakita.jpg/200px-Japaneseakita.jpg" alt="" width="220" style={{'borderRadius': '10px', 'marginLeft': '20px', 'marginTop': '30px'}}/>
         </div>
 
-        <div style={{'float': 'right', 'marginRight': '480px', 'marginTop': '-250px'}}>
-
-          <CardHeader title="Dog's Name: "/>
-          <TextField
-            name = "dogname"
-            value={this.state.dogname}
-            onChange={this.handleChange}
-          />
-          <CardHeader title="Dog's Breed: "/>
-          <TextField
-            name = "dogbreed"
-            value={this.state.dogbreed}
-            onChange={this.handleChange}
-          />
-          <CardHeader title="Dog's Weight in LB: "/>
-          <TextField
-            name = "dogweight"
-            value={this.state.dogweight}
-            onChange={this.handleChange}
-          />
-          <CardHeader title="Dog's Info: "/>
-          <TextField
-            name = "dogextras"
-            value={this.state.dogextras}
-            onChange={this.handleChange}
-          />
+        <div style={{'float': 'right', 'marginRight': '320px', 'marginTop': '-210px'}}>
+          <table>
+            <tbody>
+              <tr>
+                <td><CardHeader title="Dog's Name:"/></td>
+                <td>
+                  <TextField
+                    name = "name"
+                    value={this.state.name}
+                    onChange={this.handleChange}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td><CardHeader title="Dog's Breed:"/></td>
+                <td>
+                  <TextField
+                    name = "breed"
+                    value={this.state.breed}
+                    onChange={this.handleChange}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td><CardHeader title="Dog's Weight in LB:"/></td>
+                <td>
+                  <TextField
+                    name = "weight"
+                    value={this.state.weight}
+                    onChange={this.handleChange}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td><CardHeader title="Dog's Info:"/></td>
+                <td>
+                  <TextField
+                    name = "extras"
+                    value={this.state.extras}
+                    onChange={this.handleChange}
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
         <div>
           <br></br>
           <br></br>
         </div>
         <div style={{'marginLeft': '20px'}}>
-          <RaisedButton label="Update Profile" />
+          <RaisedButton label="Update Profile" onClick={this.handleUpdateProfile}/>
         </div>
       </div>);
   }

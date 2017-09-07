@@ -148,6 +148,52 @@ module.exports.saveWalker = function(req, res) {
 };
 
 
+module.exports.updateOwnerProfile = (req, res) => {
+  console.log('UPDATE OWNER', req.body.name);
+
+  var dogUpdate = new Promise(
+    (resolve, reject) => {
+      knex('dogs').where('id', req.body.id).update({
+        name: req.body.name,
+        weight: req.body.weight,
+        breed: req.body.breed,
+        extras: req.body.extras
+      })
+        .then(resolve());
+    }
+  );
+
+  var ownerUpdate = new Promise(
+    (resolve, reject) => {
+      knex('profiles').where('id', req.user.id).update({
+        phone: req.body.phone,
+        address: req.body.address
+      })
+        .then(resolve());
+    }
+  );
+
+  Promise.all([dogUpdate, ownerUpdate]).then(responses => {
+    res.send(200);
+  })
+    .catch(e => {
+      console.log(e);
+    });
+
+};
+
+module.exports.updateWalkerProfile = (req, res) => {
+  console.log('UPDATE WALKER', req.body.name);
+
+  knex('profiles').where('id', req.user.id).update({
+    phone: req.body.phone,
+    address: req.body.address,
+    about_me: req.body.about_me
+  })
+    .then(res.send(200));
+};
+
+
 module.exports.getAndSaveStripeID = (req, res) => {
   curl.request({
     url: 'https://connect.stripe.com/oauth/token',
@@ -216,6 +262,7 @@ module.exports.processPayment = (req, res) => {
             });
         });
     });
+};
 
 module.exports.getOwnerProfile = function(req, res) {
   knex.select().from('profiles').where('id', req.user.id)
@@ -224,6 +271,11 @@ module.exports.getOwnerProfile = function(req, res) {
 
 module.exports.getDogProfile = function(req, res) {
   knex.select().from('dogs').where('owner_id', req.user.id)
+    .then(data => { res.status(201).send(data); });
+};
+
+module.exports.getWalkerProfile = function(req, res) {
+  knex.select().from('profiles').where('id', req.user.id)
     .then(data => { res.status(201).send(data); });
 };
 
