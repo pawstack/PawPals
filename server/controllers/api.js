@@ -295,7 +295,10 @@ module.exports.refundPayment = (req, res) => {
     })
     .then(() => {
       res.sendStatus(200);
-    });
+    })
+  .catch(() => {
+    res.sendStatus(503);
+  })
 };
 
 var saveChargeTransactionToDB = (walkID, transactionNumber) => {
