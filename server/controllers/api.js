@@ -35,25 +35,20 @@ module.exports.getFilteredWalks = (req, res) => {
     });
 };
 
-
 module.exports.getAll = (req, res) => {
   models.Walk
-    .fetchAll({walker_id: req.user.id})
+    .query((qb) => {
+      qb.where('walker_id', '=', req.user.id)
+    })
+    .fetchAll({withRelated: ['dog', 'owner']})
     .then((collection) => {
-      collection.fetch({withRelated: ['owner', 'dog']})
-        .then((join) => {
-          var response = {};
-          var walks = [];
-          for (var i = 0; i < join.models.length; i++) {
-            walks.push(join.models[i]);
-          }
-          response['walks'] = walks;
-          response['location'] = req.user.address;
-          res.status(200).send(response);
-        })
-        .catch(err => {
-          res.status(503).send(err);
-        });
+      var response = {};
+      response['walks'] = collection.models;
+      response['location'] = req.user.address;
+      res.status(200).send(response);
+    })
+    .catch(err => {
+      res.status(503).send(err);
     });
 };
 
@@ -68,22 +63,18 @@ module.exports.create = (req, res) => {
     .save()
     .then(() => {
       models.Walk
-        .fetchAll({walker_id: req.user.id})
+        .query((qb) => {
+          qb.where('walker_id', '=', req.user.id)
+        })
+        .fetchAll({withRelated: ['dog', 'owner']})
         .then((collection) => {
-          collection.fetch({withRelated: ['owner', 'dog']})
-            .then((join) => {
-              var response = {};
-              var walks = [];
-              for (var i = 0; i < join.models.length; i++) {
-                walks.push(join.models[i]);
-              }
-              response['walks'] = walks;
-              response['location'] = req.user.address;
-              res.status(200).send(response);
-            })
-            .catch(err => {
-              res.status(503).send(err);
-            });
+          var response = {};
+          response['walks'] = collection.models;
+          response['location'] = req.user.address;
+          res.status(200).send(response);
+        })
+        .catch(err => {
+          res.status(503).send(err);
         });
     });
 };
@@ -93,22 +84,18 @@ module.exports.destroy = (req, res) => {
     .destroy()
     .then(() => {
       models.Walk
-        .fetchAll({walker_id: req.user.id})
+        .query((qb) => {
+          qb.where('walker_id', '=', req.user.id)
+        })
+        .fetchAll({withRelated: ['dog', 'owner']})
         .then((collection) => {
-          collection.fetch({withRelated: ['owner', 'dog']})
-            .then((join) => {
-              var response = {};
-              var walks = [];
-              for (var i = 0; i < join.models.length; i++) {
-                walks.push(join.models[i]);
-              }
-              response['walks'] = walks;
-              response['location'] = req.user.address;
-              res.status(200).send(response);
-            })
-            .catch(err => {
-              res.status(503).send(err);
-            });
+          var response = {};
+          response['walks'] = collection.models;
+          response['location'] = req.user.address;
+          res.status(200).send(response);
+        })
+        .catch(err => {
+          res.status(503).send(err);
         });
     });
 };
