@@ -14,7 +14,7 @@ module.exports.getFilteredWalks = (req, res) => {
   filters.minDate = new Date(filters.minDate);
   filters.location = !!filters.location ? filters.location : req.user.address;
   filters.startDate = new Date(filters.startDate);
-  filters.endDate = new Date(filters.endDate);
+  // filters.endDate = new Date(filters.endDate); // Removed unitl date range functionality is needed
   filters.duration = !!filters.duration ? filters.duration : 30;
   filters.pickUpTime = !!filters.pickupTime ? filters.pickupTime.getTime() - filters.pickupTime.setHours(0, 0, 0, 0) : filters.pickupTime;
 
@@ -41,7 +41,7 @@ module.exports.getFilteredWalks = (req, res) => {
 module.exports.getAll = (req, res) => {
   models.Walk
     .query((qb) => {
-      qb.where('walker_id', '=', req.user.id)
+      qb.where('walker_id', '=', req.user.id);
     })
     .fetchAll({withRelated: ['dog', 'owner']})
     .then((collection) => {
@@ -67,7 +67,7 @@ module.exports.create = (req, res) => {
     .then(() => {
       models.Walk
         .query((qb) => {
-          qb.where('walker_id', '=', req.user.id)
+          qb.where('walker_id', '=', req.user.id);
         })
         .fetchAll({withRelated: ['dog', 'owner']})
         .then((collection) => {
@@ -88,7 +88,7 @@ module.exports.destroy = (req, res) => {
     .then(() => {
       models.Walk
         .query((qb) => {
-          qb.where('walker_id', '=', req.user.id)
+          qb.where('walker_id', '=', req.user.id);
         })
         .fetchAll({withRelated: ['dog', 'owner']})
         .then((collection) => {
