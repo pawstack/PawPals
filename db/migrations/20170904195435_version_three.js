@@ -16,7 +16,7 @@ exports.up = function(knex, Promise) {
 exports.down = function (knex, Promise) {
   return Promise.all([
     knex.schema.table('profiles', function(table) {
-      table.dropColumn('venmo');
+      table.string('venmo', 50).unique();
       table.dropColumn('stripe_user_id');
       table.dropColumn('customer_id_cc_Token');
     }),
