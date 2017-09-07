@@ -122,7 +122,7 @@ class OwnerRegister extends React.Component {
     let {imagePreviewUrl} = this.state;
     let imagePreview = null;
     if (imagePreviewUrl) {
-      console.log('URL is', imagePreviewUrl);
+      //console.log('URL is', imagePreviewUrl);
       imagePreview = (<img src={imagePreviewUrl} width="200"/>);
     } else {
       imagePreview = (<div>Please select an Image for Preview</div>);
