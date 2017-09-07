@@ -28,7 +28,7 @@ let parseEvents = (data) => {
     events.push(event);
   }
   return events;
-}
+};
 
 class Calendar extends React.Component {
   constructor (props) {
@@ -110,12 +110,12 @@ class Calendar extends React.Component {
       .then((response) => response.json())
       .then((data) => {
         var events = parseEvents(data);
-        this.setState({events, ['eventOpen']: false})
+        this.setState({events, ['eventOpen']: false});
       })
       .catch((err) => {
-        console.log('error:', err)
-      })
-  };
+        console.log('error:', err);
+      });
+  }
 
   handleSubmit(e) {
     fetch('/api/walks/create', {
