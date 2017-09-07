@@ -1,7 +1,5 @@
 const express = require('express');
 const middleware = require('../middleware');
-var curl = require('curlrequest');
-var controllers = require('../controllers');
 
 const router = express.Router();
 
@@ -23,7 +21,6 @@ router.route('/login')
     failureRedirect: '/login',
     failureFlash: true
   }));
-
 
 // new users/signups also go through /login, registration happens after if they are a new user
 // router.route('/signup')

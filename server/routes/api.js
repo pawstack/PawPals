@@ -20,7 +20,7 @@ router.route('/signup/walker')
   .post(ApiController.saveWalker);
 
 router.route('/walks/destroy')
-  .delete(ApiController.destroy)
+  .delete(ApiController.destroy);
 
 router.route('/')
   .get((req, res) => {
@@ -39,7 +39,7 @@ router.route('/signup/payment/tokenizecard')
     res.render('cardtoken.ejs');
   });
 
-router.route('/signup/payment/savecardtoken') //post request from the ejs file.... need to update
+router.route('/signup/payment/savecardtoken') //post request from the ejs file
   .post(ApiController.getAndsaveCardToken);
 
 router.route('/walks/payment')
