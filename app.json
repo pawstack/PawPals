@@ -3,13 +3,13 @@
   "scripts": {
   },
   "env": {
-    "CLIENTID": {
+    "GOOGLE_CLIENT_ID": {
       "required": true
     },
-    "CLIENTSECRET": {
+    "GOOGLE_CLIENT_SECRET": {
       "required": true
     },
-    "CALLBACK": {
+    "GOOGLE_CALLBACK_URL": {
       "required": true
     },
     "DATABASE_URL": {
