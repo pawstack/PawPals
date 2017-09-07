@@ -187,9 +187,17 @@ module.exports.getAndsaveCardToken = (req, res) => {
     .then((customer) => {
       console.log('the (tokenized) customer id for this new card is ', customer.id);
       var tokenizedCard = customer.id;
-      controllers.Profiles.saveTokenizedCC(req.user.email, tokenizedCard)
-        .then(() => {
-          res.redirect('/');
+      controllers.Profiles.saveTokenizedCC(req.user.email, tokenizedCard);
+    })
+    .then(() => {
+      getUserType(req.user.id)
+        .then((owner) => {
+          console.log('the data for owner is ', owner);
+          if (owner) {
+            res.redirect('/browse');
+          } else {
+            res.redirect('/walker');
+          }
         });
     });
 };
@@ -289,5 +297,15 @@ var reverseChargeTransctionInDB = (walkID) => {
     })
     .catch(result => {
       console.log('error updating transaction details from DB');
+    });
+};
+
+var getUserType = (userID) => {
+  return knex('profiles')
+    .select('owner')
+    .where({id: userID})
+    .then((result) => {
+      console.log('Is the user an owner ? ', result[0].owner);
+      return result[0].owner;
     });
 };
