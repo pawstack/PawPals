@@ -19,8 +19,15 @@ router.route('/signup/owner')
 router.route('/signup/walker')
   .post(ApiController.saveWalker);
 
+
 router.route('/walks/destroy')
   .delete(ApiController.destroy);
+
+router.route('/profile/owner')
+  .get(ApiController.getOwnerProfile);
+
+router.route('/profile/dog')
+  .get(ApiController.getDogProfile);
 
 router.route('/')
   .get((req, res) => {
@@ -47,9 +54,6 @@ router.route('/walks/payment')
 
 router.route('/walks/refund')
   .post(ApiController.refundPayment);
-
-
-
 
 
 

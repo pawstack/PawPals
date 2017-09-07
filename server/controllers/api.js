@@ -129,7 +129,6 @@ module.exports.saveDog = (req, res) => {
     }
   );
 
-
   Promise.all([dogToDB, ownerToDB]).then(responses => {
     res.send(200);
   })
@@ -140,7 +139,6 @@ module.exports.saveDog = (req, res) => {
 
 
 module.exports.saveWalker = function(req, res) {
-
   knex('profiles').where('id', req.user.id).update({ about_me: req.body.extras,
     walker: true,
     phone: req.body.phone,
@@ -148,6 +146,7 @@ module.exports.saveWalker = function(req, res) {
   })
     .then(res.send(200));
 };
+
 
 module.exports.getAndSaveStripeID = (req, res) => {
   curl.request({
@@ -217,6 +216,15 @@ module.exports.processPayment = (req, res) => {
             });
         });
     });
+
+module.exports.getOwnerProfile = function(req, res) {
+  knex.select().from('profiles').where('id', req.user.id)
+    .then(data => { res.status(201).send(data); });
+};
+
+module.exports.getDogProfile = function(req, res) {
+  knex.select().from('dogs').where('owner_id', req.user.id)
+    .then(data => { res.status(201).send(data); });
 };
 
 

@@ -34,4 +34,8 @@ app.use('/api', routes.api);
 app.use('/api/profiles', routes.profiles);
 app.use('/*', routes.auth);
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> profile page setup
 module.exports = app;
