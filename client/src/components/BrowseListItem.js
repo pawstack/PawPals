@@ -22,7 +22,7 @@ class BrowseListItem extends React.Component {
           {this.props.walk.walker.about_me}
         </CardText>
         <CardActions>
-          <RaisedButton label="Book this walk" primary={true} />
+          <RaisedButton label="Proceed to Checkout" primary={true} />
         </CardActions>
       </Card>
     );
