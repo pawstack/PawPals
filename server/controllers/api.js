@@ -164,7 +164,7 @@ module.exports.getAndSaveStripeID = (req, res) => {
     url: 'https://connect.stripe.com/oauth/token',
     data: {
       'client_secret': config.secretKey,
-      'code': req.query.code, //'ac_BKskFL5z0e7rB4OySIe0EKWVFiD1wFVw', pull this in from the query data of the ajax get request.
+      'code': req.query.code, // from the query data of the ajax get request.
       'grant_type': 'authorization_code'
     }
   }, function(err, stdout, meta) {
@@ -214,7 +214,7 @@ module.exports.processPayment = (req, res) => {
             currency: 'USD',
             customer: tokenizedCC,
             destination: {
-              amount: req.body.amount * (1 - (req.body.percentRetainedByPlatform / 100)), // amount transferred to the destination account.t.
+              amount: req.body.amount * (1 - (req.body.percentRetainedByPlatform / 100)), // Amount transferred to the destination account.
               account: destinationStripeID // Account where funds will be deposited.
             }
           })

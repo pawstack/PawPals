@@ -70,7 +70,6 @@ module.exports.saveStripeUserID = function(userID, stripeUserID) {
       if (result === 0) { //id does not exist.  no update made.
         throw result;
       }
-      console.log('updated db with stripe data ', result);
     })
     .catch(function(err) {
       console.log('error updating db with stripe data - id does not exist', err);
@@ -85,10 +84,9 @@ module.exports.saveTokenizedCC = function(userID, token) {
       if (result === 0) { //id does not exist.  no update made.
         throw result;
       }
-      console.log('********updated db with tokenized cc data ', result);
     })
     .catch(function(err) {
-      console.log('********error updating db with tokenized cc data - email does not exist', err);
+      console.log('error updating db with tokenized cc data - email does not exist', err);
     });
 };
 
