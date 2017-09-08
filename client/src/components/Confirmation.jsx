@@ -10,6 +10,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
+import Snackbar from 'material-ui/Snackbar';
 import TextField from 'material-ui/TextField';
 import moment from 'moment';
 
@@ -104,6 +105,14 @@ class Confirmation extends React.Component {
               <CardActions>
                 <RaisedButton label="BACK TO BROWSE" primary={true} onClick = {this.props.resetSelectedState}/>
                 <RaisedButton label="BOOK NOW" primary={true} onClick = {this.props.processPayment}/>
+                <Snackbar
+                  open={this.props.snackBarOpen}
+                  message={'Your booking is confirmed!'}
+                  action="OK"
+                  autoHideDuration= {6000}
+                  onActionTouchTap={this.props.handleActionTouchTap}
+                  onRequestClose={this.props.handleSnackBarClose}
+                />
               </CardActions>
             </Card>
           </div>
@@ -114,3 +123,17 @@ class Confirmation extends React.Component {
 }
 
 export default Confirmation;
+
+
+/*
+
+<Snackbar
+  open={this.props.snackBarOpen}
+  message={'Your booking is confirmed!'}
+  action="OK"
+  autoHideDuration= {4000}
+  onActionTouchTap={this.handleActionTouchTap}
+  onRequestClose={this.props.handleSnackBarClose}
+/>
+
+*/
