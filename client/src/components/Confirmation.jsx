@@ -23,6 +23,7 @@ class Confirmation extends React.Component {
     };
 
     this.calculateTotalPrice = this.calculateTotalPrice.bind(this);
+    this.processPayment = this.processPayment.bind(this);
   }
 
   componentDidMount() {
@@ -39,6 +40,33 @@ class Confirmation extends React.Component {
       totalPrice: durationInHours * this.props.selectedWalk.price
     });
     console.log('the duration is ', durationInHours);
+  }
+
+  processPayment() {
+    console.log('client - /api/walks/payment create a destination charge button clicked');
+    console.log('the amount is ', typeof this.state.totalPrice);
+    console.log('the walker_id is ', this.props.selectedWalk.walker_id);
+    console.log('the selected walk is ', this.props.selectedWalk.id);
+
+
+
+    $.ajax({
+      type: 'POST',
+      url: '/api/walks/payment',
+      data: {
+        amount: this.state.totalPrice * 100,  //TBD WHEN BOOKED
+        walkerUserID: this.props.selectedWalk.walker_id, //TBD WHEN BOOKED.  This will come from the selected walk state.
+        walkID: this.props.selectedWalk.id, //TBD WHEN BOOKED.
+        description: 'PawPals',
+        percentRetainedByPlatform: 10
+      },
+      success: function() {
+        console.log('client - successful destination charge post request completed');
+      },
+      error: function() {
+        console.log('client - error destination charge post request completed');
+      }
+    });
   }
 
   render() {
@@ -102,7 +130,7 @@ class Confirmation extends React.Component {
               </CardText>
               <CardActions>
                 <RaisedButton label="BACK TO BROWSE" primary={true}/>
-                <RaisedButton label="BOOK NOW" primary={true}/>
+                <RaisedButton label="BOOK NOW" primary={true} onClick = {this.processPayment}/>
               </CardActions>
             </Card>
           </div>
