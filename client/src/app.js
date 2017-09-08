@@ -14,7 +14,6 @@ import Calendar from './components/Calendar';
 import Payment from './components/Payment.jsx';
 import ProfileOwner from './components/ProfileOwner';
 import ProfileWalker from './components/ProfileWalker';
-import FileStack from './components/FileStack';
 
 
 class App extends React.Component {
@@ -30,7 +29,7 @@ class App extends React.Component {
               <li><Link to='/walker'>Walker</Link></li>
               <li><Link to='/profilepage/owner'>Owner Profile Page</Link></li>
               <li><Link to='/profilepage/walker'>Walker Profile Page</Link></li>
-              <li><Link to='/filestack'>File Stack</Link></li>
+
             </ul>
 
             <Route exact path="/home" render={() => (
@@ -41,7 +40,7 @@ class App extends React.Component {
             <Route exact path="/walker" component={Calendar}/>
             <Route exact path="/profilepage/owner" component={ProfileOwner}/>
             <Route exact path="/profilepage/walker" component={ProfileWalker}/>
-            <Route exact path="/filestack" component={FileStack}/>
+
           </div>
         </Router>
       </MuiThemeProvider>
