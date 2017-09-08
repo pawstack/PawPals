@@ -6,7 +6,6 @@ const ApiController = require('../controllers').Api;
 router.route('/walks/search')
   .post(ApiController.getFilteredWalks);
 
-
 router.route('/walks/fetch')
   .get(ApiController.getAll);
 
@@ -71,5 +70,8 @@ router.route('/walks/getOwnerInfo')
 
 router.route('/walks/getDogInfo')
   .get(ApiController.getDogInfo);
+  
+router.route('/walks/track')
+  .post(ApiController.saveWalkGeolocation);
 
 module.exports = router;
