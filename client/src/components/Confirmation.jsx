@@ -43,13 +43,6 @@ class Confirmation extends React.Component {
   }
 
   processPayment() {
-    console.log('client - /api/walks/payment create a destination charge button clicked');
-    console.log('the amount is ', typeof this.state.totalPrice);
-    console.log('the walker_id is ', this.props.selectedWalk.walker_id);
-    console.log('the selected walk is ', this.props.selectedWalk.id);
-
-
-
     $.ajax({
       type: 'POST',
       url: '/api/walks/payment',
@@ -78,7 +71,7 @@ class Confirmation extends React.Component {
             <Card>
 
               <CardMedia
-                overlay={<CardTitle title="Confirm your Selection"/>}
+                overlay={<CardTitle title="Confirm your selection"/>}
               >
                 <img src="" alt="" />
               </CardMedia>
@@ -129,7 +122,7 @@ class Confirmation extends React.Component {
                 The total price for this walk will be <b>${this.state.totalPrice.toFixed(2)} USD</b>.
               </CardText>
               <CardActions>
-                <RaisedButton label="BACK TO BROWSE" primary={true}/>
+                <RaisedButton label="BACK TO BROWSE" primary={true} onClick = {this.props.resetSelectedState}/>
                 <RaisedButton label="BOOK NOW" primary={true} onClick = {this.processPayment}/>
               </CardActions>
             </Card>
