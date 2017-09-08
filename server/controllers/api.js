@@ -372,3 +372,10 @@ module.exports.getDogInfo = (req, res) => {
       res.send(result[0]);
     });
 };
+
+module.exports.saveWalkGeolocation = (req, res) => {
+  var geolocation = req.body;
+  console.log('GEOLOCATION ', geolocation);
+  // models.
+  res.sendStatus(201);
+};
