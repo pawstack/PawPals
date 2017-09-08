@@ -33,8 +33,8 @@ class Confirmation extends React.Component {
   }
 
   calculateTotalPrice() {
-    var start = moment(this.props.selectedWalk.session_start, 'HH:mm:ss');
-    var end = moment(this.props.selectedWalk.session_end, 'HH:mm:ss');
+    var start = moment(this.props.selectedWalk.session_start);
+    var end = moment(this.props.selectedWalk.session_end);
     var durationInHours = moment.duration(end.diff(start)) / 1000 / 60 / 60;
     this.setState({
       totalPrice: durationInHours * this.props.selectedWalk.price
@@ -67,7 +67,7 @@ class Confirmation extends React.Component {
       <div>
         <MuiThemeProvider>
           <div>
-            
+
             <Card>
 
               <CardMedia
