@@ -23,7 +23,6 @@ class Confirmation extends React.Component {
     };
 
     this.calculateTotalPrice = this.calculateTotalPrice.bind(this);
-    this.processPayment = this.processPayment.bind(this);
   }
 
   componentDidMount() {
@@ -42,28 +41,6 @@ class Confirmation extends React.Component {
     console.log('the duration is ', durationInHours);
   }
 
-  processPayment() {
-    $.ajax({
-      type: 'POST',
-      url: '/api/walks/payment',
-      data: {
-        amount: this.state.totalPrice * 100,  //TBD WHEN BOOKED
-        walkerUserID: this.props.selectedWalk.walker_id, //TBD WHEN BOOKED.  This will come from the selected walk state.
-        walkID: this.props.selectedWalk.id, //TBD WHEN BOOKED.
-        description: 'PawPals',
-        percentRetainedByPlatform: 10,
-        ownerID: this.props.ownerInfo.id,
-        pickupAddress: this.props.pickupAddress,
-        dogID: this.props.dogInfo.id
-      },
-      success: function() {
-        console.log('client - successful destination charge post request completed');
-      },
-      error: function() {
-        console.log('client - error destination charge post request completed');
-      }
-    });
-  }
 
   render() {
     return (
@@ -114,7 +91,7 @@ class Confirmation extends React.Component {
               </div>
               <div>
                 <TextField
-                  defaultValue={this.props.ownerInfo.address}
+                  defaultValue={this.props.pickupAddress}
                   floatingLabelText="Pick-Up Location"
                   disabled={true}
                   style = {{padding: 20, width: 450, fontSize: 20}}
@@ -126,7 +103,7 @@ class Confirmation extends React.Component {
               </CardText>
               <CardActions>
                 <RaisedButton label="BACK TO BROWSE" primary={true} onClick = {this.props.resetSelectedState}/>
-                <RaisedButton label="BOOK NOW" primary={true} onClick = {this.processPayment}/>
+                <RaisedButton label="BOOK NOW" primary={true} onClick = {this.props.processPayment}/>
               </CardActions>
             </Card>
           </div>

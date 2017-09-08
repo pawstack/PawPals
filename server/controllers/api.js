@@ -263,7 +263,7 @@ module.exports.processPayment = (req, res) => {
               if (charge.paid === true) {
                 saveChargeTransactionToDB(req.body.walkID, charge.id, req.body.ownerID, req.body.dogID, req.body.pickupAddress);
               }
-              res.redirect('/home'); //update this later!
+              res.redirect('/browse'); //update this later!
             });
         });
     });

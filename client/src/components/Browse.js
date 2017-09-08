@@ -13,6 +13,7 @@ class Browse extends React.Component {
       ownerInfo: {},
       dogInfo: {},
       pickupAddress: '',
+      totalPrice: 0
     };
     this.getWalks = this.getWalks.bind(this);
     this.selectWalk = this.selectWalk.bind(this);
@@ -20,6 +21,7 @@ class Browse extends React.Component {
     this.getDogInfo = this.getDogInfo.bind(this);
     this.resetSelectedState = this.resetSelectedState.bind(this);
     this.setPickupAddress = this.setPickupAddress.bind(this);
+    this.processPayment = this.processPayment.bind(this);
 
   }
 
@@ -88,10 +90,33 @@ class Browse extends React.Component {
     });
   }
 
-  componentDidMount() {
-    console.log('component did mount');
-    this.getOwnerInfo();
+  processPayment() {
+    var context = this;
+    $.ajax({
+      type: 'POST',
+      url: '/api/walks/payment',
+      data: {
+        //amount: this.state.totalPrice * 100,  //TBD WHEN BOOKED
+        amount: 100,
+        walkerUserID: this.state.selectedWalk.walker_id, //TBD WHEN BOOKED.  This will come from the selected walk state.
+        walkID: this.state.selectedWalk.id, //TBD WHEN BOOKED.
+        description: 'PawPals',
+        percentRetainedByPlatform: 10,
+        ownerID: this.state.ownerInfo.id,
+        pickupAddress: this.state.pickupAddress,
+        dogID: this.state.dogInfo.id
+      },
+      success: function() {
+        console.log('client - successful destination charge post request completed');
+        console.log('after payment, reset the selected state');
+        context.resetSelectedState();
+      },
+      error: function() {
+        console.log('client - error destination charge post request completed');
+      }
+    });
   }
+
 
   render() {
     if (!this.state.selectedWalk.walker) {
@@ -111,6 +136,7 @@ class Browse extends React.Component {
             selectedWalk = {this.state.selectedWalk}
             resetSelectedState ={this.resetSelectedState}
             pickupAddress = {this.state.pickupAddress}
+            processPayment = {this.processPayment}
           />
         </div>
       );
