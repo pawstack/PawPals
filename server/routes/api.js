@@ -67,4 +67,12 @@ router.route('/walks/refund')
 router.route('/walks/confirmation')
   .get(ApiController.confirmation);
 
+router.route('/walks/getOwnerInfo')
+  .get((req, res) => {
+    res.status(200).send(req.user);
+  });
+
+router.route('/walks/getDogInfo')
+  .get(ApiController.getDogInfo);
+
 module.exports = router;

@@ -263,7 +263,7 @@ module.exports.processPayment = (req, res) => {
               if (charge.paid === true) {
                 saveChargeTransactionToDB(req.body.walkID, charge.id);
               }
-              res.redirect('/payment'); //update this later!
+              res.redirect('/home'); //update this later!
             });
         });
     });
@@ -372,6 +372,14 @@ var getUserType = (userID) => {
 
 ||||||| merged common ancestors
 =======
+
+module.exports.getDogInfo = (req, res) => {
+  return knex('dogs')
+    .where({owner_id: req.query.ownerID})
+    .then((result) => {
+      res.send(result[0]);
+    });
+};
 
 module.exports.confirmation = (req, res) => {
 

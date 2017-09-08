@@ -17,6 +17,8 @@ class Browse extends React.Component {
     this.selectWalk = this.selectWalk.bind(this);
     this.getOwnerInfo = this.getOwnerInfo.bind(this);
     this.getDogInfo = this.getDogInfo.bind(this);
+    this.resetSelectedState = this.resetSelectedState.bind(this);
+
   }
 
   getWalks(filters) {
@@ -70,6 +72,13 @@ class Browse extends React.Component {
     });
   }
 
+  resetSelectedState() {
+    console.log('reseting the selected state');
+    this.setState({
+      selectedWalk: {}
+    });
+  }
+
   componentDidMount() {
     console.log('component did mount');
     this.getOwnerInfo();
@@ -86,13 +95,12 @@ class Browse extends React.Component {
     } else {
       return (
         <div>
-          <BrowseFilter getWalks={this.getWalks} />
-          <BrowseList walks={this.state.walks} selectWalk={this.selectWalk} />
           <Confirmation
             ownerInfo = {this.state.ownerInfo}
             dogInfo = {this.state.dogInfo}
             walks = {this.state.walks}
             selectedWalk = {this.state.selectedWalk}
+            resetSelectedState ={this.resetSelectedState}
           />
         </div>
       );

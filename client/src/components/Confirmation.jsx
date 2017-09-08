@@ -67,7 +67,7 @@ class Confirmation extends React.Component {
       <div>
         <MuiThemeProvider>
           <div>
-            Confirmation Page
+            
             <Card>
 
               <CardMedia

@@ -52,7 +52,7 @@ class BrowseFilter extends React.Component {
   render() {
     return (
       <div>
-        <Drawer docked={true}>
+        <Drawer docked={false}>
           <AppBar title="Filter" showMenuIconButton={false} />
           <MenuItem>
             <TextField
@@ -64,8 +64,8 @@ class BrowseFilter extends React.Component {
               onChange={this.handleChange}
             />
           </MenuItem>
-          <MenuItem> 
-            <DatePicker 
+          <MenuItem>
+            <DatePicker
               floatingLabelText="Pickup Date"
               hintText="Pickup Date"
               autoOk={true}
@@ -75,7 +75,7 @@ class BrowseFilter extends React.Component {
               onChange={this.handleChangeAdditional.bind(this, 'startDate')}
             />
           </MenuItem>
-          <MenuItem> 
+          <MenuItem>
             <TimePicker
               format="ampm"
               floatingLabelText="Pickup Time"
@@ -85,7 +85,7 @@ class BrowseFilter extends React.Component {
               onChange={this.handleChangeAdditional.bind(this, 'pickupTime')}
             />
           </MenuItem>
-          <MenuItem> 
+          <MenuItem>
             <SelectField
               floatingLabelText="Walk Duration"
               value={this.state.duration}
@@ -98,7 +98,7 @@ class BrowseFilter extends React.Component {
               <MenuItem value={120} primaryText="2 hours" />
             </SelectField>
           </MenuItem>
-          <MenuItem> 
+          <MenuItem>
             <Subheader>Price per hour: {this.state.price}</Subheader>
             <Slider
               min={0}
@@ -108,7 +108,7 @@ class BrowseFilter extends React.Component {
               onChange={this.handleChangeAdditional.bind(this, 'price')}
             />
           </MenuItem>
-          <MenuItem> 
+          <MenuItem>
             <RaisedButton label="Apply Filter" primary={true} onClick={this.props.getWalks.bind(this, this.state)} />
           </MenuItem>
         </Drawer>
