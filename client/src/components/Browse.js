@@ -13,7 +13,8 @@ class Browse extends React.Component {
       ownerInfo: {},
       dogInfo: {},
       pickupAddress: '',
-      totalPrice: 0
+      totalPrice: 0,
+      snackBarOpen: true
     };
     this.getWalks = this.getWalks.bind(this);
     this.selectWalk = this.selectWalk.bind(this);
@@ -22,7 +23,7 @@ class Browse extends React.Component {
     this.resetSelectedState = this.resetSelectedState.bind(this);
     this.setPickupAddress = this.setPickupAddress.bind(this);
     this.processPayment = this.processPayment.bind(this);
-
+    this.handleSnackBarClose = this.handleSnackBarClose.bind(this);
   }
 
   getWalks(filters) {
@@ -109,11 +110,24 @@ class Browse extends React.Component {
       success: function() {
         console.log('client - successful destination charge post request completed');
         console.log('after payment, reset the selected state');
-        context.resetSelectedState();
+        context.setState({
+          snackBarOpen: true
+        }, function() {
+          context.resetSelectedState();
+        });
+
       },
       error: function() {
         console.log('client - error destination charge post request completed');
       }
+    });
+  }
+
+  handleSnackBarClose() {
+    console.log('about to close snackbar');
+    console.log('this is ', this);
+    this.setState({
+      snackBarOpen: false
     });
   }
 
@@ -137,6 +151,8 @@ class Browse extends React.Component {
             resetSelectedState ={this.resetSelectedState}
             pickupAddress = {this.state.pickupAddress}
             processPayment = {this.processPayment}
+            snackBarOpen = {this.state.snackBarOpen}
+            handleSnackBarClose = {this.handleSnackBarClose}
           />
         </div>
       );
