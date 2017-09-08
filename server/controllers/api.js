@@ -261,7 +261,7 @@ module.exports.processPayment = (req, res) => {
             .then(charge => {
               console.log('the charge details are ', charge);
               if (charge.paid === true) {
-                saveChargeTransactionToDB(req.body.walkID, charge.id);
+                saveChargeTransactionToDB(req.body.walkID, charge.id, req.body.ownerID, req.body.dogID, req.body.pickupAddress);
               }
               res.redirect('/home'); //update this later!
             });
@@ -306,12 +306,15 @@ module.exports.refundPayment = (req, res) => {
     });
 };
 
-var saveChargeTransactionToDB = (walkID, transactionNumber) => {
+var saveChargeTransactionToDB = (walkID, transactionNumber, ownerID, dogID, pickupAddress) => {
   return knex('walks')
     .where({id: walkID, paid: false})
     .update({
       paid: true,
-      payment_transaction_id: transactionNumber
+      payment_transaction_id: transactionNumber,
+      owner_id: ownerID,
+      dog_id: dogID,
+      pickup_address: pickupAddress
     })
     .then(result => {
       if (result === 0) {
