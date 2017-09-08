@@ -70,8 +70,8 @@ export default class DialogExampleScrollable extends React.Component {
       />,
     ];
 
-    const start = moment(this.props.start, 'YYYY-YY-DD hh:mm:ss').format('llll');
-    const end = moment(this.props.end, 'YYYY-YY-DD hh:mm:ss').format('LT');
+    const start = moment(this.props.start, 'YYYY-MM-DD hh:mm:ss').format('llll');
+    const end = moment(this.props.end, 'YYYY-MM-DD hh:mm:ss').format('LT');
 
     return (
       <div>
