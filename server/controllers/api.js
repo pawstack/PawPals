@@ -3,7 +3,9 @@ const knex = require('knex')(require('../../knexfile'));
 const db = require('bookshelf')(knex);
 var curl = require('curlrequest');
 var config = require('config')['stripe'];
+var cloudinaryConfig = require('config')['cloudinary'];
 var stripe = require('stripe')(config.secretKey);
+var cloudinary = require('cloudinary');
 var controllers = require('./');
 
 db.plugin('registry');
@@ -362,3 +364,5 @@ var getUserType = (userID) => {
       return result[0].owner;
     });
 };
+
+

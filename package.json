@@ -1,5 +1,4 @@
 {
-  "name": "course.thesis",
   "version": "1.0.0",
   "engines": {
     "node": "6.11.2"
@@ -21,6 +20,7 @@
     "bookshelf": "^0.10.3",
     "classnames": "^2.2.5",
     "cldr-data": "^31.0.2",
+    "cloudinary": "^1.9.0",
     "config": "^1.26.1",
     "connect-flash": "^0.1.1",
     "connect-redis": "^3.2.0",
