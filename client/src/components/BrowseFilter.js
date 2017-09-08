@@ -16,7 +16,6 @@ class BrowseFilter extends React.Component {
     const minDate = new Date(new Date().setHours(0, 0, 0, 0));
 
     this.state = {
-      location: '',
       minDate: minDate,
       startDate: minDate,
       endDate: new Date(minDate.getTime() + (1000 * 60 * 60 * 24 * 14 + 86399000)),
@@ -24,7 +23,7 @@ class BrowseFilter extends React.Component {
       pickupTime: null,
       price: 100
     };
-    this.handleChange = this.handleChange.bind(this);
+    this.handleLocationChange = this.handleLocationChange.bind(this);
     this.handleSelectDuration = this.handleSelectDuration.bind(this);
   }
 
@@ -32,11 +31,9 @@ class BrowseFilter extends React.Component {
     this.props.getWalks(this.state);
   }
 
-  handleChange(event) {
+  handleLocationChange(event) {
     const name = event.target.name;
-    this.setState({
-      [name]: event.target.value,
-    });
+    this.props.setPickupAddress(event.target.value);
   }
 
   handleChangeAdditional(key, event, value) {
@@ -52,16 +49,16 @@ class BrowseFilter extends React.Component {
   render() {
     return (
       <div>
-        <Drawer docked={false}>
+        <Drawer docked={true}>
           <AppBar title="Filter" showMenuIconButton={false} />
           <MenuItem>
             <TextField
               id="filter-location"
               hintText="e.g. 944 Market St, San Francisco"
-              floatingLabelText="Location"
+              floatingLabelText="Pickup Address"
               name="location"
-              value={this.state.location}
-              onChange={this.handleChange}
+              value={this.props.pickupAddress}
+              onChange={this.handleLocationChange}
             />
           </MenuItem>
           <MenuItem>

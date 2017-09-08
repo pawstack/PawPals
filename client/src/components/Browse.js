@@ -11,13 +11,15 @@ class Browse extends React.Component {
       walks: [],
       selectedWalk: {},
       ownerInfo: {},
-      dogInfo: {}
+      dogInfo: {},
+      pickupAddress: '',
     };
     this.getWalks = this.getWalks.bind(this);
     this.selectWalk = this.selectWalk.bind(this);
     this.getOwnerInfo = this.getOwnerInfo.bind(this);
     this.getDogInfo = this.getDogInfo.bind(this);
     this.resetSelectedState = this.resetSelectedState.bind(this);
+    this.setPickupAddress = this.setPickupAddress.bind(this);
 
   }
 
@@ -79,6 +81,13 @@ class Browse extends React.Component {
     });
   }
 
+  setPickupAddress(location) {
+    console.log('updating set pickup location on browse ', location);
+    this.setState({
+      pickupAddress: location
+    });
+  }
+
   componentDidMount() {
     console.log('component did mount');
     this.getOwnerInfo();
@@ -88,7 +97,7 @@ class Browse extends React.Component {
     if (!this.state.selectedWalk.walker) {
       return (
         <div>
-          <BrowseFilter getWalks={this.getWalks} />
+          <BrowseFilter setPickupAddress = {this.setPickupAddress} pickupAddress = {this.state.pickupAddress} getWalks={this.getWalks} />
           <BrowseList walks={this.state.walks} selectWalk={this.selectWalk} />
         </div>
       );
@@ -101,6 +110,7 @@ class Browse extends React.Component {
             walks = {this.state.walks}
             selectedWalk = {this.state.selectedWalk}
             resetSelectedState ={this.resetSelectedState}
+            pickupAddress = {this.state.pickupAddress}
           />
         </div>
       );

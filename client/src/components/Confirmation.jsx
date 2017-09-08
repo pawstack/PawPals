@@ -51,7 +51,10 @@ class Confirmation extends React.Component {
         walkerUserID: this.props.selectedWalk.walker_id, //TBD WHEN BOOKED.  This will come from the selected walk state.
         walkID: this.props.selectedWalk.id, //TBD WHEN BOOKED.
         description: 'PawPals',
-        percentRetainedByPlatform: 10
+        percentRetainedByPlatform: 10,
+        ownerID: this.props.ownerInfo.id,
+        pickupAddress: this.props.pickupAddress,
+        dogID: this.props.dogInfo.id
       },
       success: function() {
         console.log('client - successful destination charge post request completed');
@@ -88,7 +91,7 @@ class Confirmation extends React.Component {
               <CardHeader
                 title={this.props.selectedWalk.walker.display}
                 subtitle={this.props.selectedWalk.walker.about_me}
-                avatar={this.props.selectedWalk.walker.profile_pic}
+                avatar={this.props.selectedWalk.walker.profile_pic }
                 titleStyle={{'fontSize': '20px', 'fontWeight': 'bold'}}
                 subtitleStyle={{'fontSize': '15px'}}
               />
