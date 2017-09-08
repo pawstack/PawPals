@@ -88,7 +88,7 @@ class Calendar extends React.Component {
     this.setState({
       snackBarOpen: false,
     });
-  };
+  }
 
   getEvents(callback) {
     fetch('/api/walks/fetch', {
@@ -144,11 +144,11 @@ class Calendar extends React.Component {
       body: JSON.stringify({walkID: walk_id})
     })
       .then(() => {
-        this.setState({['snackBarOpen']: true})
+        this.setState({['snackBarOpen']: true});
       })
       .catch((err) => {
         console.log('refund failed');
-      })
+      });
   }
 
   handleSubmit(e) {
@@ -197,7 +197,7 @@ class Calendar extends React.Component {
         />
         <DialogForm handleTextInputChange={this.handleTextInputChange} open={this.state.formOpen} handleClose={this.handleFormClose} handleOpen={this.handleFormOpen} handleSubmit={this.handleSubmit} start={this.state.start} end={this.state.end} price={this.state.price} location={this.state.location}/>
         < EventDialog handleCancel={this.handleCancel} open={this.state.eventOpen} handleClose={this.handleEventClose} handleOpen={this.handleEventOpen} selectedEvent={this.state.selectedEvent}/>
-      < SnackBarCom open={this.state.snackBarOpen} handleSnackBarClose={this.handleSnackBarClose} message={'Refund successful'} />
+        < SnackBarCom open={this.state.snackBarOpen} handleSnackBarClose={this.handleSnackBarClose} message={'Refund successful'} />
       </div>
     );
   }

@@ -114,6 +114,7 @@ module.exports.saveDog = (req, res) => {
         name: req.body.name,
         age: req.body.age,
         weight: req.body.weight,
+        profile_pic: req.body.profile_pic,
         breed: req.body.breed,
         extras: req.body.extras,
         owner_id: req.user.id})
@@ -141,8 +142,10 @@ module.exports.saveDog = (req, res) => {
 
 
 module.exports.saveWalker = function(req, res) {
-  knex('profiles').where('id', req.user.id).update({ about_me: req.body.extras,
+  knex('profiles').where('id', req.user.id).update({
+    about_me: req.body.extras,
     walker: true,
+    profile_pic: req.body.profile_pic,
     phone: req.body.phone,
     address: req.body.address
   })
@@ -151,7 +154,7 @@ module.exports.saveWalker = function(req, res) {
 
 
 module.exports.updateOwnerProfile = (req, res) => {
-  console.log('UPDATE OWNER', req.body.name);
+  console.log('UPDATE OWNER', req.body.profile_pic);
 
   var dogUpdate = new Promise(
     (resolve, reject) => {
@@ -159,6 +162,7 @@ module.exports.updateOwnerProfile = (req, res) => {
         name: req.body.name,
         weight: req.body.weight,
         breed: req.body.breed,
+        profile_pic: req.body.profile_pic,
         extras: req.body.extras
       })
         .then(resolve());
@@ -190,6 +194,7 @@ module.exports.updateWalkerProfile = (req, res) => {
   knex('profiles').where('id', req.user.id).update({
     phone: req.body.phone,
     address: req.body.address,
+    profile_pic: req.body.profile_pic,
     about_me: req.body.about_me
   })
     .then(res.send(200));
@@ -298,9 +303,9 @@ module.exports.refundPayment = (req, res) => {
     .then(() => {
       res.sendStatus(200);
     })
-  .catch(() => {
-    res.sendStatus(503);
-  })
+    .catch(() => {
+      res.sendStatus(503);
+    });
 };
 
 var saveChargeTransactionToDB = (walkID, transactionNumber) => {

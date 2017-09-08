@@ -6,7 +6,7 @@ export default class SnackbarSimple extends React.Component {
 
   constructor(props) {
     super(props);
-  };
+  }
 
   render() {
     return (
