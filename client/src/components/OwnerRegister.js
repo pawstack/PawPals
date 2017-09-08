@@ -77,6 +77,7 @@ class OwnerRegister extends React.Component {
 
     let reader = new FileReader();
     let file = e.target.files[0];
+    console.log('Image file: ', file);
 
     reader.onloadend = () => {
       this.setState({
@@ -104,7 +105,7 @@ class OwnerRegister extends React.Component {
           age: this.state.age,
           breed: this.state.breed,
           weight: this.state.weight,
-          profile_pic: this.state.imagePreviewUrl,
+          //profile_pic: this.state.imagePreviewUrl,
           extras: this.state.extras,
           phone: this.props.phoneInfo,
           address: this.props.addressInfo
@@ -119,14 +120,50 @@ class OwnerRegister extends React.Component {
   }
 
   render() {
+
+    var b64toBlob = function (b64Data, contentType, sliceSize) {
+      contentType = contentType || '';
+      sliceSize = sliceSize || 512;
+
+      var byteCharacters = atob(b64Data);
+      var byteArrays = [];
+
+      for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+        var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+        var byteNumbers = new Array(slice.length);
+        for (var i = 0; i < slice.length; i++) {
+          byteNumbers[i] = slice.charCodeAt(i);
+        }
+
+        var byteArray = new Uint8Array(byteNumbers);
+
+        byteArrays.push(byteArray);
+      }
+
+      var blob = new Blob(byteArrays, {type: contentType});
+      return blob;
+    };
+
+
     let {imagePreviewUrl} = this.state;
     let imagePreview = null;
+
     if (imagePreviewUrl) {
-      //console.log('URL is', imagePreviewUrl);
+      console.log('URL is', imagePreviewUrl);
       imagePreview = (<img src={imagePreviewUrl} width="200"/>);
+
+      var block = imagePreviewUrl.split(';');
+      var contentType = block[0].split(':')[1];
+      var realData = block[1].split(',')[1];
+      var blob = b64toBlob(realData, contentType);
+      console.log('BLOB IS,', blob);
+
     } else {
       imagePreview = (<div>Please select an Image for Preview</div>);
     }
+
+
 
     return (
       <div>
