@@ -30,9 +30,6 @@ class App extends React.Component {
               <li><Link to='/walker'>Walker</Link></li>
               <li><Link to='/profilepage/owner'>Owner Profile Page</Link></li>
               <li><Link to='/profilepage/walker'>Walker Profile Page</Link></li>
-<<<<<<< HEAD
-
->>>>>>> updates for confirmation
             </ul>
 
             <Route exact path="/home" render={() => (
@@ -43,9 +40,6 @@ class App extends React.Component {
             <Route exact path="/walker" component={Calendar}/>
             <Route exact path="/profilepage/owner" component={ProfileOwner}/>
             <Route exact path="/profilepage/walker" component={ProfileWalker}/>
-<<<<<<< HEAD
-
->>>>>>> updates for confirmation
           </div>
         </Router>
       </MuiThemeProvider>
