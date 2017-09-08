@@ -19,34 +19,27 @@ class Confirmation extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      totalPrice: 0
     };
 
+    this.calculateTotalPrice = this.calculateTotalPrice.bind(this);
+  }
 
-    this.requestRefundForCancellation = this.requestRefundForCancellation.bind(this);
+  componentDidMount() {
+    // console.log('confirmation - mounted');
+    this.calculateTotalPrice();
 
   }
 
-
-
-  requestRefundForCancellation() {
-    console.log('button clicked to request a refund for cancellation');
-    $.ajax({
-      type: 'POST',
-      url: '/api/walks/refund',
-      data: {
-        walkID: 1, //TBD WHEN BOOKED.
-      },
-      success: function() {
-        console.log('client - successful cancellation refund completed');
-      },
-      error: function() {
-        console.log('client - successful cancellation refund completed');
-      }
+  calculateTotalPrice() {
+    var start = moment(this.props.selectedWalk.session_start, 'HH:mm:ss');
+    var end = moment(this.props.selectedWalk.session_end, 'HH:mm:ss');
+    var durationInHours = moment.duration(end.diff(start)) / 1000 / 60 / 60;
+    this.setState({
+      totalPrice: durationInHours * this.props.selectedWalk.price
     });
+    console.log('the duration is ', durationInHours);
   }
-
-
 
   render() {
     return (
@@ -57,7 +50,7 @@ class Confirmation extends React.Component {
             <Card>
 
               <CardMedia
-                overlay={<CardTitle title="Confirm your Selection!"/>}
+                overlay={<CardTitle title="Confirm your Selection"/>}
               >
                 <img src="" alt="" />
               </CardMedia>
@@ -67,15 +60,16 @@ class Confirmation extends React.Component {
                   .format('h:mm A'))}`
                 }
 
-                subtitle= {`Cosmos upcoming walk with ${this.props.selectedWalk.walker.display}`}
+                subtitle= {`${this.props.dogInfo.name}'s upcoming walk with ${this.props.selectedWalk.walker.display}`}
+                subtitleStyle={{'fontSize': '15px'}}
               />
 
               <CardHeader
                 title={this.props.selectedWalk.walker.display}
                 subtitle={this.props.selectedWalk.walker.about_me}
                 avatar={this.props.selectedWalk.walker.profile_pic}
-                titleStyle={{'fontSize': '30px', 'fontWeight': 'bold'}}
-                subtitleStyle={{'fontSize': '20px'}}
+                titleStyle={{'fontSize': '20px', 'fontWeight': 'bold'}}
+                subtitleStyle={{'fontSize': '15px'}}
               />
 
               <div>
@@ -96,7 +90,7 @@ class Confirmation extends React.Component {
               </div>
               <div>
                 <TextField
-                  defaultValue="944 Market Street, San Francisco, CA"
+                  defaultValue={this.props.ownerInfo.address}
                   floatingLabelText="Pick-Up Location"
                   disabled={true}
                   style = {{padding: 20, width: 450, fontSize: 20}}
@@ -104,7 +98,7 @@ class Confirmation extends React.Component {
               </div>
 
               <CardText>
-                The total price for this walk will be <b>${this.props.selectedWalk.price} USD</b>.
+                The total price for this walk will be <b>${this.state.totalPrice.toFixed(2)} USD</b>.
               </CardText>
               <CardActions>
                 <RaisedButton label="BACK TO BROWSE" primary={true}/>
