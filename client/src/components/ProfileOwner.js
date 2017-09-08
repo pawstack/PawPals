@@ -4,6 +4,7 @@ import $ from 'jquery';
 import TextField from 'material-ui/TextField';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
+import ReactFilestack from 'filestack-react';
 
 class ProfileOwner extends React.Component {
 
@@ -19,12 +20,14 @@ class ProfileOwner extends React.Component {
       age: '',
       breed: '',
       weight: 0,
+      url: '',
       extras: ''
     };
 
     this.getOwnerProfile = this.getOwnerProfile.bind(this);
     this.getDogProfile = this.getDogProfile.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.uploadImage = this.uploadImage.bind(this);
     this.handleUpdateProfile = this.handleUpdateProfile.bind(this);
   }
 
@@ -58,6 +61,7 @@ class ProfileOwner extends React.Component {
           name: res[0].name,
           breed: res[0].breed,
           weight: res[0].weight,
+          url: res[0].profile_pic,
           extras: res[0].extras,
         });
       },
@@ -78,6 +82,15 @@ class ProfileOwner extends React.Component {
     });
   }
 
+  uploadImage(result) {
+    console.log('RESULT IS ', result);
+    var url = result.filesUploaded[0].url;
+    console.log('URL IS', url);
+    this.setState({
+      url: url
+    });
+  }
+
   handleUpdateProfile() {
     $.ajax({
       url: '/api/profileupdate/owner',
@@ -88,6 +101,7 @@ class ProfileOwner extends React.Component {
         id: this.state.id,
         breed: this.state.breed,
         weight: this.state.weight,
+        profile_pic: this.state.url,
         extras: this.state.extras,
         phone: this.state.phone,
         address: this.state.address
@@ -101,6 +115,10 @@ class ProfileOwner extends React.Component {
   }
 
   render() {
+    const options = {
+      accept: 'image/*',
+      maxFiles: 1,
+    };
 
     return (
       <div>
@@ -136,10 +154,18 @@ class ProfileOwner extends React.Component {
           </tbody>
         </table>
         <div>
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Japaneseakita.jpg/200px-Japaneseakita.jpg" alt="" width="220" style={{'borderRadius': '10px', 'marginLeft': '20px', 'marginTop': '30px'}}/>
+          <img src={this.state.url} alt="" width="220" height="220" style={{'borderRadius': '10px', 'marginLeft': '20px', 'marginTop': '20px', 'marginBottom': '20px'}}/>
         </div>
-
-        <div style={{'float': 'right', 'marginRight': '320px', 'marginTop': '-210px'}}>
+        <div style={{'marginLeft': '20px'}}>
+          <ReactFilestack
+            apikey="Ay45M83ltRnWSZq3qL6Zhz"
+            buttonText="Change Dog's Photo"
+            buttonClass="photoupload"
+            options={options}
+            onSuccess={this.uploadImage}
+          />
+        </div>
+        <div style={{'float': 'right', 'marginRight': '320px', 'marginTop': '-260px'}}>
           <table>
             <tbody>
               <tr>

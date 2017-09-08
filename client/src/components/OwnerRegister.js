@@ -7,6 +7,7 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import Subheader from 'material-ui/Subheader';
 import RaisedButton from 'material-ui/RaisedButton';
+import ReactFilestack from 'filestack-react';
 
 
 var checkEmptyEntry = function(obj) {
@@ -18,6 +19,7 @@ var checkEmptyEntry = function(obj) {
   return false;
 };
 
+
 class OwnerRegister extends React.Component {
 
   constructor(props) {
@@ -27,9 +29,8 @@ class OwnerRegister extends React.Component {
       name: '',
       age: 0,
       breed: '',
-      file: '',
       weight: 0,
-      imagePreviewUrl: '',
+      url: '',
       extras: '',
       owner: true
     };
@@ -39,6 +40,7 @@ class OwnerRegister extends React.Component {
     this.handleBreedChange = this.handleBreedChange.bind(this);
     this.handleWeightChange = this.handleWeightChange.bind(this);
     this.handleExtrasChange = this.handleExtrasChange.bind(this);
+    this.uploadImage = this.uploadImage.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -72,21 +74,13 @@ class OwnerRegister extends React.Component {
     });
   }
 
-  handleImageChange(e) {
-    e.preventDefault();
-
-    let reader = new FileReader();
-    let file = e.target.files[0];
-    console.log('Image file: ', file);
-
-    reader.onloadend = () => {
-      this.setState({
-        file: file,
-        imagePreviewUrl: reader.result
-      });
-    };
-
-    reader.readAsDataURL(file);
+  uploadImage(result) {
+    console.log('RESULT IS ', result);
+    var url = result.filesUploaded[0].url;
+    console.log('URL IS', url);
+    this.setState({
+      url: url
+    });
   }
 
 
@@ -105,7 +99,7 @@ class OwnerRegister extends React.Component {
           age: this.state.age,
           breed: this.state.breed,
           weight: this.state.weight,
-          //profile_pic: this.state.imagePreviewUrl,
+          profile_pic: this.state.url,
           extras: this.state.extras,
           phone: this.props.phoneInfo,
           address: this.props.addressInfo
@@ -121,48 +115,10 @@ class OwnerRegister extends React.Component {
 
   render() {
 
-    var b64toBlob = function (b64Data, contentType, sliceSize) {
-      contentType = contentType || '';
-      sliceSize = sliceSize || 512;
-
-      var byteCharacters = atob(b64Data);
-      var byteArrays = [];
-
-      for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-        var slice = byteCharacters.slice(offset, offset + sliceSize);
-
-        var byteNumbers = new Array(slice.length);
-        for (var i = 0; i < slice.length; i++) {
-          byteNumbers[i] = slice.charCodeAt(i);
-        }
-
-        var byteArray = new Uint8Array(byteNumbers);
-
-        byteArrays.push(byteArray);
-      }
-
-      var blob = new Blob(byteArrays, {type: contentType});
-      return blob;
+    const options = {
+      accept: 'image/*',
+      maxFiles: 1,
     };
-
-
-    let {imagePreviewUrl} = this.state;
-    let imagePreview = null;
-
-    if (imagePreviewUrl) {
-      console.log('URL is', imagePreviewUrl);
-      imagePreview = (<img src={imagePreviewUrl} width="200"/>);
-
-      var block = imagePreviewUrl.split(';');
-      var contentType = block[0].split(':')[1];
-      var realData = block[1].split(',')[1];
-      var blob = b64toBlob(realData, contentType);
-      console.log('BLOB IS,', blob);
-
-    } else {
-      imagePreview = (<div>Please select an Image for Preview</div>);
-    }
-
 
 
     return (
@@ -201,15 +157,18 @@ class OwnerRegister extends React.Component {
             onChange={this.handleWeightChange}
           />
         </div>
-        <h5>Upload a photo of your dog</h5>
-        <form onSubmit={(e)=>this.handleSubmit(e)}>
-          <input
-            className="fileInput"
-            type="file"
-            onChange={(e)=>this.handleImageChange(e)} />
-        </form>
+
         <div>
-          {imagePreview}
+          <ReactFilestack
+            apikey="Ay45M83ltRnWSZq3qL6Zhz"
+            buttonText="Upload Dog's Photo"
+            buttonClass="photoupload"
+            options={options}
+            onSuccess={this.uploadImage}
+          />
+          <div style={{'marginTop': '20px'}}>
+            <img src={this.state.url} width="200"></img>
+          </div>
         </div>
 
         <div>

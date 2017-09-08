@@ -4,6 +4,7 @@ import $ from 'jquery';
 import TextField from 'material-ui/TextField';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
+import ReactFilestack from 'filestack-react';
 
 class ProfileWalker extends React.Component {
 
@@ -13,11 +14,13 @@ class ProfileWalker extends React.Component {
       walkername: '',
       phone: '',
       address: '',
+      url: '',
       about_me: ''
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.getWalkerProfile = this.getWalkerProfile.bind(this);
+    this.uploadImage = this.uploadImage.bind(this);
     this.handleUpdateProfile = this.handleUpdateProfile.bind(this);
   }
 
@@ -29,6 +32,7 @@ class ProfileWalker extends React.Component {
         console.log('WALKER PROFILE', res[0]);
         this.setState({
           walkername: res[0].display,
+          url: res[0].profile_pic,
           phone: res[0].phone,
           address: res[0].address,
           about_me: res[0].about_me
@@ -51,6 +55,15 @@ class ProfileWalker extends React.Component {
     });
   }
 
+  uploadImage(result) {
+    console.log('RESULT IS ', result);
+    var url = result.filesUploaded[0].url;
+    console.log('URL IS', url);
+    this.setState({
+      url: url
+    });
+  }
+
   handleUpdateProfile() {
     $.ajax({
       url: '/api/profileupdate/walker',
@@ -58,6 +71,7 @@ class ProfileWalker extends React.Component {
       data: {
         phone: this.state.phone,
         address: this.state.address,
+        profile_pic: this.state.url,
         about_me: this.state.about_me
       },
       success: (res) => {
@@ -69,6 +83,10 @@ class ProfileWalker extends React.Component {
   }
 
   render() {
+    const options = {
+      accept: 'image/*',
+      maxFiles: 1,
+    };
 
     return (
       <div>
@@ -78,46 +96,58 @@ class ProfileWalker extends React.Component {
           subtitle="Walker"
           avatar='https://s.imgur.com/images/404/cat3weyes.png'
         />
-
-
-        <table>
-          <tbody>
-            <tr>
-              <td><CardHeader title="Phone: "/></td>
-              <td>
-                <TextField
-                  name = "phone"
-                  value={this.state.phone}
-                  onChange={this.handleChange}
-                />
-              </td>
-            </tr>
-            <tr>
-              <td><CardHeader title="Address: "/></td>
-              <td>
-                <TextField
-                  name = "address"
-                  multiLine={true}
-                  rows={2}
-                  value={this.state.address}
-                  onChange={this.handleChange}
-                />
-              </td>
-            </tr>
-            <tr>
-              <td><CardHeader title="About me: "/></td>
-              <td>
-                <TextField
-                  name = "about_me"
-                  multiLine={true}
-                  rows={2}
-                  value={this.state.about_me}
-                  onChange={this.handleChange}
-                />
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div>
+          <img src={this.state.url} alt="" width="220" style={{'borderRadius': '10px', 'marginLeft': '20px', 'marginTop': '20px', 'marginBottom': '10px'}}/>
+        </div>
+        <div style={{'borderRadius': '10px', 'marginLeft': '20px', 'marginTop': '10px', 'marginBottom': '20px'}}>
+          <ReactFilestack
+            apikey="Ay45M83ltRnWSZq3qL6Zhz"
+            buttonText="Change Your Profile Photo"
+            buttonClass="photoupload"
+            options={options}
+            onSuccess={this.uploadImage}
+          />
+        </div>
+        <div>
+          <table>
+            <tbody>
+              <tr>
+                <td><CardHeader title="Phone: "/></td>
+                <td>
+                  <TextField
+                    name = "phone"
+                    value={this.state.phone}
+                    onChange={this.handleChange}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td><CardHeader title="Address: "/></td>
+                <td>
+                  <TextField
+                    name = "address"
+                    multiLine={true}
+                    rows={2}
+                    value={this.state.address}
+                    onChange={this.handleChange}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td><CardHeader title="About me: "/></td>
+                <td>
+                  <TextField
+                    name = "about_me"
+                    multiLine={true}
+                    rows={2}
+                    value={this.state.about_me}
+                    onChange={this.handleChange}
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <div>
           <br></br>
           <br></br>

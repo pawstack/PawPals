@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import ReactFilestack from 'filestack-react';
 
 
 var checkEmptyEntry = function(obj) {
@@ -19,12 +20,12 @@ class WalkerRegister extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      file: '',
-      imagePreviewUrl: '',
+      url: '',
       extras: ''
     };
 
     this.handleExtrasChange = this.handleExtrasChange.bind(this);
+    this.uploadImage = this.uploadImage.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -34,20 +35,13 @@ class WalkerRegister extends React.Component {
     });
   }
 
-  handleImageChange(e) {
-    e.preventDefault();
-
-    let reader = new FileReader();
-    let file = e.target.files[0];
-
-    reader.onloadend = () => {
-      this.setState({
-        file: file,
-        imagePreviewUrl: reader.result
-      });
-    };
-
-    reader.readAsDataURL(file);
+  uploadImage(result) {
+    console.log('RESULT IS ', result);
+    var url = result.filesUploaded[0].url;
+    console.log('URL IS', url);
+    this.setState({
+      url: url
+    });
   }
 
   handleSubmit() {
@@ -60,7 +54,7 @@ class WalkerRegister extends React.Component {
         url: '/api/signup/walker',
         type: 'POST',
         data: {
-          profile_pic: this.state.imagePreviewUrl,
+          profile_pic: this.state.url,
           extras: this.state.extras,
           phone: this.props.phoneInfo,
           address: this.props.addressInfo
@@ -76,28 +70,26 @@ class WalkerRegister extends React.Component {
   }
 
   render() {
-    let {imagePreviewUrl} = this.state;
-    let imagePreview = null;
-    if (imagePreviewUrl) {
-      imagePreview = (<img src={imagePreviewUrl} width="200"/>);
-    } else {
-      imagePreview = (<div>Please select an Image for Preview</div>);
-    }
+
+    const options = {
+      accept: 'image/*',
+      maxFiles: 1,
+    };
 
     return (
       <div>
         <h4>Step 2 Complete profile as a walker</h4>
         <div><br></br></div>
-        <div><h5>Upload your profile photo</h5></div>
         <div>
-          <form onSubmit={(e)=>this.handleSubmit(e)}>
-            <input
-              className="fileInput"
-              type="file"
-              onChange={(e)=>this.handleImageChange(e)} />
-          </form>
-          <div>
-            {imagePreview}
+          <ReactFilestack
+            apikey="Ay45M83ltRnWSZq3qL6Zhz"
+            buttonText="Upload Your Profile Photo"
+            buttonClass="photoupload"
+            options={options}
+            onSuccess={this.uploadImage}
+          />
+          <div style={{'marginTop': '20px'}}>
+            <img src={this.state.url} width="200"></img>
           </div>
         </div>
         <div>
