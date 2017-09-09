@@ -61,8 +61,8 @@ export default class EventDialog extends React.Component {
         onClick={this.props.handleClose}
       />,
     ]);
-    const start = moment(this.props.selectedEvent.start, 'YYYY-YY-DD hh:mm:ss').format('llll');
-    const end = moment(this.props.selectedEvent.end, 'YYYY-YY-DD hh:mm:ss').format('LT');
+    const start = moment(this.props.selectedEvent.start, 'YYYY-MM-DD hh:mm:ss').format('llll');
+    const end = moment(this.props.selectedEvent.end, 'YYYY-MM-DD hh:mm:ss').format('LT');
     return (
       <div>
         <Dialog
