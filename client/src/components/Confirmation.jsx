@@ -19,15 +19,11 @@ class Confirmation extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-
-    };
 
     this.calculateTotalPrice = this.calculateTotalPrice.bind(this);
   }
 
   componentDidMount() {
-    //this.calculateTotalPrice();
     var totalPrice = this.calculateTotalPrice();
     this.props.updateTotalPrice(totalPrice);
     console.log('the total price is ', totalPrice);
@@ -37,10 +33,7 @@ class Confirmation extends React.Component {
     var start = moment(this.props.selectedWalk.session_start);
     var end = moment(this.props.selectedWalk.session_end);
     var durationInHours = moment.duration(end.diff(start)) / 1000 / 60 / 60;
-    // this.setState({
     return durationInHours * this.props.selectedWalk.price;
-    // });
-    // console.log('the duration is ', durationInHours);
   }
 
 
