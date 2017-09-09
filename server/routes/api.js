@@ -72,6 +72,7 @@ router.route('/walks/getDogInfo')
   .get(ApiController.getDogInfo);
   
 router.route('/walks/track')
+  .get(ApiController.fetchGeolocations)
   .post(ApiController.saveWalkGeolocation);
 
 module.exports = router;
