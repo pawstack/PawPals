@@ -110,13 +110,9 @@ class Browse extends React.Component {
         dogID: this.state.dogInfo.id
       },
       success: function() {
-        console.log('client - successful destination charge post request completed');
-        console.log('after payment, reset the selected state');
-        console.log('BEFORE- the snackBarOpen is ', context.state.snackBarOpen);
         context.setState({
           snackBarOpen: true
         }, function() {
-          console.log('AFTER - the state of snackBarOpen is', context.state.snackBarOpen);
           context.resetSelectedState();
         });
 
@@ -138,8 +134,6 @@ class Browse extends React.Component {
   }
 
   handleSnackBarClose() {
-    console.log('about to close snackbar');
-    console.log('this is ', this);
     this.setState({
       snackBarOpen: false
     });
