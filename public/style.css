@@ -1,0 +1,16 @@
+body {
+
+}
+
+.container {
+  margin: auto
+  width: 100%
+}
+
+#root {
+  width: 100%
+}
+
+h3 {
+  color: red;
+}
