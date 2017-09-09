@@ -8,6 +8,7 @@ import $ from 'jquery';
 import Snackbar from 'material-ui/Snackbar';
 import RaisedButton from 'material-ui/RaisedButton';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
+import SnackBarCom from './Snackbar'
 
 BigCalendar.momentLocalizer(moment);
 require('style-loader!css-loader!react-big-calendar/lib/css/react-big-calendar.css');
@@ -168,8 +169,8 @@ class Calendar extends React.Component {
             'session_end': this.state.end,
             'walk_zone_pt': this.state.location,
             'price': this.state.price,
-            'longitute': latLng['lat'],
-            'latitude': latLng['lng']
+            'longitute': latLng['lng'],
+            'latitude': latLng['lat']
           })
         })
           .then((response) => response.json())

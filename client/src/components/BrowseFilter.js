@@ -9,6 +9,7 @@ import Subheader from 'material-ui/Subheader';
 import RaisedButton from 'material-ui/RaisedButton';
 import Drawer from 'material-ui/Drawer';
 import AppBar from 'material-ui/AppBar';
+import PlacesAutocomplete from './PlacesAutocomplete';
 
 class BrowseFilter extends React.Component {
   constructor(props) {
@@ -31,9 +32,8 @@ class BrowseFilter extends React.Component {
     this.props.getWalks(this.state);
   }
 
-  handleLocationChange(event) {
-    const name = event.target.name;
-    this.props.setPickupAddress(event.target.value);
+  handleLocationChange(value) {
+    this.props.setPickupAddress(value);
   }
 
   handleChangeAdditional(key, event, value) {
@@ -47,19 +47,16 @@ class BrowseFilter extends React.Component {
   }
 
   render() {
+    const inputProps = {
+      value: this.props.pickupAddress,
+      onChange: (v) => this.handleLocationChange(v),
+    }
     return (
       <div>
         <Drawer docked={true}>
           <AppBar title="Filter" showMenuIconButton={false} />
           <MenuItem>
-            <TextField
-              id="filter-location"
-              hintText="e.g. 944 Market St, San Francisco"
-              floatingLabelText="Pickup Address"
-              name="location"
-              value={this.props.pickupAddress}
-              onChange={this.handleLocationChange}
-            />
+            <PlacesAutocomplete inputProps={inputProps} label={"Pickup Address"} />
           </MenuItem>
           <MenuItem>
             <DatePicker
