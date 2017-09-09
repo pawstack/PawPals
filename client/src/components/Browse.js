@@ -127,6 +127,10 @@ class Browse extends React.Component {
     });
   }
 
+  componentDidMount() {
+    this.getOwnerInfo();
+  }
+
   handleSnackBarClose() {
     console.log('about to close snackbar');
     console.log('this is ', this);
