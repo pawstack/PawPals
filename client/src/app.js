@@ -18,42 +18,65 @@ import Confirmation from './components/Confirmation.jsx';
 import FindMyDog from './components/FindMyDog';
 import TrackWalk from './components/TrackWalk';
 import WalkHistory from './components/WalkHistory';
+import AppBar from 'material-ui/AppBar';
+import IconButton from 'material-ui/IconButton';
+import NavigationClose from 'material-ui/svg-icons/navigation/close';
+import FlatButton from 'material-ui/FlatButton';
+import NavBarOwnerLoggedIn from './components/NavBarOwnerLoggedIn.jsx';
 
 
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loggedIn: true
+    };
+  }
   render() {
     return (
-      <MuiThemeProvider>
-        <Router>
-          <div>
-            <ul>
-              <li><Link to="/home">Home</Link></li>
-              <li><Link to='/signup/start'>Signup</Link></li>
-              <li><Link to='/browse'>Browse Walks</Link></li>
-              <li><Link to='/walker'>Walker</Link></li>
-              <li><Link to='/profilepage/owner'>Owner Profile Page</Link></li>
-              <li><Link to='/profilepage/walker'>Walker Profile Page</Link></li>
-              <li><Link to='/findmydog'>Find My Dog</Link></li>
-              <li><Link to='/trackwalk'>Track Walk</Link></li>
-              <li><Link to='/walkhistory'>Current & Past Walks</Link></li>
-            </ul>
+      <div>
 
-            <Route exact path="/home" render={() => (
-              <h1>Hello World from React</h1>
-            )}/>
-            <Route exact path="/signup/start" component={SignUpStart}/>
-            <Route exact path="/browse" component={Browse}/>
-            <Route exact path="/walker" component={Calendar}/>
-            <Route exact path="/profilepage/owner" component={ProfileOwner}/>
-            <Route exact path="/profilepage/walker" component={ProfileWalker}/>
-            <Route exact path="/findmydog" component={FindMyDog}/>
-            <Route exact path="/trackwalk" component={TrackWalk}/>
-            <Route exact path="/walkhistory" component={WalkHistory}/>
+        <MuiThemeProvider>
+          <div>
+            <AppBar
+              title="Title"
+              iconElementRight = {<NavBarOwnerLoggedIn />}
+            />
           </div>
-        </Router>
-      </MuiThemeProvider>
+        </MuiThemeProvider>
+      </div>
+
     );
   }
 }
 
 ReactDOM.render(<App />, document.getElementById('root'));
+
+
+
+/*
+
+<Router>
+  <div>
+    <h3>test2</h3>
+    <ul>
+      <li><Link to="/home">Home</Link></li>
+      <li><Link to='/signup/start'>Signup</Link></li>
+      <li><Link to='/browse'>Browse Walks</Link></li>
+      <li><Link to='/walker'>Walker</Link></li>
+      <li><Link to='/profilepage/owner'>Owner Profile Page</Link></li>
+      <li><Link to='/profilepage/walker'>Walker Profile Page</Link></li>
+    </ul>
+
+    <Route exact path="/home" render={() => (
+      <h1>Hello World from React</h1>
+    )}/>
+    <Route exact path="/signup/start" component={SignUpStart}/>
+    <Route exact path="/browse" component={Browse}/>
+    <Route exact path="/walker" component={Calendar}/>
+    <Route exact path="/profilepage/owner" component={ProfileOwner}/>
+    <Route exact path="/profilepage/walker" component={ProfileWalker}/>
+  </div>
+</Router>
+
+*/
