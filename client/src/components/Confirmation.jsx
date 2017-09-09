@@ -27,9 +27,7 @@ class Confirmation extends React.Component {
   }
 
   componentDidMount() {
-    // console.log('confirmation - mounted');
     this.calculateTotalPrice();
-
   }
 
   calculateTotalPrice() {
@@ -115,17 +113,3 @@ class Confirmation extends React.Component {
 }
 
 export default Confirmation;
-
-
-/*
-
-<Snackbar
-  open={this.props.snackBarOpen}
-  message={'Your booking is confirmed!'}
-  action="OK"
-  autoHideDuration= {4000}
-  onActionTouchTap={this.handleActionTouchTap}
-  onRequestClose={this.props.handleSnackBarClose}
-/>
-
-*/

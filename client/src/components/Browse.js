@@ -135,7 +135,6 @@ class Browse extends React.Component {
     });
   }
 
-
   render() {
     if (!this.state.selectedWalk.walker) {
       return (
@@ -168,7 +167,6 @@ class Browse extends React.Component {
         </div>
       );
     }
-
   }
 }
 
