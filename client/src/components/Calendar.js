@@ -7,7 +7,7 @@ import EventDialog from './EventDialog';
 import $ from 'jquery';
 import Snackbar from 'material-ui/Snackbar';
 import RaisedButton from 'material-ui/RaisedButton';
-import SnackBarCom from './SnackBar';
+import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
 
 BigCalendar.momentLocalizer(moment);
 require('style-loader!css-loader!react-big-calendar/lib/css/react-big-calendar.css');
@@ -152,28 +152,35 @@ class Calendar extends React.Component {
   }
 
   handleSubmit(e) {
-    fetch('/api/walks/create', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      credentials: 'include',
-      body: JSON.stringify({
-        'session_start': this.state.start,
-        'session_end': this.state.end,
-        'walk_zone_pt': this.state.location,
-        'price': this.state.price,
+    e.preventDefault()
+    geocodeByAddress(this.state.location)
+      .then(results => getLatLng(results[0]))
+      .then((latLng) => {
+        fetch('/api/walks/create', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          credentials: 'include',
+          body: JSON.stringify({
+            'session_start': this.state.start,
+            'session_end': this.state.end,
+            'walk_zone_pt': this.state.location,
+            'price': this.state.price,
+            'longitute': latLng['lat'],
+            'latitude': latLng['lng']
+          })
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            var events = parseEvents(data);
+            this.setState({events, formOpen: false});
+          })
+          .catch((error) => {
+            console.error(error);
+          });
       })
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        var events = parseEvents(data);
-        this.setState({events, formOpen: false});
-      })
-      .catch((error) => {
-        console.error(error);
-      });
   }
 
   componentDidMount () {

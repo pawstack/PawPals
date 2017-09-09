@@ -44,7 +44,7 @@ class SignUpStart extends React.Component {
 
 
   handleEntriesChanged( component, valueType, value ) {
-    this.setState( { [valueType]: value } );
+    this.setState( { [valueType]: value });
   }
 
 
@@ -66,7 +66,7 @@ class SignUpStart extends React.Component {
   getStepContent(stepIndex) {
     switch (stepIndex) {
     case 0:
-      return (<SignUpDataEntry updateRoleState = {this.updateRoleState.bind(this)} entriesChanged = {this.handleEntriesChanged.bind(this)}/>);
+      return (<SignUpDataEntry address={this.state.address} updateRoleState = {this.updateRoleState.bind(this)} entriesChanged = {this.handleEntriesChanged.bind(this)}/>);
     case 1:
       if (this.state.owner) {
         return (<OwnerRegister phoneInfo = {this.state.phone} addressInfo = {this.state.address}/>);
