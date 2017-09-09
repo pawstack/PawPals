@@ -9,7 +9,6 @@ import moment from 'moment';
 import GpsFixed from 'material-ui/svg-icons/device/gps-fixed';
 import GpsOff from 'material-ui/svg-icons/device/gps-off';
 
-
 const styles = {
   radioButton: {
     marginTop: 16,
@@ -72,14 +71,25 @@ export default class EventDialog extends React.Component {
           open={this.props.open}
           onRequestClose={this.props.handleClose}
         >
-          <ul>
-            <li> Pickup Address: {this.props.selectedEvent.pickup_address}</li>
-            <li> Owner: {this.props.selectedEvent.owner_name} </li>
-            <li> Contact: {this.props.selectedEvent.owner_phone} </li>
-            <li> Price: ${this.props.selectedEvent.price} </li>
-            <li> Time: {start} to {end} </li>
-            <li> About the Dog: {this.props.selectedEvent.dog_extras} </li>
-          </ul>
+          <table>
+            <tbody>
+              <tr>
+                <td>
+                  <img src={this.props.selectedEvent.dog_profile_pic} alt="" width="220" height="220" style={{'borderRadius': '10px'}}/>
+                </td>
+                <td>
+                  <ul>
+                    <li> Pickup Address: {this.props.selectedEvent.pickup_address}</li>
+                    <li> Owner: {this.props.selectedEvent.owner_name} </li>
+                    <li> Contact: {this.props.selectedEvent.owner_phone} </li>
+                    <li> Price: ${this.props.selectedEvent.price} </li>
+                    <li> Time: {start} to {end} </li>
+                    <li> About the Dog: {this.props.selectedEvent.dog_extras} </li>
+                  </ul>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </Dialog>
       </div>
     );

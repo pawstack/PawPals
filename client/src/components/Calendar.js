@@ -7,8 +7,8 @@ import EventDialog from './EventDialog';
 import $ from 'jquery';
 import Snackbar from 'material-ui/Snackbar';
 import RaisedButton from 'material-ui/RaisedButton';
-import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
-import SnackBarCom from './Snackbar'
+import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
+import SnackBarCom from './Snackbar';
 
 BigCalendar.momentLocalizer(moment);
 require('style-loader!css-loader!react-big-calendar/lib/css/react-big-calendar.css');
@@ -26,6 +26,7 @@ let parseEvents = (data) => {
     event['paid'] = data.walks[i].paid;
     event['owner_name'] = data.walks[i].owner.first;
     event['owner_phone'] = data.walks[i].owner.phone;
+    event['dog_profile_pic'] = data.walks[i].dog.profile_pic;
     event['dog_extras'] = data.walks[i].dog.extras;
     event['end'] = new Date(data.walks[i].session_end);
     event['price'] = data.walks[i].price;
@@ -167,7 +168,7 @@ class Calendar extends React.Component {
   }
 
   handleSubmit(e) {
-    e.preventDefault()
+    e.preventDefault();
     geocodeByAddress(this.state.location)
       .then(results => getLatLng(results[0]))
       .then((latLng) => {
@@ -195,7 +196,7 @@ class Calendar extends React.Component {
           .catch((error) => {
             console.error(error);
           });
-      })
+      });
   }
 
   componentDidMount () {
