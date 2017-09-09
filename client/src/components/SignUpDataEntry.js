@@ -4,6 +4,7 @@ import TextField from 'material-ui/TextField';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import ActionFavorite from 'material-ui/svg-icons/action/favorite';
 import ActionFavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
+import PlacesAutocomplete from './PlacesAutocomplete';
 
 const styles = {
   block: {
@@ -30,8 +31,7 @@ class SignUpDataEntry extends React.Component {
   }
 
   updateAddress(e) {
-    const address = e.target.value;
-    this.props.entriesChanged( this, 'address', address );
+    this.props.entriesChanged( this, 'address', e);
   }
 
   getOwnerValue(e, value) {
@@ -55,6 +55,10 @@ class SignUpDataEntry extends React.Component {
   }
 
   render() {
+    const inputProps = {
+      value: this.props.address,
+      onChange: (v) => {this.updateAddress(v)},
+    }
     return (
       <div>
         <RadioButtonGroup name="shipSpeed" defaultSelected="not_light">
@@ -77,18 +81,9 @@ class SignUpDataEntry extends React.Component {
           floatingLabelText="Phone #"
           name="phone"
           onChange={this.updatePhone.bind(this)}
-        />
+          fullWidth={true}/>
         <div>
-          <TextField
-            id="address-info"
-            hintText="e.g. 944 Market St, San Francisco, CA 94103"
-            floatingLabelText="Address"
-            name="address"
-            multiLine={true}
-            rows={2}
-            rowsMax={4}
-            onChange={this.updateAddress.bind(this)}
-          />
+          <PlacesAutocomplete inputProps={inputProps} label={"Address"} />
         </div>
       </div>
     );

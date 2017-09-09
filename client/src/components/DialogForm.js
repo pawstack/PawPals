@@ -5,50 +5,8 @@ import TextField from 'material-ui/TextField';
 import {orange500, blue500} from 'material-ui/styles/colors';
 import Checkbox from 'material-ui/Checkbox';
 import moment from 'moment';
-
-const styles = {
-  radioButton: {
-    marginTop: 16,
-    errorStyle: {
-      color: orange500,
-    },
-    underlineStyle: {
-      borderColor: orange500,
-    },
-    floatingLabelStyle: {
-      color: orange500,
-    },
-    floatingLabelFocusStyle: {
-      color: blue500,
-    },
-  }
-};
-
-const WalkerConfirmationTextField = (props) => (
-  <div>
-    <text>{props.start} to {props.end}</text>
-    <br />
-    <TextField
-      floatingLabelText="Walking Zone"
-      floatingLabelStyle={styles.floatingLabelStyle}
-      floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
-      id="text-field-default"
-      value= {props.location}
-      onChange={(e, v) => props.handleTextInputChange('location', v)}
-    /><br />
-    <TextField
-      floatingLabelText="Price per Hour"
-      type="number"
-      min="20"
-      step="1.00"
-      max="100"
-      defaultValue="20"
-      floatingLabelStyle={styles.floatingLabelStyle}
-      floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
-      onChange={(e, v) => { props.handleTextInputChange('price', v); }}
-    />
-  </div>
-);
+import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
+import WalkerConfirmationTextField from './walkerConfirmationTextField';
 
 export default class DialogExampleScrollable extends React.Component {
   constructor(props) {
@@ -83,7 +41,7 @@ export default class DialogExampleScrollable extends React.Component {
           onRequestClose={this.props.handleClose}
           autoScrollBodyContent={true}
         >
-          <WalkerConfirmationTextField price={this.props.price} handleTextInputChange={this.props.handleTextInputChange} location={this.props.location} end={end} start={start} />
+          <WalkerConfirmationTextField price={this.props.price} handleTextInputChange={this.props.handleTextInputChange} handleAddressSelect={this.props.handleAddressSelect} location={this.props.location} end={end} start={start} />
         </Dialog>
       </div>
     );
