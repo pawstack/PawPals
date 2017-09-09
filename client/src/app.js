@@ -7,6 +7,7 @@ import {
   Switch,
   Redirect
 } from 'react-router-dom';
+import $ from 'jquery';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import SignUpStart from './components/SignUpStart';
 import Browse from './components/Browse';
@@ -29,20 +30,46 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loggedIn: true
+      loggedIn: true,
+      userInfo: {}
     };
+    this.retrieveUserInfo = this.retrieveUserInfo.bind(this);
   }
+
+  retrieveUserInfo() {
+    $.get('/api/walks/getOwnerInfo')
+      .done((data) => {
+        console.log('SUCCESS - the owner info is ', data);
+        this.setState({
+          userInfo: data
+        }, function() {
+          console.log('SUCCESS - the user info is ', this.state.userInfo);
+        });
+      })
+      .fail((err) => {
+        console.log('ERROR retreiving ownerInfo ', err);
+      });
+  }
+
+
+  componentDidMount() {
+    this.retrieveUserInfo();
+  }
+
   render() {
+    console.log('the state inside of render is ', this.state.userInfo.display);
     return (
       <div>
 
         <MuiThemeProvider>
           <div>
             <AppBar
-              title="Title"
+              title={this.state.userInfo.display}
               iconElementRight = {<NavBarOwnerLoggedIn />}
             />
           </div>
+
+
         </MuiThemeProvider>
       </div>
 
