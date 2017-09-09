@@ -15,8 +15,11 @@ class WalkHistory extends React.Component {
     super(props);
     this.state = {
       currentwalks: [],
-      pastwalks: []
+      pastwalks: [],
     };
+
+    this.getCurrentWalk = this.getCurrentWalk.bind(this);
+    this.cancelWalk = this.cancelWalk.bind(this);
 
   }
 
@@ -35,8 +38,23 @@ class WalkHistory extends React.Component {
     });
   }
 
-  cancelWalk() {
-    console.log('This walk is canceled');
+  cancelWalk(e) {
+
+    console.log('WALK CANCELED ID ', e.id);
+    $.ajax({
+      url: '/api/walkhistory/cancel',
+      type: 'POST',
+      data: {walkID: e.id},
+      context: this,
+      success: (res) => {
+        console.log('request sent');
+        this.getCurrentWalk();
+      },
+      error: function(err) {
+      }
+    });
+
+    // console.log('This walk is canceled');
   }
 
   getPastWalk() {

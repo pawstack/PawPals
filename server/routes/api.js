@@ -75,6 +75,9 @@ router.route('/walkhistory/current')
 router.route('/walkhistory/past')
   .get(ApiController.getPastWalk);
 
+router.route('/walkhistory/cancel')
+  .post(ApiController.ownerCancelWalk);
+
 
 router.route('/walks/getDogInfo')
   .get(ApiController.getDogInfo);

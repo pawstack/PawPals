@@ -409,7 +409,7 @@ module.exports.fetchGeolocations = (req, res) => {
 module.exports.getCurrentWalk = function(req, res) {
   models.Walk
     .query((qb) => {
-      qb.where({'owner_id': 1,
+      qb.where({'owner_id': req.user.id,
         'paid': true});
     })
     .where('session_start', '>=', new Date())
@@ -428,7 +428,7 @@ module.exports.getCurrentWalk = function(req, res) {
 module.exports.getPastWalk = function(req, res) {
   models.Walk
     .query((qb) => {
-      qb.where({'owner_id': 1,
+      qb.where({'owner_id': req.user.id,
         'paid': true});
     })
     .where('session_end', '<=', new Date())
@@ -444,4 +444,34 @@ module.exports.getPastWalk = function(req, res) {
     });
 };
 
+
+module.exports.ownerCancelWalk = function(req, res) {
+
+  var cancelDBUpdate = new Promise(
+    (resolve, reject) => {
+      knex('walks').where('id', req.body.walkID).update({
+        owner_id: null,
+        dog_id: null,
+        paid: false
+      })
+        .then(resolve());
+    }
+  );
+
+  var refundPaymentOwner = new Promise(
+    (resolve, reject) => {
+      module.exports.refundPayment(req, res)
+        .then(resolve());
+    }
+  );
+
+  Promise.all([cancelDBUpdate, refundPaymentOwner]).then(responses => {
+    console.log('cancel res sent');
+    res.send(200);
+  })
+    .catch(e => {
+      console.log(e);
+    });
+
+};
 
