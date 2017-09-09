@@ -62,7 +62,7 @@ module.exports.create = (req, res) => {
     walk_zone_pt: req.body.walk_zone_pt,
     price: req.body.price,
     walker_id: req.user.id,
-    longitute: req.body.longitute,
+    longitude: req.body.longitude,
     latitude: req.body.latitude
   })
     .save()
