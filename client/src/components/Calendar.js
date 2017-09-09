@@ -52,6 +52,13 @@ class Calendar extends React.Component {
         walk_zone_pt: null,
         start: null,
         end: null
+      },
+      tracking: {
+        geolocations: [],
+        maximumAge: 30000,
+        timeout: 10000, 
+        enableHighAccuracy: true,
+        watchId: null
       }
     };
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -63,6 +70,13 @@ class Calendar extends React.Component {
     this.handleCancel = this.handleCancel.bind(this);
     this.handleSnackBarClose = this.handleSnackBarClose.bind(this);
     this.requestRefundForCancellation = this.requestRefundForCancellation.bind(this);
+    this.handleStartWalk = this.handleStartWalk.bind(this);
+    this.handleFinishWalk = this.handleFinishWalk.bind(this);
+    this.processGeoResult = this.processGeoResult.bind(this);
+    this.startWatch = this.startWatch.bind(this);
+    this.stopWatch = this.stopWatch.bind(this);
+    this.handleGeoError = this.handleGeoError.bind(this);
+    this.postGeolocation = this.postGeolocation.bind(this);
   }
 
   handleEventOpen() {
@@ -189,6 +203,71 @@ class Calendar extends React.Component {
       this.setState(states);
     });
   }
+
+  // Geolocation tracking
+  handleStartWalk(walkId) {
+    this.startWatch(walkId);
+  }
+  
+  handleFinishWalk() {
+    this.stopWatch();
+  }
+  
+  processGeoResult(walkId, position) {
+    var geolocation = {
+      latitude: position.coords.latitude,
+      longitude: position.coords.longitude,
+      timestamp: new Date(position.timestamp),
+      accuracy: position.coords.accuracy,
+      walk_id: walkId
+    };
+    
+    console.log(`SUCCESS latitude:${position.coords.latitude}, longitutde:${position.coords.longitude}, accuracy:${position.coords.accuracy}, timestamp:${new Date(position.timestamp)}`); // TODO remove
+    this.postGeolocation(geolocation);
+    // this.setState({
+    //   geolocations: this.state.geolocations.concat(geolocation)
+    // });
+  }
+
+  handleGeoError(error) {
+    console.log('ERROR failed to retrieve your location: ' + error);
+  }
+
+  startWatch(walkId) {
+    var watchId = navigator.geolocation.watchPosition(this.processGeoResult.bind(this, walkId), this.handleGeoError, {
+      maximumAge: this.state.tracking.maximumAge,
+      timeout: this.state.tracking.timeout, 
+      enableHighAccuracy: this.state.tracking.enableHighAccuracy
+    });
+    this.setState((prevState) => {
+      var newState = Object.assign({}, prevState);
+      newState.tracking.watchId = watchId;
+      return newState;
+    });
+    console.log('STARTING WALK'); // TODO change to snackbar
+  }
+
+  stopWatch() {
+    navigator.geolocation.clearWatch(this.state.watchId);
+    this.setState((prevState) => {
+      var newState = Object.assign({}, prevState);
+      newState.tracking.watchId = null;
+      return newState;
+    });
+    console.log('STOPPING WALK'); // TODO change to snackbar
+  }
+
+  postGeolocation(geolocation) {
+    $.post('/api/walks/track', geolocation)
+      .then((data) => {
+        console.log('SUCCESS sending geolocation ', data);
+      })
+      .fail((err) => {
+        console.log('ERROR sending geolocation ', error);
+      });
+  }
+
+
   render () {
     return (
       <div>
@@ -204,7 +283,7 @@ class Calendar extends React.Component {
           }}
         />
         <DialogForm handleTextInputChange={this.handleTextInputChange} open={this.state.formOpen} handleClose={this.handleFormClose} handleOpen={this.handleFormOpen} handleSubmit={this.handleSubmit} start={this.state.start} end={this.state.end} price={this.state.price} location={this.state.location}/>
-        < EventDialog handleCancel={this.handleCancel} open={this.state.eventOpen} handleClose={this.handleEventClose} handleOpen={this.handleEventOpen} selectedEvent={this.state.selectedEvent}/>
+        < EventDialog handleCancel={this.handleCancel} open={this.state.eventOpen} handleClose={this.handleEventClose} handleOpen={this.handleEventOpen} selectedEvent={this.state.selectedEvent} handleStartWalk={this.handleStartWalk} handleFinishWalk={this.handleFinishWalk} />
         < SnackBarCom open={this.state.snackBarOpen} handleSnackBarClose={this.handleSnackBarClose} message={'Refund successful'} />
       </div>
     );
