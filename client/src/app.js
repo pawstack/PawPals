@@ -28,6 +28,7 @@ injectTapEventPlugin();
 
 import NavBarOwnerLoggedIn from './components/NavBarOwnerLoggedIn.jsx';
 import NavBarWalkerLoggedIn from './components/NavBarWalkerLoggedIn.jsx';
+import NavBarNewUserLoggedIn from './components/NavBarNewUserLoggedIn.jsx';
 
 
 class App extends React.Component {
@@ -74,24 +75,42 @@ class App extends React.Component {
 
   render() {
     console.log('the state inside of render is ', this.state.userInfo.display);
-    return (
-      <div>
-        <Router>
-          <MuiThemeProvider>
-            <div>
-              <AppBar
-                title={this.state.userInfo.display}
-                iconElementRight = {this.state.owner ? <NavBarOwnerLoggedIn /> : <NavBarWalkerLoggedIn />}
-              />
-            </div>
 
-          </MuiThemeProvider>
+    if (!this.state.owner && ! this.state.walker) {
+      return (
+        <div>
+          <Router>
+            <MuiThemeProvider>
+              <div>
+                <AppBar
+                  title={this.state.userInfo.display}
+                  iconElementRight = {<NavBarNewUserLoggedIn />}
+                />
+                <Route exact path="/signup/start" component={SignUpStart}/>
+              </div>
+            </MuiThemeProvider>
+          </Router>
+        </div>
+      );
 
-        </Router>
+    } else {
+      return (
+        <div>
+          <Router>
+            <MuiThemeProvider>
+              <div>
+                <AppBar
+                  title={this.state.userInfo.display}
+                  iconElementRight = {this.state.owner ? <NavBarOwnerLoggedIn /> : <NavBarWalkerLoggedIn />}
+                />
+              </div>
+            </MuiThemeProvider>
+          </Router>
+        </div>
 
-      </div>
+      );
+    }
 
-    );
   }
 }
 
