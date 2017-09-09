@@ -184,7 +184,7 @@ class Calendar extends React.Component {
             'session_end': this.state.end,
             'walk_zone_pt': this.state.location,
             'price': this.state.price,
-            'longitute': latLng['lng'],
+            'longitude': latLng['lng'],
             'latitude': latLng['lat']
           })
         })

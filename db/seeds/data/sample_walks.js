@@ -25,9 +25,12 @@ const generateSessionDateTime = function() {
 let startEnd;
 for (let i = 0; i < 500; i++) {
   startEnd = generateSessionDateTime();
+  const address = addresses[faker.random.number(addresses.length - 1)]; // cannot use faker.address as real addresses are required, easier for testing if in the same area as well  
   users.push({
-    walk_zone_pt: addresses[faker.random.number(addresses.length - 1)],
+    walk_zone_pt: address[0],
     walk_zone_radius: faker.random.number(2) + 2,
+    latitude: address[1],
+    longitude: address[2],
     price: 20 + faker.random.number(30),
     session_start: startEnd[0],
     session_end: startEnd[1],

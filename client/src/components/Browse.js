@@ -5,7 +5,7 @@ import BrowseFilter from './BrowseFilter';
 import BrowseList from './BrowseList';
 import $ from 'jquery';
 import Confirmation from './Confirmation.jsx';
-import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
+import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import geolib from 'geolib';
 
 class Browse extends React.Component {
@@ -58,19 +58,19 @@ class Browse extends React.Component {
         var nearbyWalks = [];
         for (var i = 0; i < walks.length; i++) {
           var distance = geolib.getDistanceSimple(
-            {latitude: walks[i].latitude, longitude: walks[i].longitute},
-            pickUpLatLng, 10, 1)
+            {latitude: walks[i].latitude, longitude: walks[i].longitude},
+            pickUpLatLng, 10, 1);
           if (distance < Number(walks[i].walk_zone_radius) * 1000) {
             nearbyWalks.push(walks[0]);
           }
         }
         this.setState({
           walks: nearbyWalks
-        })
+        });
       })
       .catch((error) => {
-        console.log(error)
-      })
+        console.log(error);
+      });
   }
 
   selectWalk(walk) {
@@ -132,7 +132,7 @@ class Browse extends React.Component {
       type: 'POST',
       url: '/api/walks/payment',
       data: {
-        amount: this.state.totalPrice * 100,  //TBD WHEN BOOKED
+        amount: this.state.totalPrice * 100, //TBD WHEN BOOKED
         walkerUserID: this.state.selectedWalk.walker_id, //TBD WHEN BOOKED.  This will come from the selected walk state.
         walkID: this.state.selectedWalk.id, //TBD WHEN BOOKED.
         description: 'PawPals',
