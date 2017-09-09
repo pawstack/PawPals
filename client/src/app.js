@@ -23,7 +23,11 @@ import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
 import FlatButton from 'material-ui/FlatButton';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+injectTapEventPlugin();
+
 import NavBarOwnerLoggedIn from './components/NavBarOwnerLoggedIn.jsx';
+import NavBarWalkerLoggedIn from './components/NavBarWalkerLoggedIn.jsx';
 
 
 class App extends React.Component {
@@ -31,7 +35,9 @@ class App extends React.Component {
     super(props);
     this.state = {
       loggedIn: true,
-      userInfo: {}
+      userInfo: {},
+      walker: false,
+      owner: false
     };
     this.retrieveUserInfo = this.retrieveUserInfo.bind(this);
   }
@@ -40,11 +46,21 @@ class App extends React.Component {
     $.get('/api/walks/getOwnerInfo')
       .done((data) => {
         console.log('SUCCESS - the owner info is ', data);
-        this.setState({
-          userInfo: data
-        }, function() {
-          console.log('SUCCESS - the user info is ', this.state.userInfo);
-        });
+        console.log('the user is a walker ', data.walker);
+        console.log('the user is a owner ', data.owner);
+        if (data.walker) {
+          //console.log('the user is a walker ', data.walker);
+          this.setState({
+            userInfo: data,
+            walker: true
+          });
+        } else if (data.owner) {
+          console.log('the user is a owner ', data.owner);
+          this.setState({
+            userInfo: data,
+            owner: true
+          });
+        }
       })
       .fail((err) => {
         console.log('ERROR retreiving ownerInfo ', err);
@@ -60,17 +76,19 @@ class App extends React.Component {
     console.log('the state inside of render is ', this.state.userInfo.display);
     return (
       <div>
+        <Router>
+          <MuiThemeProvider>
+            <div>
+              <AppBar
+                title={this.state.userInfo.display}
+                iconElementRight = {this.state.owner ? <NavBarOwnerLoggedIn /> : <NavBarWalkerLoggedIn />}
+              />
+            </div>
 
-        <MuiThemeProvider>
-          <div>
-            <AppBar
-              title={this.state.userInfo.display}
-              iconElementRight = {<NavBarOwnerLoggedIn />}
-            />
-          </div>
+          </MuiThemeProvider>
 
+        </Router>
 
-        </MuiThemeProvider>
       </div>
 
     );
