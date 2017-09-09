@@ -370,11 +370,6 @@ var getUserType = (userID) => {
       return result[0].owner;
     });
 };
-<<<<<<< HEAD
-
-
-||||||| merged common ancestors
-=======
 
 module.exports.getDogInfo = (req, res) => {
   return knex('dogs')
@@ -383,8 +378,3 @@ module.exports.getDogInfo = (req, res) => {
       res.send(result[0]);
     });
 };
-
-module.exports.confirmation = (req, res) => {
-
-};
->>>>>>> confirmation page in work

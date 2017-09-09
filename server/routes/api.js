@@ -64,9 +64,6 @@ router.route('/walks/payment')
 router.route('/walks/refund')
   .post(ApiController.refundPayment);
 
-router.route('/walks/confirmation')
-  .get(ApiController.confirmation);
-
 router.route('/walks/getOwnerInfo')
   .get((req, res) => {
     res.status(200).send(req.user);
