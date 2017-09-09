@@ -20,24 +20,27 @@ class Confirmation extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      totalPrice: 0
+
     };
 
     this.calculateTotalPrice = this.calculateTotalPrice.bind(this);
   }
 
   componentDidMount() {
-    this.calculateTotalPrice();
+    //this.calculateTotalPrice();
+    var totalPrice = this.calculateTotalPrice();
+    this.props.updateTotalPrice(totalPrice);
+    console.log('the total price is ', totalPrice);
   }
 
   calculateTotalPrice() {
     var start = moment(this.props.selectedWalk.session_start);
     var end = moment(this.props.selectedWalk.session_end);
     var durationInHours = moment.duration(end.diff(start)) / 1000 / 60 / 60;
-    this.setState({
-      totalPrice: durationInHours * this.props.selectedWalk.price
-    });
-    console.log('the duration is ', durationInHours);
+    // this.setState({
+    return durationInHours * this.props.selectedWalk.price;
+    // });
+    // console.log('the duration is ', durationInHours);
   }
 
 
@@ -98,7 +101,7 @@ class Confirmation extends React.Component {
               </div>
 
               <CardText>
-                The total price for this walk will be <b>${this.state.totalPrice.toFixed(2)} USD</b>.
+                The total price for this walk will be <b>${this.props.totalPrice.toFixed(2)} USD</b>.
               </CardText>
               <CardActions>
                 <RaisedButton label="BACK TO BROWSE" primary={true} onClick = {this.props.resetSelectedState}/>

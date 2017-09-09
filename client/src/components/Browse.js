@@ -26,6 +26,7 @@ class Browse extends React.Component {
     this.setPickupAddress = this.setPickupAddress.bind(this);
     this.processPayment = this.processPayment.bind(this);
     this.handleSnackBarClose = this.handleSnackBarClose.bind(this);
+    this.updateTotalPrice = this.updateTotalPrice.bind(this);
   }
 
   getWalks(filters) {
@@ -99,8 +100,8 @@ class Browse extends React.Component {
       type: 'POST',
       url: '/api/walks/payment',
       data: {
-        //amount: this.state.totalPrice * 100,  //TBD WHEN BOOKED
-        amount: 100,
+        amount: this.state.totalPrice * 100,  //TBD WHEN BOOKED
+        //amount: 100,
         walkerUserID: this.state.selectedWalk.walker_id, //TBD WHEN BOOKED.  This will come from the selected walk state.
         walkID: this.state.selectedWalk.id, //TBD WHEN BOOKED.
         description: 'PawPals',
@@ -124,6 +125,12 @@ class Browse extends React.Component {
       error: function() {
         console.log('client - error destination charge post request completed');
       }
+    });
+  }
+
+  updateTotalPrice(totalPrice) {
+    this.setState({
+      totalPrice: totalPrice
     });
   }
 
@@ -167,6 +174,8 @@ class Browse extends React.Component {
             resetSelectedState ={this.resetSelectedState}
             pickupAddress = {this.state.pickupAddress}
             processPayment = {this.processPayment}
+            updateTotalPrice = {this.updateTotalPrice}
+            totalPrice = {this.state.totalPrice}
           />
         </div>
       );
