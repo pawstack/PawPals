@@ -101,7 +101,6 @@ class Browse extends React.Component {
       url: '/api/walks/payment',
       data: {
         amount: this.state.totalPrice * 100,  //TBD WHEN BOOKED
-        //amount: 100,
         walkerUserID: this.state.selectedWalk.walker_id, //TBD WHEN BOOKED.  This will come from the selected walk state.
         walkID: this.state.selectedWalk.id, //TBD WHEN BOOKED.
         description: 'PawPals',
