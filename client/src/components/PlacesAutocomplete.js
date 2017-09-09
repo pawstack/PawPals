@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import debounce from 'lodash.debounce'
-import defaultStyles from './defaultStyles'
 import TextField from 'material-ui/TextField';
 
 import AutoComplete from 'material-ui/AutoComplete';
@@ -41,8 +40,7 @@ class PlacesAutocomplete extends Component {
     }
 
     // transform snake_case to camelCase
-    const formattedSuggestion = (structured_formatting) => ({
-      mainText: structured_formatting.main_text,
+    const formattedSuggestion = (structured_formatting) => ({      mainText: structured_formatting.main_text,
       secondaryText: structured_formatting.secondary_text,
     })
 
@@ -210,7 +208,6 @@ class PlacesAutocomplete extends Component {
     return props.reduce((acc, prop) => {
       return {
         ...acc,
-        ...defaultStyles[prop],
         ...styles[prop],
       }
     }, {})
