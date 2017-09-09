@@ -50,10 +50,43 @@ router.get('/auth/google', middleware.passport.authenticate('google', {
   scope: ['email', 'profile']
 }));
 
-router.get('/auth/google/callback', middleware.passport.authenticate('google', {
-  successRedirect: '/profile',
-  failureRedirect: '/login'
-}));
+// router.route('/auth/google/callback')
+//   .get((req, res) => {
+//     console.log('in /auth/goolge/callback');
+//     debugger;
+//     middleware.passport.authenticate('google', {
+//       successRedirect: '/profile',
+//       failureRedirect: '/login'
+//     });
+//   });
+
+
+// router.get('/auth/google/callback', middleware.passport.authenticate('google', {
+//   successRedirect: '/profile',
+//   failureRedirect: '/login'
+// }));
+
+router.route('/auth/google/callback')
+  .get((req, res) => {
+    //console.log('req user is ', req.user);
+    // console.log('res is ', res);
+    middleware.passport.authenticate('google', function(err, user, info) {
+      console.log('error is ', err);
+      console.log('user is ', user);
+      console.log('info is ', info);
+      req.logIn(user, function(err) {
+        if (!user.owner && !user.walker) {
+          return res.redirect('/signup/start');
+        } else if (user.owner && !user.walker) {
+          return res.redirect('/browse');
+        } else if (!user.owner && user.walker) {
+          return res.redirect('/walker');
+        }
+      });
+    })(req, res);
+  });
+
+
 
 router.get('/auth/facebook', middleware.passport.authenticate('facebook', {
   scope: ['public_profile', 'email']
