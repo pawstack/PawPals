@@ -105,14 +105,6 @@ class Confirmation extends React.Component {
               <CardActions>
                 <RaisedButton label="BACK TO BROWSE" primary={true} onClick = {this.props.resetSelectedState}/>
                 <RaisedButton label="BOOK NOW" primary={true} onClick = {this.props.processPayment}/>
-                <Snackbar
-                  open={this.props.snackBarOpen}
-                  message={'Your booking is confirmed!'}
-                  action="OK"
-                  autoHideDuration= {6000}
-                  onActionTouchTap={this.props.handleActionTouchTap}
-                  onRequestClose={this.props.handleSnackBarClose}
-                />
               </CardActions>
             </Card>
           </div>

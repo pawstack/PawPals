@@ -1,4 +1,6 @@
 import React from 'react';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import Snackbar from 'material-ui/Snackbar';
 import BrowseFilter from './BrowseFilter';
 import BrowseList from './BrowseList';
 import $ from 'jquery';
@@ -14,7 +16,7 @@ class Browse extends React.Component {
       dogInfo: {},
       pickupAddress: '',
       totalPrice: 0,
-      snackBarOpen: true
+      snackBarOpen: false
     };
     this.getWalks = this.getWalks.bind(this);
     this.selectWalk = this.selectWalk.bind(this);
@@ -110,9 +112,11 @@ class Browse extends React.Component {
       success: function() {
         console.log('client - successful destination charge post request completed');
         console.log('after payment, reset the selected state');
+        console.log('BEFORE- the snackBarOpen is ', context.state.snackBarOpen);
         context.setState({
           snackBarOpen: true
         }, function() {
+          console.log('AFTER - the state of snackBarOpen is', context.state.snackBarOpen);
           context.resetSelectedState();
         });
 
@@ -138,9 +142,18 @@ class Browse extends React.Component {
         <div>
           <BrowseFilter setPickupAddress = {this.setPickupAddress} pickupAddress = {this.state.pickupAddress} getWalks={this.getWalks} />
           <BrowseList walks={this.state.walks} selectWalk={this.selectWalk} />
+          <MuiThemeProvider>
+            <Snackbar
+              open={this.state.snackBarOpen}
+              message = {'Your booking is confirmed!'}
+              autoHideDuration= {6000}
+              onRequestClose={this.handleSnackBarClose}
+            />
+          </MuiThemeProvider>
+
         </div>
       );
-    } else {
+    } else if (this.state.selectedWalk.walker) {
       return (
         <div>
           <Confirmation
@@ -151,8 +164,6 @@ class Browse extends React.Component {
             resetSelectedState ={this.resetSelectedState}
             pickupAddress = {this.state.pickupAddress}
             processPayment = {this.processPayment}
-            snackBarOpen = {this.state.snackBarOpen}
-            handleSnackBarClose = {this.handleSnackBarClose}
           />
         </div>
       );
