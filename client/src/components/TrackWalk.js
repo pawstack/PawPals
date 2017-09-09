@@ -48,7 +48,6 @@ class TrackWalk extends React.Component {
     this.handleStart = this.handleStart.bind(this);
     this.handleFinish = this.handleFinish.bind(this);
     this.processGeolocationResult = this.processGeolocationResult.bind(this);
-    // this.getCurrentPos = this.getCurrentPos.bind(this);
     this.startWatch = this.startWatch.bind(this);
     this.stopWatch = this.stopWatch.bind(this);
     this.handleGeoError = this.handleGeoError.bind(this);
@@ -56,7 +55,6 @@ class TrackWalk extends React.Component {
   }
 
   handleStart() {
-    // this.getCurrentPos();
     this.startWatch();
   }
   
@@ -83,14 +81,6 @@ class TrackWalk extends React.Component {
   handleGeoError(error) {
     console.log('ERROR failed to retrieve your location: ' + error);
   }
-
-  // getCurrentPos() {
-  //   navigator.geolocation.getCurrentPosition(this.processGeolocationResult, this.handleGeoError, {
-  //     maximumAge: this.state.maximumAge,
-  //     timeout: this.state.timeout, 
-  //     enableHighAccuracy: this.state.enableHighAccuracy
-  //   });
-  // }
 
   startWatch() {
     var watchId = navigator.geolocation.watchPosition(this.processGeolocationResult, this.handleGeoError, {

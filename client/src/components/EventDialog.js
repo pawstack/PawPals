@@ -6,6 +6,9 @@ import TextField from 'material-ui/TextField';
 import {orange500, blue500} from 'material-ui/styles/colors';
 import Checkbox from 'material-ui/Checkbox';
 import moment from 'moment';
+import GpsFixed from 'material-ui/svg-icons/device/gps-fixed';
+import GpsOff from 'material-ui/svg-icons/device/gps-off';
+
 
 const styles = {
   radioButton: {
@@ -31,7 +34,21 @@ export default class EventDialog extends React.Component {
   }
 
   render() {
-    const actions = [
+    const trackActions = [
+      <FlatButton 
+        label="Start Walk" 
+        primary={true} 
+        icon={<GpsFixed />}
+        onClick={() => {
+          this.props.handleStartWalk(this.props.selectedEvent.id);
+        }}/>,
+      <FlatButton 
+        label="Finish Walk" 
+        secondary={true} 
+        icon={<GpsOff />}
+        onClick={this.props.handleFinishWalk} />
+    ];
+    const actions = trackActions.concat([
       <FlatButton
         label="Cancel Walk"
         primary={false}
@@ -43,7 +60,7 @@ export default class EventDialog extends React.Component {
         keyboardFocused={true}
         onClick={this.props.handleClose}
       />,
-    ];
+    ]);
     const start = moment(this.props.selectedEvent.start, 'YYYY-YY-DD hh:mm:ss').format('llll');
     const end = moment(this.props.selectedEvent.end, 'YYYY-YY-DD hh:mm:ss').format('LT');
     return (
