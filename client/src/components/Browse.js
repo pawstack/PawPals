@@ -5,6 +5,8 @@ import BrowseFilter from './BrowseFilter';
 import BrowseList from './BrowseList';
 import $ from 'jquery';
 import Confirmation from './Confirmation.jsx';
+import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
+import geolib from 'geolib';
 
 class Browse extends React.Component {
   constructor(props) {
@@ -32,13 +34,43 @@ class Browse extends React.Component {
   getWalks(filters) {
     $.post('/api/walks/search', filters)
       .done((data) => {
-        // console.log('SUCCESS getWalks in Browse ', data);
-        this.setState({
-          walks: data
-        });
+        //console.log('SUCCESS getWalks in Browse ', data);
+        if (this.state.pickupAddress) {
+          this.filterLocation(data);
+        } else {
+          this.setState({
+            walks: data
+          });
+        }
       }).fail((err) => {
         console.log('ERROR getWalks in Browse ', error);
       });
+  }
+
+  filterLocation(walks) {
+    geocodeByAddress(this.state.pickupAddress)
+      .then(results => getLatLng(results[0]))
+      .then((latLng) => {
+        var pickUpLatLng = {
+          'latitude': latLng['lat'],
+          'longitude': latLng['lng']
+        };
+        var nearbyWalks = [];
+        for (var i = 0; i < walks.length; i++) {
+          var distance = geolib.getDistanceSimple(
+            {latitude: walks[i].latitude, longitude: walks[i].longitute},
+            pickUpLatLng, 10, 1)
+          if (distance < Number(walks[i].walk_zone_radius) * 1000) {
+            nearbyWalks.push(walks[0]);
+          }
+        }
+        this.setState({
+          walks: nearbyWalks
+        })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
   selectWalk(walk) {
@@ -143,7 +175,7 @@ class Browse extends React.Component {
     if (!this.state.selectedWalk.walker) {
       return (
         <div>
-          <BrowseFilter setPickupAddress = {this.setPickupAddress} pickupAddress = {this.state.pickupAddress} getWalks={this.getWalks} />
+          <BrowseFilter pickupAddress={this.state.pickupAddress} setPickupAddress = {this.setPickupAddress} pickupAddress = {this.state.pickupAddress} getWalks={this.getWalks} />
           <BrowseList walks={this.state.walks} selectWalk={this.selectWalk} />
           <MuiThemeProvider>
             <Snackbar

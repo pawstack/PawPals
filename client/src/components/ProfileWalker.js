@@ -17,7 +17,6 @@ class ProfileWalker extends React.Component {
       phone_old: '',
       address: '',
       url: '',
-      about_me: ''
       address_old: '',
       about_me: '',
       about_me_old: ''
@@ -96,14 +95,13 @@ class ProfileWalker extends React.Component {
       maxFiles: 1,
     };
 
-  render() {
     const inputProps = {
       value: this.state.address,
       onChange: (v) => {this.setState({'address': v})},
     }
+
     return (
       <div>
-
         <CardHeader
           title={this.state.walkername}
           subtitle="Walker"
@@ -122,46 +120,45 @@ class ProfileWalker extends React.Component {
           />
         </div>
         <div>
-        <table style={{"width": "100%"}}>
-          <tbody>
-            <tr>
-              <td><CardHeader title="Phone: "/></td>
-              <td>
-                <TextField
-                  name = "phone"
-                  hintText={this.state.phone_old}
-                  onChange={this.handleChange}
-                  value={this.state.phone}
-                />
-              </td>
-            </tr>
-            <tr>
-              <td><CardHeader title="Address: "/></td>
-              <td>
-                <PlacesAutocomplete inputProps={inputProps} hintText={this.state.address_old} />
-              </td>
-            </tr>
-            <tr>
-              <td><CardHeader title="About me: "/></td>
-              <td>
-                <TextField
-                  name = "about_me"
-                  multiLine={true}
-                  rows={2}
-                  hintText={this.state.about_me_old}
-                  value={this.state.about_me}
-                  onChange={this.handleChange}
-                />
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <div>
-          <br></br>
-          <br></br>
-        </div>
-        <div style={{'marginLeft': '20px'}}>
-          <RaisedButton label="Update Profile" onClick={this.handleUpdateProfile}/>
+          <table style={{"width": "100%"}}>
+            <tbody>
+              <tr>
+                <td><CardHeader title="Phone: "/></td>
+                <td>
+                  <TextField
+                    name = "phone"
+                    hintText={this.state.phone_old}
+                    onChange={this.handleChange}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td><CardHeader title="Address: "/></td>
+                <td>
+                  <PlacesAutocomplete inputProps={inputProps} hintText={this.state.address_old} />
+                </td>
+              </tr>
+              <tr>
+                <td><CardHeader title="About me: "/></td>
+                <td>
+                  <TextField
+                    name = "about_me"
+                    multiLine={true}
+                    rows={2}
+                    hintText={this.state.about_me_old}
+                    onChange={this.handleChange}
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div>
+            <br></br>
+            <br></br>
+          </div>
+          <div style={{'marginLeft': '20px'}}>
+            <RaisedButton label="Update Profile" onClick={this.handleUpdateProfile}/>
+          </div>
         </div>
       </div>);
   }

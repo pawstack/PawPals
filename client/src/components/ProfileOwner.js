@@ -5,6 +5,7 @@ import TextField from 'material-ui/TextField';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import ReactFilestack from 'filestack-react';
+import PlacesAutocomplete from './PlacesAutocomplete';
 
 class ProfileOwner extends React.Component {
 
@@ -13,15 +14,22 @@ class ProfileOwner extends React.Component {
     this.state = {
       ownername: '',
       phone: '',
+      phone_old: '',
       address: '',
+      address_old: '',
       dogphoto: '',
       id: 0,
       name: '',
+      name_old: '',
       age: '',
+      age_old: '',
       breed: '',
+      breed_old: '',
       weight: 0,
+      weight_old: 0,
       url: '',
-      extras: ''
+      extras: '',
+      extras_old: ''
     };
 
     this.getOwnerProfile = this.getOwnerProfile.bind(this);
@@ -41,7 +49,9 @@ class ProfileOwner extends React.Component {
         this.setState({
           ownername: res[0].display,
           phone: res[0].phone,
-          address: res[0].address
+          phone_old: res[0].phone,
+          address: res[0].address,
+          address_old: res[0].address
         });
       },
       error: function(err) {
@@ -59,10 +69,14 @@ class ProfileOwner extends React.Component {
         this.setState({
           id: res[0].id,
           name: res[0].name,
+          name_old: res[0].name,
           breed: res[0].breed,
+          breed_old: res[0].breed,
           weight: res[0].weight,
+          weight_old: res[0].weight,
           url: res[0].profile_pic,
           extras: res[0].extras,
+          extras_old: res[0].extras,
         });
       },
       error: function(err) {
@@ -120,6 +134,11 @@ class ProfileOwner extends React.Component {
       maxFiles: 1,
     };
 
+    const inputProps = {
+      value: this.state.address,
+      onChange: (v) => {this.setState({'address': v})}
+    }
+
     return (
       <div>
         <CardHeader
@@ -127,14 +146,14 @@ class ProfileOwner extends React.Component {
           subtitle="Owner"
           avatar='https://s.imgur.com/images/404/cat3weyes.png'
         />
-        <table>
+        <table style={{"width": "100%"}}>
           <tbody>
             <tr>
               <td><CardHeader title="Phone: "/></td>
               <td>
                 <TextField
                   name = "phone"
-                  value={this.state.phone}
+                  hintText={this.state.phone_old}
                   onChange={this.handleChange}
                 />
               </td>
@@ -142,13 +161,7 @@ class ProfileOwner extends React.Component {
             <tr>
               <td><CardHeader title="Address: "/></td>
               <td>
-                <TextField
-                  name = "address"
-                  multiLine={true}
-                  rows={2}
-                  value={this.state.address}
-                  onChange={this.handleChange}
-                />
+                  <PlacesAutocomplete inputProps={inputProps} hintText={this.state.address_old} />
               </td>
             </tr>
           </tbody>
@@ -173,8 +186,8 @@ class ProfileOwner extends React.Component {
                 <td>
                   <TextField
                     name = "name"
-                    value={this.state.name}
                     onChange={this.handleChange}
+                    hintText={this.state.name_old}
                   />
                 </td>
               </tr>
@@ -183,7 +196,7 @@ class ProfileOwner extends React.Component {
                 <td>
                   <TextField
                     name = "breed"
-                    value={this.state.breed}
+                    hintText={this.state.breed_old}
                     onChange={this.handleChange}
                   />
                 </td>
@@ -193,7 +206,7 @@ class ProfileOwner extends React.Component {
                 <td>
                   <TextField
                     name = "weight"
-                    value={this.state.weight}
+                    hintText={this.state.weight_old}
                     onChange={this.handleChange}
                   />
                 </td>
@@ -203,7 +216,7 @@ class ProfileOwner extends React.Component {
                 <td>
                   <TextField
                     name = "extras"
-                    value={this.state.extras}
+                    hintText={this.state.extras_old}
                     onChange={this.handleChange}
                   />
                 </td>
