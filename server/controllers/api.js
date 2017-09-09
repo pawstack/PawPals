@@ -61,7 +61,9 @@ module.exports.create = (req, res) => {
     session_end: req.body.session_end,
     walk_zone_pt: req.body.walk_zone_pt,
     price: req.body.price,
-    walker_id: req.user.id
+    walker_id: req.user.id,
+    longitute: req.body.longitute,
+    latitude: req.body.latitude
   })
     .save()
     .then(() => {
@@ -103,9 +105,7 @@ module.exports.destroy = (req, res) => {
     });
 };
 
-
 module.exports.saveDog = (req, res) => {
-
   var dogToDB = new Promise(
     (resolve, reject) => {
       knex('dogs').insert({
@@ -138,7 +138,6 @@ module.exports.saveDog = (req, res) => {
     });
 };
 
-
 module.exports.saveWalker = function(req, res) {
   knex('profiles').where('id', req.user.id).update({
     about_me: req.body.extras,
@@ -149,7 +148,6 @@ module.exports.saveWalker = function(req, res) {
   })
     .then(res.send(200));
 };
-
 
 module.exports.updateOwnerProfile = (req, res) => {
   console.log('UPDATE OWNER', req.body.profile_pic);
@@ -183,7 +181,6 @@ module.exports.updateOwnerProfile = (req, res) => {
     .catch(e => {
       console.log(e);
     });
-
 };
 
 module.exports.updateWalkerProfile = (req, res) => {
@@ -197,7 +194,6 @@ module.exports.updateWalkerProfile = (req, res) => {
   })
     .then(res.send(200));
 };
-
 
 module.exports.getAndSaveStripeID = (req, res) => {
   curl.request({
@@ -242,7 +238,6 @@ module.exports.getAndsaveCardToken = (req, res) => {
     });
 };
 
-
 module.exports.processPayment = (req, res) => {
   controllers.Profiles.getCCToken(req.user.id)
     .then((tokenizedCC) => {
@@ -283,7 +278,6 @@ module.exports.getWalkerProfile = function(req, res) {
   knex.select().from('profiles').where('id', req.user.id)
     .then(data => { res.status(201).send(data); });
 };
-
 
 module.exports.refundPayment = (req, res) => {
   getTransactionID(req.body.walkID)
