@@ -365,6 +365,7 @@ var getUserType = (userID) => {
     });
 };
 
+
 module.exports.getDogInfo = (req, res) => {
   return knex('dogs')
     .where({owner_id: req.query.ownerID})
@@ -404,3 +405,43 @@ module.exports.fetchGeolocations = (req, res) => {
       res.status(500).send(err);
     });
 };
+
+module.exports.getCurrentWalk = function(req, res) {
+  models.Walk
+    .query((qb) => {
+      qb.where({'owner_id': 1,
+        'paid': true});
+    })
+    .where('session_start', '>=', new Date())
+    .fetchAll({
+      withRelated: ['walker']
+    })
+    .then(walks => {
+      res.status(200).send(walks);
+    })
+    .catch(err => {
+      console.log('****** getFilteredWalks error ', err);
+      res.status(503).send(err);
+    });
+};
+
+module.exports.getPastWalk = function(req, res) {
+  models.Walk
+    .query((qb) => {
+      qb.where({'owner_id': 1,
+        'paid': true});
+    })
+    .where('session_end', '<=', new Date())
+    .fetchAll({
+      withRelated: ['walker']
+    })
+    .then(walks => {
+      res.status(200).send(walks);
+    })
+    .catch(err => {
+      console.log('****** getFilteredWalks error ', err);
+      res.status(503).send(err);
+    });
+};
+
+

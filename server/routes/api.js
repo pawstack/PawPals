@@ -63,10 +63,18 @@ router.route('/walks/payment')
 router.route('/walks/refund')
   .post(ApiController.refundPayment);
 
+
 router.route('/walks/getOwnerInfo')
   .get((req, res) => {
     res.status(200).send(req.user);
   });
+
+router.route('/walkhistory/current')
+  .get(ApiController.getCurrentWalk);
+
+router.route('/walkhistory/past')
+  .get(ApiController.getPastWalk);
+
 
 router.route('/walks/getDogInfo')
   .get(ApiController.getDogInfo);

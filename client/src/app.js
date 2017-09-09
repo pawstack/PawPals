@@ -17,6 +17,8 @@ import ProfileWalker from './components/ProfileWalker';
 import Confirmation from './components/Confirmation.jsx';
 import FindMyDog from './components/FindMyDog';
 import TrackWalk from './components/TrackWalk';
+import WalkHistory from './components/WalkHistory';
+
 
 class App extends React.Component {
   render() {
@@ -33,6 +35,7 @@ class App extends React.Component {
               <li><Link to='/profilepage/walker'>Walker Profile Page</Link></li>
               <li><Link to='/findmydog'>Find My Dog</Link></li>
               <li><Link to='/trackwalk'>Track Walk</Link></li>
+              <li><Link to='/walkhistory'>Current & Past Walks</Link></li>
             </ul>
 
             <Route exact path="/home" render={() => (
@@ -45,7 +48,7 @@ class App extends React.Component {
             <Route exact path="/profilepage/walker" component={ProfileWalker}/>
             <Route exact path="/findmydog" component={FindMyDog}/>
             <Route exact path="/trackwalk" component={TrackWalk}/>
-            
+            <Route exact path="/walkhistory" component={WalkHistory}/>
           </div>
         </Router>
       </MuiThemeProvider>
