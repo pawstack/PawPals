@@ -12,8 +12,8 @@ class BrowseListItem extends React.Component {
   }
 
   convertDate(start, end) {
-    let jsStart= new Date(start);
-    let jsEnd= new Date(end);
+    let jsStart = new Date(start);
+    let jsEnd = new Date(end);
     return [moment(jsStart, 'YYY-MM-DD hh:mm:ss').format('llll'), moment(jsEnd, 'YYYY-MM-DD hh:mm:ss').format('LT')];
   }
 

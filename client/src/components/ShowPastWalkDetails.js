@@ -4,6 +4,7 @@ import Popover, {PopoverAnimationVertical} from 'material-ui/Popover';
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import moment from 'moment';
 
 export default class ShowPastWalkDetails extends React.Component {
 
@@ -16,6 +17,13 @@ export default class ShowPastWalkDetails extends React.Component {
 
     this.handleTouchTap = this.handleTouchTap.bind(this);
     this.handleRequestClose = this.handleRequestClose.bind(this);
+    this.convertDate = this.convertDate.bind(this);
+  }
+
+  convertDate(start, end) {
+    let jsStart = new Date(start);
+    let jsEnd = new Date(end);
+    return [moment(jsStart, 'YYY-MM-DD hh:mm:ss').format('llll'), moment(jsEnd, 'YYYY-MM-DD hh:mm:ss').format('LT')];
   }
 
   handleTouchTap(event) {
@@ -35,6 +43,7 @@ export default class ShowPastWalkDetails extends React.Component {
   }
 
   render() {
+    let time = this.convertDate(this.props.start, this.props.stop);
     return (
       <div>
         <RaisedButton
@@ -49,7 +58,12 @@ export default class ShowPastWalkDetails extends React.Component {
           targetOrigin={{horizontal: 'left', vertical: 'top'}}
           onRequestClose={this.handleRequestClose}
         >
-          <CardTitle title={`$${this.props.price}/hour`} subtitle={`Start: ${new Date(this.props.start)}, Stop: ${new Date(this.props.stop)}, Near: ${this.props.near}`} />
+          <CardText>
+            From {time[0]} to {time[1]}  Near {this.props.near}
+            <br></br>
+            ${this.props.price}/hour
+          </CardText>
+
         </Popover>
       </div>
     );

@@ -5,7 +5,7 @@ import TextField from 'material-ui/TextField';
 import {orange500, blue500} from 'material-ui/styles/colors';
 import Checkbox from 'material-ui/Checkbox';
 import moment from 'moment';
-import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
+import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import WalkerConfirmationTextField from './walkerConfirmationTextField';
 
 export default class DialogExampleScrollable extends React.Component {

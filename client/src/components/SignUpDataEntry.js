@@ -57,8 +57,8 @@ class SignUpDataEntry extends React.Component {
   render() {
     const inputProps = {
       value: this.props.address,
-      onChange: (v) => {this.updateAddress(v)},
-    }
+      onChange: (v) => { this.updateAddress(v); },
+    };
     return (
       <div>
         <RadioButtonGroup name="shipSpeed" defaultSelected="not_light">
@@ -83,7 +83,7 @@ class SignUpDataEntry extends React.Component {
           onChange={this.updatePhone.bind(this)}
           fullWidth={true}/>
         <div>
-          <PlacesAutocomplete inputProps={inputProps} label={"Address"} />
+          <PlacesAutocomplete inputProps={inputProps} label={'Address'} />
         </div>
       </div>
     );
