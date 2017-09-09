@@ -26,6 +26,9 @@ class PastWalkItem extends React.Component {
           <br></br>
         </div>
         <ShowPastWalkDetails price={this.props.walk.price} start={this.props.walk.session_start} stop ={this.props.walk.session_end} near={this.props.walk.walk_zone_pt}/>
+        <div>
+          <br></br>
+        </div>
       </Card>
     );
   }

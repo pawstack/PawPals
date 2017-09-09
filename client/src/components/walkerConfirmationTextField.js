@@ -25,7 +25,7 @@ const styles = {
   },
 };
 
-class WalkerConfirmationTextField extends React.Component{
+class WalkerConfirmationTextField extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -34,25 +34,25 @@ class WalkerConfirmationTextField extends React.Component{
     const inputProps = {
       value: this.props.location,
       onChange: (v) => this.props.handleTextInputChange('location', v),
-    }
+    };
     return (
       <div>
-      <text>{this.props.start} to {this.props.end}</text>
-      <br />
-        <PlacesAutocomplete inputProps={inputProps} label={"Address or Area"} />
-      <br />
-      <TextField
-        floatingLabelText="Price per Hour"
-        type="number"
-        min="20"
-        step="1.00"
-        max="100"
-        floatingLabelStyle={styles.floatingLabelStyle}
-        floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
-        onChange={(e, v) => {this.props.handleTextInputChange('price', v); }}
-        fullWidth={true}/>
+        <text>{this.props.start} to {this.props.end}</text>
+        <br />
+        <PlacesAutocomplete inputProps={inputProps} label={'Address or Area'} />
+        <br />
+        <TextField
+          floatingLabelText="Price per Hour"
+          type="number"
+          min="20"
+          step="1.00"
+          max="100"
+          floatingLabelStyle={styles.floatingLabelStyle}
+          floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+          onChange={(e, v) => { this.props.handleTextInputChange('price', v); }}
+          fullWidth={true}/>
       </div>
-    )
+    );
   }
 }
 

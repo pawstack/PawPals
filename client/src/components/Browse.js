@@ -59,6 +59,7 @@ class Browse extends React.Component {
         for (var i = 0; i < walks.length; i++) {
           var distance = geolib.getDistanceSimple(
             {latitude: walks[i].latitude, longitude: walks[i].longitude},
+            {latitude: walks[i].latitude, longitude: walks[i].longitute},
             pickUpLatLng, 10, 1);
           if (distance < Number(walks[i].walk_zone_radius) * 1000) {
             nearbyWalks.push(walks[0]);

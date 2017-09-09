@@ -97,8 +97,8 @@ class ProfileWalker extends React.Component {
 
     const inputProps = {
       value: this.state.address,
-      onChange: (v) => {this.setState({'address': v})},
-    }
+      onChange: (v) => { this.setState({'address': v}); },
+    };
 
     return (
       <div>
@@ -120,7 +120,7 @@ class ProfileWalker extends React.Component {
           />
         </div>
         <div>
-          <table style={{"width": "100%"}}>
+          <table style={{'width': '100%'}}>
             <tbody>
               <tr>
                 <td><CardHeader title="Phone: "/></td>

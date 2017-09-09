@@ -50,13 +50,13 @@ class BrowseFilter extends React.Component {
     const inputProps = {
       value: this.props.pickupAddress,
       onChange: (v) => this.handleLocationChange(v),
-    }
+    };
     return (
       <div>
         <Drawer docked={true}>
           <AppBar title="Filter" showMenuIconButton={false} />
           <MenuItem>
-            <PlacesAutocomplete inputProps={inputProps} label={"Pickup Address"} />
+            <PlacesAutocomplete inputProps={inputProps} label={'Pickup Address'} />
           </MenuItem>
           <MenuItem>
             <DatePicker

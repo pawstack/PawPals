@@ -136,8 +136,8 @@ class ProfileOwner extends React.Component {
 
     const inputProps = {
       value: this.state.address,
-      onChange: (v) => {this.setState({'address': v})}
-    }
+      onChange: (v) => { this.setState({'address': v}); }
+    };
 
     return (
       <div>
@@ -146,7 +146,7 @@ class ProfileOwner extends React.Component {
           subtitle="Owner"
           avatar='https://s.imgur.com/images/404/cat3weyes.png'
         />
-        <table style={{"width": "100%"}}>
+        <table style={{'width': '100%'}}>
           <tbody>
             <tr>
               <td><CardHeader title="Phone: "/></td>
@@ -161,7 +161,7 @@ class ProfileOwner extends React.Component {
             <tr>
               <td><CardHeader title="Address: "/></td>
               <td>
-                  <PlacesAutocomplete inputProps={inputProps} hintText={this.state.address_old} />
+                <PlacesAutocomplete inputProps={inputProps} hintText={this.state.address_old} />
               </td>
             </tr>
           </tbody>
