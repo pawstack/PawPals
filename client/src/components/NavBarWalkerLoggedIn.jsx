@@ -16,7 +16,7 @@ import MenuItem from 'material-ui/MenuItem';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import ProfileWalker from './ProfileWalker';
 import Calendar from './Calendar';
-injectTapEventPlugin();
+
 
 class NavBarWalkerLoggedIn extends React.Component {
   constructor(props) {
@@ -46,7 +46,7 @@ class NavBarWalkerLoggedIn extends React.Component {
               />
               <MenuItem
                 primaryText="Sign out"
-                containerElement={<Link to="/logout" />}
+                href ='/logout'
               />
             </IconMenu>
 
@@ -65,3 +65,10 @@ class NavBarWalkerLoggedIn extends React.Component {
 
 
 export default NavBarWalkerLoggedIn;
+
+
+/*
+
+<a href="/logout" class="btn btn-default btn-sm">Logout</a>
+
+*/

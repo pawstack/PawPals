@@ -71,9 +71,9 @@ router.route('/auth/google/callback')
     //console.log('req user is ', req.user);
     // console.log('res is ', res);
     middleware.passport.authenticate('google', function(err, user, info) {
-      console.log('error is ', err);
-      console.log('user is ', user);
-      console.log('info is ', info);
+      // console.log('error is ', err);
+      // console.log('user is ', user);
+      // console.log('info is ', info);
       req.logIn(user, function(err) {
         if (!user.owner && !user.walker) {
           return res.redirect('/signup/start');

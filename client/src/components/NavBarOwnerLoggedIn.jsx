@@ -16,7 +16,7 @@ import MenuItem from 'material-ui/MenuItem';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import Browse from './Browse';
 import ProfileOwner from './ProfileOwner';
-injectTapEventPlugin();
+
 
 class NavBarOwnerLoggedIn extends React.Component {
   constructor(props) {
@@ -52,7 +52,7 @@ class NavBarOwnerLoggedIn extends React.Component {
               />
               <MenuItem
                 primaryText="Sign out"
-                containerElement={<Link to="/logout" />}
+                href = '/logout'
               />
             </IconMenu>
 
