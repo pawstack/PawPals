@@ -189,7 +189,9 @@ module.exports.saveWalker = function(req, res) {
     phone: req.body.phone,
     address: req.body.address
   })
-    .then(res.send(200));
+    .then(() => {
+      res.send(200);
+    });
 };
 
 module.exports.updateOwnerProfile = (req, res) => {

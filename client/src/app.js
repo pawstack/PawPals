@@ -72,6 +72,12 @@ class App extends React.Component {
   }
 
   render() {
+
+    // console.log('the state inside of render is ', this.state.userInfo.display);
+
+
+    console.log('the state inside of render is ', this.state.userInfo.display);
+
     if (!this.state.owner && ! this.state.walker) {
       return (
         <div>
@@ -117,10 +123,40 @@ class App extends React.Component {
       );
     }
 
+    return (
+      <MuiThemeProvider>
+        <Router>
+          <div>
+            <li><Link to="/home">Home</Link></li>
+            <li><Link to='/signup/start'>Signup</Link></li>
+            <li><Link to='/browse'>Browse Walks</Link></li>
+            <li><Link to='/walker'>Walker</Link></li>
+            <li><Link to='/profilepage/owner'>Owner Profile Page</Link></li>
+            <li><Link to='/profilepage/walker'>Walker Profile Page</Link></li>
+            <li><Link to='/findmydog'>Find My Dog</Link></li>
+            <li><Link to='/trackwalk'>Track Walk</Link></li>
+            <li><Link to='/walkhistory'>Current & Past Walks</Link></li>
+            <Route exact path="/home" render={() => (
+              <h1>Hello World from React</h1>
+            )}/>
+            <Route exact path="/signup/start" component={SignUpStart}/>
+            <Route exact path="/browse" component={Browse}/>
+            <Route exact path="/walker" component={Calendar}/>
+            <Route exact path="/profilepage/owner" component={ProfileOwner}/>
+            <Route exact path="/profilepage/walker" component={ProfileWalker}/>
+            <Route exact path="/findmydog" component={FindMyDog}/>
+            <Route exact path="/trackwalk" component={TrackWalk}/>
+            <Route exact path="/walkhistory" component={WalkHistory}/>
+          </div>
+        </Router>
+      </MuiThemeProvider>
+    );
+
   }
 }
 
 ReactDOM.render(<App />, document.getElementById('root'));
+
 
 
 
@@ -150,3 +186,5 @@ ReactDOM.render(<App />, document.getElementById('root'));
 </Router>
 
 */
+
+
