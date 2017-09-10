@@ -16,6 +16,7 @@ import MenuItem from 'material-ui/MenuItem';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import Browse from './Browse';
 import ProfileOwner from './ProfileOwner';
+import FindMyDog from './FindMyDog';
 
 
 class NavBarOwnerLoggedIn extends React.Component {
@@ -46,6 +47,7 @@ class NavBarOwnerLoggedIn extends React.Component {
               />
               <MenuItem
                 primaryText="Find My Dog"
+                containerElement={<Link to='/findmydog' />}
               />
               <MenuItem
                 primaryText="History"
@@ -58,6 +60,7 @@ class NavBarOwnerLoggedIn extends React.Component {
 
             <Route exact path="/profilepage/owner" component={ProfileOwner}/>
             <Route exact path="/browse" component={Browse}/>
+            <Route exact path="/findmydog" component={FindMyDog}/>
 
           </div>
 
