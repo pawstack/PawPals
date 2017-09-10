@@ -31,7 +31,8 @@ class SignUpDataEntry extends React.Component {
   }
 
   updateAddress(e) {
-    this.props.entriesChanged( this, 'address', e);
+    const address = e.target.value;
+    this.props.entriesChanged( this, 'address', address);
   }
 
   getOwnerValue(e, value) {
@@ -83,7 +84,13 @@ class SignUpDataEntry extends React.Component {
           onChange={this.updatePhone.bind(this)}
           fullWidth={true}/>
         <div>
-          <PlacesAutocomplete inputProps={inputProps} label={'Address'} />
+          <TextField
+            id="address-info"
+            hintText="e.g. 944 Market St"
+            floatingLabelText="Address"
+            name="address"
+            onChange={this.updateAddress.bind(this)}
+            fullWidth={true}/>
         </div>
       </div>
     );
@@ -91,4 +98,3 @@ class SignUpDataEntry extends React.Component {
 }
 
 export default SignUpDataEntry;
-

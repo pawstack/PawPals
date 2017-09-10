@@ -87,7 +87,7 @@ class Payment extends React.Component {
         <MuiThemeProvider>
           <div>
             <div>
-              <a href = 'https://connect.stripe.com/express/oauth/authorize?redirect_uri=http://localhost:3000/&client_id=ca_BKKqX6IKWv2zjuHsLKdReiYfTfnaNPIE&state=testing123'>
+              <a href = 'https://connect.stripe.com/express/oauth/authorize?redirect_uri=http://localhost:3000/&client_id=ca_BKKqX6IKWv2zjuHsLKdReiYfTfnaNPIE&state=testing1234'>
                 <RaisedButton label="Connect with Stripe" primary={true}/>
               </a>
             </div>
