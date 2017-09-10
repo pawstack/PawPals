@@ -97,7 +97,6 @@ class App extends React.Component {
       return (
         <div>
           <Router>
-
             <MuiThemeProvider>
               <div>
                 <AppBar
@@ -114,7 +113,6 @@ class App extends React.Component {
                 <Route exact path="/walkhistory" component={WalkHistory}/>
               </div>
             </MuiThemeProvider>
-
           </Router>
         </div>
 
