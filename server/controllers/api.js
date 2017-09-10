@@ -1,38 +1,62 @@
 const models = require('../../db/models');
 const knex = require('knex')(require('../../knexfile'));
 const db = require('bookshelf')(knex);
-var curl = require('curlrequest');
-var config = require('config')['stripe'];
-var stripe = require('stripe')(config.secretKey);
-var controllers = require('./');
+const curl = require('curlrequest');
+const config = require('config')['stripe'];
+const stripe = require('stripe')(config.secretKey);
+const controllers = require('./');
+const Moment = require('moment');
+const MomentRange = require('moment-range');
+
+const moment = MomentRange.extendMoment(Moment);
 
 db.plugin('registry');
 
 module.exports.getFilteredWalks = (req, res) => {
+  console.log(req.body, 'body')
   var filters = req.body;
-  // Initialize default search parameters
-  filters.minDate = new Date(filters.minDate);
-  filters.location = !!filters.location ? filters.location : req.user.address;
-  filters.startDate = new Date(filters.startDate);
-  filters.endDate = new Date(filters.endDate); // Removed unitl date range functionality is needed
-  filters.duration = !!filters.duration ? filters.duration : -(((11 * 60 + 59) * 60 + 59) * 1000);
-  filters.pickupTime = !!filters.pickupTime ? new Date(filters.pickupTime).getTime() - new Date(filters.pickupTime).setHours(0, 0, 0, 0) : ((11 * 60 + 59) * 60 + 59) * 1000;
-  console.log('PICKUP TIME ', filters.pickupTime);
+  new Date(req.body.minDate).toISOString();
+  if (req.body.startDate === '' && req.body.pickupTime === '') {
+    console.log('two null;')
+    var start = Moment(new Date(req.body.minDate).toISOString());
+    var finish = start.clone().endOf('day');
+  } else if (req.body.pickupTime !== '' && req.body.startDate !== '') {
+    console.log('no null')
+    var startDateJS = new Date(req.body.startDate);
+    var pickupTimeJS = new Date(req.body.pickupTime);
+    var date = Moment(startDateJS).startOf('day');
+    var start = date.clone();
+    var finish = date.clone();
+    var hour = Moment(pickupTimeJS).get('hour');
+    var minute = Moment(pickupTimeJS).get('minute');
+    start.add(hour, 'h').add(minute, 'm')
+    finish.add(hour, 'h').add(minute, 'm').add(Number(req.body.duration), 'm');
+  } else if(req.body.startDate === '' && req.body.pickupTime !== '') {
+    console.log('start date null')
+    var start = Moment(new Date(req.body.pickupTime));
+    var finish = start.clone().add(Number(req.body.duration), 'm')
+  } else {
+    console.log('pick up time null')
+    var start = Moment(new Date(req.body.minDate).toISOString());
+    var finish = start.clone().endOf('day');
+  }
+  console.log(start, 'start')
+  console.log(finish, 'finish')
   models.Walk
     .query((qb) => {
       qb.where('price', '<=', filters.price)
-        .where('session_start', '<=', new Date(filters.startDate.getTime() + filters.pickupTime))
-        .where('session_end', '>=', new Date(filters.startDate.getTime() + filters.pickupTime + filters.duration * 60 * 1000))
+        .where('session_start', '<=', new Date(start.toDate()))
+        .where('session_end', '>=', new Date(finish.toDate()))
         .limit(20);
     })
     .fetchAll({
       withRelated: ['walker']
     })
     .then(walks => {
+      console.log(walks.models, 'walks')
       res.status(200).send(walks);
     })
     .catch(err => {
-      // This code indicates an outside service (the database) did not respond in time
       console.log('****** getFilteredWalks error ', err);
       res.status(503).send(err);
     });
