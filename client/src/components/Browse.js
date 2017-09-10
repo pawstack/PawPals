@@ -34,7 +34,7 @@ class Browse extends React.Component {
   getWalks(filters) {
     $.post('/api/walks/search', filters)
       .done((data) => {
-        //console.log('SUCCESS getWalks in Browse ', data);
+        console.log('SUCCESS getWalks in Browse ', data);
         if (this.state.pickupAddress) {
           this.filterLocation(data);
         } else {
@@ -48,21 +48,24 @@ class Browse extends React.Component {
   }
 
   filterLocation(walks) {
+    console.log(this.state.pickupAddress);
     geocodeByAddress(this.state.pickupAddress)
       .then(results => getLatLng(results[0]))
       .then((latLng) => {
+        console.log(latLng)
         var pickUpLatLng = {
           'latitude': latLng['lat'],
           'longitude': latLng['lng']
         };
+        console.log(pickUpLatLng)
         var nearbyWalks = [];
         for (var i = 0; i < walks.length; i++) {
           var distance = geolib.getDistanceSimple(
-            {latitude: walks[i].latitude, longitude: walks[i].longitude},
-            {latitude: walks[i].latitude, longitude: walks[i].longitute},
-            pickUpLatLng, 10, 1);
+            {'latitude': walks[i].latitude, 'longitude': walks[i].longitude},
+            pickUpLatLng, 10, 1)
           if (distance < Number(walks[i].walk_zone_radius) * 1000) {
-            nearbyWalks.push(walks[0]);
+            console.log(walks[i])
+            nearbyWalks.push(walks[i]);
           }
         }
         this.setState({

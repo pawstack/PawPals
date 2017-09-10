@@ -10,16 +10,15 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Drawer from 'material-ui/Drawer';
 import AppBar from 'material-ui/AppBar';
 import PlacesAutocomplete from './PlacesAutocomplete';
+import moment from 'moment';
 
 class BrowseFilter extends React.Component {
   constructor(props) {
     super(props);
-    const minDate = new Date(new Date().setHours(0, 0, 0, 0));
-
+    const todayJS = moment().startOf('day').toDate();
     this.state = {
-      minDate: minDate,
-      startDate: minDate,
-      endDate: new Date(minDate.getTime() + (1000 * 60 * 60 * 24 * 14 + 86399000)),
+      minDate: todayJS,
+      startDate: null,
       duration: null,
       pickupTime: null,
       price: 100
@@ -29,6 +28,7 @@ class BrowseFilter extends React.Component {
   }
 
   componentWillMount() {
+    console.log(this.state);
     this.props.getWalks(this.state);
   }
 
@@ -65,7 +65,7 @@ class BrowseFilter extends React.Component {
               autoOk={true}
               minDate={this.state.minDate}
               disableYearSelection={true}
-              value={this.state.startDate}
+              defaultDate={this.state.minDate}
               onChange={this.handleChangeAdditional.bind(this, 'startDate')}
             />
           </MenuItem>
