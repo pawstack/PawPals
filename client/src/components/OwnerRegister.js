@@ -8,6 +8,7 @@ import MenuItem from 'material-ui/MenuItem';
 import Subheader from 'material-ui/Subheader';
 import RaisedButton from 'material-ui/RaisedButton';
 import ReactFilestack from 'filestack-react';
+import Snackbar from 'material-ui/Snackbar';
 
 
 var checkEmptyEntry = function(obj) {
@@ -32,7 +33,8 @@ class OwnerRegister extends React.Component {
       weight: 0,
       url: '',
       extras: '',
-      owner: true
+      owner: true,
+      open: false
     };
 
     this.handleNameChange = this.handleNameChange.bind(this);
@@ -41,6 +43,8 @@ class OwnerRegister extends React.Component {
     this.handleWeightChange = this.handleWeightChange.bind(this);
     this.handleExtrasChange = this.handleExtrasChange.bind(this);
     this.uploadImage = this.uploadImage.bind(this);
+    this.handleTouchTap = this.handleTouchTap.bind(this);
+    this.handleRequestClose = this.handleRequestClose.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -83,6 +87,17 @@ class OwnerRegister extends React.Component {
     });
   }
 
+  handleTouchTap(event) {
+    this.setState({
+      open: true,
+    });
+  }
+
+  handleRequestClose() {
+    this.setState({
+      open: false,
+    });
+  }
 
   handleSubmit() {
     console.log('phone is', this.props.phoneInfo);
@@ -104,8 +119,10 @@ class OwnerRegister extends React.Component {
           phone: this.props.phoneInfo,
           address: this.props.addressInfo
         },
+        context: this,
         success: (res) => {
           console.log('data sent');
+          this.handleTouchTap();
         },
         error: function(data) {
         }
@@ -142,7 +159,7 @@ class OwnerRegister extends React.Component {
           <Slider
             min={0}
             max={20}
-            step={0.5}
+            step={1}
             value={this.state.age}
             onChange={this.handleAgeChange}
           />
@@ -188,7 +205,12 @@ class OwnerRegister extends React.Component {
         </div>
 
         <RaisedButton label="Submit Profile" primary={true} onClick={this.handleSubmit} />
-
+        <Snackbar
+          open={this.state.open}
+          message="Profile has been submitted!"
+          autoHideDuration={900}
+          onRequestClose={this.handleRequestClose}
+        />
       </div>
     );
   }

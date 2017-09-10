@@ -266,7 +266,6 @@ class Browse extends React.Component {
               onRequestClose={this.handleSnackBarClose}
             />
           </MuiThemeProvider>
-
         </div>
       );
     } else if (this.state.selectedWalk.walker) {

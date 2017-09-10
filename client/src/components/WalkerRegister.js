@@ -4,6 +4,7 @@ import $ from 'jquery';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import ReactFilestack from 'filestack-react';
+import Snackbar from 'material-ui/Snackbar';
 
 
 var checkEmptyEntry = function(obj) {
@@ -21,11 +22,14 @@ class WalkerRegister extends React.Component {
     super(props);
     this.state = {
       url: '',
-      extras: ''
+      extras: '',
+      open: false
     };
 
     this.handleExtrasChange = this.handleExtrasChange.bind(this);
     this.uploadImage = this.uploadImage.bind(this);
+    this.handleTouchTap = this.handleTouchTap.bind(this);
+    this.handleRequestClose = this.handleRequestClose.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -44,6 +48,18 @@ class WalkerRegister extends React.Component {
     });
   }
 
+  handleTouchTap(event) {
+    this.setState({
+      open: true,
+    });
+  }
+
+  handleRequestClose() {
+    this.setState({
+      open: false,
+    });
+  }
+
   handleSubmit() {
     if (checkEmptyEntry(this.state)) {
       console.log('phone number is', this.props.phoneInfo);
@@ -59,15 +75,17 @@ class WalkerRegister extends React.Component {
           phone: this.props.phoneInfo,
           address: this.props.addressInfo
         },
+        context: this,
         success: (res) => {
-          console.log('data sent');
+          console.log('walker registry');
+          this.handleTouchTap();
         },
         error: function(data) {
         }
       });
     }
-
   }
+
 
   render() {
 
@@ -108,6 +126,12 @@ class WalkerRegister extends React.Component {
           />
         </div>
         <RaisedButton label="Submit Profile" primary={true} onClick={this.handleSubmit} />
+        <Snackbar
+          open={this.state.open}
+          message="Profile has been submitted!"
+          autoHideDuration={900}
+          onRequestClose={this.handleRequestClose}
+        />
       </div>
     );
   }
