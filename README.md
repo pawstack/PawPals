@@ -1,17 +1,17 @@
-# Project Name
+# PawPals
 
-The project description
+PawPals connects dog owners with dog walkers in their community that they can hire, with streamlined scheduling, purchasing, and real-time tracking of their dogs.
 
-## Team
+## Paw Stack Team
 
-- teamMember
-- teamMember
-- teamMember
-- teamMember
+- [Martin](https://github.com/mkchang)
+- [Nova](https://github.com/novyQ)
+- [Tiffany](https://github.com/tiffanycchoy)
+- [Yang](https://github.com/youngyanglu)
 
 ## Roadmap
 
-View the project roadmap [here](LINK_TO_DOC)
+View the project roadmap on Trello [here](https://trello.com/b/FZuumD8M/pawpals)
 
 ## Contributing
 
@@ -34,7 +34,6 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
 - Node 6.9.x
 - Redis 3.2.x
 - Postgresql 9.6.x
-- etc
 
 ## Development
 
@@ -47,6 +46,12 @@ brew install postgresql
 ```
 
 Yarn is a replacement for npm. It's faster and *guarantees* consistency -- as you deploy your code in various environments, you won't run the risk of slight variations in what gets installed.
+
+After brew installs, inside of the repo root directory run:
+
+```
+yarn install
+```
 
 ### Install Project Dependencies
 
