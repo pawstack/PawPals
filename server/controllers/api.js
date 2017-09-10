@@ -13,31 +13,29 @@ const moment = MomentRange.extendMoment(Moment);
 db.plugin('registry');
 
 module.exports.getFilteredWalks = (req, res) => {
+  filters = req.body;
   console.log(req.body, 'body')
-  var filters = req.body;
-  new Date(req.body.minDate).toISOString();
-  if (req.body.startDate === '' && req.body.pickupTime === '') {
-    console.log('two null;')
-    var start = Moment(new Date(req.body.minDate).toISOString());
-    var finish = start.clone().endOf('day');
-  } else if (req.body.pickupTime !== '' && req.body.startDate !== '') {
+  if (req.body.pickupTime !== '' && req.body.startDate !== '') {
     console.log('no null')
-    var startDateJS = new Date(req.body.startDate);
-    var pickupTimeJS = new Date(req.body.pickupTime);
-    var date = Moment(startDateJS).startOf('day');
-    var start = date.clone();
-    var finish = date.clone();
-    var hour = Moment(pickupTimeJS).get('hour');
-    var minute = Moment(pickupTimeJS).get('minute');
+    var startDate = Moment(new Date(req.body.startDate)).startOf('day');
+    var pickupTime = Moment(new Date(req.body.pickupTime));
+    var start = startDate.clone();
+    var finish = startDate.clone();
+    var hour = pickupTime.get('hour');
+    var minute = pickupTime.get('minute');
     start.add(hour, 'h').add(minute, 'm')
     finish.add(hour, 'h').add(minute, 'm').add(Number(req.body.duration), 'm');
   } else if(req.body.startDate === '' && req.body.pickupTime !== '') {
     console.log('start date null')
     var start = Moment(new Date(req.body.pickupTime));
     var finish = start.clone().add(Number(req.body.duration), 'm')
-  } else {
+  } else if (req.body.startDate!=='' && req.body.pickupTime === ''){
     console.log('pick up time null')
-    var start = Moment(new Date(req.body.minDate).toISOString());
+    var start = Moment(new Date(req.body.startDate)).startOf();
+    var finish = start.clone().endOf('day');
+  } else {
+    console.log('both null')
+    var start = Moment(new Date(req.body.minDate));
     var finish = start.clone().endOf('day');
   }
   console.log(start, 'start')
