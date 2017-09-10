@@ -27,7 +27,6 @@ class NavBarOwnerLoggedIn extends React.Component {
   render() {
     return (
       <div>
-        <Router>
           <div>
             <IconMenu
               iconButtonElement={
@@ -59,13 +58,7 @@ class NavBarOwnerLoggedIn extends React.Component {
                 href = '/logout'
               />
             </IconMenu>
-
-            <Route exact path="/profilepage/owner" component={ProfileOwner}/>
-            <Route exact path="/browse" component={Browse}/>
-            <Route exact path="/findmydog" component={FindMyDog}/>
-            <Route exact path="/walkhistory" component={WalkHistory}/>
           </div>
-        </Router>
       </div>
     );
   }

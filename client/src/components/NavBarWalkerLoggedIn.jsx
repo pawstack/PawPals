@@ -25,7 +25,6 @@ class NavBarWalkerLoggedIn extends React.Component {
   render() {
     return (
       <div>
-        <Router>
           <div>
             <IconMenu
               iconButtonElement={
@@ -49,14 +48,7 @@ class NavBarWalkerLoggedIn extends React.Component {
                 href ='/logout'
               />
             </IconMenu>
-
-            <Route exact path="/profilepage/walker" component={ProfileWalker}/>
-            <Route exact path="/walker" component={Calendar}/>
-
           </div>
-
-
-        </Router>
       </div>
     );
   }
@@ -65,10 +57,3 @@ class NavBarWalkerLoggedIn extends React.Component {
 
 
 export default NavBarWalkerLoggedIn;
-
-
-/*
-
-<a href="/logout" class="btn btn-default btn-sm">Logout</a>
-
-*/
