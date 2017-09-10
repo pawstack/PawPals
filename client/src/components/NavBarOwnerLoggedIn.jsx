@@ -17,6 +17,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import Browse from './Browse';
 import ProfileOwner from './ProfileOwner';
 import FindMyDog from './FindMyDog';
+import WalkHistory from './WalkHistory';
 
 
 class NavBarOwnerLoggedIn extends React.Component {
@@ -50,7 +51,8 @@ class NavBarOwnerLoggedIn extends React.Component {
                 containerElement={<Link to='/findmydog' />}
               />
               <MenuItem
-                primaryText="History"
+                primaryText="Walk History"
+                containerElement={<Link to='/walkhistory' />}
               />
               <MenuItem
                 primaryText="Sign out"
@@ -61,10 +63,8 @@ class NavBarOwnerLoggedIn extends React.Component {
             <Route exact path="/profilepage/owner" component={ProfileOwner}/>
             <Route exact path="/browse" component={Browse}/>
             <Route exact path="/findmydog" component={FindMyDog}/>
-
+            <Route exact path="/walkhistory" component={WalkHistory}/>
           </div>
-
-
         </Router>
       </div>
     );
