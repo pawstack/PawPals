@@ -25,7 +25,6 @@ class NavBarNewUserLoggedIn extends React.Component {
   render() {
     return (
       <div>
-        <Router>
           <div>
             <IconMenu
               iconButtonElement={
@@ -40,7 +39,6 @@ class NavBarNewUserLoggedIn extends React.Component {
               />
             </IconMenu>
           </div>
-        </Router>
       </div>
     );
   }
