@@ -44,7 +44,7 @@ class SignUpStart extends React.Component {
 
 
   handleEntriesChanged( component, valueType, value ) {
-    this.setState( { [valueType]: value });
+    this.setState( { [valueType]: value }, () => {console.log(this.state[valueType])});
   }
 
 

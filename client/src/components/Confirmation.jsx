@@ -43,7 +43,7 @@ class Confirmation extends React.Component {
         <MuiThemeProvider>
           <div>
 
-            <Card>
+            <Card style={{"marginTop":"10%"}}>
 
               <CardMedia
                 overlay={<CardTitle title="Confirm your selection"/>}

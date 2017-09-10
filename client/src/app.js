@@ -97,14 +97,24 @@ class App extends React.Component {
       return (
         <div>
           <Router>
+
             <MuiThemeProvider>
               <div>
                 <AppBar
                   title={this.state.userInfo.display}
                   iconElementRight = {this.state.owner ? <NavBarOwnerLoggedIn /> : <NavBarWalkerLoggedIn />}
                 />
+                <Route exact path="/signup/start" component={SignUpStart}/>
+                <Route exact path="/browse" component={Browse}/>
+                <Route exact path="/walker" component={Calendar}/>
+                <Route exact path="/profilepage/owner" component={ProfileOwner}/>
+                <Route exact path="/profilepage/walker" component={ProfileWalker}/>
+                <Route exact path="/findmydog" component={FindMyDog}/>
+                <Route exact path="/trackwalk" component={TrackWalk}/>
+                <Route exact path="/walkhistory" component={WalkHistory}/>
               </div>
             </MuiThemeProvider>
+
           </Router>
         </div>
 

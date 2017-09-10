@@ -27,38 +27,38 @@ class NavBarOwnerLoggedIn extends React.Component {
   render() {
     return (
       <div>
-          <div>
-            <IconMenu
-              iconButtonElement={
-                <IconButton><MoreVertIcon /></IconButton>
-              }
-              targetOrigin={{horizontal: 'right', vertical: 'top'}}
-              anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-            >
-              <MenuItem
-                primaryText="My Profile"
-                onTouchTap = {() => console.log('touch1') }
-                containerElement={<Link to="/profilepage/owner" />}
-              />
-              <MenuItem
-                primaryText="Browse Walks"
-                onTouchTap = {() => console.log('touch2') }
-                containerElement={<Link to="/browse" />}
-              />
-              <MenuItem
-                primaryText="Find My Dog"
-                containerElement={<Link to='/findmydog' />}
-              />
-              <MenuItem
-                primaryText="Walk History"
-                containerElement={<Link to='/walkhistory' />}
-              />
-              <MenuItem
-                primaryText="Sign out"
-                href = '/logout'
-              />
-            </IconMenu>
-          </div>
+        <div>
+          <IconMenu
+            iconButtonElement={
+              <IconButton><MoreVertIcon /></IconButton>
+            }
+            targetOrigin={{horizontal: 'right', vertical: 'top'}}
+            anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+          >
+            <MenuItem
+              primaryText="My Profile"
+              onTouchTap = {() => console.log('touch1') }
+              containerElement={<Link to="/profilepage/owner" />}
+            />
+            <MenuItem
+              primaryText="Browse Walks"
+              onTouchTap = {() => console.log('touch2') }
+              containerElement={<Link to="/browse" />}
+            />
+            <MenuItem
+              primaryText="Find My Dog"
+              containerElement={<Link to='/findmydog' />}
+            />
+            <MenuItem
+              primaryText="Walk History"
+              containerElement={<Link to='/walkhistory' />}
+            />
+            <MenuItem
+              primaryText="Sign out"
+              href = '/logout'
+            />
+          </IconMenu>
+        </div>
       </div>
     );
   }
