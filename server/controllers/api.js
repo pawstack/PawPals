@@ -13,30 +13,32 @@ const moment = MomentRange.extendMoment(Moment);
 db.plugin('registry');
 
 module.exports.getFilteredWalks = (req, res) => {
+  // implement as if walkers don't make "walk slots" but rather general
+  // availability periods, and owners can book as long as their need is in that
+  // period.
   filters = req.body;
-  console.log(req.body, 'body')
   if (req.body.pickupTime !== '' && req.body.startDate !== '') {
-    console.log('no null')
+    // show all walks in period of given day and given time
     var startDate = Moment(new Date(req.body.startDate)).startOf('day');
     var pickupTime = Moment(new Date(req.body.pickupTime));
     var start = startDate.clone();
     var finish = startDate.clone();
     var hour = pickupTime.get('hour');
     var minute = pickupTime.get('minute');
-    start.add(hour, 'h').add(minute, 'm')
-    finish.add(hour, 'h').add(minute, 'm').add(Number(req.body.duration), 'm');
+    start.add(hour, 'h').add(minute, 'm').endOf('minute')
+    finish.add(hour, 'h').add(minute, 'm').add(Number(req.body.duration), 'm').startOf('minute');
   } else if(req.body.startDate === '' && req.body.pickupTime !== '') {
-    console.log('start date null')
-    var start = Moment(new Date(req.body.pickupTime));
-    var finish = start.clone().add(Number(req.body.duration), 'm')
+    // see all walks available today at given time
+    var start = Moment(new Date(req.body.pickupTime)).endOf('minute');;
+    var finish = start.clone().add(Number(req.body.duration), 'm').startOf('minute');
   } else if (req.body.startDate!=='' && req.body.pickupTime === ''){
-    console.log('pick up time null')
-    var start = Moment(new Date(req.body.startDate)).startOf();
-    var finish = start.clone().endOf('day');
+    // see all walks for that day
+    var start = Moment(new Date(req.body.startDate)).endOf('day');
+    var finish = start.clone().startOf('day');
   } else {
-    console.log('both null')
-    var start = Moment(new Date());
-    var finish = start.clone().endOf('day');
+    // see all walks available today
+    var start = Moment(new Date()).endOf('day');
+    var finish = Moment(new Date()).startOf('minute');
   }
   console.log(start, 'start')
   console.log(finish, 'finish')
@@ -70,7 +72,6 @@ module.exports.getAll = (req, res) => {
       var response = {};
       response['walks'] = collection.models;
       response['location'] = req.user.address;
-      console.log(response)
       res.status(200).send(response);
     })
     .catch(err => {
@@ -388,10 +389,112 @@ var getUserType = (userID) => {
     });
 };
 
+
 module.exports.getDogInfo = (req, res) => {
   return knex('dogs')
     .where({owner_id: req.query.ownerID})
     .then((result) => {
       res.send(result[0]);
     });
+};
+
+module.exports.saveWalkGeolocation = (req, res) => {
+  var geolocation = req.body;
+  models.Geolocation.forge({
+    latitude: req.body.latitude,
+    longitude: req.body.longitude,
+    timestamp: new Date(req.body.timestamp),
+    accuracy: req.body.accuracy,
+    walk_id: req.body.walk_id
+  })
+    .save()
+    .then(geolocation => {
+      res.status(201).send(geolocation);
+    })
+    .catch(err => {
+      console.log('ERROR trying to save a walk geolocation: ', err);
+      res.status(500).send(err);
+    });
+};
+
+module.exports.fetchGeolocations = (req, res) => {
+  var walkId = Number(req.query.walkId);
+  models.Geolocation.where('walk_id', walkId)
+    .fetchAll()
+    .then(geolocations => {
+      res.status(200).send(geolocations);
+    })
+    .catch(err => {
+      console.log('ERROR trying to fetch all geolocations for walk_id:' + walkId + ' ', err);
+      res.status(500).send(err);
+    });
+};
+
+module.exports.getCurrentWalk = function(req, res) {
+  models.Walk
+    .query((qb) => {
+      qb.where({'owner_id': req.user.id,
+        'paid': true});
+    })
+    .where('session_start', '>=', new Date())
+    .fetchAll({
+      withRelated: ['walker']
+    })
+    .then(walks => {
+      res.status(200).send(walks);
+    })
+    .catch(err => {
+      console.log('****** getFilteredWalks error ', err);
+      res.status(503).send(err);
+    });
+};
+
+module.exports.getPastWalk = function(req, res) {
+  models.Walk
+    .query((qb) => {
+      qb.where({'owner_id': req.user.id,
+        'paid': true});
+    })
+    .where('session_end', '<=', new Date())
+    .fetchAll({
+      withRelated: ['walker']
+    })
+    .then(walks => {
+      res.status(200).send(walks);
+    })
+    .catch(err => {
+      console.log('****** getFilteredWalks error ', err);
+      res.status(503).send(err);
+    });
+};
+
+
+module.exports.ownerCancelWalk = function(req, res) {
+
+  var cancelDBUpdate = new Promise(
+    (resolve, reject) => {
+      knex('walks').where('id', req.body.walkID).update({
+        owner_id: null,
+        dog_id: null,
+        paid: false
+      })
+        .then(resolve());
+    }
+  );
+
+  var refundPaymentOwner = new Promise(
+    (resolve, reject) => {
+      module.exports.refundPayment(req, res)
+        .then(resolve());
+    }
+  );
+
+  Promise.all([cancelDBUpdate, refundPaymentOwner]).then(responses => {
+    console.log('cancel res sent');
+    res.send(200);
+  })
+    .catch(e => {
+      console.log(e);
+    });
+
 };
