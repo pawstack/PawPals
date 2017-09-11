@@ -7,10 +7,10 @@ router.route('/walks/search')
   .post(ApiController.getFilteredWalks);
 
 router.route('/walks/fetch')
-  .get(ApiController.getAll);
+  .get(ApiController.getWalkersWalks);
 
 router.route('/walks/create')
-  .post(ApiController.create);
+  .post(ApiController.createWalk);
 
 router.route('/signup/owner')
   .post(ApiController.saveDog);
@@ -18,9 +18,8 @@ router.route('/signup/owner')
 router.route('/signup/walker')
   .post(ApiController.saveWalker);
 
-
 router.route('/walks/destroy')
-  .delete(ApiController.destroy);
+  .delete(ApiController.destroyWalk);
 
 router.route('/profile/owner')
   .get(ApiController.getOwnerProfile);
