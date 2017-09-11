@@ -2,8 +2,10 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import debounce from 'lodash.debounce'
 import TextField from 'material-ui/TextField';
-
+import scriptLoader from 'react-async-script-loader'
 import AutoComplete from 'material-ui/AutoComplete';
+
+
 class PlacesAutocomplete extends Component {
   constructor(props) {
     super(props)
@@ -11,29 +13,49 @@ class PlacesAutocomplete extends Component {
     this.state = {
       autocompleteItems: [],
       materialUIItems: [],
+      isConfigured: !props.googleApiUrl
     }
-
+    this.isUnmounted = false;
     this.autocompleteCallback = this.autocompleteCallback.bind(this)
     this.handleInputKeyDown = this.handleInputKeyDown.bind(this)
     this.handleInputChange = this.handleInputChange.bind(this)
     this.debouncedFetchPredictions = debounce(this.fetchPredictions, this.props.debounce)
+    this.configureDependencies = this.configureDependencies.bind(this)
+
   }
 
-  componentWillMount() {
-    if (!window.google || !window.google.maps.places) {
-      setTimeout(() => {console.log('should be ready')}, 1000);
-    }
-  }
   componentDidMount() {
-     if (!window.google) {
-       throw new Error('Google Maps JavaScript API library must be loaded. See: https://github.com/kenny-hibino/react-places-autocomplete#load-google-library')
-     }
-     if (!window.google.maps.places) {
-       throw new Error('Google Maps Places library must be loaded. Please add `libraries=places` to the src URL. See: https://github.com/kenny-hibino/react-places-autocomplete#load-google-library')
-     }
+    if (!window.google) {
+      throw new Error('Google Maps JavaScript API library must be loaded. See: https://github.com/kenny-hibino/react-places-autocomplete#load-google-library')
+    }
+
+    if (!window.google.maps.places) {
+      throw new Error('Google Maps Places library must be loaded. Please add `libraries=places` to the src URL. See: https://github.com/kenny-hibino/react-places-autocomplete#load-google-library')
+    }
 
     this.autocompleteService = new google.maps.places.AutocompleteService()
     this.autocompleteOK = google.maps.places.PlacesServiceStatus.OK
+  }
+  componentWillUnmount() {
+    this.isUnmounted = true;
+  }
+
+  configureDependencies() {
+    this.autocompleteService = new google.maps.places.AutocompleteService()
+    this.autocompleteOK = google.maps.places.PlacesServiceStatus.OK
+
+    // If the component have be unmounted since we started loading the API, then the `setState`
+    // will fail, so we exit
+    if (this.isUnmounted) return;
+
+    // If the component is already configured, we can save a rerender by not 
+    // updating the state
+    if (!this.state.isConfigured) {
+      this.setState((prevState) => ({
+        ...prevState,
+        isConfigured: true
+      }))
+    }
   }
 
   autocompleteCallback(predictions, status) {
@@ -251,7 +273,7 @@ class PlacesAutocomplete extends Component {
 
   render() {
     const { classNames, styles } = this.props
-    const { autocompleteItems } = this.state
+    const { autocompleteItems, isConfigured } = this.state
     const inputProps = this.getInputProps()
     if (this.props.hintText) {
       var auto = <AutoComplete
@@ -325,6 +347,7 @@ PlacesAutocomplete.propTypes = {
   highlightFirstSuggestion: PropTypes.bool,
   googleLogo: PropTypes.bool,
   googleLogoType: PropTypes.oneOf(["default", "inverse"]),
+  googleApiUrl: PropTypes.string
 }
 
 PlacesAutocomplete.defaultProps = {
@@ -338,6 +361,7 @@ PlacesAutocomplete.defaultProps = {
   highlightFirstSuggestion: false,
   googleLogo: true,
   googleLogoType: 'default',
+  googleApiUrl: null
 }
 
-export default PlacesAutocomplete
+export default PlacesAutocomplete;

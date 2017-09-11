@@ -1,12 +1,11 @@
 <% include head.ejs%>
 
-    <div id='root'></div>
-    <script
-        async
-        type="text/javascript"
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIbSyqxifN1yHQ-VjV9VDELz--j67fjQw&libraries=places"
-
-    ></script>
-    <script src="/dist/bundle.js"></script>
-
+<div id='root'></div>
+<script src="/dist/script.js"></script>
+<script type="text/javascript">
+$script('https://maps.googleapis.com/maps/api/js?key=AIzaSyBIbSyqxifN1yHQ-VjV9VDELz--j67fjQw&libraries=places', 'googleAPI', function () {
+    $script('/dist/bundle.js', 'bundle', function() {
+      })
+    })
+</script>
 <% include foot.ejs%>
