@@ -3,6 +3,7 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 import RaisedButton from 'material-ui/RaisedButton';
 import moment from 'moment';
 import Snackbar from 'material-ui/Snackbar';
+import FindMyDogMap from './FindMyDogMap';
 
 class CurrentWalkItem extends React.Component {
   constructor(props) {

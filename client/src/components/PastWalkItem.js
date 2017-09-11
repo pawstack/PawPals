@@ -2,6 +2,7 @@ import React from 'react';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import ShowPastWalkDetails from './ShowPastWalkDetails';
+import FindMyDogMap from './FindMyDogMap';
 
 class PastWalkItem extends React.Component {
   constructor(props) {
@@ -19,7 +20,7 @@ class PastWalkItem extends React.Component {
           title={this.props.walk.walker.display}
         />
         <CardText>
-          MAP GOES HERE
+          <FindMyDogMap walkId={this.props.walk.id} />
         </CardText>
         <div>
           <br></br>
