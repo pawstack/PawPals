@@ -28,7 +28,7 @@ class WalkHistory extends React.Component {
       url: '/api/walkhistory/current',
       type: 'GET',
       success: (res) => {
-        console.log('CURRENT WALKS', res);
+        // console.log('CURRENT WALKS', res);
         this.setState({
           currentwalks: res
         });
@@ -40,14 +40,14 @@ class WalkHistory extends React.Component {
 
   cancelWalk(e) {
 
-    console.log('WALK CANCELED ID ', e.id);
+    // console.log('WALK CANCELED ID ', e.id);
     $.ajax({
       url: '/api/walkhistory/cancel',
       type: 'POST',
       data: {walkID: e.id},
       context: this,
       success: (res) => {
-        console.log('request sent');
+        // console.log('request sent');
         this.getCurrentWalk();
       },
       error: function(err) {
@@ -62,7 +62,7 @@ class WalkHistory extends React.Component {
       url: '/api/walkhistory/past',
       type: 'GET',
       success: (res) => {
-        console.log('PAST WALKS', res);
+        // console.log('PAST WALKS', res);
         this.setState({
           pastwalks: res
         });
