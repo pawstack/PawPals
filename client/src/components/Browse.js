@@ -39,46 +39,42 @@ class Browse extends React.Component {
     $.post('/api/walks/search', filters)
       .done((data) => {
         console.log('SUCCESS getWalks in Browse ', data);
-        if (this.state.pickupAddress) {
-          this.filterLocation(data);
-        } else {
-          this.setState({
-            walks: data
-          });
-        }
+        this.filterLocation(data);
       }).fail((err) => {
         console.log('ERROR getWalks in Browse ', error);
       });
   }
 
   filterLocation(walks) {
-    console.log(this.state.pickupAddress);
-    geocodeByAddress(this.state.pickupAddress)
-      .then(results => getLatLng(results[0]))
-      .then((latLng) => {
-        console.log(latLng);
-        var pickUpLatLng = {
-          'latitude': latLng['lat'],
-          'longitude': latLng['lng']
-        };
-        console.log(pickUpLatLng);
-        var nearbyWalks = [];
-        for (var i = 0; i < walks.length; i++) {
-          var distance = geolib.getDistanceSimple(
-            {'latitude': walks[i].latitude, 'longitude': walks[i].longitude},
-            pickUpLatLng, 10, 1);
-          if (distance < Number(walks[i].walk_zone_radius) * 1000) {
-            console.log(walks[i]);
-            nearbyWalks.push(walks[i]);
-          }
-        }
-        this.setState({
-          walks: nearbyWalks
+    this.getOwnerInfo(() => {
+      if (!this.state.pickupAddress) {
+        this.setState({['pickupAddress']: this.state.ownerInfo.address}, () => {
+          geocodeByAddress(this.state.pickupAddress)
+            .then(results => getLatLng(results[0]))
+            .then((latLng) => {
+              var pickUpLatLng = {
+                'latitude': latLng['lat'],
+                'longitude': latLng['lng']
+              };
+              var nearbyWalks = [];
+              for (var i = 0; i < walks.length; i++) {
+                var distance = geolib.getDistanceSimple(
+                  {'latitude': walks[i].latitude, 'longitude': walks[i].longitude},
+                  pickUpLatLng, 10, 1)
+                if (distance < Number(walks[i].walk_zone_radius) * 1000) {
+                  nearbyWalks.push(walks[i]);
+                }
+              }
+              this.setState({
+                walks: nearbyWalks
+              });
+            })
+            .catch((error) => {
+              console.log(error);
+            });
         });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      }
+    })
   }
 
   selectWalk(walk) {
@@ -87,13 +83,13 @@ class Browse extends React.Component {
     });
   }
 
-  getOwnerInfo() {
+  getOwnerInfo(callback) {
     $.get('/api/walks/getOwnerInfo')
       .done((data) => {
         this.setState({
           ownerInfo: data
         }, function() {
-          this.getDogInfo();
+          this.getDogInfo(callback);
         });
       })
       .fail((err) => {
@@ -101,7 +97,7 @@ class Browse extends React.Component {
       });
   }
 
-  getDogInfo() {
+  getDogInfo(callback) {
     var context = this;
     $.ajax({
       method: 'GET',
@@ -112,7 +108,7 @@ class Browse extends React.Component {
       success(data) {
         context.setState({
           dogInfo: data
-        });
+        }, () => {callback() });
       },
       error(err) {
         console.log('ERROR retrieving dogInfo ', err);
@@ -170,7 +166,6 @@ class Browse extends React.Component {
   }
 
   componentDidMount() {
-    this.getOwnerInfo();
   }
 
   handleSnackBarClose() {
