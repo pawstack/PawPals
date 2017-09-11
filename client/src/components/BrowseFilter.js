@@ -39,7 +39,7 @@ class BrowseFilter extends React.Component {
   handleChangeAdditional(key, event, value) {
     this.setState({
       [key]: value,
-    });
+    }, () => {console.log(this.state[key])});
   }
 
   handleSelectDuration(event, index, duration) {
