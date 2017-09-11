@@ -68,7 +68,7 @@ module.exports.getFilteredWalks = (req, res) => {
     });
 };
 
-module.exports.getAll = (req, res) => {
+module.exports.getWalkersWalks = (req, res) => {
   models.Walk
     .query((qb) => {
       qb.where('walker_id', '=', req.user.id);
@@ -85,7 +85,7 @@ module.exports.getAll = (req, res) => {
     });
 };
 
-module.exports.create = (req, res) => {
+module.exports.createWalk = (req, res) => {
   models.Walk.forge({
     session_start: req.body.session_start,
     session_end: req.body.session_end,
@@ -114,7 +114,7 @@ module.exports.create = (req, res) => {
     });
 };
 
-module.exports.destroy = (req, res) => {
+module.exports.destroyWalk = (req, res) => {
   new models.Walk({id: req.body.walk_id})
     .destroy()
     .then(() => {
