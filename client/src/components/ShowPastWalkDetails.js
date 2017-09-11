@@ -59,7 +59,9 @@ export default class ShowPastWalkDetails extends React.Component {
           onRequestClose={this.handleRequestClose}
         >
           <CardText>
-            From {time[0]} to {time[1]}  Near {this.props.near}
+            From {time[0]} to {time[1]}
+            <br></br>
+            Near {this.props.near}
             <br></br>
             ${this.props.price}/hour
           </CardText>
@@ -71,4 +73,3 @@ export default class ShowPastWalkDetails extends React.Component {
 }
 
 //<CardTitle title={`$${this.props.price}/hour`} subtitle={`Start: ${new Date(this.props.start)}, Stop: ${new Date(this.props.stop)}, Near: ${this.props.near}`} />
-
