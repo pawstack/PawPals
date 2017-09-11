@@ -3,6 +3,7 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 import RaisedButton from 'material-ui/RaisedButton';
 import ShowPastWalkDetails from './ShowPastWalkDetails';
 import FindMyDogMap from './FindMyDogMap';
+import StarRating from './StarRating.jsx';
 
 class PastWalkItem extends React.Component {
   constructor(props) {
@@ -26,7 +27,12 @@ class PastWalkItem extends React.Component {
           <br></br>
           <br></br>
         </div>
-        <ShowPastWalkDetails price={this.props.walk.price} start={this.props.walk.session_start} stop ={this.props.walk.session_end} near={this.props.walk.walk_zone_pt}/>
+        <ShowPastWalkDetails
+          price={this.props.walk.price}
+          start={this.props.walk.session_start}
+          stop ={this.props.walk.session_end}
+          near={this.props.walk.walk_zone_pt}/>
+        <StarRating />
         <div>
           <br></br>
         </div>
@@ -36,7 +42,3 @@ class PastWalkItem extends React.Component {
 }
 
 export default PastWalkItem;
-
-
-
-
