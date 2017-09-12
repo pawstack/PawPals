@@ -9,6 +9,8 @@ import Subheader from 'material-ui/Subheader';
 import RaisedButton from 'material-ui/RaisedButton';
 import Drawer from 'material-ui/Drawer';
 import AppBar from 'material-ui/AppBar';
+import IconButton from 'material-ui/IconButton';
+import NavigationChevronLeft from 'material-ui/svg-icons/navigation/chevron-left';
 import PlacesAutocomplete from './PlacesAutocomplete';
 import moment from 'moment';
 
@@ -39,7 +41,7 @@ class BrowseFilter extends React.Component {
   handleChangeAdditional(key, event, value) {
     this.setState({
       [key]: value,
-    }, () => {console.log(this.state[key])});
+    }, () => { console.log(this.state[key]); });
   }
 
   handleSelectDuration(event, index, duration) {
@@ -50,13 +52,22 @@ class BrowseFilter extends React.Component {
     const inputProps = {
       value: this.props.pickupAddress,
       onChange: (v) => this.handleLocationChange(v),
-    }
+    };
     return (
       <div>
-        <Drawer docked={true}>
-          <AppBar title="Filter" showMenuIconButton={false} />
+        <Drawer 
+          docked={false} 
+          open={this.props.filterOpen} 
+          onRequestChange={this.props.toggleFilter} 
+          overlayStyle={{ opacity: 0 }}
+        >
+          <AppBar 
+            title="Filter" 
+            showMenuIconButton={false} 
+            iconElementRight={<IconButton><NavigationChevronLeft /></IconButton>}
+            onRightIconButtonTouchTap={this.props.toggleFilter}/>
           <MenuItem>
-            <PlacesAutocomplete inputProps={inputProps} label={"Pickup Address"} />
+            <PlacesAutocomplete inputProps={inputProps} label={'Pickup Address'} />
           </MenuItem>
           <MenuItem>
             <DatePicker
