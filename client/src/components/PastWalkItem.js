@@ -32,7 +32,10 @@ class PastWalkItem extends React.Component {
           start={this.props.walk.session_start}
           stop ={this.props.walk.session_end}
           near={this.props.walk.walk_zone_pt}/>
-        <StarRating />
+        <StarRating
+          ratingFor = {'walker'}
+          walk= {this.props.walk}
+        />
         <div>
           <br></br>
         </div>

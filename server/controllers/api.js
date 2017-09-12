@@ -518,3 +518,23 @@ module.exports.ownerCancelWalk = function(req, res) {
     });
 
 };
+
+module.exports.addRating = function(req, res) {
+  knex('walks').where('id', req.body.walkID).update({
+    ['rating_' + req.body.ratingFor]: req.body.rating
+  })
+    .then(result => {
+      console.log('result for adding rating to the db is ', result);
+      res.status(201);
+    });
+};
+
+module.exports.fetchRating = function(req, res) {
+  console.log('****INSIDE OF FETCH RATING ');
+  knex.select('rating_' + req.query.ratingFor)
+    .from('walks')
+    .where('id', req.query.walkID)
+    .then(result => {
+      res.status(200).send(result[0]);
+    });
+};
