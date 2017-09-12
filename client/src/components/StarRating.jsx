@@ -18,9 +18,10 @@ class StarRating extends React.Component {
     this.state = {
       starRating: 0
     };
-    
+
     this.updateRatingDB = this.updateRatingDB.bind(this);
     this.getRatingDB = this.getRatingDB.bind(this);
+    this.updateAverageRating = this.updateAverageRating.bind(this);
   }
 
   updateRatingDB (event) {
@@ -32,8 +33,10 @@ class StarRating extends React.Component {
         ratingFor: this.props.ratingFor,
         walkID: this.props.walk.id
       },
+      context: this,
       success: function(data) {
         console.log('successfully updated rating to the db ', data);
+        this.updateAverageRating();
         this.getRatingDB();
       },
       error: function(err) {
@@ -46,7 +49,7 @@ class StarRating extends React.Component {
     this.getRatingDB();
   }
 
-  getRatingDB () {
+  getRatingDB() {
     console.log('about to get rating from db');
     $.ajax({
       method: 'GET',
@@ -67,6 +70,28 @@ class StarRating extends React.Component {
       }
     });
   }
+
+  updateAverageRating() {
+    console.log('****the walker id in update average rating is ', this.props.walk.walker_id);
+    console.log('^^^%%%the id for ' + this.props.ratingFor + ' is ' + this.props.ratingForID);
+    $.ajax({
+      method: 'POST',
+      url: '/api/walks/averagerating',
+      data: {
+        ratingFor: this.props.ratingFor,
+        walkerID: this.props.walk.walker_id,
+        ratingForID: this.props.ratingForID
+      },
+      context: this,
+      success: function(data) {
+        console.log('&&&successfully updated walkers average rating ', data);
+      },
+      error: function(err) {
+        console.log('successfully updated walkers average rating ', err);
+      }
+    });
+  }
+
 
   render() {
     return (
