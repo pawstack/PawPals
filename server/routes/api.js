@@ -93,4 +93,7 @@ router.route('/walks/rating')
   .get(ApiController.fetchRating)
   .post(ApiController.addRating);
 
+router.route('/walks/averagerating')
+  .post(ApiController.calculateAverageRating);
+
 module.exports = router;

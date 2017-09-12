@@ -525,12 +525,13 @@ module.exports.addRating = function(req, res) {
   })
     .then(result => {
       console.log('result for adding rating to the db is ', result);
-      res.status(201);
+      res.status(200).end();
+      //res.send(200);
+      //res.status(200);
     });
 };
 
 module.exports.fetchRating = function(req, res) {
-  console.log('****INSIDE OF FETCH RATING ');
   knex.select('rating_' + req.query.ratingFor)
     .from('walks')
     .where('id', req.query.walkID)
@@ -538,3 +539,41 @@ module.exports.fetchRating = function(req, res) {
       res.status(200).send(result[0]);
     });
 };
+
+//after a rating is made,
+module.exports.calculateAverageRating = function(req, res) {
+  console.log('**INSIDE OF CALCULATE AVERAGE RATING');
+  console.log('the walker id is ', req.body.walkerID);
+  knex.select('rating_walker')
+    .from('walks')
+    .where({'walker_id': req.body.walkerID, })
+    .andWhereNot({'rating_walker': null})
+    .then(result => {
+      var sum = 0;
+      var average;
+      console.log('the array of all ratings for this walker is ', result);
+      result.forEach(function(rating) {
+        sum += rating['rating_walker'];
+      });
+      average = sum / result.length;
+      console.log(' the average is ', average);
+      return average;
+
+      //calculate the average rating
+      //then update the average walker rating in the profiles table.
+    })
+    .then(average => {
+      console.log('the average is ', average);
+      console.log('the walker id is ', req.body.walkerID);
+      return knex('profiles')
+        .where('id', req.body.walkerID)
+        .update('avg_walker_rating', average);
+    })
+    .then((result) => {
+      console.log('the result from saving average to db is ', result);
+      res.send(200);
+      console.log('succssfully saved average to the db');
+    });
+};
+
+  

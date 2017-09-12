@@ -35,6 +35,7 @@ class PastWalkItem extends React.Component {
         <StarRating
           ratingFor = {'walker'}
           walk= {this.props.walk}
+          ratingForID = {this.props.walk['walker_id']}
         />
         <div>
           <br></br>
