@@ -5,7 +5,7 @@ import moment from 'moment';
 import Snackbar from 'material-ui/Snackbar';
 import FindMyDogMap from './FindMyDogMap';
 
-class CurrentWalkItem extends React.Component {
+class UpcomingWalkItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -73,7 +73,7 @@ class CurrentWalkItem extends React.Component {
   }
 }
 
-export default CurrentWalkItem;
+export default UpcomingWalkItem;
 
 //<CardText>{this.props.walk.walker.about_me}</CardText>
 

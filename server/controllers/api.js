@@ -22,13 +22,13 @@ module.exports.getFilteredWalks = (req, res) => {
     var finish = startDate.clone();
     var hour = pickupTime.get('hour');
     var minute = pickupTime.get('minute');
-    start.add(hour, 'h').add(minute, 'm').endOf('minute')
+    start.add(hour, 'h').add(minute, 'm').endOf('minute');
     finish.add(hour, 'h').add(minute, 'm').add(Number(req.body.duration), 'm').startOf('minute');
-  } else if(req.body.startDate === '' && req.body.pickupTime !== '') {
+  } else if (req.body.startDate === '' && req.body.pickupTime !== '') {
     // see all walks available today at given time
-    var start = Moment(new Date(req.body.pickupTime)).endOf('minute');;
+    var start = Moment(new Date(req.body.pickupTime)).endOf('minute');
     var finish = start.clone().add(Number(req.body.duration), 'm').startOf('minute');
-  } else if (req.body.startDate!=='' && req.body.pickupTime === ''){
+  } else if (req.body.startDate !== '' && req.body.pickupTime === '') {
     // see all walks for that day
     var start = Moment(new Date(req.body.startDate)).endOf('day');
     var finish = start.clone().startOf('day');
@@ -37,8 +37,8 @@ module.exports.getFilteredWalks = (req, res) => {
     var start = Moment(new Date()).endOf('day');
     var finish = Moment(new Date()).startOf('minute');
   }
-  console.log(start, 'start')
-  console.log(finish, 'finish')
+  console.log(start, 'start');
+  console.log(finish, 'finish');
   models.Walk
     .query((qb) => {
       qb.where('price', '<=', filters.price)
@@ -50,7 +50,7 @@ module.exports.getFilteredWalks = (req, res) => {
       withRelated: ['walker']
     })
     .then(walks => {
-      console.log(walks.models, 'walks')
+      console.log(walks.models, 'walks');
       res.status(200).send(walks);
     })
     .catch(err => {
@@ -433,7 +433,29 @@ module.exports.getCurrentWalk = function(req, res) {
       qb.where({'owner_id': req.user.id,
         'paid': true});
     })
-    .where('session_start', '>=', new Date())
+    .where('session_start', '<=', new Date())
+    .where('session_end', '>=', new Date())
+    .fetch({
+      withRelated: ['walker']
+    })
+    .then(walk => {
+      console.log('current walk ', walk);
+      res.status(200).send(walk);
+    })
+    .catch(err => {
+      console.log('ERROR getting current walk ', err);
+      res.status(503).send(err);
+    });
+};
+
+module.exports.getUpcomingWalks = function(req, res) {
+  models.Walk
+    .query((qb) => {
+      qb.where({'owner_id': req.user.id,
+        'paid': true});
+    })
+    .where('session_end', '>', new Date())
+    .orderBy('session_start', 'DESC')
     .fetchAll({
       withRelated: ['walker']
     })
@@ -441,7 +463,7 @@ module.exports.getCurrentWalk = function(req, res) {
       res.status(200).send(walks);
     })
     .catch(err => {
-      console.log('****** getFilteredWalks error ', err);
+      console.log('ERROR getting upcoming walks ', err);
       res.status(503).send(err);
     });
 };
@@ -453,6 +475,7 @@ module.exports.getPastWalk = function(req, res) {
         'paid': true});
     })
     .where('session_end', '<=', new Date())
+    .orderBy('session_start', 'DESC')
     .fetchAll({
       withRelated: ['walker']
     })
