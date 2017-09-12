@@ -7,6 +7,8 @@ import $ from 'jquery';
 import Confirmation from './Confirmation.jsx';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import geolib from 'geolib';
+import FilterList from 'material-ui/svg-icons/content/filter-list';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class Browse extends React.Component {
   constructor(props) {
@@ -18,7 +20,8 @@ class Browse extends React.Component {
       dogInfo: {},
       pickupAddress: '',
       totalPrice: 0,
-      snackBarOpen: false
+      snackBarOpen: false,
+      filterOpen: false
     };
     this.getWalks = this.getWalks.bind(this);
     this.selectWalk = this.selectWalk.bind(this);
@@ -29,6 +32,7 @@ class Browse extends React.Component {
     this.processPayment = this.processPayment.bind(this);
     this.handleSnackBarClose = this.handleSnackBarClose.bind(this);
     this.updateTotalPrice = this.updateTotalPrice.bind(this);
+    this.toggleFilter = this.toggleFilter.bind(this);
   }
 
   getWalks(filters) {
@@ -52,19 +56,19 @@ class Browse extends React.Component {
     geocodeByAddress(this.state.pickupAddress)
       .then(results => getLatLng(results[0]))
       .then((latLng) => {
-        console.log(latLng)
+        console.log(latLng);
         var pickUpLatLng = {
           'latitude': latLng['lat'],
           'longitude': latLng['lng']
         };
-        console.log(pickUpLatLng)
+        console.log(pickUpLatLng);
         var nearbyWalks = [];
         for (var i = 0; i < walks.length; i++) {
           var distance = geolib.getDistanceSimple(
             {'latitude': walks[i].latitude, 'longitude': walks[i].longitude},
-            pickUpLatLng, 10, 1)
+            pickUpLatLng, 10, 1);
           if (distance < Number(walks[i].walk_zone_radius) * 1000) {
-            console.log(walks[i])
+            console.log(walks[i]);
             nearbyWalks.push(walks[i]);
           }
         }
@@ -175,11 +179,30 @@ class Browse extends React.Component {
     });
   }
 
+  toggleFilter() {
+    this.setState((prevState) => ({
+      filterOpen: !prevState.filterOpen
+    }));
+  }
+
   render() {
     if (!this.state.selectedWalk.walker) {
       return (
         <div>
-          <BrowseFilter pickupAddress={this.state.pickupAddress} setPickupAddress = {this.setPickupAddress} pickupAddress = {this.state.pickupAddress} getWalks={this.getWalks} />
+          <div>
+            <BrowseFilter pickupAddress={this.state.pickupAddress} setPickupAddress = {this.setPickupAddress} pickupAddress = {this.state.pickupAddress} getWalks={this.getWalks} filterOpen={this.state.filterOpen} toggleFilter={this.toggleFilter} />
+          </div>
+          <div>
+            <RaisedButton
+              label="Open Filter"
+              labelPosition="before"
+              primary={true}
+              icon={<FilterList />}
+              onClick={this.toggleFilter}
+              style={{ 'margin': 12 }}
+            />
+            <h2>Search Results</h2> 
+          </div>
           <BrowseList walks={this.state.walks} selectWalk={this.selectWalk} />
           <MuiThemeProvider>
             <Snackbar
