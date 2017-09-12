@@ -5,32 +5,31 @@ import TextField from 'material-ui/TextField';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import ReactFilestack from 'filestack-react';
-import CurrentWalkList from './CurrentWalkList';
+import UpcomingWalkList from './UpcomingWalkList';
 import PastWalkList from './PastWalkList';
-
 
 class WalkHistory extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      currentwalks: [],
+      upcomingwalks: [],
       pastwalks: [],
     };
 
-    this.getCurrentWalk = this.getCurrentWalk.bind(this);
+    this.getUpcomingWalks = this.getUpcomingWalks.bind(this);
     this.cancelWalk = this.cancelWalk.bind(this);
 
   }
 
-  getCurrentWalk() {
+  getUpcomingWalks() {
     $.ajax({
-      url: '/api/walkhistory/current',
+      url: '/api/walkhistory/upcoming',
       type: 'GET',
       success: (res) => {
-        // console.log('CURRENT WALKS', res);
+        // console.log('upcoming WALKS', res);
         this.setState({
-          currentwalks: res
+          upcomingwalks: res
         });
       },
       error: function(err) {
@@ -48,7 +47,7 @@ class WalkHistory extends React.Component {
       context: this,
       success: (res) => {
         // console.log('request sent');
-        this.getCurrentWalk();
+        this.getUpcomingWalks();
       },
       error: function(err) {
       }
@@ -74,17 +73,15 @@ class WalkHistory extends React.Component {
   }
 
   componentDidMount() {
-    this.getCurrentWalk();
+    this.getUpcomingWalks();
     this.getPastWalk();
   }
 
-
   render() {
-
     return (
       <div>
         <div>
-          <CurrentWalkList currentwalks={this.state.currentwalks} cancelWalk={this.cancelWalk} />
+          <UpcomingWalkList upcomingwalks={this.state.upcomingwalks} cancelWalk={this.cancelWalk} />
         </div>
         <div>
           <br></br>

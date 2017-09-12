@@ -72,6 +72,9 @@ router.route('/walks/getOwnerInfo')
 router.route('/walkhistory/current')
   .get(ApiController.getCurrentWalk);
 
+router.route('/walkhistory/upcoming')
+  .get(ApiController.getUpcomingWalks);
+
 router.route('/walkhistory/past')
   .get(ApiController.getPastWalk);
 
