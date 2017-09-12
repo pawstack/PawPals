@@ -2047,7 +2047,7 @@ es6-set@~0.1.5:
     es6-symbol "3.1.1"
     event-emitter "~0.3.5"
 
-es6-symbol@3.1.1, es6-symbol@^3.1, es6-symbol@^3.1.0, es6-symbol@^3.1.1, es6-symbol@~3.1, es6-symbol@~3.1.1:
+es6-symbol@3.1.1, es6-symbol@^3.1, es6-symbol@^3.1.1, es6-symbol@~3.1, es6-symbol@~3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/es6-symbol/-/es6-symbol-3.1.1.tgz#bf00ef4fdab6ba1b46ecb7b629b4c7ed5715cc77"
   dependencies:
@@ -2489,10 +2489,6 @@ fs.realpath@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/fs.realpath/-/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"
 
-fs@^0.0.1-security:
-  version "0.0.1-security"
-  resolved "https://registry.yarnpkg.com/fs/-/fs-0.0.1-security.tgz#8a7bd37186b6dddf3813f23858b57ecaaf5e41d4"
-
 fsevents@^1.0.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-1.1.1.tgz#f19fd28f43eeaf761680e519a203c4d0b3d31aff"
@@ -2843,7 +2839,7 @@ hoek@2.x.x:
   version "2.16.3"
   resolved "https://registry.yarnpkg.com/hoek/-/hoek-2.16.3.tgz#20bb7403d3cea398e91dc4710a8ff1b8274a25ed"
 
-hoist-non-react-statics@^1.0.0, hoist-non-react-statics@^1.0.3:
+hoist-non-react-statics@^1.0.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-1.2.0.tgz#aa448cf0986d55cc40773b17174b7dd066cb7cfb"
 
@@ -3562,10 +3558,6 @@ make-dir@^1.0.0:
   dependencies:
     pify "^2.3.0"
 
-material-ui-places@^1.1.7:
-  version "1.1.7"
-  resolved "https://registry.yarnpkg.com/material-ui-places/-/material-ui-places-1.1.7.tgz#0156599ff77d59580d59a77a3658956dde02ee1f"
-  
 marker-clusterer-plus@^2.1.4:
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/marker-clusterer-plus/-/marker-clusterer-plus-2.1.4.tgz#f8eff74d599dab3b7d0e3fed5264ea0e704f5d67"
@@ -3729,12 +3721,6 @@ mocha@^3.2.0:
     lodash.create "3.1.1"
     mkdirp "0.5.1"
     supports-color "3.1.2"
-
-moment-range@^3.0.3:
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/moment-range/-/moment-range-3.0.3.tgz#f7a1567c73228f317469cb33148ea996f79ccb9a"
-  dependencies:
-    es6-symbol "^3.1.0"
 
 moment@^2.18.1:
   version "2.18.1"
@@ -4733,12 +4719,6 @@ rc@^1.1.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-async-script-loader@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/react-async-script-loader/-/react-async-script-loader-0.3.0.tgz#c742b3ca25e08ba61ab7eb64371f814027692b86"
-  dependencies:
-    hoist-non-react-statics "^1.0.3"
-
 react-big-calendar@^0.11.1:
   version "0.11.1"
   resolved "https://registry.yarnpkg.com/react-big-calendar/-/react-big-calendar-0.11.1.tgz#fdb4e0d1b4928ce431905340d286d3824612a5d3"
@@ -4780,10 +4760,6 @@ react-geolocated@^2.0.0:
   resolved "https://registry.yarnpkg.com/react-geolocated/-/react-geolocated-2.0.0.tgz#77fc90818c66f80172c0028269f063494f504ae7"
   dependencies:
     prop-types "^15.5.8"
-
-react-load-script@^0.0.6:
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/react-load-script/-/react-load-script-0.0.6.tgz#db6851236aaa25bb622677a2eb51dad4f8d2c258"
 
 react-google-maps@next:
   version "7.1.0"
