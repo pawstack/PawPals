@@ -41,8 +41,8 @@ exports.up = function (knex, Promise) {
       table.dateTime('session_end');
       table.dateTime('walk_start');
       table.dateTime('walk_end');
-      table.integer('rating_walker');
-      table.integer('rating_dog');
+      table.decimal('rating_walker');
+      table.decimal('rating_dog');
       table.integer('owner_id');
       table.foreign('owner_id').references('profiles.id'); //foreign key
       table.integer('walker_id').notNullable();

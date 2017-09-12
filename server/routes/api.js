@@ -84,9 +84,13 @@ router.route('/walkhistory/cancel')
 
 router.route('/walks/getDogInfo')
   .get(ApiController.getDogInfo);
-  
+
 router.route('/walks/track')
   .get(ApiController.fetchGeolocations)
   .post(ApiController.saveWalkGeolocation);
+
+router.route('/walks/rating')
+  .get(ApiController.fetchRating)
+  .post(ApiController.addRating);
 
 module.exports = router;
