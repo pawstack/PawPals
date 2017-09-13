@@ -109,12 +109,13 @@ export default class EventDialog extends React.Component {
                   </td>
                   <td>
                     <ul>
-                      <li> Pickup Address: {this.props.selectedEvent.pickup_address}</li>
-                      <li> Owner: {this.props.selectedEvent.owner_name} </li>
-                      <li> Contact: {this.props.selectedEvent.owner_phone} </li>
-                      <li> Price: ${this.props.selectedEvent.price} </li>
-                      <li> Time: {start} to {end} </li>
-                      <li> About the Dog: {this.props.selectedEvent.dog_extras} </li>
+                      <li> <b>Pickup Address: </b>{this.props.selectedEvent.pickup_address}</li>
+                      <li> <b>Owner: </b>{this.props.selectedEvent.owner_name} </li>
+                      <li> <b>Contact: </b>{this.props.selectedEvent.owner_phone} </li>
+                      <li> <b>Price: </b>${this.props.selectedEvent.price} </li>
+                      <li> <b>Time: </b>{start} to {end} </li>
+                      <li> <b>About the Dog: </b>{this.props.selectedEvent.dog_extras} </li>
+                      <li> <b>Dog's Average Rating: </b>{this.props.selectedEvent.dog_avg_rating}</li>
                     </ul>
                   </td>
                 </tr>
@@ -145,12 +146,16 @@ export default class EventDialog extends React.Component {
                       style={{'borderRadius': '10px'}}/>
                   </td>
                   <td>
-                    Please rate this walk!
-                    <StarRating
-                      ratingFor = {'dog'}
-                      walk = {this.props.selectedEvent}
-                      ratingForID = {this.props.selectedEvent['dog_id']}
-                    />
+                    <div style = {{paddingLeft: '10%'}}>
+                      Please rate this walk!
+                    </div>
+                    <div style = {{paddingLeft: '10%'}}>
+                      <StarRating
+                        ratingFor = {'dog'}
+                        walk = {this.props.selectedEvent}
+                        ratingForID = {this.props.selectedEvent['dog_id']}
+                      />
+                    </div>
                   </td>
                 </tr>
               </tbody>
