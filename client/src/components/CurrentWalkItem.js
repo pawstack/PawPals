@@ -3,6 +3,7 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 import RaisedButton from 'material-ui/RaisedButton';
 import moment from 'moment';
 import Snackbar from 'material-ui/Snackbar';
+import Message from './Message';
 
 class CurrentWalkItem extends React.Component {
   constructor(props) {
@@ -65,6 +66,7 @@ class CurrentWalkItem extends React.Component {
             onRequestClose={this.handleRequestClose}
           />
         </CardActions>
+        <Message walkerid={this.props.walk.walker_id} ownerid={this.props.walk.owner_id}/>
         <div><br></br></div>
       </Card>
 
