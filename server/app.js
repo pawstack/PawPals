@@ -42,10 +42,10 @@ io.on('connection', (socket) => {
   socket.on('startChat', (data) => {
     socket.join('room1');
     io.in('room1').emit('message', data);
-    console.log("SOCKET", socket.id)
-    console.log("message", data);
+    console.log('SOCKET', socket.id);
+    console.log('message', data);
   });
-})
+});
 
 
 module.exports = server;
