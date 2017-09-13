@@ -93,7 +93,6 @@ class WalkHistory extends React.Component {
       </div>
     );
   }
-
 }
 
 export default WalkHistory;

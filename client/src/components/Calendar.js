@@ -265,7 +265,7 @@ class Calendar extends React.Component {
         console.log('SUCCESS sending geolocation ', data);
       })
       .fail((err) => {
-        console.log('ERROR sending geolocation ', error);
+        console.log('ERROR sending geolocation ', err);
       });
   }
 

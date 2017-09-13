@@ -74,10 +74,6 @@ class StarRating extends React.Component {
   }
 
   updateAverageRating() {
-    console.log('****the walker id in update average rating is ', this.props.walk.walker_id);
-    console.log('****the dog id in update average rating is ', this.props.walk.dog_id);
-    console.log('****the dog id in update average rating is ', this.props.walk[this.props.ratingFor + '_id']);
-    console.log('the id for ' + this.props.ratingFor + ' is ' + this.props.ratingForID);
     $.ajax({
       method: 'POST',
       url: '/api/walks/averagerating',
@@ -97,15 +93,16 @@ class StarRating extends React.Component {
 
 
   render() {
+    console.log('the edit rating value is ', this.state.editRating);
     return (
       <div>
-
         <ReactStars
           count={5}
           size={24}
           onChange = {this.updateRatingDB}
           value = {this.state.starRating}
           color2={'#ffd700'}
+
         />
       </div>
     );

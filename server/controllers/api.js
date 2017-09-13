@@ -540,31 +540,22 @@ module.exports.fetchRating = function(req, res) {
     });
 };
 
-//after a rating is made,
+
 module.exports.calculateAverageRating = function(req, res) {
-  console.log('**INSIDE OF CALCULATE AVERAGE RATING');
-  console.log('the walker id is ', req.body.ratingForID);
   knex.select('rating_' + req.body.ratingFor) //rating_walker
     .from('walks')
     .where(req.body.ratingFor + '_id', req.body.ratingForID)
     .andWhereNot('rating_' + req.body.ratingFor, null) // rating_walker
     .then(result => {
       var sum = 0;
-      var average;
-      console.log('the array of all ratings for this walker is ', result);
       result.forEach(function(rating) {
         sum += rating['rating_' + req.body.ratingFor]; // rating_walker
       });
-      average = sum / result.length;
+      var average = sum / result.length;
       console.log(' the average is ', average);
       return average;
-
-      //calculate the average rating
-      //then update the average walker rating in the profiles table.
     })
     .then(average => {
-      console.log('the average is ', average);
-      console.log('the walker id is ', req.body.ratingForID);
       if (req.body.ratingFor === 'walker') {
         return knex('profiles')
           .where('id', req.body.ratingForID)
@@ -576,8 +567,10 @@ module.exports.calculateAverageRating = function(req, res) {
       }
     })
     .then((result) => {
-      console.log('the result from saving average to db is ', result);
-      res.send(200);
       console.log('succssfully saved average to the db');
+      res.send(200);
+    })
+    .catch(() => {
+      res.send(500);
     });
 };
