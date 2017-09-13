@@ -240,4 +240,3 @@ class ProfileOwner extends React.Component {
 
 
 export default ProfileOwner;
-//onClick={this.getDogProfile}

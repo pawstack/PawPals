@@ -6,6 +6,21 @@ const config = require('config')['stripe'];
 const stripe = require('stripe')(config.secretKey);
 const controllers = require('./');
 const Moment = require('moment');
+<<<<<<< HEAD
+=======
+const MomentRange = require('moment-range');
+const moment = MomentRange.extendMoment(Moment);
+>>>>>>> working on instant message--no-verify
+
+const twilio = require('twilio');
+const AccessToken = twilio.jwt.AccessToken;
+const ChatGrant = AccessToken.ChatGrant;
+const IpMessagingGrant = AccessToken.IpMessagingGrant;
+const credentials = require('./credentials.json');
+const device = require('express-device');
+
+
+
 
 db.plugin('registry');
 
@@ -599,9 +614,43 @@ module.exports.ownerCancelWalk = function(req, res) {
     .catch(e => {
       console.log(e, 'error refunding payment');
     });
-
 };
 
+//twilio request here
+
+module.exports.getTwiliotoken = function(req, res) {
+  var appName = 'Pawpals';
+  var identity = req.user.id.toString();
+  console.log('user id',identity);
+
+  var deviceId = req.device.type;
+  console.log("device id", deviceId);
+
+  var endpointId = appName + ':' + identity + ':' + deviceId;
+
+  const ipmGrant = new IpMessagingGrant({
+    serviceSid: "ISb0aa6c59d5ae4bd48c8613679dbfcfda",
+    endpointId: endpointId
+  });
+
+
+  const token = new AccessToken(
+    "ACcbfdbacef3969bbf70ebbddd67c142ec",
+    "SK5c1547820e6e7bab64f1d48de43fc506",
+    "mudLoZ8C9hPiNpJXF8WkessLrvvHxwOU"
+  );
+
+  token.addGrant(ipmGrant);
+  token.identity = identity;
+
+  console.log(token, 'token')
+  res.send({
+    identity: identity,
+    token: token.toJwt(),
+  });
+};
+
+<<<<<<< HEAD
 module.exports.addRating = function(req, res) {
   knex('walks').where('id', req.body.walkID).update({
     ['rating_' + req.body.ratingFor]: req.body.rating
@@ -657,3 +706,6 @@ module.exports.calculateAverageRating = function(req, res) {
       res.send(500);
     });
 };
+=======
+
+>>>>>>> working on instant message--no-verify
