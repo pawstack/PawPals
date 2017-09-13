@@ -44,6 +44,11 @@ class NavBarWalkerLoggedIn extends React.Component {
                 containerElement={<Link to="/walker" />}
               />
               <MenuItem
+                primaryText="Message"
+                onTouchTap = {() => console.log('touch3') }
+                containerElement={<Link to="/message" />}
+              />
+              <MenuItem
                 primaryText="Sign out"
                 href ='/logout'
               />

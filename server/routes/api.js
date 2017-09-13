@@ -80,7 +80,6 @@ router.route('/walkhistory/past')
 router.route('/walkhistory/cancel')
   .post(ApiController.ownerCancelWalk);
 
-
 router.route('/walks/getDogInfo')
   .get(ApiController.getDogInfo);
 
@@ -94,5 +93,9 @@ router.route('/walks/rating')
 
 router.route('/walks/averagerating')
   .post(ApiController.calculateAverageRating);
+
+router.route('/twilio/token')
+  .get(ApiController.getTwiliotoken);
+
 
 module.exports = router;

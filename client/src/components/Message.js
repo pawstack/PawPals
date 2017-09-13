@@ -12,10 +12,17 @@ class Message extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+<<<<<<< HEAD
       message:'',
       display:[]
 
     }
+=======
+      message: '',
+      display: []
+
+    };
+>>>>>>> working on instant message--no-verify
     this.socket = openSocket();
     this.sendMessage = this.sendMessage.bind(this);
     this.messageInput = this.messageInput.bind(this);
@@ -33,8 +40,7 @@ class Message extends React.Component {
   };
 
 
-
-  componentDidMount(){
+  componentDidMount() {
     this.socket.join('room1');
   }
 
@@ -60,6 +66,24 @@ class Message extends React.Component {
       </button>
       </div>
     )
+
+  messageInput(e) {
+    this.setState({
+      message: e.target.value
+    });
+
+  }
+
+  render() {
+    return (
+      <div>
+        <div>{this.state.display.map((msg, index)=>{ return <div key={index}>{msg}</div>; })}</div>
+        <input type="text" onChange={this.messageInput}></input>
+        <button onClick={this.sendMessage}>
+        Send!
+        </button>
+      </div>
+    );
   }
 }
 
