@@ -32,7 +32,7 @@ export default class EventDialog extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      walkCompleted: true
+      walkCompleted: false
     };
   }
 
