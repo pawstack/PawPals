@@ -23,20 +23,22 @@ class PastWalkItem extends React.Component {
         <CardText>
           <FindMyDogMap walkId={this.props.walk.id} />
         </CardText>
-        <div>
-          <br></br>
-          <br></br>
-        </div>
+        <CardText>
+          <div style = {{display: 'inline-block', float: 'left', paddingRight: '10px', paddingTop: '6px', fontSize: '15px'}}>
+            Rate this walk with {this.props.walk.walker.first}:
+          </div>
+          <StarRating
+            ratingFor = {'walker'}
+            walk= {this.props.walk}
+            ratingForID = {this.props.walk['walker_id']}
+            style = {{display: 'inline-block', float: 'left', paddingLeft: '6px'}}
+          />
+        </CardText>
         <ShowPastWalkDetails
           price={this.props.walk.price}
           start={this.props.walk.session_start}
           stop ={this.props.walk.session_end}
           near={this.props.walk.walk_zone_pt}/>
-        <StarRating
-          ratingFor = {'walker'}
-          walk= {this.props.walk}
-          ratingForID = {this.props.walk['walker_id']}
-        />
         <div>
           <br></br>
         </div>
