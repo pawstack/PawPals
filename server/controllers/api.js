@@ -621,29 +621,29 @@ module.exports.ownerCancelWalk = function(req, res) {
 module.exports.getTwiliotoken = function(req, res) {
   var appName = 'Pawpals';
   var identity = req.user.id.toString();
-  console.log('user id',identity);
+  console.log('user id', identity);
 
   var deviceId = req.device.type;
-  console.log("device id", deviceId);
+  console.log('device id', deviceId);
 
   var endpointId = appName + ':' + identity + ':' + deviceId;
 
   const ipmGrant = new IpMessagingGrant({
-    serviceSid: "ISb0aa6c59d5ae4bd48c8613679dbfcfda",
+    serviceSid: 'ISb0aa6c59d5ae4bd48c8613679dbfcfda',
     endpointId: endpointId
   });
 
 
   const token = new AccessToken(
-    "ACcbfdbacef3969bbf70ebbddd67c142ec",
-    "SK5c1547820e6e7bab64f1d48de43fc506",
-    "mudLoZ8C9hPiNpJXF8WkessLrvvHxwOU"
+    'ACcbfdbacef3969bbf70ebbddd67c142ec',
+    'SK5c1547820e6e7bab64f1d48de43fc506',
+    'mudLoZ8C9hPiNpJXF8WkessLrvvHxwOU'
   );
 
   token.addGrant(ipmGrant);
   token.identity = identity;
 
-  console.log(token, 'token')
+  console.log(token, 'token');
   res.send({
     identity: identity,
     token: token.toJwt(),

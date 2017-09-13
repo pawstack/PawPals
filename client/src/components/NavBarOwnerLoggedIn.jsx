@@ -54,9 +54,9 @@ class NavBarOwnerLoggedIn extends React.Component {
               containerElement={<Link to='/walkhistory' />}
             />
             <MenuItem
-                primaryText="Message"
-                containerElement={<Link to="/message" />}
-              />
+              primaryText="Message"
+              containerElement={<Link to="/message" />}
+            />
             <MenuItem
               primaryText="Sign out"
               href = '/logout'
