@@ -95,7 +95,9 @@ class StarRating extends React.Component {
   render() {
     console.log('the edit rating value is ', this.state.editRating);
     return (
-      <div>
+      <div style = {{paddingLeft: '2%', paddingBottom: '1%'}}>
+
+
         <ReactStars
           count={5}
           size={24}
