@@ -33,6 +33,8 @@ let parseEvents = (data) => {
     event['price'] = data.walks[i].price;
     event['pickup_address'] = data.walks[i].pickup_address || data.walks[i].owner.address;
     event['id'] = data.walks[i].id;
+    event['dog_avg_rating'] = data.walks[i].dog.avg_rating;
+    event['dog_name'] = data.walks[i].dog.name;
     events.push(event);
   }
   return events;
