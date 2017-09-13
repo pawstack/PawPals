@@ -32,7 +32,7 @@ export default class EventDialog extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      walkCompleted: false
+      walkCompleted: false,
     };
   }
 
@@ -43,6 +43,7 @@ export default class EventDialog extends React.Component {
         label="Start Walk"
         primary={true}
         icon={<GpsFixed />}
+        disabled = {(Date.now() > this.props.selectedEvent.end) ? true : false}
         onClick={() => {
           this.props.handleStartWalk(this.props.selectedEvent.id);
         }}/>,
@@ -61,6 +62,7 @@ export default class EventDialog extends React.Component {
       <FlatButton
         label="Cancel Walk"
         primary={false}
+        disabled = {(Date.now() > this.props.selectedEvent.start) ? true : false}
         onClick={this.props.handleCancel}
       />,
       <FlatButton
@@ -76,6 +78,7 @@ export default class EventDialog extends React.Component {
         label="Resume Tracking This Walk"
         primary={true}
         icon={<GpsFixed />}
+        disabled = {(Date.now() > this.props.selectedEvent.end) ? true : false}
         onClick={() => {
           this.props.handleStartWalk(this.props.selectedEvent.id);
           this.setState({
@@ -91,7 +94,9 @@ export default class EventDialog extends React.Component {
     ];
     const start = moment(this.props.selectedEvent.start, 'YYYY-MM-DD hh:mm:ss').format('llll');
     const end = moment(this.props.selectedEvent.end, 'YYYY-MM-DD hh:mm:ss').format('LT');
-    if (!this.state.walkCompleted) {
+
+    if (!this.state.walkCompleted && Date.now() < this.props.selectedEvent.end) {
+    // if (!this.state.walkCompleted) {
       return (
         <div>
           <Dialog
@@ -124,7 +129,7 @@ export default class EventDialog extends React.Component {
           </Dialog>
         </div>
       );
-    } else if (this.state.walkCompleted) {
+    } else if (this.state.walkCompleted || (Date.now() > this.props.selectedEvent.end)) {
       return (
         <div>
           <Dialog
@@ -167,6 +172,3 @@ export default class EventDialog extends React.Component {
 
   }
 }
-
-
-//ratingForID = {this.props.selectedEvent['walker_id']}
