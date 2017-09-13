@@ -218,6 +218,9 @@ class ProfileOwner extends React.Component {
                     name = "extras"
                     hintText={this.state.extras_old}
                     onChange={this.handleChange}
+                    multiLine={true}
+                    rows={1}
+                    rowsMax={8}
                   />
                 </td>
               </tr>

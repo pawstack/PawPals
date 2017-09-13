@@ -144,7 +144,8 @@ class ProfileWalker extends React.Component {
                   <TextField
                     name = "about_me"
                     multiLine={true}
-                    rows={2}
+                    rows={1}
+                    rowsMax={8}
                     hintText={this.state.about_me_old}
                     onChange={this.handleChange}
                   />
