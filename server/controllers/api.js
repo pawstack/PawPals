@@ -6,16 +6,11 @@ const config = require('config')['stripe'];
 const stripe = require('stripe')(config.secretKey);
 const controllers = require('./');
 const Moment = require('moment');
-<<<<<<< HEAD
-=======
 const MomentRange = require('moment-range');
 const moment = MomentRange.extendMoment(Moment);
->>>>>>> working on instant message--no-verify
 
 const twilio = require('twilio');
-const AccessToken = twilio.jwt.AccessToken;
-const ChatGrant = AccessToken.ChatGrant;
-const IpMessagingGrant = AccessToken.IpMessagingGrant;
+
 const credentials = require('./credentials.json');
 const device = require('express-device');
 
@@ -650,7 +645,7 @@ module.exports.getTwiliotoken = function(req, res) {
   });
 };
 
-<<<<<<< HEAD
+
 module.exports.addRating = function(req, res) {
   knex('walks').where('id', req.body.walkID).update({
     ['rating_' + req.body.ratingFor]: req.body.rating
@@ -706,6 +701,4 @@ module.exports.calculateAverageRating = function(req, res) {
       res.send(500);
     });
 };
-=======
 
->>>>>>> working on instant message--no-verify
