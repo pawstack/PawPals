@@ -25,6 +25,7 @@ let parseEvents = (data) => {
     event['start'] = new Date(data.walks[i].session_start);
     event['paid'] = data.walks[i].paid;
     event['owner_name'] = data.walks[i].owner.first;
+    event['dog_id'] = data.walks[i].dog.id;
     event['owner_phone'] = data.walks[i].owner.phone;
     event['dog_profile_pic'] = data.walks[i].dog.profile_pic;
     event['dog_extras'] = data.walks[i].dog.extras;
@@ -57,7 +58,7 @@ class Calendar extends React.Component {
       tracking: {
         geolocations: [],
         maximumAge: 30000,
-        timeout: 10000, 
+        timeout: 10000,
         enableHighAccuracy: true,
         watchId: null
       }
@@ -209,11 +210,11 @@ class Calendar extends React.Component {
   handleStartWalk(walkId) {
     this.startWatch(walkId);
   }
-  
+
   handleFinishWalk() {
     this.stopWatch();
   }
-  
+
   processGeoResult(walkId, position) {
     var geolocation = {
       latitude: position.coords.latitude,
@@ -222,7 +223,7 @@ class Calendar extends React.Component {
       accuracy: position.coords.accuracy,
       walk_id: walkId
     };
-    
+
     console.log(`SUCCESS latitude:${position.coords.latitude}, longitutde:${position.coords.longitude}, accuracy:${position.coords.accuracy}, timestamp:${new Date(position.timestamp)}`); // TODO remove
     this.postGeolocation(geolocation);
     // this.setState({
@@ -237,7 +238,7 @@ class Calendar extends React.Component {
   startWatch(walkId) {
     var watchId = navigator.geolocation.watchPosition(this.processGeoResult.bind(this, walkId), this.handleGeoError, {
       maximumAge: this.state.tracking.maximumAge,
-      timeout: this.state.tracking.timeout, 
+      timeout: this.state.tracking.timeout,
       enableHighAccuracy: this.state.tracking.enableHighAccuracy
     });
     this.setState((prevState) => {
@@ -283,9 +284,31 @@ class Calendar extends React.Component {
             this.handleFormOpen(slotInfo.start, slotInfo.end);
           }}
         />
-        <DialogForm handleTextInputChange={this.handleTextInputChange} open={this.state.formOpen} handleClose={this.handleFormClose} handleOpen={this.handleFormOpen} handleSubmit={this.handleSubmit} start={this.state.start} end={this.state.end} price={this.state.price} location={this.state.location}/>
-        < EventDialog handleCancel={this.handleCancel} open={this.state.eventOpen} handleClose={this.handleEventClose} handleOpen={this.handleEventOpen} selectedEvent={this.state.selectedEvent} handleStartWalk={this.handleStartWalk} handleFinishWalk={this.handleFinishWalk} />
-        < SnackBarCom open={this.state.snackBarOpen} handleSnackBarClose={this.handleSnackBarClose} message={'Refund successful'} />
+        <DialogForm
+          handleTextInputChange={this.handleTextInputChange}
+          open={this.state.formOpen}
+          handleClose={this.handleFormClose}
+          handleOpen={this.handleFormOpen}
+          handleSubmit={this.handleSubmit}
+          start={this.state.start}
+          end={this.state.end}
+          price={this.state.price}
+          location={this.state.location}
+        />
+        < EventDialog
+          handleCancel={this.handleCancel}
+          open={this.state.eventOpen}
+          handleClose={this.handleEventClose}
+          handleOpen={this.handleEventOpen}
+          selectedEvent={this.state.selectedEvent}
+          handleStartWalk={this.handleStartWalk}
+          handleFinishWalk={this.handleFinishWalk}
+        />
+        < SnackBarCom
+          open={this.state.snackBarOpen}
+          handleSnackBarClose={this.handleSnackBarClose}
+          message={'Refund successful'}
+        />
       </div>
     );
   }

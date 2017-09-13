@@ -25,6 +25,8 @@ class StarRating extends React.Component {
   }
 
   updateRatingDB (event) {
+    console.log('**the rating is for ', this.props.ratingFor);
+    console.log('**the walkID is ', this.props.walk.id);
     $.ajax({
       method: 'POST',
       url: '/api/walks/rating',
@@ -73,13 +75,14 @@ class StarRating extends React.Component {
 
   updateAverageRating() {
     console.log('****the walker id in update average rating is ', this.props.walk.walker_id);
-    console.log('^^^%%%the id for ' + this.props.ratingFor + ' is ' + this.props.ratingForID);
+    console.log('****the dog id in update average rating is ', this.props.walk.dog_id);
+    console.log('****the dog id in update average rating is ', this.props.walk[this.props.ratingFor + '_id']);
+    console.log('the id for ' + this.props.ratingFor + ' is ' + this.props.ratingForID);
     $.ajax({
       method: 'POST',
       url: '/api/walks/averagerating',
       data: {
         ratingFor: this.props.ratingFor,
-        walkerID: this.props.walk.walker_id,
         ratingForID: this.props.ratingForID
       },
       context: this,

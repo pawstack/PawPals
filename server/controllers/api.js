@@ -543,17 +543,17 @@ module.exports.fetchRating = function(req, res) {
 //after a rating is made,
 module.exports.calculateAverageRating = function(req, res) {
   console.log('**INSIDE OF CALCULATE AVERAGE RATING');
-  console.log('the walker id is ', req.body.walkerID);
-  knex.select('rating_walker')
+  console.log('the walker id is ', req.body.ratingForID);
+  knex.select('rating_' + req.body.ratingFor) //rating_walker
     .from('walks')
-    .where({'walker_id': req.body.walkerID, })
-    .andWhereNot({'rating_walker': null})
+    .where(req.body.ratingFor + '_id', req.body.ratingForID)
+    .andWhereNot('rating_' + req.body.ratingFor, null) // rating_walker
     .then(result => {
       var sum = 0;
       var average;
       console.log('the array of all ratings for this walker is ', result);
       result.forEach(function(rating) {
-        sum += rating['rating_walker'];
+        sum += rating['rating_' + req.body.ratingFor]; // rating_walker
       });
       average = sum / result.length;
       console.log(' the average is ', average);
@@ -564,10 +564,16 @@ module.exports.calculateAverageRating = function(req, res) {
     })
     .then(average => {
       console.log('the average is ', average);
-      console.log('the walker id is ', req.body.walkerID);
-      return knex('profiles')
-        .where('id', req.body.walkerID)
-        .update('avg_walker_rating', average);
+      console.log('the walker id is ', req.body.ratingForID);
+      if (req.body.ratingFor === 'walker') {
+        return knex('profiles')
+          .where('id', req.body.ratingForID)
+          .update('avg_walker_rating', average);
+      } else if (req.body.ratingFor === 'dog') {
+        return knex('dogs')
+          .where('id', req.body.ratingForID)
+          .update('avg_rating', average);
+      }
     })
     .then((result) => {
       console.log('the result from saving average to db is ', result);
@@ -575,5 +581,3 @@ module.exports.calculateAverageRating = function(req, res) {
       console.log('succssfully saved average to the db');
     });
 };
-
-  
