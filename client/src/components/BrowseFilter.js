@@ -59,7 +59,7 @@ class BrowseFilter extends React.Component {
           docked={false} 
           open={this.props.filterOpen} 
           onRequestChange={this.props.toggleFilter} 
-          overlayStyle={{ opacity: 0 }}
+          overlayStyle={{ opacity: 0.3 }}
         >
           <AppBar 
             title="Filter" 
