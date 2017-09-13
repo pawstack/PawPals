@@ -33,32 +33,39 @@ export default class EventDialog extends React.Component {
     super(props);
     this.state = {
       walkCompleted: false,
+      walkStarted: false
     };
   }
 
   render() {
-    console.log('the selected walk is ', this.props.selectedEvent);
-    if (this.props.selectedEvent.start) {
-      var startTime = moment(this.props.selectedEvent.start);
-      var duration = moment.duration({'minutes': -15});
-      console.log('start time is ', startTime);
-      console.log('duration is ', duration);
-      console.log('the 15 min start time is ', startTime.add(duration)['_d']);
-    }
-
     const trackActions = [
+      /*
+      start walk button will be disabled:
+        1) until 15 minutes before the walk
+        2) if the start walk button has already been clicked
+        3) if the appointment is over.
+
+      finish walk button will be disabled:
+        1) if the start walk button has not been clicked.
+      */
       <FlatButton
         label="Start Walk"
         primary={true}
         icon={<GpsFixed />}
-        disabled = {Date.now() < moment(this.props.selectedEvent.start).add(moment.duration({'minutes': -15}))['_d'] || Date.now() > this.props.selectedEvent.end ? true : false}
+        disabled = {Date.now() < moment(this.props.selectedEvent.start).add(moment.duration({'minutes': -15}))['_d'] ||
+ Date.now() > this.props.selectedEvent.end || this.state.walkStarted ? true : false}
+
         onClick={() => {
+          this.setState({
+            walkStarted: true
+          });
           this.props.handleStartWalk(this.props.selectedEvent.id);
         }}/>,
       <FlatButton
         label="Finish Walk"
         secondary={true}
         icon={<GpsOff />}
+        disabled= {!this.state.walkStarted}
         onClick={() => {
           this.props.handleFinishWalk();
           this.setState({
