@@ -38,12 +38,20 @@ export default class EventDialog extends React.Component {
 
   render() {
     console.log('the selected walk is ', this.props.selectedEvent);
+    if (this.props.selectedEvent.start) {
+      var startTime = moment(this.props.selectedEvent.start);
+      var duration = moment.duration({'minutes': -15});
+      console.log('start time is ', startTime);
+      console.log('duration is ', duration);
+      console.log('the 15 min start time is ', startTime.add(duration)['_d']);
+    }
+
     const trackActions = [
       <FlatButton
         label="Start Walk"
         primary={true}
         icon={<GpsFixed />}
-        disabled = {(Date.now() > this.props.selectedEvent.end) ? true : false}
+        disabled = {Date.now() < moment(this.props.selectedEvent.start).add(moment.duration({'minutes': -15}))['_d'] || Date.now() > this.props.selectedEvent.end ? true : false}
         onClick={() => {
           this.props.handleStartWalk(this.props.selectedEvent.id);
         }}/>,
