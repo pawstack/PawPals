@@ -4,41 +4,15 @@ import {
   withGoogleMap,
   GoogleMap,
   Marker,
-  Circle,
-  Polyline
+  Polyline,
+  LatLngBounds,
+  LatLng
 } from 'react-google-maps';
-
-// const GoogleMapWrapper = withGoogleMap(props => (
-//   <GoogleMap
-//     ref={props.onMapLoad}
-//     defaultZoom={15}
-//     center={props.center}
-//   >
-//   <div>
-//     {props.markers.map(marker => (
-//       <Marker
-//         key={`geoloc-${marker.id}`}
-//         position={{lat: Number(marker.latitude), lng: Number(marker.longitude)}}
-//         defaultAnimation={2}
-//       />
-//     ))}
-//     <Polyline
-//       path={[{lat: 37.7835164, lng: -122.4091674}, {lat: 37.786161, lng: -122.4102922}]}
-//       defaultAnimation={2}
-//       geodesic= {true}
-//       strokeColor = {'#FF0000'}
-//        strokeOpacity = {1.0}
-//        strokeWeight = {2}
-//     />
-//   </div>
-//
-//   </GoogleMap>
-// ));
 
 const GoogleMapWrapper = withGoogleMap(props => (
   <GoogleMap
     ref={props.onMapLoad}
-    defaultZoom={16}
+    zoom={props.zoom}
     center={props.center}
   >
     <div>
@@ -62,10 +36,12 @@ export default class FindMyDogMap extends React.Component {
     this.state = {
       markers: [],
       center: {lat: 0, lng: 0},
-      polyLineData: []
+      polyLineData: [],
+      zoom: 16
     };
     this.handleMapLoad = this.handleMapLoad.bind(this);
     this.getGeolocations = this.getGeolocations.bind(this);
+    this.fitExampleBounds = this.fitExampleBounds.bind(this);
   }
 
   componentDidMount() {
@@ -75,6 +51,22 @@ export default class FindMyDogMap extends React.Component {
   handleMapLoad(map) {
     console.log('map is ', map);
     this._mapComponent = map;
+  }
+
+  fitExampleBounds() {
+    console.log('**INSIDE OF fitExampleBounds');
+    const overallBounds = this._mapComponent.getBounds();
+    const center = this._mapComponent.getCenter();
+    console.log('overallBounds is ', bounds2);
+    console.log('center is ', center);
+    //this._mapComponent.fitBounds(overallBounds);
+    // var newZoom = this._mapComponent.getZoom();
+    // console.log('zoom is ', newZoom);
+
+    this.setState({
+      center: center,
+      //zoom: newZoom + 2
+    });
   }
 
   getGeolocations() {
@@ -92,10 +84,9 @@ export default class FindMyDogMap extends React.Component {
           });
 
           var animatedPolyData = [];
-          console.log('poly data is ', polydata.shift());
-
+          // console.log('poly data is ', polydata.shift());
           var animate = window.setInterval(function() {
-            console.log('the poly data length is ', polydata.length);
+            // console.log('the poly data length is ', polydata.length);
             animatedPolyData = animatedPolyData.concat(polydata.splice(0, 1));
             console.log(animatedPolyData);
             context.setState({
@@ -103,6 +94,7 @@ export default class FindMyDogMap extends React.Component {
             }, function() {
               if (polydata.length === 0) {
                 window.clearInterval(animate);
+                this.fitExampleBounds();
               }
             });
           }, 25);
@@ -113,7 +105,6 @@ export default class FindMyDogMap extends React.Component {
         console.log('ERROR getting geolocation ', err);
       });
   }
-
 
 
   render() {
@@ -129,6 +120,7 @@ export default class FindMyDogMap extends React.Component {
           onMapLoad={this.handleMapLoad}
           markers={this.state.markers}
           center={this.state.center}
+          zoom = {this.state.zoom}
           polyLineData = {this.state.polyLineData}
         />
       </div>
