@@ -110,7 +110,7 @@ passport.use('local-login', new LocalStrategy({
 passport.use('google', new GoogleStrategy({
   clientID: config.Google.clientID,
   clientSecret: config.Google.clientSecret,
-  callbackURL: config.Google.callbackURL
+  callbackURL: process.env.HEROKU_PARENT_APP_NAME ? config.Google.callbackURL.replace(new RegExp(process.env.HEROKU_PARENT_APP_NAME), process.env.HEROKU_APP_NAME) : config.Google.callbackURL
 },
 (accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('google', profile, done))
 );
