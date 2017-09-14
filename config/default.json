@@ -25,5 +25,11 @@
     "Google": {},
     "Facebook": {},
     "Twitter": {}
+  },
+  
+  "redis": {
+    "host": "localhost",
+    "port": 6379,
+    "secret": "pawpals"
   }
 }
