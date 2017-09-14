@@ -1,4 +1,5 @@
 import React from 'react';
+import BrowseSort from './BrowseSort';
 import Slider from 'material-ui/Slider';
 import DatePicker from 'material-ui/DatePicker';
 import TimePicker from 'material-ui/TimePicker';
@@ -23,14 +24,15 @@ class BrowseFilter extends React.Component {
       startDate: null,
       duration: null,
       pickupTime: null,
-      price: 100
+      price: 100,
+      selectedSort: 'price'      
     };
     this.handleLocationChange = this.handleLocationChange.bind(this);
     this.handleSelectDuration = this.handleSelectDuration.bind(this);
-  }
+    this.handleSortRadio = this.handleSortRadio.bind(this);
+  }    
 
   componentWillMount() {
-    console.log(this.state);
     this.props.getWalks(this.state);
   }
 
@@ -46,6 +48,12 @@ class BrowseFilter extends React.Component {
 
   handleSelectDuration(event, index, duration) {
     this.setState({duration});
+  }
+
+  handleSortRadio(event, value) {
+    this.setState({
+      selectedSort: value
+    });
   }
 
   render() {
@@ -112,6 +120,9 @@ class BrowseFilter extends React.Component {
               value={this.state.price}
               onChange={this.handleChangeAdditional.bind(this, 'price')}
             />
+          </MenuItem>
+          <MenuItem>
+            <BrowseSort handleSortRadio={this.handleSortRadio} />
           </MenuItem>
           <MenuItem>
             <RaisedButton label="Apply Filter" primary={true} onClick={this.props.getWalks.bind(this, this.state)} />

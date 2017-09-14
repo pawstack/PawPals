@@ -3,7 +3,6 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Snackbar from 'material-ui/Snackbar';
 import BrowseFilter from './BrowseFilter';
 import BrowseList from './BrowseList';
-import BrowseSort from './BrowseSort';
 import $ from 'jquery';
 import Confirmation from './Confirmation.jsx';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
@@ -22,8 +21,7 @@ class Browse extends React.Component {
       pickupAddress: '',
       totalPrice: 0,
       snackBarOpen: false,
-      filterOpen: false,
-      selectedSort: 'price'
+      filterOpen: false
     };
     this.getWalks = this.getWalks.bind(this);
     this.selectWalk = this.selectWalk.bind(this);
@@ -35,7 +33,6 @@ class Browse extends React.Component {
     this.handleSnackBarClose = this.handleSnackBarClose.bind(this);
     this.updateTotalPrice = this.updateTotalPrice.bind(this);
     this.toggleFilter = this.toggleFilter.bind(this);
-    this.handleSortRadio = this.handleSortRadio.bind(this);
   }
 
   getWalks(filters) {
@@ -188,13 +185,6 @@ class Browse extends React.Component {
     }));
   }
 
-  handleSortRadio(event, value) {
-    console.log('radio ', value);
-    this.setState({
-      selectedSort: value
-    });
-  }
-
   render() {
     if (!this.state.selectedWalk.walker) {
       return (
@@ -208,9 +198,6 @@ class Browse extends React.Component {
               onClick={this.toggleFilter}
               style={{ 'margin': 12 }}
             />
-          </div>
-          <div>
-            <BrowseSort handleSortRadio={this.handleSortRadio} />
           </div>
           <div>
             <BrowseFilter pickupAddress={this.state.pickupAddress} setPickupAddress = {this.setPickupAddress} pickupAddress = {this.state.pickupAddress} getWalks={this.getWalks} filterOpen={this.state.filterOpen} toggleFilter={this.toggleFilter} />

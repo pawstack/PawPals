@@ -13,7 +13,6 @@ module.exports.getFilteredWalks = (req, res) => {
   // implement as if walkers don't make "walk slots" but rather general
   // availability periods, and owners can book as long as their need is in that
   // period.
-  filters = req.body;
   if (req.body.pickupTime !== '' && req.body.startDate !== '') {
     // show all walks in period of given day and given time
     var startDate = Moment(new Date(req.body.startDate)).startOf('day');
@@ -37,24 +36,34 @@ module.exports.getFilteredWalks = (req, res) => {
     var start = Moment(new Date()).endOf('day');
     var finish = Moment(new Date()).startOf('minute');
   }
-  console.log(start, 'start');
-  console.log(finish, 'finish');
+
+  // define sort order
+  var criteria, withRelatedParams;
+  var order = 'ASC';
+  if (req.body.selectedSort === 'avg_walker_rating') {
+    criteria = 'profiles.avg_walker_rating';
+    order = 'DESC';
+  } else {
+    criteria = `walks.${req.body.selectedSort}`;
+  }
+    
   models.Walk
     .query((qb) => {
-      qb.where('price', '<=', filters.price)
-        .where('session_start', '<=', new Date(start.toDate()))
-        .where('session_end', '>=', new Date(finish.toDate()))
+      qb.where('walks.price', '<=', req.body.price)
+        .where('walks.session_start', '<=', new Date(start.toDate()))
+        .where('walks.session_end', '>=', new Date(finish.toDate()))
+        .innerJoin('profiles', 'walks.walker_id', 'profiles.id')
+        .orderBy(criteria, order)  
         .limit(20);
     })
     .fetchAll({
       withRelated: ['walker']
     })
     .then(walks => {
-      console.log(walks.models, 'walks');
       res.status(200).send(walks);
     })
     .catch(err => {
-      console.log('****** getFilteredWalks error ', err);
+      console.log('ERROR getting filtered walks ', err);
       res.status(503).send(err);
     });
 };
