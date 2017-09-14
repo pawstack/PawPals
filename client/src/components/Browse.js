@@ -22,7 +22,7 @@ class Browse extends React.Component {
       pickupAddress: '',
       totalPrice: 0,
       snackBarOpen: false,
-      filterOpen: false
+      filterOpen: false,
       start_owner: null,
       end_owner: null,
       backButton: false,
@@ -210,9 +210,9 @@ class Browse extends React.Component {
       startDate: null,
       duration: null,
       pickupTime: null,
-      price: 100
+      price: 100,
+      selectedSort: 'price',
     })
-    console.log('function called')
   }
 
   handleSnackBarClose() {
@@ -251,9 +251,6 @@ class Browse extends React.Component {
               end_owner={this.state.end_owner}
               filterOpen={this.state.filterOpen}
               toggleFilter={this.toggleFilter} />
-          </div>
-          <div>
-            <h2>Search Results</h2>
           </div>
           <BrowseList
             walks={this.state.walks}

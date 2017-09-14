@@ -79,6 +79,7 @@ class BrowseFilter extends React.Component {
       pickupTime: null,
       price: 100
     }, () => {
+      console.log(this.state, 'state before sending call')
       this.props.getWalks.call(this, this.state)
     });
   }
