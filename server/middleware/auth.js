@@ -3,9 +3,8 @@ const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
 
 if (process.env.NODE_ENV === 'production') {
-  const redisClient = require('redis').createClient(redisConfig.url);
+  const redisClient = require('redis').createClient();
   const redisStoreOptions = {
-    client: redisClient,
     url: redisConfig.url
   };
 } else {
