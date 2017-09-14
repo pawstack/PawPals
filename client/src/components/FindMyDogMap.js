@@ -46,9 +46,11 @@ const GoogleMapWrapper = withGoogleMap(props => (
         path={props.polyLineData}
         defaultAnimation={2}
         geodesic= {true}
-        strokeColor = {'#FF0000'}
-        strokeOpacity = {1.0}
-        strokeWeight = {2}
+        options = {{
+          strokeColor: '#26194C',
+          strokeOpacity: 1,
+          strokeWeight: 3
+        }}
       />
     </div>
   </GoogleMap>
@@ -76,23 +78,47 @@ export default class FindMyDogMap extends React.Component {
   }
 
   getGeolocations() {
+    var context = this;
     $.get('/api/walks/track', {walkId: this.props.walkId})
       .then((data) => {
-        console.log('SUCCESS getting geolocation ', data);
-        var polydata = data.map(function(item, index) {
-          return {lat: Number(item.latitude), lng: Number(item.longitude)};
-        });
-        console.log('the poly data array is ', polydata);
+
         this.setState({
           markers: data,
           center: data.length > 0 ? {lat: Number(data[0].latitude), lng: Number(data[0].longitude)} : {lat: 0, lng: 0},
-          polyLineData: polydata
         });
+
+        var polydata = data.map(function(item, index) {
+          return {lat: Number(item.latitude), lng: Number(item.longitude)};
+        });
+
+        var animatedPolyData = [];
+
+
+        console.log('poly data is ', polydata.shift());
+
+        var animate = window.setInterval(function() {
+          console.log('the poly data length is ', polydata.length);
+          animatedPolyData = animatedPolyData.concat(polydata.shift());
+          console.log(animatedPolyData);
+          context.setState({
+            polyLineData: animatedPolyData
+          }, function() {
+            if (polydata.length === 0) {
+              window.clearInterval(animate);
+            }
+          });
+        }, 25);
+        animate();
+
+
+
       })
       .fail((err) => {
-        console.log('ERROR getting geolocation ', error);
+        console.log('ERROR getting geolocation ', err);
       });
   }
+
+
 
   render() {
     return (
