@@ -3,17 +3,16 @@ const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
 
 if (process.env.NODE_ENV === 'production') {
-  const redisClient = require('redis').createClient();
-  const redisStoreOptions = {
+  const store = new RedisStore({
     url: redisConfig.url
-  };
+  });
 } else {
   const redisClient = require('redis').createClient();
-  const redisStoreOptions = {
+  const store = new RedisStore({
     client: redisClient,
     host: redisConfig.host,
     port: redisConfig.port
-  };
+  });
 }
 
 module.exports.verify = (req, res, next) => {
@@ -24,7 +23,7 @@ module.exports.verify = (req, res, next) => {
 };
 
 module.exports.session = session({
-  store: new RedisStore(redisStoreOptions),
+  store: store,
   secret: redisConfig.secret,
   resave: false,
   saveUninitialized: false
