@@ -3,7 +3,7 @@ import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 
 const styles = {
   headline: {
-    fontSize: 24,
+    fontSize: 20,
     marginTop: 12,
     marginBottom: 12,
     fontWeight: 400,
@@ -13,21 +13,18 @@ const styles = {
 const BrowseSort = (props) => (
   <div>
     <h2 style={styles.headline}>Sort By:</h2>
-    <RadioButtonGroup name="sorting" defaultSelected="price" onChange={props.handleSortRadio} style={{ display: 'flex' }}>
+    <RadioButtonGroup name="sorting" defaultSelected="price" onChange={props.handleSortRadio} >
       <RadioButton
         value="price"
         label="Lowest Price"
-        style={{ width: '20%' }}
       />
       <RadioButton
-        value="startTime"
+        value="session_start"
         label="Start Time"
-        style={{ width: '20%' }}
       />
       <RadioButton
-        value="rating"
+        value="avg_walker_rating"
         label="Rating"
-        style={{ width: '20%' }}
       />
     </RadioButtonGroup>
   </div>
