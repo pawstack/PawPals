@@ -23,7 +23,7 @@ const GoogleMapWrapper = withGoogleMap(props => (
         options = {{
           strokeColor: '#26194C',
           strokeOpacity: 1,
-          strokeWeight: 3
+          strokeWeight: 5
         }}
       />
     </div>
