@@ -14,30 +14,39 @@ import Snackbar from 'material-ui/Snackbar';
 import TextField from 'material-ui/TextField';
 import moment from 'moment';
 
-
 class Confirmation extends React.Component {
 
   constructor(props) {
     super(props);
-
     this.calculateTotalPrice = this.calculateTotalPrice.bind(this);
   }
 
   componentDidMount() {
     var totalPrice = this.calculateTotalPrice();
     this.props.updateTotalPrice(totalPrice);
-    console.log('the total price is ', totalPrice);
   }
 
   calculateTotalPrice() {
-    var start = moment(this.props.selectedWalk.session_start);
-    var end = moment(this.props.selectedWalk.session_end);
-    var durationInHours = moment.duration(end.diff(start)) / 1000 / 60 / 60;
+    console.log(this.props.start_owner, this.props.end_owner)
+    if (this.props.start_owner && this.props.end_owner) {
+      var start = moment(this.props.start_owner);
+      var end = moment(this.props.end_owner);
+    } else {
+      var start = moment(this.props.selectedWalk.session_start);
+      var end = moment(this.props.selectedWalk.session_end);
+    }
+    var durationInHours = end.diff(start, 'minutes') / 60;
     return durationInHours * this.props.selectedWalk.price;
   }
 
-
   render() {
+    if (this.props.start_owner && this.props.end_owner) {
+      var start = moment(this.props.start_owner).format('h:mm A');
+      var end = moment(this.props.end_owner).format('h:mm A');
+    } else {
+      var start = moment(this.props.selectedWalk.session_start).format('h:mm A');
+      var end = moment(this.props.selectedWalk.session_end).format('h:mm A');
+    }
     return (
       <div>
         <MuiThemeProvider>
@@ -51,11 +60,7 @@ class Confirmation extends React.Component {
                 <img src="" alt="" />
               </CardMedia>
               <CardTitle
-                title={`${(moment(this.props.selectedWalk.session_start)
-                  .format('dddd, MMMM Do'))} at ${(moment(this.props.selectedWalk.session_start)
-                  .format('h:mm A'))}`
-                }
-
+                title={`${start} at ${end}`}
                 subtitle= {`${this.props.dogInfo.name}'s upcoming walk with ${this.props.selectedWalk.walker.display}`}
                 subtitleStyle={{'fontSize': '15px'}}
               />
@@ -70,7 +75,7 @@ class Confirmation extends React.Component {
 
               <div>
                 <TextField
-                  defaultValue={moment(this.props.selectedWalk.session_start).format('h:mm A')}
+                  defaultValue={start}
                   floatingLabelText="Pick-Up Time"
                   disabled={true}
                   style = {{padding: 20, width: 160, fontSize: 20}}
@@ -78,7 +83,7 @@ class Confirmation extends React.Component {
               </div>
               <div>
                 <TextField
-                  defaultValue={moment(this.props.selectedWalk.session_end).format('h:mm A')}
+                  defaultValue={end}
                   floatingLabelText="Drop-Off Time"
                   disabled={true}
                   style = {{padding: 20, width: 160, fontSize: 20}}

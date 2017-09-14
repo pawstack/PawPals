@@ -5,10 +5,11 @@ import BrowseFilter from './BrowseFilter';
 import BrowseList from './BrowseList';
 import $ from 'jquery';
 import Confirmation from './Confirmation.jsx';
-import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
+import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import geolib from 'geolib';
 import FilterList from 'material-ui/svg-icons/content/filter-list';
 import RaisedButton from 'material-ui/RaisedButton';
+import moment from 'moment';
 
 class Browse extends React.Component {
   constructor(props) {
@@ -22,6 +23,9 @@ class Browse extends React.Component {
       totalPrice: 0,
       snackBarOpen: false,
       filterOpen: false
+      start_owner: null,
+      end_owner: null,
+      backButton: false,
     };
     this.getWalks = this.getWalks.bind(this);
     this.selectWalk = this.selectWalk.bind(this);
@@ -36,10 +40,15 @@ class Browse extends React.Component {
   }
 
   getWalks(filters) {
+    this.setState({backButton: false});
     $.post('/api/walks/search', filters)
       .done((data) => {
         console.log('SUCCESS getWalks in Browse ', data);
-        this.filterLocation(data);
+        this.filterLocation(data.walks);
+        this.setState({
+          ['start_owner']: data.start,
+          ['end_owner']: data.end
+        })
       }).fail((err) => {
         console.log('ERROR getWalks in Browse ', error);
       });
@@ -66,20 +75,46 @@ class Browse extends React.Component {
                 }
               }
               this.setState({
-                walks: nearbyWalks
+                ['walks']: nearbyWalks
               });
             })
             .catch((error) => {
               console.log(error);
             });
         });
+      } else {
+        geocodeByAddress(this.state.pickupAddress)
+          .then(results => getLatLng(results[0]))
+          .then((latLng) => {
+            var pickUpLatLng = {
+              'latitude': latLng['lat'],
+              'longitude': latLng['lng']
+            };
+            var nearbyWalks = [];
+            for (var i = 0; i < walks.length; i++) {
+              var distance = geolib.getDistanceSimple(
+                {'latitude': walks[i].latitude, 'longitude': walks[i].longitude},
+                pickUpLatLng, 10, 1)
+              if (distance < Number(walks[i].walk_zone_radius) * 1000) {
+                nearbyWalks.push(walks[i]);
+              }
+            }
+            console.log(nearbyWalks, 'walks should show up')
+            this.setState({
+              ['walks']: nearbyWalks
+            });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       }
     })
   }
 
   selectWalk(walk) {
     this.setState({
-      selectedWalk: walk
+      selectedWalk: walk,
+      backButton: true
     });
   }
 
@@ -119,31 +154,35 @@ class Browse extends React.Component {
   resetSelectedState() {
     console.log('reseting the selected state');
     this.setState({
-      selectedWalk: {}
+      selectedWalk: {},
+      backButton: true
     });
   }
 
   setPickupAddress(location) {
-    console.log('updating set pickup location on browse ', location);
     this.setState({
       pickupAddress: location
     });
   }
 
   processPayment() {
+    console.log(this.state.start_owner, this.state.end_owner)
+    console.log(this.state, 'states')
     var context = this;
     $.ajax({
       type: 'POST',
       url: '/api/walks/payment',
       data: {
-        amount: this.state.totalPrice * 100, //TBD WHEN BOOKED
-        walkerUserID: this.state.selectedWalk.walker_id, //TBD WHEN BOOKED.  This will come from the selected walk state.
-        walkID: this.state.selectedWalk.id, //TBD WHEN BOOKED.
+        amount: this.state.totalPrice * 100,
+        walkerUserID: this.state.selectedWalk.walker_id,
+        walkID: this.state.selectedWalk.id,
         description: 'PawPals',
         percentRetainedByPlatform: 10,
         ownerID: this.state.ownerInfo.id,
         pickupAddress: this.state.pickupAddress,
-        dogID: this.state.dogInfo.id
+        dogID: this.state.dogInfo.id,
+        start_owner: this.state.start_owner,
+        end_owner: this.state.end_owner,
       },
       success: function() {
         context.setState({
@@ -151,7 +190,6 @@ class Browse extends React.Component {
         }, function() {
           context.resetSelectedState();
         });
-
       },
       error: function() {
         console.log('client - error destination charge post request completed');
@@ -166,6 +204,15 @@ class Browse extends React.Component {
   }
 
   componentDidMount() {
+    const todayJS = moment().startOf('day').toDate();
+    this.getWalks({
+      minDate: todayJS,
+      startDate: null,
+      duration: null,
+      pickupTime: null,
+      price: 100
+    })
+    console.log('function called')
   }
 
   handleSnackBarClose() {
@@ -195,12 +242,25 @@ class Browse extends React.Component {
             />
           </div>
           <div>
-            <BrowseFilter pickupAddress={this.state.pickupAddress} setPickupAddress = {this.setPickupAddress} pickupAddress = {this.state.pickupAddress} getWalks={this.getWalks} filterOpen={this.state.filterOpen} toggleFilter={this.toggleFilter} />
+            <BrowseFilter
+              pickupAddress={this.state.pickupAddress}
+              setPickupAddress = {this.setPickupAddress}
+              pickupAddress = {this.state.pickupAddress}
+              getWalks={this.getWalks}
+              start_owner={this.state.start_owner}
+              end_owner={this.state.end_owner}
+              filterOpen={this.state.filterOpen}
+              toggleFilter={this.toggleFilter} />
           </div>
           <div>
-            <h2>Search Results</h2> 
+            <h2>Search Results</h2>
           </div>
-          <BrowseList walks={this.state.walks} selectWalk={this.selectWalk} />
+          <BrowseList
+            walks={this.state.walks}
+            ownerInfo = {this.state.ownerInfo}
+            start_owner={this.state.start_owner}
+            end_owner={this.state.end_owner}
+            selectWalk={this.selectWalk} />
           <MuiThemeProvider>
             <Snackbar
               open={this.state.snackBarOpen}
@@ -225,6 +285,9 @@ class Browse extends React.Component {
             processPayment = {this.processPayment}
             updateTotalPrice = {this.updateTotalPrice}
             totalPrice = {this.state.totalPrice}
+            start_owner={this.state.start_owner}
+            end_owner={this.state.end_owner}
+            backButton={this.state.backButton}
           />
         </div>
       );

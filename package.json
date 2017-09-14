@@ -42,6 +42,7 @@
     "material-ui": "^0.19.1",
     "moment": "^2.18.1",
     "morgan": "^1.8.1",
+    "parse-address": "^0.0.7",
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",
     "passport-google-oauth": "^1.0.0",
