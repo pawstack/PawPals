@@ -38,7 +38,7 @@ import {
 const GoogleMapWrapper = withGoogleMap(props => (
   <GoogleMap
     ref={props.onMapLoad}
-    defaultZoom={15}
+    defaultZoom={16}
     center={props.center}
   >
     <div>
@@ -81,37 +81,33 @@ export default class FindMyDogMap extends React.Component {
     var context = this;
     $.get('/api/walks/track', {walkId: this.props.walkId})
       .then((data) => {
-
+        var midpoint = Math.floor(data.length / 2);
         this.setState({
           markers: data,
-          center: data.length > 0 ? {lat: Number(data[0].latitude), lng: Number(data[0].longitude)} : {lat: 0, lng: 0},
-        });
+          center: data.length > 0 ? {lat: Number(data[midpoint].latitude), lng: Number(data[midpoint].longitude)} : {lat: 0, lng: 0},
+        }, function() {
 
-        var polydata = data.map(function(item, index) {
-          return {lat: Number(item.latitude), lng: Number(item.longitude)};
-        });
-
-        var animatedPolyData = [];
-
-
-        console.log('poly data is ', polydata.shift());
-
-        var animate = window.setInterval(function() {
-          console.log('the poly data length is ', polydata.length);
-          animatedPolyData = animatedPolyData.concat(polydata.shift());
-          console.log(animatedPolyData);
-          context.setState({
-            polyLineData: animatedPolyData
-          }, function() {
-            if (polydata.length === 0) {
-              window.clearInterval(animate);
-            }
+          var polydata = data.map(function(item, index) {
+            return {lat: Number(item.latitude), lng: Number(item.longitude)};
           });
-        }, 25);
-        animate();
 
+          var animatedPolyData = [];
+          console.log('poly data is ', polydata.shift());
 
-
+          var animate = window.setInterval(function() {
+            console.log('the poly data length is ', polydata.length);
+            animatedPolyData = animatedPolyData.concat(polydata.splice(0, 1));
+            console.log(animatedPolyData);
+            context.setState({
+              polyLineData: animatedPolyData
+            }, function() {
+              if (polydata.length === 0) {
+                window.clearInterval(animate);
+              }
+            });
+          }, 25);
+          animate();
+        });
       })
       .fail((err) => {
         console.log('ERROR getting geolocation ', err);
