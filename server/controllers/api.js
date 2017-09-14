@@ -51,11 +51,13 @@ module.exports.getFilteredWalks = (req, res) => {
     criteria = `walks.${req.body.selectedSort}`;
   }
 
+  console.log(req.body, 'request body')
+
   models.Walk
     .query((qb) => {
-      qb.where('walks.price', '<=', req.body.price)
-        .where('walks.session_start_walker', '<=', new Date(walker_start.endOf('minute').toDate()))
-        .where('walks.session_end', '>=', new Date(walker_finish.startOf('minute').toDate()))
+      qb.where('price', '<=', req.body.price)
+        .where('session_start_walker', '<=', new Date(walker_start.endOf('minute').toDate()))
+        .where('session_end_walker', '>=', new Date(walker_finish.startOf('minute').toDate()))
         .innerJoin('profiles', 'walks.walker_id', 'profiles.id')
         .orderBy(criteria, order)
         .limit(20);
