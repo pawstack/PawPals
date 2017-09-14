@@ -7,7 +7,7 @@ import EventDialog from './EventDialog';
 import $ from 'jquery';
 import RaisedButton from 'material-ui/RaisedButton';
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
-import SnackBarCom from './Snackbar';
+import SnackBarCom from './SnackBar';
 
 BigCalendar.momentLocalizer(moment);
 require('style-loader!css-loader!react-big-calendar/lib/css/react-big-calendar.css');
