@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import debounce from 'lodash.debounce'
 import TextField from 'material-ui/TextField';
 import AutoComplete from 'material-ui/AutoComplete';
@@ -275,56 +274,6 @@ class PlacesAutocomplete extends Component {
       </div>
     )
   }
-}
-
-PlacesAutocomplete.propTypes = {
-  inputProps: (props, propName) => {
-    const inputProps = props[propName];
-
-    if (!inputProps.hasOwnProperty('value')) {
-      throw new Error('\'inputProps\' must have \'value\'.')
-    }
-
-    if (!inputProps.hasOwnProperty('onChange')) {
-      throw new Error('\'inputProps\' must have \'onChange\'.')
-    }
-  },
-  onError: PropTypes.func,
-  clearItemsOnError: PropTypes.bool,
-  onSelect: PropTypes.func,
-  autocompleteItem: PropTypes.func,
-  classNames: PropTypes.shape({
-    root: PropTypes.string,
-    input: PropTypes.string,
-    autocompleteContainer: PropTypes.string,
-    autocompleteItem: PropTypes.string,
-    autocompleteItemActive: PropTypes.string,
-  }),
-  styles: PropTypes.shape({
-    root: PropTypes.object,
-    input: PropTypes.object,
-    autocompleteContainer: PropTypes.object,
-    autocompleteItem: PropTypes.object,
-    autocompleteItemActive: PropTypes.object
-  }),
-  options: PropTypes.shape({
-    bounds: PropTypes.object,
-    componentRestrictions: PropTypes.object,
-    location: PropTypes.object,
-    offset: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.string
-    ]),
-    radius: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.string
-    ]),
-    types: PropTypes.array
-  }),
-  debounce: PropTypes.number,
-  highlightFirstSuggestion: PropTypes.bool,
-  googleLogo: PropTypes.bool,
-  googleLogoType: PropTypes.oneOf(["default", "inverse"]),
 }
 
 PlacesAutocomplete.defaultProps = {

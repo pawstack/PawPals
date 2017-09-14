@@ -20,20 +20,25 @@ class BrowseFilter extends React.Component {
     super(props);
     const todayJS = moment().startOf('day').toDate();
     this.state = {
+      disableFilter: true,
       minDate: todayJS,
       startDate: null,
       duration: null,
       pickupTime: null,
       price: 100,
-      selectedSort: 'price'      
+      selectedSort: 'price'
     };
     this.handleLocationChange = this.handleLocationChange.bind(this);
     this.handleSelectDuration = this.handleSelectDuration.bind(this);
     this.handleSortRadio = this.handleSortRadio.bind(this);
-  }    
+    this.handleClearFilter = this.handleClearFilter.bind(this);
+  }
 
-  componentWillMount() {
-    this.props.getWalks(this.state);
+  componentDidMount() {
+  }
+
+  shouldComponentUpdate(nextProps, nextState){
+    return !nextProps.backButton;
   }
 
   handleLocationChange(value) {
@@ -43,16 +48,38 @@ class BrowseFilter extends React.Component {
   handleChangeAdditional(key, event, value) {
     this.setState({
       [key]: value,
-    }, () => { console.log(this.state[key]); });
+    }, this.handleUpdateState);
   }
 
   handleSelectDuration(event, index, duration) {
-    this.setState({duration});
+    this.setState({duration}, this.handleUpdateState);
+  }
+
+  handleUpdateState() {
+    if (this.state.duration && this.state.pickupTime) {
+      this.setState({['disableFilter']: false})
+    } else {
+      this.setState({['disableFilter']: true});
+    }
   }
 
   handleSortRadio(event, value) {
     this.setState({
       selectedSort: value
+    });
+  }
+
+  handleClearFilter() {
+    const todayJS = moment().startOf('day').toDate();
+    this.setState({
+      disableFilter: true,
+      minDate: todayJS,
+      startDate: null,
+      duration: null,
+      pickupTime: null,
+      price: 100
+    }, () => {
+      this.props.getWalks.call(this, this.state)
     });
   }
 
@@ -63,15 +90,15 @@ class BrowseFilter extends React.Component {
     };
     return (
       <div>
-        <Drawer 
-          docked={false} 
-          open={this.props.filterOpen} 
-          onRequestChange={this.props.toggleFilter} 
+        <Drawer
+          docked={false}
+          open={this.props.filterOpen}
+          onRequestChange={this.props.toggleFilter}
           overlayStyle={{ opacity: 0.3 }}
         >
-          <AppBar 
-            title="Filter" 
-            showMenuIconButton={false} 
+          <AppBar
+            title="Filter"
+            showMenuIconButton={false}
             iconElementRight={<IconButton><NavigationChevronLeft /></IconButton>}
             onRightIconButtonTouchTap={this.props.toggleFilter}/>
           <MenuItem>
@@ -125,7 +152,10 @@ class BrowseFilter extends React.Component {
             <BrowseSort handleSortRadio={this.handleSortRadio} />
           </MenuItem>
           <MenuItem>
-            <RaisedButton label="Apply Filter" primary={true} onClick={this.props.getWalks.bind(this, this.state)} />
+            <RaisedButton label="Apply Filter" disabled={this.state.disableFilter} primary={true} onClick={this.props.getWalks.bind(this, this.state)} />
+          </MenuItem>
+          <MenuItem>
+            <RaisedButton label="Clear Filter"  primary={true} onClick={this.handleClearFilter} />
           </MenuItem>
         </Drawer>
       </div>

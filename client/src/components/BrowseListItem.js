@@ -17,8 +17,15 @@ class BrowseListItem extends React.Component {
     return [moment(jsStart, 'YYY-MM-DD hh:mm:ss').format('llll'), moment(jsEnd, 'YYYY-MM-DD hh:mm:ss').format('LT')];
   }
 
+  componentDidMount() {
+  }
+
   render() {
-    let time = this.convertDate(this.props.walk.session_start, this.props.walk.session_end);
+    if (this.props.start_owner && this.props.end_owner) {
+      var time = this.convertDate(this.props.start_owner, this.props.end_owner);
+    } else {
+      var time = this.convertDate(this.props.walk.session_start, this.props.walk.session_end)
+    }
     return (
       <Card>
         <CardHeader

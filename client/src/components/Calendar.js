@@ -7,7 +7,7 @@ import EventDialog from './EventDialog';
 import $ from 'jquery';
 import Snackbar from 'material-ui/Snackbar';
 import RaisedButton from 'material-ui/RaisedButton';
-import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
+import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import SnackBarCom from './Snackbar';
 
 BigCalendar.momentLocalizer(moment);
@@ -22,14 +22,14 @@ let parseEvents = (data) => {
     } else {
       event['title'] = 'Unbooked Walk';
     }
-    event['start'] = new Date(data.walks[i].session_start);
+    event['start'] = new Date(data.walks[i].session_start_walker);
     event['paid'] = data.walks[i].paid;
     event['owner_name'] = data.walks[i].owner.first;
     event['dog_id'] = data.walks[i].dog.id;
     event['owner_phone'] = data.walks[i].owner.phone;
     event['dog_profile_pic'] = data.walks[i].dog.profile_pic;
     event['dog_extras'] = data.walks[i].dog.extras;
-    event['end'] = new Date(data.walks[i].session_end);
+    event['end'] = new Date(data.walks[i].session_end_walker);
     event['price'] = data.walks[i].price;
     event['pickup_address'] = data.walks[i].pickup_address || data.walks[i].owner.address;
     event['id'] = data.walks[i].id;
@@ -193,8 +193,11 @@ class Calendar extends React.Component {
         })
           .then((response) => response.json())
           .then((data) => {
+            console.log(data)
             var events = parseEvents(data);
-            this.setState({events, formOpen: false});
+            this.setState({events, formOpen: false}, () => {
+              console.log(this.state.events)
+            });
           })
           .catch((error) => {
             console.error(error);
@@ -204,6 +207,7 @@ class Calendar extends React.Component {
 
   componentDidMount () {
     this.getEvents((states) => {
+      console.log(states, 'states')
       this.setState(states);
     });
   }
@@ -292,25 +296,22 @@ class Calendar extends React.Component {
           handleClose={this.handleFormClose}
           handleOpen={this.handleFormOpen}
           handleSubmit={this.handleSubmit}
-          start={this.state.start}
-          end={this.state.end}
+          start={this.state.start_walker}
+          end={this.state.end_walker}
           price={this.state.price}
-          location={this.state.location}
-        />
-        < EventDialog
+          location={this.state.location}/>
+        <EventDialog
           handleCancel={this.handleCancel}
           open={this.state.eventOpen}
           handleClose={this.handleEventClose}
           handleOpen={this.handleEventOpen}
           selectedEvent={this.state.selectedEvent}
           handleStartWalk={this.handleStartWalk}
-          handleFinishWalk={this.handleFinishWalk}
-        />
-        < SnackBarCom
+          handleFinishWalk={this.handleFinishWalk} />
+        <SnackBarCom
           open={this.state.snackBarOpen}
           handleSnackBarClose={this.handleSnackBarClose}
-          message={'Refund successful'}
-        />
+          message={'Refund successful'} />
       </div>
     );
   }
