@@ -5,7 +5,6 @@ import BigCalendar from 'react-big-calendar';
 import DialogForm from './DialogForm';
 import EventDialog from './EventDialog';
 import $ from 'jquery';
-import Snackbar from 'material-ui/Snackbar';
 import RaisedButton from 'material-ui/RaisedButton';
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import SnackBarCom from './Snackbar';
