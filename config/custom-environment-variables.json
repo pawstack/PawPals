@@ -3,7 +3,7 @@
     "client": "postgresql",
     "connection": "DATABASE_URL"
   },
-  
+
   "passport": {
     "Google": {
       "clientID": "GOOGLE_CLIENT_ID",
@@ -27,6 +27,10 @@
   "stripe": {
     "secretKey": "STRIPE_SECRET_KEY",
     "publishableKey": "STRIPE_PUBLISHABLE_KEY"
+  },
+
+  "redis": {
+    "url": "REDIS_URL"
   }
 
 }
