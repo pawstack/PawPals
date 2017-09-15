@@ -109,4 +109,8 @@ router.route('/messages/senders')
 router.route('/walks/trackRealTime')
   .get(ApiController.fetchLatestGeolocations);
 
+
+router.route('/messages/fetch')
+  .get(ApiController.fetchMessages);
+
 module.exports = router;

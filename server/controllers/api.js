@@ -90,7 +90,7 @@ module.exports.createWalk = (req, res) => {
     session_start_walker: req.body.session_start,
     session_end_walker: req.body.session_end,
     session_start: req.body.session_start,
-    session_end: req.body.session_end,    
+    session_end: req.body.session_end,
     walk_zone_pt: req.body.walk_zone_pt,
     price: req.body.price,
     walker_id: req.user.id,
@@ -713,10 +713,22 @@ module.exports.fetchMessages = function(req, res) {
   models.Message
     .query((qb) => {
       qb.where('walker_id', '=', walker_id).andWhere('owner_id', '=', owner_id);
+  console.log('hello')
+  console.log(req.user.id)
+  models.Message
+    .query((qb) => {
+      qb.where('walker_id', '=', req.user.id).orWhere('owner_id', '=', req.user.id)
     })
     .orderBy('createdAt')
     .fetchAll({withRelated: ['walker', 'owner', 'sender']})
     .then((collection) => {
       res.status(201).send(collection.models);
     });
+      var response = {
+        messages: collection,
+        user_id: req.user.id,
+      }
+      console.log(collection, 'collection')
+      res.status(200).send(response);
+    })
 };
