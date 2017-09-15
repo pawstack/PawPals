@@ -9,6 +9,7 @@ import Subheader from 'material-ui/Subheader';
 import RaisedButton from 'material-ui/RaisedButton';
 import ReactFilestack from 'filestack-react';
 import Snackbar from 'material-ui/Snackbar';
+import PlacesAutocomplete from './PlacesAutocomplete';
 
 
 var checkEmptyEntry = function(obj) {
@@ -37,6 +38,8 @@ class OwnerRegister extends React.Component {
       open: false
     };
 
+    this.updatePhone = this.updatePhone.bind(this);
+    this.updateAddress = this.updateAddress.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleAgeChange = this.handleAgeChange.bind(this);
     this.handleBreedChange = this.handleBreedChange.bind(this);
@@ -87,17 +90,15 @@ class OwnerRegister extends React.Component {
     });
   }
 
-  handleTouchTap(event) {
-    this.setState({
-      open: true,
-    });
+  updatePhone(e) {
+    const phone = e.target.value;
+    this.props.entriesChanged('phone', phone );
   }
 
-  handleRequestClose() {
-    this.setState({
-      open: false,
-    });
+  updateAddress(e) {
+    this.props.entriesChanged( 'address', e);
   }
+
 
   handleSubmit() {
     console.log('phone is', this.props.phoneInfo);
@@ -134,9 +135,29 @@ class OwnerRegister extends React.Component {
       maxFiles: 1,
     };
 
+    const inputProps = {
+      value: this.props.addressInfo,
+      onChange: (v) => { this.updateAddress(v); },
+    };
+
 
     return (
       <div>
+        <TextField
+          id="phone-info"
+          hintText="e.g. 9498786181"
+          floatingLabelText="Phone #"
+          name="phone"
+          onChange={this.updatePhone}
+          fullWidth={true}
+        />
+        <div>
+          <PlacesAutocomplete
+            inputProps={inputProps}
+            label={'Address'}
+          />
+        </div>
+
         <TextField
           id="dog-name"
           floatingLabelText="Dog's Name"
