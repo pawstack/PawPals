@@ -1,5 +1,12 @@
 import Dialog from 'material-ui/Dialog';
 import React from 'react';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Switch,
+  Redirect
+} from 'react-router-dom';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
@@ -9,7 +16,7 @@ import moment from 'moment';
 import GpsFixed from 'material-ui/svg-icons/device/gps-fixed';
 import GpsOff from 'material-ui/svg-icons/device/gps-off';
 import StarRating from './StarRating.jsx';
-import Message from './Message';
+
 
 const styles = {
   radioButton: {
@@ -164,20 +171,15 @@ export default class EventDialog extends React.Component {
                 </tr>
               </tbody>
             </table>
-
-
-            <RaisedButton label="Message Owner" primary={true} onClick={this.handleChatOpen} style={{'marginLeft': '25px', 'marginTop': '15px'}}/>
-            <Dialog
-              title={`Chat with ${this.props.selectedEvent.owner_name}`}
-              actions={chatActions}
-              modal={false}
-              open={this.state.openchat}
-              onRequestClose={this.handleChatClose}
-            >
-              <Message walkerid = {this.props.selectedEvent.walker_id} ownerid = {this.props.selectedEvent.owner_id}/>
-            </Dialog>
-
-
+            <div>
+              <Link to= {{pathname:'/messages',
+                          state: {ownerid: this.props.selectedEvent.owner_id,
+                          walkerid: this.props.selectedEvent.walker_id}
+                        }}
+              >
+              <FlatButton label="Message Owner" primary={true}  style={{'marginLeft': '3px'}}/>
+              </Link>
+            </div>
           </Dialog>
         </div>
       );
@@ -218,7 +220,6 @@ export default class EventDialog extends React.Component {
               </tbody>
             </table>
           </Dialog>
-
         </div>
       );
     }
@@ -226,4 +227,3 @@ export default class EventDialog extends React.Component {
   }
 }
 
-//<Message walkerid={this.props.selectedEvent.walker_id} ownerid={this.props.selectedEvent.owner_id}/>
