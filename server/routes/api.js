@@ -106,4 +106,7 @@ router.route('/messages/write')
 router.route('/messages/senders')
   .get(ApiController.fetchChatDetails);
 
+
+router.route('/messages/fetch')
+  .get(ApiController.fetchMessages);
 module.exports = router;
