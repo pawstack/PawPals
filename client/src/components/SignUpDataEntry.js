@@ -55,13 +55,13 @@ class SignUpDataEntry extends React.Component {
         >
           <RadioButton
             value="Owner"
-            label="Owner"
+            label="Dog Owner"
             style={styles.radioButton}
             onClick = {this.handleUserType}
           />
           <RadioButton
             value="Walker"
-            label="Walker"
+            label="Dog Walker"
             style={styles.radioButton}
             onClick = {this.handleUserType}
           />

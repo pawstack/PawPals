@@ -93,6 +93,7 @@ class SignUpStart extends React.Component {
           <WalkerRegister
             phoneInfo = {this.state.phone}
             addressInfo = {this.state.address}
+            entriesChanged = {this.handleEntriesChanged}
           />);
       }
     default:

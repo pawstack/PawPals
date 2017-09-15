@@ -5,6 +5,7 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import ReactFilestack from 'filestack-react';
 import Snackbar from 'material-ui/Snackbar';
+import PlacesAutocomplete from './PlacesAutocomplete';
 
 
 var checkEmptyEntry = function(obj) {
@@ -31,6 +32,18 @@ class WalkerRegister extends React.Component {
     this.handleTouchTap = this.handleTouchTap.bind(this);
     this.handleRequestClose = this.handleRequestClose.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.updatePhone = this.updatePhone.bind(this);
+    this.updateAddress = this.updateAddress.bind(this);
+
+  }
+
+  updatePhone(e) {
+    const phone = e.target.value;
+    this.props.entriesChanged('phone', phone );
+  }
+
+  updateAddress(e) {
+    this.props.entriesChanged( 'address', e);
   }
 
   handleExtrasChange(e) {
@@ -94,11 +107,49 @@ class WalkerRegister extends React.Component {
       maxFiles: 1,
     };
 
+    const inputProps = {
+      value: this.props.addressInfo,
+      onChange: (v) => { this.updateAddress(v); },
+    };
+
     return (
       <div>
         <h4>Step 2 Complete profile as a walker</h4>
         <div><br></br></div>
         <div>
+
+          <div>
+            <PlacesAutocomplete
+              inputProps={inputProps}
+              label={'Address'}
+            />
+          </div>
+
+          <TextField
+            id="phone-info"
+            hintText="e.g. 9498786181"
+            floatingLabelText="Phone #"
+            name="phone"
+            onChange={this.updatePhone}
+            fullWidth={true}
+          />
+
+          <div>
+            <TextField
+              id="walker-extra"
+              hintText="e.g. I grew up with 5 dogs and have had more than 20 years' experience with puppies, adult and elderly dogs."
+              floatingLabelText="About me"
+              name="walkerExtras"
+              multiLine={true}
+              rows={2}
+              rowsMax={5}
+              style={{
+                width: '400px'
+              }}
+              onChange={this.handleExtrasChange}
+            />
+          </div>
+
           <ReactFilestack
             apikey="Ay45M83ltRnWSZq3qL6Zhz"
             buttonText="Upload Your Profile Photo"
@@ -110,21 +161,7 @@ class WalkerRegister extends React.Component {
             <img src={this.state.url} width="200"></img>
           </div>
         </div>
-        <div>
-          <TextField
-            id="walker-extra"
-            hintText="e.g. I grew up with 5 dogs and have had more than 20 years' experience with puppies, adult and elderly dogs."
-            floatingLabelText="About me"
-            name="walkerExtras"
-            multiLine={true}
-            rows={2}
-            rowsMax={5}
-            style={{
-              width: '400px'
-            }}
-            onChange={this.handleExtrasChange}
-          />
-        </div>
+
         <RaisedButton label="Submit Profile" primary={true} onClick={this.handleSubmit} />
         <Snackbar
           open={this.state.open}
