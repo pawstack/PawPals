@@ -18,7 +18,6 @@ class Payment extends React.Component {
 
     this.processPayment = this.processPayment.bind(this);
     this.requestRefundForCancellation = this.requestRefundForCancellation.bind(this);
-    this.handleStripeRegistration = this.handleStripeRegistration.bind(this);
   }
 
   processPayment() {
@@ -59,43 +58,18 @@ class Payment extends React.Component {
     });
   }
 
-  handleStripeRegistration() { // AJAX - doesn't work.  Work around. Fix Later.
-    console.log('button clicked to handle stripe registration');
-    $.ajax({
-      type: 'POST',
-      url: '/stripe',
-      data: {
-        redirect_uri: 'http://localhost:3000/',
-        client_id: 'ca_BKKqX6IKWv2zjuHsLKdReiYfTfnaNPIE',
-        state: 'test123'
-      },
-      success: () => {
-        console.log('client - successfully registered with stripe');
-      },
-      error: (error) => {
-        console.log('client - error in registering with stripe', error);
-      }
-    });
-  }
-
-
-
-
   render() {
+    const url = new URL(window.location.href);
+    const callbackUrl = `${url.protocol}//${url.hostname}${url.port.length > 0 ? ':' + url.port : url.port}`;
+    const state = Math.floor(Math.random() * 1000);
     return (
       <div>
         <MuiThemeProvider>
           <div>
             <div>
-              <a href = 'https://connect.stripe.com/express/oauth/authorize?redirect_uri=http://localhost:3000/&client_id=ca_BKKqX6IKWv2zjuHsLKdReiYfTfnaNPIE&state=testing1234'>
+              <a href = {`https://connect.stripe.com/express/oauth/authorize?redirect_uri=${callbackUrl}/&client_id=ca_BKKqX6IKWv2zjuHsLKdReiYfTfnaNPIE&state=${state}`}>
                 <RaisedButton label="Connect with Stripe" primary={true}/>
               </a>
-            </div>
-            <div>
-              <RaisedButton onClick = {this.processPayment} label="Create a Destination Charge" primary ={true}/>
-            </div>
-            <div>
-              <RaisedButton onClick = {this.requestRefundForCancellation} label = "Request Refund for Cancellation" primary = {true}/>
             </div>
           </div>
         </MuiThemeProvider>

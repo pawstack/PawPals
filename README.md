@@ -63,6 +63,10 @@ For environments that require use of environment variables, you can supply varia
 See https://www.npmjs.com/package/config
 And https://github.com/lorenwest/node-config/wiki/Environment-Variables#custom-environment-variables
 
+### Passport OAuth Login
+
+Follow the instructions for [Passport's Google Strategy](https://github.com/jaredhanson/passport-google-oauth2), this will require making a new project and app in that project. Fill in the Client ID, secret, and callback URL into config files. You will also need to [enable the Google+ API](https://console.developers.google.com/apis/api/plus.googleapis.com) for your project.
+
 ## Database Initialization
 
 IMPORTANT: ensure `postgres` is running before performing these steps.
