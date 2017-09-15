@@ -105,7 +105,7 @@ class App extends React.Component {
                 <AppBar
                   title="PawPals"
                   iconElementLeft={
-                      <Avatar 
+                      <Avatar
                         src={this.state.userInfo.profile_pic}
                         style={{marginBottom: 4}} />
                   }
@@ -144,7 +144,7 @@ class App extends React.Component {
             <li><Link to='/trackwalk'>Track Walk</Link></li>
             <li><Link to='/walkhistory'>Current & Past Walks</Link></li>
             <li><Link to='/messages'>Messages</Link></li>
-
+            <li><Link to='/messages'>Messages</Link></li>
             <Route exact path="/home" render={() => (
               <h1>Hello World from React</h1>
             )}/>
