@@ -5,7 +5,6 @@ import RaisedButton from 'material-ui/RaisedButton';
 import moment from 'moment';
 import Snackbar from 'material-ui/Snackbar';
 import FindMyDogMap from './FindMyDogMap';
-import PopupOwner from './PopupOwner';
 import Message from './Message';
 import Popup from 'react-popup';
 import Dialog from 'material-ui/Dialog';

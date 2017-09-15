@@ -72,6 +72,8 @@ class ProfileOwner extends React.Component {
           name_old: res[0].name,
           breed: res[0].breed,
           breed_old: res[0].breed,
+          age: res[0].age,
+          age_old: res[0].age,
           weight: res[0].weight,
           weight_old: res[0].weight,
           url: res[0].profile_pic,
@@ -202,7 +204,17 @@ class ProfileOwner extends React.Component {
                 </td>
               </tr>
               <tr>
-                <td><CardHeader title="Dog's Weight in LB:"/></td>
+                <td><CardHeader title="Dog's Age:"/></td>
+                <td>
+                  <TextField
+                    name = "age"
+                    hintText={this.state.age_old}
+                    onChange={this.handleChange}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td><CardHeader title="Dog's Weight in lb:"/></td>
                 <td>
                   <TextField
                     name = "weight"
