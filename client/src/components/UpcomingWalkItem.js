@@ -95,6 +95,17 @@ class UpcomingWalkItem extends React.Component {
           avatar={this.props.walk.walker.profile_pic}
           title={this.props.walk.walker.display}
         />
+
+        <div>
+          <Link to= {{pathname:'/messages',
+                      state: {ownerid: this.props.walk.owner_id,
+                              walkerid: this.props.walk.walker_id}
+                    }}
+          >
+          <FlatButton label="Message Walker" primary={true}  style={{'marginLeft': 'px'}}/>
+          </Link>
+        </div>
+
         <CardText style={{'font': '14px'}}>
         From {time[0]} to {time[1]}  Near {this.props.walk.walk_zone_pt}
         </CardText>
@@ -110,17 +121,7 @@ class UpcomingWalkItem extends React.Component {
             onRequestClose={this.handleRequestClose}
           />
         </CardActions>
-
-        <div>
-          <Link to= {{pathname:'/messages',
-                      state: {ownerid: this.props.walk.owner_id,
-                              walkerid: this.props.walk.walker_id}
-                    }}
-          >
-          <FlatButton label="Message Walker" primary={true}  style={{'marginLeft': 'px'}}/>
-          </Link>
-        </div>
-
+        <div><br></br></div>
       </Card>
 
     );
