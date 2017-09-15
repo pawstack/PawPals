@@ -6,15 +6,9 @@ const config = require('config')['stripe'];
 const stripe = require('stripe')(config.secretKey);
 const controllers = require('./');
 const Moment = require('moment');
-
-
 const twilio = require('twilio');
-
 const credentials = require('./credentials.json');
 const device = require('express-device');
-
-
-
 
 db.plugin('registry');
 
@@ -32,7 +26,7 @@ module.exports.getFilteredWalks = (req, res) => {
     var finish = startDate.clone().add(hour, 'h').add(minute, 'm').add(Number(req.body.duration), 'm');
     var walker_start = start.clone().subtract(15, 'm');
     var walker_finish = finish.clone().add(15, 'm');
-  } else if(req.body.startDate === '' && req.body.pickupTime !== '') {
+  } else if (req.body.startDate === '' && req.body.pickupTime !== '') {
     // see all walks available today at given time
     var start = Moment(new Date(req.body.pickupTime));
     var finish = start.clone().add(Number(req.body.duration), 'm');
@@ -45,10 +39,10 @@ module.exports.getFilteredWalks = (req, res) => {
     var start = null;
     var finish = null;
   }
-  console.log(start, 'start')
-  console.log(walker_start, 'start walker')
-  console.log(finish, 'finish')
-  console.log(walker_finish, 'finish walker')
+  console.log(start, 'start');
+  console.log(walker_start, 'start walker');
+  console.log(finish, 'finish');
+  console.log(walker_finish, 'finish walker');
 
   // define sort order
   var criteria, withRelatedParams;
@@ -60,7 +54,7 @@ module.exports.getFilteredWalks = (req, res) => {
     criteria = `walks.${req.body.selectedSort}`;
   }
 
-  console.log(req.body, 'request body')
+  console.log(req.body, 'request body');
 
   models.Walk
     .query((qb) => {
@@ -127,7 +121,7 @@ module.exports.createWalk = (req, res) => {
           var response = {};
           response['walks'] = collection.models;
           response['location'] = req.user.address;
-          console.log(response)
+          console.log(response);
           res.status(200).send(response);
         })
         .catch(err => {
@@ -136,7 +130,7 @@ module.exports.createWalk = (req, res) => {
     });
 };
 
-module.exports.destroyWalk =  (req, res) => {
+module.exports.destroyWalk = (req, res) => {
   new models.Walk({id: req.body.walk_id})
     .destroy()
     .then(() => {
@@ -183,7 +177,7 @@ module.exports.saveDog = (req, res) => {
   );
 
   Promise.all([dogToDB, ownerToDB]).then(responses => {
-    res.send(200);
+    res.sendStatus(200);
   })
     .catch(e => {
       console.log(e);
@@ -199,7 +193,7 @@ module.exports.saveWalker = function(req, res) {
     address: req.body.address
   })
     .then(() => {
-      res.send(200);
+      res.sendStatus(200);
     });
 };
 
@@ -239,7 +233,7 @@ module.exports.updateWalkerProfile = (req, res) => {
     profile_pic: req.body.profile_pic,
     about_me: req.body.about_me
   })
-    .then(res.send(200));
+    .then(res.sendStatus(200));
 };
 
 module.exports.getAndSaveStripeID = (req, res) => {
@@ -286,7 +280,7 @@ module.exports.getAndsaveCardToken = (req, res) => {
 };
 
 module.exports.processPayment = (req, res) => {
-  console.log(req.body, 'request')
+  console.log(req.body, 'request');
   controllers.Profiles.getCCToken(req.user.id)
     .then((tokenizedCC) => {
       controllers.Profiles.getStripeID(req.body.walkerUserID)
@@ -305,16 +299,16 @@ module.exports.processPayment = (req, res) => {
               if (charge.paid === true) {
                 createSplitWalks(req.body.start_owner, req.body.end_owner, req.body.walkID)
                   .then(() => {
-                    console.log(req.body)
-                    updateExistingWalk(req.body.start_owner, req.body.end_owner, charge.id, req.body.walkID, req.body.ownerID, req.body.dogID, req.body.pickupAddress)
-                  })
+                    console.log(req.body);
+                    updateExistingWalk(req.body.start_owner, req.body.end_owner, charge.id, req.body.walkID, req.body.ownerID, req.body.dogID, req.body.pickupAddress);
+                  });
               }
               res.redirect('/browse'); //update this later!
             });
-       })
-        .catch(error => {
-          console.log(error, 'stripe error')
         })
+        .catch(error => {
+          console.log(error, 'stripe error');
+        });
     });
 };
 
@@ -391,8 +385,8 @@ var updateExistingWalk = (start_owner, end_owner, transactionNumber, walkID, own
       session_start_walker: start_walker,
     })
     .then(callback)
-    .catch(error => console.log(error, 'error database'))
-}
+    .catch(error => console.log(error, 'error database'));
+};
 
 var createSplitWalks = (start_owner, end_owner, walkID) => {
   var start_walker = Moment(start_owner).subtract(15, 'm').toDate();
@@ -412,7 +406,7 @@ var createSplitWalks = (start_owner, end_owner, walkID) => {
       })
         .save()
         .catch(err => {
-          console.log(err, 'before booked walk')
+          console.log(err, 'before booked walk');
         })
         .then(() => {
           // create walk after booked walk
@@ -427,11 +421,11 @@ var createSplitWalks = (start_owner, end_owner, walkID) => {
           })
             .save()
             .catch(err => {
-              console.log(err, 'after booked walk')
-            })
-        })
-    })
-}
+              console.log(err, 'after booked walk');
+            });
+        });
+    });
+};
 
 var getTransactionID = (walkID) => {
   return knex('walks')
@@ -595,8 +589,8 @@ module.exports.ownerCancelWalk = function(req, res) {
         pickup_address: null,
       })
         .catch(err => {
-          console.log(error, 'error updating walks')
-        })
+          console.log(error, 'error updating walks');
+        });
     })
     .catch(e => {
       console.log(e, 'error refunding payment');
@@ -687,10 +681,10 @@ module.exports.calculateAverageRating = function(req, res) {
     })
     .then((result) => {
       console.log('succssfully saved average to the db');
-      res.send(200);
+      res.sendStatus(200);
     })
     .catch(() => {
-      res.send(500);
+      res.sendStatus(500);
     });
 };
 
@@ -700,7 +694,7 @@ module.exports.writeMessages = function(req, res) {
     walker_id: req.body.walker_id,
     text: req.body.text,
   })
-    .then(res.send(200));
+    .then(res.sendStatus(200));
 };
 
 module.exports.fetchMessages = function(req, res) {
