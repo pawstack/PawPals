@@ -206,34 +206,27 @@ module.exports.saveWalker = function(req, res) {
 module.exports.updateOwnerProfile = (req, res) => {
   console.log('UPDATE OWNER', req.body.profile_pic);
 
-  var dogUpdate = new Promise(
-    (resolve, reject) => {
-      knex('dogs').where('id', req.body.id).update({
-        name: req.body.name,
-        weight: req.body.weight,
-        breed: req.body.breed,
-        profile_pic: req.body.profile_pic,
-        extras: req.body.extras
-      })
-        .then(resolve());
-    }
-  );
+  var dogUpdate = knex('dogs').where('id', req.body.id).update({
+    name: req.body.name,
+    age: req.body.age,
+    weight: req.body.weight,
+    breed: req.body.breed,
+    profile_pic: req.body.profile_pic,
+    extras: req.body.extras
+  });
 
-  var ownerUpdate = new Promise(
-    (resolve, reject) => {
-      knex('profiles').where('id', req.user.id).update({
-        phone: req.body.phone,
-        address: req.body.address
-      })
-        .then(resolve());
-    }
-  );
+  var ownerUpdate = knex('profiles').where('id', req.user.id).update({
+    phone: req.body.phone,
+    address: req.body.address
+  });
 
-  Promise.all([dogUpdate, ownerUpdate]).then(responses => {
-    res.send(200);
-  })
+  Promise.all([dogUpdate, ownerUpdate])
+    .then(responses => {
+      res.sendStatus(200);
+    })
     .catch(e => {
       console.log(e);
+      res.sendStatus(500);
     });
 };
 
