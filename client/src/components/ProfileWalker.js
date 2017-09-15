@@ -105,7 +105,7 @@ class ProfileWalker extends React.Component {
         <CardHeader
           title={this.state.walkername}
           subtitle="Walker"
-          avatar='https://s.imgur.com/images/404/cat3weyes.png'
+          avatar={this.state.url}
         />
         <div>
           <img src={this.state.url} alt="" width="220" style={{'borderRadius': '10px', 'marginLeft': '20px', 'marginTop': '20px', 'marginBottom': '10px'}}/>

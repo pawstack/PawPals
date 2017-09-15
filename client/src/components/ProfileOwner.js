@@ -13,6 +13,7 @@ class ProfileOwner extends React.Component {
     super(props);
     this.state = {
       ownername: '',
+      owner_profile_pic: null,
       phone: '',
       phone_old: '',
       address: '',
@@ -27,7 +28,7 @@ class ProfileOwner extends React.Component {
       breed_old: '',
       weight: 0,
       weight_old: 0,
-      url: '',
+      dog_profile_pic: '',
       extras: '',
       extras_old: ''
     };
@@ -50,7 +51,8 @@ class ProfileOwner extends React.Component {
           phone: res[0].phone,
           phone_old: res[0].phone,
           address: res[0].address,
-          address_old: res[0].address
+          address_old: res[0].address,
+          owner_profile_pic: res[0].profile_pic
         });
       },
       error: (err) => {
@@ -75,7 +77,7 @@ class ProfileOwner extends React.Component {
           age_old: res[0].age,
           weight: res[0].weight,
           weight_old: res[0].weight,
-          url: res[0].profile_pic,
+          dog_profile_pic: res[0].profile_pic,
           extras: res[0].extras,
           extras_old: res[0].extras,
         });
@@ -101,7 +103,7 @@ class ProfileOwner extends React.Component {
   uploadImage(result) {
     var url = result.filesUploaded[0].url;
     this.setState({
-      url: url
+      dog_profile_pic: url
     });
   }
 
@@ -115,7 +117,7 @@ class ProfileOwner extends React.Component {
         id: this.state.id,
         breed: this.state.breed,
         weight: this.state.weight,
-        profile_pic: this.state.url,
+        profile_pic: this.state.dog_profile_pic,
         extras: this.state.extras,
         phone: this.state.phone,
         address: this.state.address
@@ -144,7 +146,7 @@ class ProfileOwner extends React.Component {
         <CardHeader
           title={this.state.ownername}
           subtitle="Owner"
-          avatar='https://s.imgur.com/images/404/cat3weyes.png'
+          avatar={this.state.owner_profile_pic}
         />
         <table style={{'width': '100%'}}>
           <tbody>
@@ -167,7 +169,7 @@ class ProfileOwner extends React.Component {
           </tbody>
         </table>
         <div>
-          <img src={this.state.url} alt="" width="220" height="220" style={{'borderRadius': '10px', 'marginLeft': '20px', 'marginTop': '20px', 'marginBottom': '20px'}}/>
+          <img src={this.state.dog_profile_pic} alt="" width="220" height="220" style={{'borderRadius': '10px', 'marginLeft': '20px', 'marginTop': '20px', 'marginBottom': '20px'}}/>
         </div>
         <div style={{'marginLeft': '20px'}}>
           <ReactFilestack
