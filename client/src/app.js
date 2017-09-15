@@ -19,6 +19,7 @@ import Confirmation from './components/Confirmation.jsx';
 import FindMyDog from './components/FindMyDog';
 import TrackWalk from './components/TrackWalk';
 import WalkHistory from './components/WalkHistory';
+import Messages from './components/Messages';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
@@ -68,7 +69,6 @@ class App extends React.Component {
       });
   }
 
-
   componentDidMount() {
     this.retrieveUserInfo();
   }
@@ -116,8 +116,7 @@ class App extends React.Component {
                 <Route exact path="/findmydog" component={FindMyDog}/>
                 <Route exact path="/trackwalk" component={TrackWalk}/>
                 <Route exact path="/walkhistory" component={WalkHistory}/>
-
-                <Route exact path="/message" component={Message}/>
+                <Route exact path="/messages" component={Messages}/>
               </div>
             </MuiThemeProvider>
 
