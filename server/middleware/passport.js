@@ -161,6 +161,7 @@ const getOrCreateOAuthProfile = (type, oauthProfile, done) => {
         return profile.save(profileInfo, { method: 'update' });
       }
       // otherwise create new profile
+      profileInfo.profile_pic = oauthProfile.photos[0].value; // only pull profile pic first time, user editable later
       return models.Profile.forge(profileInfo).save();
     })
     .tap(profile => {
