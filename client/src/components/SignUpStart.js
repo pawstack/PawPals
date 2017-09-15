@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import $ from 'jquery';
 import {
   Step,
   Stepper,
@@ -23,17 +24,28 @@ class SignUpStart extends React.Component {
       owner: true,
       walker: false,
       phone: '',
-      address: ''
+      address: '',
+      dogName: '',
+      dogAge: 0,
+      dogBreed: '',
+      dogWeight: 0,
+      dogPicURL: '',
+      dogAboutMe: '',
+
     };
     this.handleNext = this.handleNext.bind(this);
     this.handlePrev = this.handlePrev.bind(this);
     this.handleEntriesChanged = this.handleEntriesChanged.bind(this);
     this.updateUserType = this.updateUserType.bind(this);
     this.getStepContent = this.getStepContent.bind(this);
+    this.handleOwnerSubmit = this.handleOwnerSubmit.bind(this);
   }
 
   handleNext() {
     const {stepIndex} = this.state;
+    if (this.state.stepIndex === 1 && this.state.owner) {
+      this.handleOwnerSubmit();
+    }
     this.setState({
       stepIndex: stepIndex + 1,
       finished: stepIndex >= 2,
@@ -71,6 +83,42 @@ class SignUpStart extends React.Component {
     });
   }
 
+  handleOwnerSubmit() {
+    console.log("**SIDE OF SIGNUP PARENT - OWNER SUBMIT");
+    console.log("**DOG NAME ", this.state.dogName);
+    console.log("**DOG BREED ", this.state.dogBreed);
+    console.log("**DOG ABOUT ME ", this.state.dogAboutMe);
+    console.log("**PHONE NUMBER ", this.state.phone);
+    console.log("**ADDRESS ", this.state.address);
+    //if (checkEmptyEntry(this.state.dogName)) { // fix later
+      //console.log(this.state);
+      //alert('please complete profile');
+  //  } else {
+    //  console.log(this.state);
+    $.ajax({
+      url: '/api/signup/owner',
+      type: 'POST',
+      data: {
+        owner: this.state.owner,
+        walker: this.state.walker,
+        dogName: this.state.dogName,
+        dogAge: this.state.dogAge,
+        dogBreed: this.state.dogBreed,
+        dogWeight: this.state.dogWeight,
+        dogPicURL: this.state.dogPicURL,
+        dogAboutMe: this.state.dogAboutMe,
+        phone: this.state.phone,
+        address: this.state.address
+      },
+      success: (data) => {
+        console.log('data sent ', data);
+      },
+      error: function(err) {
+        console.log('error sending data to db ', err);
+      }
+    });
+  }
+
   getStepContent(stepIndex) {
     switch (stepIndex) {
     case 0:
@@ -86,15 +134,19 @@ class SignUpStart extends React.Component {
         return (
           <OwnerRegister
             phoneInfo = {this.state.phone}
-            addressInfo = {this.state.address}
+            address = {this.state.address}
+            handleOwnerSubmit = {this.handleOwnerSubmit}
             entriesChanged = {this.handleEntriesChanged}
+            dogAge = {this.state.dogAge}
+            dogWeight = {this.state.dogWeight}
+            dogPicURL = {this.state.dogPicURL}
           />
         );
       } else if (this.state.walker) {
         return (
           <WalkerRegister
             phoneInfo = {this.state.phone}
-            addressInfo = {this.state.address}
+            address = {this.state.address}
             entriesChanged = {this.handleEntriesChanged}
           />);
       }

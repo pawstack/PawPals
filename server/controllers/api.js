@@ -152,34 +152,31 @@ module.exports.destroyWalk = (req, res) => {
 };
 
 module.exports.saveDog = (req, res) => {
-  var dogToDB = new Promise(
-    (resolve, reject) => {
-      knex('dogs').insert({
-        name: req.body.name,
-        age: req.body.age,
-        weight: req.body.weight,
-        profile_pic: req.body.profile_pic,
-        breed: req.body.breed,
-        extras: req.body.extras,
-        owner_id: req.user.id})
-        .then(resolve());
-    }
-  );
+  var dogToDB = knex('dogs')
+    .insert({
+      name: req.body.dogName,
+      age: req.body.dogAge,
+      weight: req.body.dogWeight,
+      profile_pic: req.body.dogPicURL,
+      breed: req.body.dogBreed,
+      extras: req.body.dogAboutMe,
+      owner_id: req.user.id
+    });
 
-  var ownerToDB = new Promise(
-    (resolve, reject) => {
-      knex('profiles').where('id', req.user.id).update({ owner: true,
-        phone: req.body.phone,
-        address: req.body.address
-      })
-        .then(resolve());
-    }
-  );
+  var ownerToDB = knex('profiles')
+    .where('id', req.user.id)
+    .update({
+      owner: req.body.owner,
+      walker: req.body.walker,
+      phone: req.body.phone,
+      address: req.body.address
+    });
 
   Promise.all([dogToDB, ownerToDB]).then(responses => {
     res.sendStatus(200);
   })
     .catch(e => {
+      console.log('error resolving promise');
       console.log(e);
     });
 };

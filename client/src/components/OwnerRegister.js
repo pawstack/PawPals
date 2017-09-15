@@ -25,69 +25,26 @@ var checkEmptyEntry = function(obj) {
 class OwnerRegister extends React.Component {
 
   constructor(props) {
-
     super(props);
-    this.state = {
-      name: '',
-      age: 0,
-      breed: '',
-      weight: 0,
-      url: '',
-      extras: '',
-      owner: true,
-      open: false
-    };
-
     this.updatePhone = this.updatePhone.bind(this);
     this.updateAddress = this.updateAddress.bind(this);
-    this.handleNameChange = this.handleNameChange.bind(this);
     this.handleAgeChange = this.handleAgeChange.bind(this);
-    this.handleBreedChange = this.handleBreedChange.bind(this);
     this.handleWeightChange = this.handleWeightChange.bind(this);
-    this.handleExtrasChange = this.handleExtrasChange.bind(this);
     this.uploadImage = this.uploadImage.bind(this);
-    this.handleTouchTap = this.handleTouchTap.bind(this);
-    this.handleRequestClose = this.handleRequestClose.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.updateDogInfo = this.updateDogInfo.bind(this);
   }
 
-  handleNameChange(e) {
-    this.setState({
-      name: e.target.value
-    });
+  handleAgeChange(event, value) {
+    this.props.entriesChanged('dogAge', value);
   }
 
-  handleAgeChange(e, value) {
-    this.setState({
-      age: value
-    });
-  }
-
-  handleBreedChange(e) {
-    this.setState({
-      breed: e.target.value
-    });
-  }
-
-  handleWeightChange(e, value) {
-    this.setState({
-      weight: value
-    });
-  }
-
-  handleExtrasChange(e) {
-    this.setState({
-      extras: e.target.value
-    });
+  handleWeightChange(event, value) {
+    this.props.entriesChanged('dogWeight', value);
   }
 
   uploadImage(result) {
-    console.log('RESULT IS ', result);
     var url = result.filesUploaded[0].url;
-    console.log('URL IS', url);
-    this.setState({
-      url: url
-    });
+    this.props.entriesChanged('dogPicURL', url);
   }
 
   updatePhone(e) {
@@ -99,47 +56,21 @@ class OwnerRegister extends React.Component {
     this.props.entriesChanged( 'address', e);
   }
 
-
-  handleSubmit() {
-    console.log('phone is', this.props.phoneInfo);
-    if (checkEmptyEntry(this.state)) {
-      alert('please complete profile');
-    } else {
-      $.ajax({
-        url: '/api/signup/owner',
-        type: 'POST',
-        data: {
-          name: this.state.name,
-          age: this.state.age,
-          breed: this.state.breed,
-          weight: this.state.weight,
-          profile_pic: this.state.url,
-          extras: this.state.extras,
-          phone: this.props.phoneInfo,
-          address: this.props.addressInfo
-        },
-        context: this,
-        success: (res) => {
-          this.handleTouchTap();
-        },
-        error: function(data) {
-        }
-      });
-    }
+  updateDogInfo(event) {
+    this.props.entriesChanged(event.target.name, event.target.value);
   }
 
-  render() {
 
+  render() {
     const options = {
       accept: 'image/*',
       maxFiles: 1,
     };
 
     const inputProps = {
-      value: this.props.addressInfo,
+      value: this.props.address,
       onChange: (v) => { this.updateAddress(v); },
     };
-
 
     return (
       <div>
@@ -151,7 +82,7 @@ class OwnerRegister extends React.Component {
         </div>
         <TextField
           id="phone-info"
-          hintText="e.g. 9498786181"
+          hintText="e.g. (949)878-6181"
           floatingLabelText="Phone #"
           name="phone"
           onChange={this.updatePhone}
@@ -161,37 +92,51 @@ class OwnerRegister extends React.Component {
           id="dog-name"
           floatingLabelText="Dog's Name"
           name="dogName"
-          onChange={this.handleNameChange}
+          onChange={this.updateDogInfo}
         />
         <div>
           <TextField
             id="dog-breed"
             floatingLabelText="Dog's Breed"
             name="dogBreed"
-            onChange={this.handleBreedChange}
+            onChange={this.updateDogInfo}
           />
         </div>
         <div>
-          <h5>Dog's age in year: {this.state.age}</h5>
+          <TextField
+            id="dog-extra"
+            hintText="e.g. Bruce loves the woods. But please don't let him chase squirrels."
+            floatingLabelText="Fun facts about my dog"
+            name="dogAboutMe"
+            multiLine={true}
+            rows={2}
+            rowsMax={5}
+            style={{
+              width: '600px'
+            }}
+            onChange={this.updateDogInfo}
+          />
+        </div>
+        <div>
+          <h5>Dog's age in year: {this.props.dogAge}</h5>
           <Slider
             min={0}
             max={20}
             step={1}
-            value={this.state.age}
+            value={this.props.dogAge}
             onChange={this.handleAgeChange}
           />
         </div>
         <div>
-          <h5>Dog's weight in lb: {this.state.weight}</h5>
+          <h5>Dog's weight in lb: {this.props.dogWeight}</h5>
           <Slider
             min={0}
             max={200}
             step={2}
-            value={this.state.weight}
+            value={this.props.dogWeight}
             onChange={this.handleWeightChange}
           />
         </div>
-
         <div>
           <ReactFilestack
             apikey="Ay45M83ltRnWSZq3qL6Zhz"
@@ -201,24 +146,12 @@ class OwnerRegister extends React.Component {
             onSuccess={this.uploadImage}
           />
           <div style={{'marginTop': '20px'}}>
-            <img src={this.state.url} width="200"></img>
+            <img
+              src={this.props.dogPicURL}
+              width="200"
+              style={{'borderRadius': '40px'}}
+            ></img>
           </div>
-        </div>
-
-        <div>
-          <TextField
-            id="dog-extra"
-            hintText="e.g. Bruce loves the woods. But please don't let him chase squirrels."
-            floatingLabelText="About dog"
-            name="dogExtras"
-            multiLine={true}
-            rows={2}
-            rowsMax={5}
-            style={{
-              width: '400px'
-            }}
-            onChange={this.handleExtrasChange}
-          />
         </div>
       </div>
     );
