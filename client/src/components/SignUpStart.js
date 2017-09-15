@@ -20,8 +20,8 @@ class SignUpStart extends React.Component {
     this.state = {
       finished: false,
       stepIndex: 0,
-      owner: false,
-      walker: true,
+      owner: true,
+      walker: false,
       phone: '',
       address: ''
     };
@@ -59,12 +59,12 @@ class SignUpStart extends React.Component {
   }
 
 
-  updateUserType(e) {
+  updateUserType(type) {
     this.setState({ //initially set the owner and the walker to be false.
       owner: false,
       walker: false
     }, () => {
-      (e.state.owner ? this.setState({owner: true}) : this.setState({walker: true}));
+      (type === 'Owner' ? this.setState({owner: true}) : this.setState({walker: true}));
     });
   }
 
