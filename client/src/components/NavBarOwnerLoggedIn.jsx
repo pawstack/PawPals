@@ -18,6 +18,7 @@ import Browse from './Browse';
 import ProfileOwner from './ProfileOwner';
 import FindMyDog from './FindMyDog';
 import WalkHistory from './WalkHistory';
+import Messages from './Messages';
 
 
 class NavBarOwnerLoggedIn extends React.Component {
@@ -45,6 +46,11 @@ class NavBarOwnerLoggedIn extends React.Component {
               onTouchTap = {() => console.log('touch2') }
               containerElement={<Link to="/browse" />}
             />
+              <MenuItem
+                primaryText="My Messages"
+                onTouchTap = {() => console.log('touch3') }
+                containerElement={<Link to="/messages" />}
+              />
             <MenuItem
               primaryText="Find My Dog"
               containerElement={<Link to='/findmydog' />}
