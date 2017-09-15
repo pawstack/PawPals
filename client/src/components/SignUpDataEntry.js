@@ -19,10 +19,7 @@ class SignUpDataEntry extends React.Component {
 
   constructor(props) {
     super(props);
-    // this.state = {
-    //   owner: false,
-    //   walker: true
-    // };
+
     this.updatePhone = this.updatePhone.bind(this);
     this.updateAddress = this.updateAddress.bind(this);
     this.handleUserType = this.handleUserType.bind(this);
@@ -66,20 +63,6 @@ class SignUpDataEntry extends React.Component {
             onClick = {this.handleUserType}
           />
         </RadioButtonGroup>
-        <TextField
-          id="phone-info"
-          hintText="e.g. 9498786181"
-          floatingLabelText="Phone #"
-          name="phone"
-          onChange={this.updatePhone}
-          fullWidth={true}
-        />
-        <div>
-          <PlacesAutocomplete
-            inputProps={inputProps}
-            label={'Address'}
-          />
-        </div>
       </div>
     );
   }

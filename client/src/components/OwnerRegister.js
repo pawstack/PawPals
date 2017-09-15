@@ -220,14 +220,6 @@ class OwnerRegister extends React.Component {
             onChange={this.handleExtrasChange}
           />
         </div>
-
-        <RaisedButton label="Submit Profile" primary={true} onClick={this.handleSubmit} />
-        <Snackbar
-          open={this.state.open}
-          message="Profile has been submitted!"
-          autoHideDuration={900}
-          onRequestClose={this.handleRequestClose}
-        />
       </div>
     );
   }
