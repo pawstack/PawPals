@@ -40,7 +40,7 @@ class SignUpDataEntry extends React.Component {
       owner: true,
       walker: false
     }, ()=>{
-      this.props.updateRoleState(this);
+      this.props.updateUserType(this);
     });
   }
 
@@ -50,7 +50,7 @@ class SignUpDataEntry extends React.Component {
       owner: false,
       walker: true
     }, ()=>{
-      this.props.updateRoleState(this);
+      this.props.updateUserType(this);
     });
   }
 

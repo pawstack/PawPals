@@ -25,6 +25,11 @@ class SignUpStart extends React.Component {
       phone: '',
       address: ''
     };
+    this.handleNext = this.handleNext.bind(this);
+    this.handlePrev = this.handlePrev.bind(this);
+    this.handleEntriesChanged = this.handleEntriesChanged.bind(this);
+    this.updateUserType = this.updateUserType.bind(this);
+    this.getStepContent = this.getStepContent.bind(this);
   }
 
   handleNext() {
@@ -38,40 +43,55 @@ class SignUpStart extends React.Component {
   handlePrev() {
     const {stepIndex} = this.state;
     if (stepIndex > 0) {
-      this.setState({stepIndex: stepIndex - 1});
+      this.setState({
+        stepIndex: stepIndex - 1
+      });
     }
   }
 
 
-  handleEntriesChanged( component, valueType, value ) {
-    this.setState( { [valueType]: value }, () => { console.log(this.state[valueType]); });
+  handleEntriesChanged(valueType, value) {
+    this.setState({
+      [valueType]: value
+    }, () => {
+      console.log(this.state[valueType]);
+    });
   }
 
 
-  updateRoleState(e) {
-    console.log('owner is ', e.state.owner);
-    if (e.state.owner) {
-      this.setState({
-        owner: true,
-        walker: false
-      });
-    } else if (e.state.walker) {
-      this.setState({
-        owner: false,
-        walker: true
-      });
-    }
+  updateUserType(e) {
+    this.setState({ //initially set the owner and the walker to be false.
+      owner: false,
+      walker: false
+    }, () => {
+      (e.state.owner ? this.setState({owner: true}) : this.setState({walker: true}));
+    });
   }
 
   getStepContent(stepIndex) {
     switch (stepIndex) {
     case 0:
-      return (<SignUpDataEntry address={this.state.address} updateRoleState = {this.updateRoleState.bind(this)} entriesChanged = {this.handleEntriesChanged.bind(this)}/>);
+      return (
+        <SignUpDataEntry
+          address={this.state.address}
+          updateUserType = {this.updateUserType}
+          entriesChanged = {this.handleEntriesChanged}
+        />
+      );
     case 1:
       if (this.state.owner) {
-        return (<OwnerRegister phoneInfo = {this.state.phone} addressInfo = {this.state.address}/>);
+        return (
+          <OwnerRegister
+            phoneInfo = {this.state.phone}
+            addressInfo = {this.state.address}
+          />
+        );
       } else if (this.state.walker) {
-        return (<WalkerRegister phoneInfo = {this.state.phone} addressInfo = {this.state.address}/>);
+        return (
+          <WalkerRegister
+            phoneInfo = {this.state.phone}
+            addressInfo = {this.state.address}
+          />);
       }
     default:
       return (
@@ -82,6 +102,10 @@ class SignUpStart extends React.Component {
     }
   }
 
+
+
+
+
   render() {
     const {finished, stepIndex} = this.state;
     const contentStyle = {margin: '0 16px'};
@@ -91,13 +115,13 @@ class SignUpStart extends React.Component {
         <div style={{width: '100%', maxWidth: 700, margin: 'auto'}}>
           <Stepper activeStep={stepIndex}>
             <Step>
-              <StepLabel>Fillout your info as a owner or a walker</StepLabel>
+              <StepLabel>Fill out your info as a owner or a walker</StepLabel>
             </Step>
             <Step>
               <StepLabel>Complete profile</StepLabel>
             </Step>
             <Step>
-              <StepLabel>Payment</StepLabel>
+              <StepLabel>Setup Payment</StepLabel>
             </Step>
           </Stepper>
           <div style={contentStyle}>
