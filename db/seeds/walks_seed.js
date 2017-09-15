@@ -20,6 +20,8 @@ const createWalk = (knex, walk) => {
       price: walk.price,
       session_start: walk.session_start,
       session_end: walk.session_end,
+      session_start_walker: walk.session_start_walker,
+      session_end_walker: walk.session_end_walker,
       walker_id: walk.walker_id,
     });
 };
