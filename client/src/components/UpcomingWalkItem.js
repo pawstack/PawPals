@@ -1,22 +1,31 @@
 import React from 'react';
+import ReactDom from 'react-dom';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import moment from 'moment';
 import Snackbar from 'material-ui/Snackbar';
 import FindMyDogMap from './FindMyDogMap';
+import PopupOwner from './PopupOwner';
+import Message from './Message';
+import Popup from 'react-popup';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
 
 class UpcomingWalkItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       open: false,
+      openchat: false,
+      poppedOut: false
     };
 
     this.convertDate = this.convertDate.bind(this);
     this.handleTouchTap = this.handleTouchTap.bind(this);
     this.handleRequestClose = this.handleRequestClose.bind(this);
     this.click = this.click.bind(this);
-
+    this.handleChatOpen = this.handleChatOpen.bind(this);
+    this.handleChatClose = this.handleChatClose.bind(this);
   }
 
   convertDate(start, end) {
@@ -42,8 +51,26 @@ class UpcomingWalkItem extends React.Component {
     setTimeout(()=>this.props.cancelWalk(this.props.walk), 1000);
   }
 
+  handleChatOpen() {
+    this.setState({openchat: true});
+  }
+
+  handleChatClose() {
+    this.setState({openchat: false});
+  }
+
   render() {
     let time = this.convertDate(this.props.walk.session_start, this.props.walk.session_end);
+
+    const actions = [
+      <FlatButton
+        label="Close"
+        primary={true}
+        onClick={this.handleChatClose}
+      />,
+
+    ];
+
     return (
       <Card>
         <CardHeader
@@ -66,6 +93,16 @@ class UpcomingWalkItem extends React.Component {
             onRequestClose={this.handleRequestClose}
           />
         </CardActions>
+        <RaisedButton label="Message Walker" primary={true} onClick={this.handleChatOpen} style={{'marginLeft': '8px'}}/>
+        <Dialog
+          title={`Chat with ${this.props.walk.walker.display}`}
+          actions={actions}
+          modal={false}
+          open={this.state.openchat}
+          onRequestClose={this.handleChatClose}
+        >
+          <Message walkerid = {this.props.walk.walker_id} ownerid = {this.props.walk.owner_id}/>
+        </Dialog>
         <div><br></br></div>
       </Card>
 
@@ -75,6 +112,5 @@ class UpcomingWalkItem extends React.Component {
 
 export default UpcomingWalkItem;
 
-//<CardText>{this.props.walk.walker.about_me}</CardText>
 
 

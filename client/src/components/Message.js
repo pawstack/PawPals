@@ -5,6 +5,7 @@ import TextField from 'material-ui/TextField';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import openSocket from 'socket.io-client';
+import FlatButton from 'material-ui/FlatButton';
 
 
 class Message extends React.Component {
@@ -12,10 +13,10 @@ class Message extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      message:'',
-      display:[]
-    }
-  };
+      message: '',
+      display: [],
+      align: null
+    };
 
     this.socket = openSocket();
     this.sendMessage = this.sendMessage.bind(this);
@@ -25,57 +26,77 @@ class Message extends React.Component {
 
       var newdisplay = this.state.display;
       newdisplay.push(data);
+
       this.setState({
         display: newdisplay
       },
-        function(){console.log('Display,',this.state.display)
-      })
-    })
-  };
+      function() { console.log('Ownerid,', this.props.ownerid); }
+      );
+    });
 
+  }
+
+
+
+  fetchMessages() {
+    fetch('/api/messages/fetch', {
+      method: 'GET',
+      credentials: 'include'
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log('error:', err);
+      });
+  }
 
   componentDidMount() {
-    this.socket.join('room1');
+
+  }
+
+  saveMessages() {
+    $.ajax({
+      url: '/api/messages/save',
+      type: 'POST',
+      data: {
+        text: this.state.message,
+        walker_id: this.props.walkerid,
+        owner_id: this.props.ownerid
+      },
+      success: (res) => {
+
+      },
+      error: function(data) {
+      }
+    });
   }
 
   sendMessage() {
-    this.socket.emit('startChat', this.state.message);
+    var room = this.props.ownerid.toString() + this.props.walkerid.toString();
+    this.socket.emit('startChat', { message: this.state.message,
+      room: room
+    });
   }
-
-
-  messageInput(e){
-    this.setState({
-      message: e.target.value
-    })
-
-  }
-
-  render(){
-    return(
-      <div>
-      <div>{this.state.display.map((msg,index)=>{return <div key={index}>{msg}</div>})}</div>
-      <input type="text" onChange={this.messageInput}></input>
-      <button onClick={this.sendMessage}>
-        Send!
-      </button>
-      </div>
-    )
 
   messageInput(e) {
     this.setState({
       message: e.target.value
     });
-
   }
 
   render() {
     return (
       <div>
-        <div>{this.state.display.map((msg, index)=>{ return <div key={index}>{msg}</div>})}</div>
+        <div>{this.state.display.map((msg, index)=>{ return <div key={index}>{msg}</div>; })}</div>
         <input type="text" onChange={this.messageInput}></input>
-        <button onClick={this.sendMessage}>
-        Send!
-        </button>
+        <FlatButton
+          label="Send"
+          primary={true}
+          onClick={this.sendMessage}
+        />
+
       </div>
     );
   }

@@ -102,10 +102,8 @@ class OwnerRegister extends React.Component {
   handleSubmit() {
     console.log('phone is', this.props.phoneInfo);
     if (checkEmptyEntry(this.state)) {
-      console.log(this.state);
       alert('please complete profile');
     } else {
-      console.log(this.state);
       $.ajax({
         url: '/api/signup/owner',
         type: 'POST',
@@ -121,7 +119,6 @@ class OwnerRegister extends React.Component {
         },
         context: this,
         success: (res) => {
-          console.log('data sent');
           this.handleTouchTap();
         },
         error: function(data) {

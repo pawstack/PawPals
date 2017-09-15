@@ -97,5 +97,8 @@ router.route('/walks/averagerating')
 router.route('/twilio/token')
   .get(ApiController.getTwiliotoken);
 
+router.route('/messages/fetch')
+  .get(ApiController.fetchMessages);
+
 
 module.exports = router;

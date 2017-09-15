@@ -6,8 +6,7 @@ const config = require('config')['stripe'];
 const stripe = require('stripe')(config.secretKey);
 const controllers = require('./');
 const Moment = require('moment');
-const MomentRange = require('moment-range');
-const moment = MomentRange.extendMoment(Moment);
+
 
 const twilio = require('twilio');
 
@@ -700,5 +699,21 @@ module.exports.calculateAverageRating = function(req, res) {
     .catch(() => {
       res.send(500);
     });
+};
+
+module.exports.writeMessages = function(req, res) {
+  knex('messages').insert({
+    owner_id: req.body.owner_id,
+    walker_id: req.body.walker_id,
+    text: req.body.text,
+  })
+    .then(res.send(200));
+};
+
+module.exports.fetchMessages = function(req, res) {
+  knex.select()
+    .from('messages')
+    .where({send_id: req.body.id})
+    .then((messages) => { res.status(200).send(messages); });
 };
 

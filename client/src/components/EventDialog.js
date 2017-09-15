@@ -9,6 +9,7 @@ import moment from 'moment';
 import GpsFixed from 'material-ui/svg-icons/device/gps-fixed';
 import GpsOff from 'material-ui/svg-icons/device/gps-off';
 import StarRating from './StarRating.jsx';
+import Message from './Message';
 
 const styles = {
   radioButton: {
@@ -33,11 +34,24 @@ export default class EventDialog extends React.Component {
     super(props);
     this.state = {
       walkCompleted: false,
-      walkStarted: false
+      walkStarted: false,
+      openchat: false
     };
+
+    this.handleChatOpen = this.handleChatOpen.bind(this);
+    this.handleChatClose = this.handleChatClose.bind(this);
+  }
+
+  handleChatOpen() {
+    this.setState({openchat: true});
+  }
+
+  handleChatClose() {
+    this.setState({openchat: false});
   }
 
   render() {
+    console.log(this.props.selectedEvent.walker_id, 'not undefined');
     const trackActions = [
       /*
       start walk button will be disabled:
@@ -59,6 +73,7 @@ export default class EventDialog extends React.Component {
           this.setState({
             walkStarted: true
           });
+          console.log('SELECTED WALK', this.props.selectedEvent);
           this.props.handleStartWalk(this.props.selectedEvent.id);
         }}/>,
       <FlatButton
@@ -109,6 +124,15 @@ export default class EventDialog extends React.Component {
     ];
     const start = moment(this.props.selectedEvent.start, 'YYYY-MM-DD hh:mm:ss').format('llll');
     const end = moment(this.props.selectedEvent.end, 'YYYY-MM-DD hh:mm:ss').format('LT');
+    console.log(this.props.selectedEvent);
+
+    const chatActions = [
+      <FlatButton
+        label="Close Chat"
+        primary={true}
+        onClick={this.handleChatClose}
+      />,
+    ];
 
     if (!this.state.walkCompleted && Date.now() < this.props.selectedEvent.end) {
     // if (!this.state.walkCompleted) {
@@ -141,6 +165,20 @@ export default class EventDialog extends React.Component {
                 </tr>
               </tbody>
             </table>
+
+
+            <RaisedButton label="Message Owner" primary={true} onClick={this.handleChatOpen} style={{'marginLeft': '25px', 'marginTop': '15px'}}/>
+            <Dialog
+              title={`Chat with ${this.props.selectedEvent.owner_name}`}
+              actions={chatActions}
+              modal={false}
+              open={this.state.openchat}
+              onRequestClose={this.handleChatClose}
+            >
+              <Message walkerid = {this.props.selectedEvent.walker_id} ownerid = {this.props.selectedEvent.owner_id}/>
+            </Dialog>
+
+
           </Dialog>
         </div>
       );
@@ -181,9 +219,12 @@ export default class EventDialog extends React.Component {
               </tbody>
             </table>
           </Dialog>
+
         </div>
       );
     }
 
   }
 }
+
+//<Message walkerid={this.props.selectedEvent.walker_id} ownerid={this.props.selectedEvent.owner_id}/>
