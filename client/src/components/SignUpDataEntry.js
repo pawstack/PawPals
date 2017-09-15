@@ -19,10 +19,10 @@ class SignUpDataEntry extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      owner: false,
-      walker: true
-    };
+    // this.state = {
+    //   owner: false,
+    //   walker: true
+    // };
     this.updatePhone = this.updatePhone.bind(this);
     this.updateAddress = this.updateAddress.bind(this);
     this.handleUserType = this.handleUserType.bind(this);

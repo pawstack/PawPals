@@ -51,6 +51,7 @@ class SignUpStart extends React.Component {
 
 
   handleEntriesChanged(valueType, value) {
+    console.log('**inside of handleEntries with type ', valueType, ' ', value);
     this.setState({
       [valueType]: value
     }, () => {
@@ -84,6 +85,7 @@ class SignUpStart extends React.Component {
           <OwnerRegister
             phoneInfo = {this.state.phone}
             addressInfo = {this.state.address}
+            entriesChanged = {this.handleEntriesChanged}
           />
         );
       } else if (this.state.walker) {
