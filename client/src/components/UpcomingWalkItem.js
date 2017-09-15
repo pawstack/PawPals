@@ -146,6 +146,15 @@ class UpcomingWalkItem extends React.Component {
                       }}
             >Send Message</Link>
           </div>
+        <div>
+          <Link to= {{pathname:'/messages',
+                      state: {ownerid: this.props.walk.owner_id,
+                              walkerid: this.props.walk.walker_id}
+                    }}
+          >
+          <FlatButton label="Message Walker" primary={true}  style={{'marginLeft': 'px'}}/>
+          </Link>
+        </div>
 
       </Card>
 
