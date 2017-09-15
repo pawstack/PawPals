@@ -45,7 +45,6 @@ class ProfileOwner extends React.Component {
       url: '/api/profile/owner',
       type: 'GET',
       success: (res) => {
-        console.log('OWNER PROFILE', res[0]);
         this.setState({
           ownername: res[0].display,
           phone: res[0].phone,
@@ -54,7 +53,8 @@ class ProfileOwner extends React.Component {
           address_old: res[0].address
         });
       },
-      error: function(err) {
+      error: (err) => {
+        console.error(err);
       }
     });
   }
@@ -65,7 +65,6 @@ class ProfileOwner extends React.Component {
       url: '/api/profile/dog',
       type: 'GET',
       success: (res) => {
-        console.log('DOG PROFILE ', res[0]);
         this.setState({
           id: res[0].id,
           name: res[0].name,
@@ -81,7 +80,8 @@ class ProfileOwner extends React.Component {
           extras_old: res[0].extras,
         });
       },
-      error: function(err) {
+      error: (err) => {
+        console.error(err);
       }
     });
   }
@@ -99,9 +99,7 @@ class ProfileOwner extends React.Component {
   }
 
   uploadImage(result) {
-    console.log('RESULT IS ', result);
     var url = result.filesUploaded[0].url;
-    console.log('URL IS', url);
     this.setState({
       url: url
     });
@@ -123,9 +121,9 @@ class ProfileOwner extends React.Component {
         address: this.state.address
       },
       success: (res) => {
-        console.log('data sent');
       },
-      error: function(data) {
+      error: (err) => {
+        console.error(err);
       }
     });
   }
