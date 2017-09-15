@@ -12,10 +12,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import moment from 'moment';
 import Snackbar from 'material-ui/Snackbar';
 import FindMyDogMap from './FindMyDogMap';
-<<<<<<< HEAD
-=======
 import Message from './Message';
->>>>>>> added redirect to from owner's upcoming walks to messages
 import Messages from './Messages';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
@@ -125,6 +122,7 @@ class UpcomingWalkItem extends React.Component {
           />
         </CardActions>
 
+
         <RaisedButton label="Message Walker" primary={true} onClick={this.handleMessageLink} style={{'marginLeft': '8px'}}/>
 
         <Dialog
@@ -155,7 +153,7 @@ class UpcomingWalkItem extends React.Component {
           <FlatButton label="Message Walker" primary={true}  style={{'marginLeft': 'px'}}/>
           </Link>
         </div>
-
+        <div><br></br></div>
       </Card>
 
     );
