@@ -690,14 +690,27 @@ module.exports.writeMessages = function(req, res) {
   knex('messages').insert({
     owner_id: req.body.owner_id,
     walker_id: req.body.walker_id,
+    sender_id: req.user.id,
     text: req.body.text,
   })
     .then(res.sendStatus(200));
 };
 
 module.exports.fetchMessages = function(req, res) {
-  knex.select()
-    .from('messages')
-    .where({send_id: req.body.id})
-    .then((messages) => { res.status(200).send(messages); });
+  console.log('hello')
+  console.log(req.user.id)
+  models.Message
+    .query((qb) => {
+      qb.where('walker_id', '=', req.user.id).orWhere('owner_id', '=', req.user.id)
+    })
+    .orderBy('createdAt')
+    .fetchAll({withRelated: ['walker', 'owner', 'sender']})
+    .then((collection) => {
+      var response = {
+        messages: collection,
+        user_id: req.user.id,
+      }
+      console.log(collection, 'collection')
+      res.status(200).send(response);
+    })
 };

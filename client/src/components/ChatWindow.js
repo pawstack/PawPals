@@ -39,9 +39,18 @@ class ChatWindow extends React.Component {
 
   handleNewUserMessage(newMessage) {
     addUserMessage(newMessage);
-    console.log(`New message incomig! ${newMessage}`);
-    // send web socket connection
+    fetch('/api/messages/write', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        text: newMessage,
+      })
+    })
   }
+
 
   render() {
     return (
