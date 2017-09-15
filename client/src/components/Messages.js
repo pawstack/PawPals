@@ -75,6 +75,8 @@ class ChatList extends React.Component {
         conversationNames[conversationDetail.walker_id] = conversationDetail.walker;
 =======
     console.log('owner is',this.props.location.state.ownerid);
+    console.log('walker is',this.props.location.state.walkerid);
+
     this.fetchMessages()
     .then(() => {
       lastConvo = this.state.messages[this.state.messages.length - 1];
