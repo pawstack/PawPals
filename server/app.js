@@ -40,10 +40,9 @@ app.use('/*', routes.auth);
 
 io.on('connection', (socket) => {
   socket.on('startChat', (data) => {
-    socket.join('room1');
-    io.in('room1').emit('message', data);
-    console.log('SOCKET', socket.id);
-    console.log('message', data);
+    socket.join(data.room);
+    io.in(data.room).emit('message', data.message);
+    console.log('DATA IS', data);
   });
 });
 
