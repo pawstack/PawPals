@@ -143,6 +143,12 @@ class OwnerRegister extends React.Component {
 
     return (
       <div>
+        <div>
+          <PlacesAutocomplete
+            inputProps={inputProps}
+            label={'Address'}
+          />
+        </div>
         <TextField
           id="phone-info"
           hintText="e.g. 9498786181"
@@ -151,13 +157,6 @@ class OwnerRegister extends React.Component {
           onChange={this.updatePhone}
           fullWidth={true}
         />
-        <div>
-          <PlacesAutocomplete
-            inputProps={inputProps}
-            label={'Address'}
-          />
-        </div>
-
         <TextField
           id="dog-name"
           floatingLabelText="Dog's Name"
