@@ -140,7 +140,7 @@ class App extends React.Component {
             <li><Link to='/trackwalk'>Track Walk</Link></li>
             <li><Link to='/walkhistory'>Current & Past Walks</Link></li>
 
-            <li><Link to='/message'>Message</Link></li>
+            <li><Link to='/messages'>Messages</Link></li>
             <Route exact path="/home" render={() => (
               <h1>Hello World from React</h1>
             )}/>
@@ -153,7 +153,7 @@ class App extends React.Component {
             <Route exact path="/trackwalk" component={TrackWalk}/>
             <Route exact path="/walkhistory" component={WalkHistory}/>
 
-            <Route exact path="/message" component={Message}/>
+            <Route exact path="/messages" component={Messages}/>
           </div>
         </Router>
       </MuiThemeProvider>
