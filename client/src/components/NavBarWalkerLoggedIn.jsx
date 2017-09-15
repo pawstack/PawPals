@@ -34,18 +34,19 @@ class NavBarWalkerLoggedIn extends React.Component {
               anchorOrigin={{horizontal: 'right', vertical: 'top'}}
             >
               <MenuItem
+                primaryText="My Profile"
+                containerElement={<Link to="/profilepage/walker" />}
+              />
+              <MenuItem
                 primaryText="My Calendar"
-                onTouchTap = {() => console.log('touch2') }
                 containerElement={<Link to="/walker" />}
               />
               <MenuItem
                 primaryText="My Messages"
-                onTouchTap = {() => console.log('touch3') }
                 containerElement={<Link to="/messages" />}
               />
               <MenuItem
                 primaryText="My Profile"
-                onTouchTap = {() => console.log('touch1') }
                 containerElement={<Link to="/profilepage/walker" />}
               />
               <MenuItem

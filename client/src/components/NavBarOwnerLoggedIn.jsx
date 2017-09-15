@@ -41,6 +41,11 @@ class NavBarOwnerLoggedIn extends React.Component {
               onTouchTap = {() => console.log('touch2') }
               containerElement={<Link to="/browse" />}
             />
+              <MenuItem
+                primaryText="My Messages"
+                onTouchTap = {() => console.log('touch3') }
+                containerElement={<Link to="/messages" />}
+              />
             <MenuItem
               primaryText="My Walks"
               containerElement={<Link to='/walkhistory' />}

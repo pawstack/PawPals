@@ -9,6 +9,7 @@ import openSocket from 'socket.io-client';
 import Notification  from 'react-web-notification';
 import $ from 'jquery';
 
+
 class ChatList extends React.Component {
   constructor(props) {
     super(props)
@@ -208,6 +209,61 @@ class ChatList extends React.Component {
      </div>
     );
   }
+
+      conversations: [
+        {
+          name: 'Nova Qiu',
+          url: 'https://static.pexels.com/photos/104827/cat-pet-animal-domestic-104827.jpeg',
+          messages: [
+            {
+              timestamp: new Date(2017, 2, 1, 1, 10),
+              text: 'Hi!'
+            },
+            {
+              timestamp: new Date(2017, 3, 1, 1, 10),
+              text: 'Bye!'
+            }
+          ]
+        }
+      ],
+      selectedChat: {
+        name: 'Nova Qiu',
+        url: 'https://static.pexels.com/photos/104827/cat-pet-animal-domestic-104827.jpeg',
+        messages: [
+          {
+            timestamp: new Date(2017, 2, 1, 1, 10),
+            text: 'Hi!',
+            sender_id: '201'
+          },
+          {
+            timestamp: new Date(2017, 3, 1, 1, 10),
+            text: 'Bye!',
+            sender_id: '202'
+          }
+        ]
+      },
+      user_id: '201'
+    }
+  }
+  render() {
+    return (
+      <div>
+        <List>
+          <Subheader>Chats</Subheader>
+          {this.state.conversations.map(conversation => (
+            <ListItem
+              primaryText={conversation.name}
+              leftAvatar={<Avatar src= {conversation.url} />}
+              rightIcon={<CommunicationChatBubble />}
+              onClick={() => {console.log('hello')}}
+            />
+          ))}
+        </List>
+        <ChatWindow selectedChat={this.state.selectedChat} user_id={this.state.user_id} />
+      </div>
+    );
+  }
+
 }
 
 export default ChatList;
