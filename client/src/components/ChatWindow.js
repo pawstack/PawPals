@@ -15,6 +15,20 @@ const widgetStyles = {
   snippet: {
     info: {
       borderLeft: '2px solid #66BB6A'
+
+const widgetStyles = {
+  header: {
+    backgroundColor: '#334588'
+  },
+  launcher: {
+    backgroundColor: '#334588'
+  },
+  message: {
+    backgroundColor: '#cdd8ec'
+  },
+  snippet: {
+    info: {
+      borderLeft: '2px solid #cdd8ec'
     }
   }
 }
@@ -80,6 +94,14 @@ class ChatWindow extends React.Component {
     for (var i = 0; i < nextProps.selectedConversation.length; i++) {
       var message = nextProps.selectedConversation[i];
       if (message.sender_id === nextProps.user_id) {
+
+    }
+  }
+  componentDidMount() {
+    console.log(this.props.selectedChat);
+    for (var i = 0; i < this.props.selectedChat.messages.length; i++) {
+      var message = this.props.selectedChat.messages[i];
+      if (message.sender_id !== this.props.user_id) {
         addUserMessage(message.text);
       } else {
         addResponseMessage(message.text);
@@ -121,4 +143,24 @@ class ChatWindow extends React.Component {
     }
   }
 }
+  handleNewUserMessage(newMessage) {
+    addUserMessage(newMessage);
+    // send web socket connection
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <Widget
+          handleNewUserMessage={this.handleNewUserMessage}
+          stylesInjected={widgetStyles}
+          profileAvatar='https://static.pexels.com/photos/104827/cat-pet-animal-domestic-104827.jpeg'
+          title= {"Chat with " + this.props.selectedChat.name}
+          subtitle=''
+        />
+      </div>
+    );
+  }
+}
+
 export default ChatWindow;
