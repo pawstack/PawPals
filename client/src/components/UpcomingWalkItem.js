@@ -12,6 +12,10 @@ import RaisedButton from 'material-ui/RaisedButton';
 import moment from 'moment';
 import Snackbar from 'material-ui/Snackbar';
 import FindMyDogMap from './FindMyDogMap';
+<<<<<<< HEAD
+=======
+import Message from './Message';
+>>>>>>> added redirect to from owner's upcoming walks to messages
 import Messages from './Messages';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
@@ -120,7 +124,29 @@ class UpcomingWalkItem extends React.Component {
             onRequestClose={this.handleRequestClose}
           />
         </CardActions>
+
+        <RaisedButton label="Message Walker" primary={true} onClick={this.handleMessageLink} style={{'marginLeft': '8px'}}/>
+
+        <Dialog
+          title={`Chat with ${this.props.walk.walker.display}`}
+          actions={actions}
+          modal={false}
+          open={this.state.openchat}
+          onRequestClose={this.handleChatClose}
+        >
+          <Message walkerid = {this.props.walk.walker_id} ownerid = {this.props.walk.owner_id}/>
+        </Dialog>
+
         <div><br></br></div>
+
+
+          <div>
+            <Link to= {{pathname:'/messages',
+                        state: {ownerid: this.props.walk.owner_id}
+                      }}
+            >Send Message</Link>
+          </div>
+
       </Card>
 
     );
@@ -128,5 +154,4 @@ class UpcomingWalkItem extends React.Component {
 }
 
 export default UpcomingWalkItem;
-
 
