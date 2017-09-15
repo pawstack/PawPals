@@ -49,16 +49,16 @@ export default class FindMyDogMap extends React.Component {
   }
 
   handleMapLoad(map) {
-    console.log('map is ', map);
+    // console.log('map is ', map);
     this._mapComponent = map;
   }
 
   fitExampleBounds() {
-    console.log('**INSIDE OF fitExampleBounds');
+    // console.log('**INSIDE OF fitExampleBounds');
     const overallBounds = this._mapComponent.getBounds();
     const center = this._mapComponent.getCenter();
-    console.log('overallBounds is ', bounds2);
-    console.log('center is ', center);
+    // console.log('overallBounds is ', bounds2);
+    // console.log('center is ', center);
     //this._mapComponent.fitBounds(overallBounds);
     // var newZoom = this._mapComponent.getZoom();
     // console.log('zoom is ', newZoom);
@@ -88,7 +88,7 @@ export default class FindMyDogMap extends React.Component {
           var animate = window.setInterval(function() {
             // console.log('the poly data length is ', polydata.length);
             animatedPolyData = animatedPolyData.concat(polydata.splice(0, 1));
-            console.log(animatedPolyData);
+            // console.log(animatedPolyData);
             context.setState({
               polyLineData: animatedPolyData
             }, function() {
