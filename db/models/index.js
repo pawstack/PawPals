@@ -4,3 +4,4 @@ module.exports.Dog = require('./dogs');
 module.exports.Walk = require('./walks');
 module.exports.Dog = require('./dogs');
 module.exports.Geolocation = require('./geolocations');
+module.exports.Message= require('./messages');
