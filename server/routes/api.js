@@ -100,5 +100,9 @@ router.route('/twilio/token')
 router.route('/messages/fetch')
   .get(ApiController.fetchMessages);
 
+router.route('/messages/write')
+  .get(ApiController.writeMessages);
 
+router.route('/messages/fetch')
+  .get(ApiController.fetchMessages);
 module.exports = router;

@@ -10,47 +10,62 @@ class ChatList extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      conversations: [
-        {
-          name: 'Nova Qiu',
-          url: 'https://static.pexels.com/photos/104827/cat-pet-animal-domestic-104827.jpeg',
-          messages: [
-            {
-              timestamp: new Date(2017, 2, 1, 1, 10),
-              text: 'Hi!'
-            },
-            {
-              timestamp: new Date(2017, 3, 1, 1, 10),
-              text: 'Bye!'
-            }
-          ]
-        }
-      ],
-      selectedChat: {
-        name: 'Nova Qiu',
-        url: 'https://static.pexels.com/photos/104827/cat-pet-animal-domestic-104827.jpeg',
-        messages: [
-          {
-            timestamp: new Date(2017, 2, 1, 1, 10),
-            text: 'Hi!',
-            sender_id: '201'
-          },
-          {
-            timestamp: new Date(2017, 3, 1, 1, 10),
-            text: 'Bye!',
-            sender_id: '202'
-          }
-        ]
-      },
-      user_id: '201'
+      type: null,
+      conversations: {},
+      user_id: null,
+      selectedConversation: [],
     }
+    this.fetchMessages = this.fetchMessages.bind(this);
   }
+
+  componentWillMount() {
+    this.fetchMessages()
+    .then(() => {
+      lastConvo = this.state.messages[this.state.messages.length - 1];
+      if (lastConvo.owner_id === user_id) {
+        var latest_convo_replier_id = lastConvo.walker_id;
+      } else {
+        var latest_convo_replier_id = lastConvo.user_id;
+      }
+      this.createConversation(latest_convo_replier_id);
+    })
+  }
+
+  createConversations() {
+    var conversation = [];
+    for (var i = 0; i < this.state.messages.length; i++) {
+      var message = this.state.messages[i];
+      if (message.owner_id === replier_id || message.walker_id === replier_id) {
+        conversation.push(message);
+      }
+    }
+    this.setState({conversation});
+  }
+
+  fetchMessages() {
+   return fetch('/api/messages/fetch', {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => response.json())
+      .then((responsejson) => {
+        this.setState({
+          user_id: responsejson.user_id,
+          messages: responsejson.messages,
+        })
+      })
+  }
+
   render() {
     return (
       <div>
         <List>
           <Subheader>Chats</Subheader>
-          {this.state.conversations.map(conversation => (
+          {this.state.messages.map(messages => (
             <ListItem
               primaryText={conversation.name}
               leftAvatar={<Avatar src= {conversation.url} />}
