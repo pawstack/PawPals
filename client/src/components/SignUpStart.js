@@ -61,10 +61,12 @@ class SignUpStart extends React.Component {
 
 
   updateUserType(type) {
+    console.log('the type is ', type);
     this.setState({ //initially set the owner and the walker to be false.
       owner: false,
       walker: false
     }, () => {
+      console.log('set owner and walker to ', this.state.owner, this.state.walker);
       (type === 'Owner' ? this.setState({owner: true}) : this.setState({walker: true}));
     });
   }
@@ -118,10 +120,10 @@ class SignUpStart extends React.Component {
         <div style={{width: '100%', maxWidth: 700, margin: 'auto'}}>
           <Stepper activeStep={stepIndex}>
             <Step>
-              <StepLabel>Fill out your info as a owner or a walker</StepLabel>
+              <StepLabel>Select an owner or walker account</StepLabel>
             </Step>
             <Step>
-              <StepLabel>Complete profile</StepLabel>
+              <StepLabel>Complete your profile</StepLabel>
             </Step>
             <Step>
               <StepLabel>Setup Payment</StepLabel>
