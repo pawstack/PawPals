@@ -5,11 +5,12 @@ const router = express.Router();
 
 router.route('/')
   .get(middleware.auth.verify, (req, res) => {
-    console.log('the req query is ', req.query);
     if (req.query.code) { //temp token retrieved from stripe and used to finalize stripe_user_id
+      // console.log('the req query is ', req.query);
       res.redirect('/api/signup/payment/stripeid/?code=' + req.query.code + '&userid=' + req.user.email);
+    } else {
+      res.render('index.ejs');
     }
-    res.render('index.ejs');
   });
 
 router.route('/login')
