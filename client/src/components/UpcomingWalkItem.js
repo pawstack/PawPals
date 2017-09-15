@@ -1,11 +1,19 @@
 import React from 'react';
 import ReactDom from 'react-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Switch,
+  Redirect
+} from 'react-router-dom';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import moment from 'moment';
 import Snackbar from 'material-ui/Snackbar';
 import FindMyDogMap from './FindMyDogMap';
 import Message from './Message';
+import Messages from './Messages';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 
@@ -24,6 +32,7 @@ class UpcomingWalkItem extends React.Component {
     this.click = this.click.bind(this);
     this.handleChatOpen = this.handleChatOpen.bind(this);
     this.handleChatClose = this.handleChatClose.bind(this);
+    this.handleMessageLink = this.handleMessageLink.bind(this);
   }
 
   convertDate(start, end) {
@@ -57,6 +66,11 @@ class UpcomingWalkItem extends React.Component {
     this.setState({openchat: false});
   }
 
+  handleMessageLink(){
+    window.location = 'http://localhost:3000/messages';
+  }
+
+
   render() {
     let time = this.convertDate(this.props.walk.session_start, this.props.walk.session_end);
 
@@ -69,7 +83,12 @@ class UpcomingWalkItem extends React.Component {
 
     ];
 
+    const msgProps = { walkerid: this.props.walk.walker_id,
+                       ownerid: this.props.walk.owner_id
+                      }
+
     return (
+
       <Card>
         <CardHeader
           subtitle={`Rating: ${this.props.walk.walker.avg_walker_rating}`}
@@ -91,7 +110,9 @@ class UpcomingWalkItem extends React.Component {
             onRequestClose={this.handleRequestClose}
           />
         </CardActions>
-        <RaisedButton label="Message Walker" primary={true} onClick={this.handleChatOpen} style={{'marginLeft': '8px'}}/>
+
+        <RaisedButton label="Message Walker" primary={true} onClick={this.handleMessageLink} style={{'marginLeft': '8px'}}/>
+
         <Dialog
           title={`Chat with ${this.props.walk.walker.display}`}
           actions={actions}
@@ -102,6 +123,15 @@ class UpcomingWalkItem extends React.Component {
           <Message walkerid = {this.props.walk.walker_id} ownerid = {this.props.walk.owner_id}/>
         </Dialog>
         <div><br></br></div>
+
+
+          <div>
+            <Link to= {{pathname:'/messages',
+                        state: {ownerid: this.props.walk.owner_id}
+                      }}
+            >Send Message</Link>
+          </div>
+
       </Card>
 
     );
@@ -109,6 +139,11 @@ class UpcomingWalkItem extends React.Component {
 }
 
 export default UpcomingWalkItem;
+
+
+
+//onClick={this.handleChatOpen}
+//state: {ownerid: this.props.walk.owner_id}
 
 
 

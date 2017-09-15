@@ -13,12 +13,14 @@ class ChatList extends React.Component {
       type: null,
       conversations: {},
       user_id: null,
+      messages: [],
       selectedConversation: [],
     }
     this.fetchMessages = this.fetchMessages.bind(this);
   }
 
   componentWillMount() {
+    console.log('owner is',this.props.location.state.ownerid);
     this.fetchMessages()
     .then(() => {
       lastConvo = this.state.messages[this.state.messages.length - 1];
@@ -32,14 +34,14 @@ class ChatList extends React.Component {
   }
 
   createConversations() {
-    var conversation = [];
-    for (var i = 0; i < this.state.messages.length; i++) {
-      var message = this.state.messages[i];
-      if (message.owner_id === replier_id || message.walker_id === replier_id) {
-        conversation.push(message);
-      }
-    }
-    this.setState({conversation});
+    // var conversation = [];
+    // for (var i = 0; i < this.state.messages.length; i++) {
+    //   var message = this.state.messages[i];
+    //   if (message.owner_id === replier_id || message.walker_id === replier_id) {
+    //     conversation.push(message);
+    //   }
+    // }
+    // this.setState({conversation});
   }
 
   fetchMessages() {

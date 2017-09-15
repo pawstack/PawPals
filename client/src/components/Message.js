@@ -37,7 +37,6 @@ class Message extends React.Component {
   }
 
 
-
   fetchMessages() {
     fetch('/api/messages/fetch', {
       method: 'GET',
