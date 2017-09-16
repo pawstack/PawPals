@@ -186,7 +186,7 @@ module.exports.saveWalker = function(req, res) {
     about_me: req.body.walkerAboutMe,
     owner: false,
     walker: true,
-    profile_pic: req.body.walkerPicURL,
+    profile_pic: req.body.userGooglePic,
     phone: req.body.phone,
     address: req.body.address
   })
@@ -701,4 +701,3 @@ module.exports.fetchMessages = function(req, res) {
     .where({send_id: req.body.id})
     .then((messages) => { res.status(200).send(messages); });
 };
-

@@ -9,6 +9,7 @@ import {
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import Snackbar from 'material-ui/Snackbar';
 import SignUpDataEntry from './SignUpDataEntry';
 import OwnerRegister from './OwnerRegister';
 import WalkerRegister from './WalkerRegister';
@@ -34,8 +35,7 @@ class SignUpStart extends React.Component {
       dogWeight: 0,
       dogPicURL: '',
       dogAboutMe: '',
-      walkerAboutMe: '',
-      walkerPicURL: ''
+      walkerAboutMe: ''
     };
     this.handleNext = this.handleNext.bind(this);
     this.handlePrev = this.handlePrev.bind(this);
@@ -149,7 +149,7 @@ class SignUpStart extends React.Component {
         url: '/api/signup/walker',
         type: 'POST',
         data: {
-          walkerPicURL: this.state.walkerPicURL,
+          userGooglePic: this.state.userGooglePic,
           walkerAboutMe: this.state.walkerAboutMe,
           phone: this.state.phone,
           address: this.state.address
@@ -216,8 +216,6 @@ class SignUpStart extends React.Component {
             phoneInfo = {this.state.phone}
             address = {this.state.address}
             entriesChanged = {this.handleEntriesChanged}
-            handleWalkerSubmit = {this.handleWalkerSubmit}
-            walkerPicURL = {this.state.walkerPicURL}
             userFullName = {this.state.userFullName}
             userEmail = {this.state.userEmail}
             userGooglePic = {this.state.userGooglePic}
@@ -226,6 +224,12 @@ class SignUpStart extends React.Component {
     default:
       return (
         <div>
+          <Snackbar
+            open={true}
+            message="Your profile has been submitted!"
+            autoHideDuration={2000}
+            onRequestClose={this.handleRequestClose}
+          />
           <Payment />
         </div>
       );
