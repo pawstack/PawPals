@@ -19,6 +19,9 @@ class SignUpStart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      userFullName: '',
+      userEmail: '',
+      userGooglePic: '',
       finished: false,
       stepIndex: 0,
       owner: true,
@@ -42,6 +45,7 @@ class SignUpStart extends React.Component {
     this.handleOwnerSubmit = this.handleOwnerSubmit.bind(this);
     this.handleWalkerSubmit = this.handleWalkerSubmit.bind(this);
     this.validateFormData = this.validateFormData.bind(this);
+    this.retrieveUserGoogleInfo = this.retrieveUserGoogleInfo.bind(this);
   }
 
   handleNext() {
@@ -159,6 +163,27 @@ class SignUpStart extends React.Component {
     }
   }
 
+  retrieveUserGoogleInfo() {
+    $.ajax({
+      method: 'GET',
+      url: '/api/profile/owner',
+      context: this,
+      success(data) {
+        console.log('succesfully retrieved user info ', data);
+        this.setState({
+          userFullName: data[0].display,
+          userEmail: data[0].email,
+          userGooglePic: data[0].profile_pic
+        }, () => {
+          console.log('the user full name is ', this.state.userFullName);
+        });
+      },
+      error(err) {
+        console.log('error retrieving user info');
+      }
+    });
+  }
+
   getStepContent(stepIndex) {
     switch (stepIndex) {
     case 0:
@@ -180,6 +205,9 @@ class SignUpStart extends React.Component {
             dogAge = {this.state.dogAge}
             dogWeight = {this.state.dogWeight}
             dogPicURL = {this.state.dogPicURL}
+            userFullName = {this.state.userFullName}
+            userEmail = {this.state.userEmail}
+            userGooglePic = {this.state.userGooglePic}
           />
         );
       } else if (this.state.walker) {
@@ -190,6 +218,9 @@ class SignUpStart extends React.Component {
             entriesChanged = {this.handleEntriesChanged}
             handleWalkerSubmit = {this.handleWalkerSubmit}
             walkerPicURL = {this.state.walkerPicURL}
+            userFullName = {this.state.userFullName}
+            userEmail = {this.state.userEmail}
+            userGooglePic = {this.state.userGooglePic}
           />);
       }
     default:
@@ -201,9 +232,9 @@ class SignUpStart extends React.Component {
     }
   }
 
-
-
-
+  componentDidMount() {
+    this.retrieveUserGoogleInfo();
+  }
 
   render() {
     const {finished, stepIndex} = this.state;
