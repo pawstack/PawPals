@@ -1,4 +1,11 @@
-body {
+
+
+.title{
+  font-family: 'Shrikhand', cursive;
+}
+
+.landingsubtitle{
+  font-family: 'Handlee', cursive
 }
 
 .container {
@@ -13,3 +20,4 @@ body {
 h3 {
   color: red;
 }
+
