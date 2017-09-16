@@ -24,7 +24,7 @@ class BrowseListItem extends React.Component {
     if (this.props.start_owner && this.props.end_owner) {
       var time = this.convertDate(this.props.start_owner, this.props.end_owner);
     } else {
-      var time = this.convertDate(this.props.walk.session_start_walker, this.props.walk.session_end_walker)
+      var time = this.convertDate(this.props.walk.session_start_walker, this.props.walk.session_end_walker);
     }
     return (
       <Card>
@@ -41,7 +41,7 @@ class BrowseListItem extends React.Component {
           <RaisedButton
             label="Proceed to Checkout"
             primary={true}
-            onClick={() => this.props.selectWalk(this.props.walk)}
+            onClick={() => this.props.selectWalk(this.props.walk, this.props.index)}
           />
         </CardActions>
       </Card>
