@@ -17,6 +17,7 @@ class Browse extends React.Component {
     this.state = {
       walks: [],
       selectedWalk: {},
+      selectedWalkIndex: null,
       ownerInfo: {},
       dogInfo: {},
       pickupAddress: '',
@@ -48,7 +49,7 @@ class Browse extends React.Component {
         this.setState({
           ['start_owner']: data.start,
           ['end_owner']: data.end
-        })
+        });
       }).fail((err) => {
         console.log('ERROR getWalks in Browse ', error);
       });
@@ -69,7 +70,7 @@ class Browse extends React.Component {
               for (var i = 0; i < walks.length; i++) {
                 var distance = geolib.getDistanceSimple(
                   {'latitude': walks[i].latitude, 'longitude': walks[i].longitude},
-                  pickUpLatLng, 10, 1)
+                  pickUpLatLng, 10, 1);
                 if (distance < Number(walks[i].walk_zone_radius) * 1000) {
                   nearbyWalks.push(walks[i]);
                 }
@@ -94,12 +95,11 @@ class Browse extends React.Component {
             for (var i = 0; i < walks.length; i++) {
               var distance = geolib.getDistanceSimple(
                 {'latitude': walks[i].latitude, 'longitude': walks[i].longitude},
-                pickUpLatLng, 10, 1)
+                pickUpLatLng, 10, 1);
               if (distance < Number(walks[i].walk_zone_radius) * 1000) {
                 nearbyWalks.push(walks[i]);
               }
             }
-            console.log(nearbyWalks, 'walks should show up')
             this.setState({
               ['walks']: nearbyWalks
             });
@@ -108,12 +108,13 @@ class Browse extends React.Component {
             console.log(error);
           });
       }
-    })
+    });
   }
 
-  selectWalk(walk) {
+  selectWalk(walk, index) {
     this.setState({
       selectedWalk: walk,
+      selectedWalkIndex: index,
       backButton: true
     });
   }
@@ -143,7 +144,7 @@ class Browse extends React.Component {
       success(data) {
         context.setState({
           dogInfo: data
-        }, () => {callback() });
+        }, () => { callback(); });
       },
       error(err) {
         console.log('ERROR retrieving dogInfo ', err);
@@ -152,7 +153,6 @@ class Browse extends React.Component {
   }
 
   resetSelectedState() {
-    console.log('reseting the selected state');
     this.setState({
       selectedWalk: {},
       backButton: true
@@ -166,12 +166,12 @@ class Browse extends React.Component {
   }
 
   processPayment() {
-    console.log(this.state.start_owner, this.state.end_owner)
-    console.log(this.state, 'states')
-    var context = this;
+    // console.log(this.state.start_owner, this.state.end_owner);
+    // console.log(this.state, 'states');
     $.ajax({
       type: 'POST',
       url: '/api/walks/payment',
+      context: this,
       data: {
         amount: this.state.totalPrice * 100,
         walkerUserID: this.state.selectedWalk.walker_id,
@@ -185,10 +185,14 @@ class Browse extends React.Component {
         end_owner: this.state.end_owner,
       },
       success: function() {
-        context.setState({
-          snackBarOpen: true
-        }, function() {
-          context.resetSelectedState();
+        this.setState((prevState) => (
+          {
+            snackBarOpen: true,
+            walks: prevState.walks.slice(0, prevState.selectedWalkIndex).concat(prevState.walks.slice(prevState.selectedWalkIndex + 1)),
+            selectedWalkIndex: null
+          }
+        ), function() {
+          this.resetSelectedState();
         });
       },
       error: function() {
@@ -212,7 +216,7 @@ class Browse extends React.Component {
       pickupTime: null,
       price: 100,
       selectedSort: 'price',
-    })
+    });
   }
 
   handleSnackBarClose() {
