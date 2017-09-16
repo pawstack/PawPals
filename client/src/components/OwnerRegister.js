@@ -5,12 +5,12 @@ import Slider from 'material-ui/Slider';
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
+import Avatar from 'material-ui/Avatar';
 import Subheader from 'material-ui/Subheader';
 import RaisedButton from 'material-ui/RaisedButton';
 import ReactFilestack from 'filestack-react';
 import Snackbar from 'material-ui/Snackbar';
 import PlacesAutocomplete from './PlacesAutocomplete';
-
 
 class OwnerRegister extends React.Component {
 
@@ -65,6 +65,27 @@ class OwnerRegister extends React.Component {
     return (
       <div>
         <div>
+          <Avatar
+            src={this.props.userGooglePic}
+            size={90}
+          />
+          <TextField
+            disabled={true}
+            id="userFullName"
+            floatingLabelText="Name"
+            name="userFullName"
+            defaultValue ={this.props.userFullName}
+            fullWidth={true}
+          />
+          <TextField
+            disabled={true}
+            id="userEmail"
+            floatingLabelText="Email"
+            name="userEmail"
+            defaultValue ={this.props.userEmail}
+            fullWidth={true}
+          />
+
           <PlacesAutocomplete
             inputProps={inputProps}
             label={'Address'}

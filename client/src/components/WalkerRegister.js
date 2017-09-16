@@ -3,21 +3,19 @@ import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import Avatar from 'material-ui/Avatar';
 import ReactFilestack from 'filestack-react';
 import Snackbar from 'material-ui/Snackbar';
 import PlacesAutocomplete from './PlacesAutocomplete';
-
 
 class WalkerRegister extends React.Component {
 
   constructor(props) {
     super(props);
-
     this.updateWalkerInfo = this.updateWalkerInfo.bind(this);
     this.uploadImage = this.uploadImage.bind(this);
     this.updatePhone = this.updatePhone.bind(this);
     this.updateAddress = this.updateAddress.bind(this);
-
   }
 
   updatePhone(e) {
@@ -39,16 +37,11 @@ class WalkerRegister extends React.Component {
     this.props.entriesChanged('walkerPicURL', url);
   }
 
-
-
-
   render() {
-
     const options = {
       accept: 'image/*',
       maxFiles: 1,
     };
-
     const inputProps = {
       value: this.props.address,
       onChange: (v) => { this.updateAddress(v); },
@@ -56,10 +49,31 @@ class WalkerRegister extends React.Component {
 
     return (
       <div>
-        <div><br></br></div>
         <div>
-
           <div>
+            <Avatar
+              src={this.props.userGooglePic}
+              size={90}
+            />
+
+            <TextField
+              disabled={true}
+              id="userFullName"
+              floatingLabelText="Name"
+              name="userFullName"
+              defaultValue ={this.props.userFullName}
+              fullWidth={true}
+            />
+
+            <TextField
+              disabled={true}
+              id="userEmail"
+              floatingLabelText="Email"
+              name="userEmail"
+              defaultValue ={this.props.userEmail}
+              fullWidth={true}
+            />
+
             <PlacesAutocomplete
               inputProps={inputProps}
               label={'Address'}
@@ -93,7 +107,7 @@ class WalkerRegister extends React.Component {
 
           <ReactFilestack
             apikey="Ay45M83ltRnWSZq3qL6Zhz"
-            buttonText="Upload Your Profile Photo"
+            buttonText="Change my profile photo"
             buttonClass="photoupload"
             options={options}
             onSuccess={this.uploadImage}
