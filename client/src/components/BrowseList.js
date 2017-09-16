@@ -7,9 +7,8 @@ class BrowseList extends React.Component {
     super(props);
   }
   render() {
-    var streetAddress = parser.parseLocation(this.props.ownerInfo.address);
     var title = {
-      'false': `Today's Walks Near ${streetAddress['number']} ${streetAddress['street']} ${streetAddress['type']}`,
+      'false': 'Open the filter to start searching for walks!',
       'true': 'Search Results'
     };
     return (
