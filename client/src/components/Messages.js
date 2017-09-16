@@ -4,10 +4,12 @@ import {List, ListItem} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import Divider from 'material-ui/Divider';
 import CommunicationChatBubble from 'material-ui/svg-icons/communication/chat-bubble';
+
 import ChatWindow from './ChatWindow';
 import openSocket from 'socket.io-client';
 import Notification  from 'react-web-notification';
 import $ from 'jquery';
+
 
 class ChatList extends React.Component {
   constructor(props) {
@@ -16,14 +18,13 @@ class ChatList extends React.Component {
       owner: null,
       conversationNames: {},
       user_id: null,
-<<<<<<< HEAD
+
       chat: [],
       ignore: true,
       title: ''
-=======
+
       messages: [],
       selectedConversation: [],
->>>>>>> added redirect to from owner's upcoming walks to messages
     }
     this.fetchMessages = this.fetchMessages.bind(this);
     this.instantiateConversation = this.instantiateConversation.bind(this);
@@ -37,7 +38,7 @@ class ChatList extends React.Component {
   }
 
   componentWillMount() {
-<<<<<<< HEAD
+
     this.getConversationDetails((conversationDetails) => {
       this.generateConversationNames(conversationDetails, () => {
         this.checkNewConversation(() => {
@@ -73,7 +74,6 @@ class ChatList extends React.Component {
       var conversationDetail = conversationDetails.details[i];
       if (this.state.owner) {
         conversationNames[conversationDetail.walker_id] = conversationDetail.walker;
-=======
     console.log('owner is',this.props.location.state.ownerid);
     console.log('walker is',this.props.location.state.walkerid);
 
@@ -82,7 +82,7 @@ class ChatList extends React.Component {
       lastConvo = this.state.messages[this.state.messages.length - 1];
       if (lastConvo.owner_id === user_id) {
         var latest_convo_replier_id = lastConvo.walker_id;
->>>>>>> added redirect to from owner's upcoming walks to messages
+
       } else {
         conversationNames[conversationDetail.owner_id] = conversationDetail.owner;
       }
@@ -90,7 +90,6 @@ class ChatList extends React.Component {
     this.setState({conversationNames}, callback);
   }
 
-<<<<<<< HEAD
   checkNewConversation(callback) {
     if (this.props.location.state) {
       if (this.state.owner && !this.state.conversationNames[this.props.location.state.walkerid]) {
@@ -103,7 +102,7 @@ class ChatList extends React.Component {
     } else {
       callback();
     }
-=======
+
   createConversations() {
     // var conversation = [];
     // for (var i = 0; i < this.state.messages.length; i++) {
@@ -113,7 +112,7 @@ class ChatList extends React.Component {
     //   }
     // }
     // this.setState({conversation});
->>>>>>> added redirect to from owner's upcoming walks to messages
+
   }
 
   instantiateConversation(owner_id, walker_id, callback) {

@@ -732,11 +732,25 @@ module.exports.sendCancelSMS = function(req, res) {
   console.log('owner phone is', req.body.toOwner);
 
   client.messages.create({
-    to: '+19497328413',
+    to: '+19493312296',
     from: '+15622739453',
     body: req.body.text
   })
   .then((message) => console.log(message.sid));
+
+  // var sendCancelToWalker = client.messages.create({
+  //   to: '+19498786181',
+  //   from: '+15622739453',
+  //   body: req.body.text
+  // })
+  // .then((message) => console.log(message.sid));
+
+  // Promise.all([sendCancelToOwner, sendCancelToWalker]).then(responses => {
+  //   res.send(200);
+  // })
+  // .catch(e => {
+  //   console.log(e);
+  // });
 
 };
 
