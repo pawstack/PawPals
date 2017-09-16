@@ -2,10 +2,13 @@ import webpack from 'webpack';
 import path from 'path';
 
 const config = {
-  entry: './client/src/app',
+  entry: {
+    app: './client/src/app',
+    login: './client/src/login'
+  },
   output: {
     path: path.join(__dirname, 'public/dist'),
-    filename: 'bundle.js'
+    filename: '[name].bundle.js'
   },
   module: {
     rules: [
