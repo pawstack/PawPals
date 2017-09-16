@@ -64,6 +64,10 @@ class NavBarOwnerLoggedIn extends React.Component {
               containerElement={<Link to="/message" />}
             />
             <MenuItem
+              primaryText="Landing Page"
+              containerElement={<Link to="/landingpage" />}
+            />
+            <MenuItem
               primaryText="Sign out"
               href = '/logout'
             />

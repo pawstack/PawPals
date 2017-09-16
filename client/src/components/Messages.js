@@ -4,7 +4,7 @@ import {List, ListItem} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import Divider from 'material-ui/Divider';
 import CommunicationChatBubble from 'material-ui/svg-icons/communication/chat-bubble';
-import ChatWindow from './ChatWindow';
+
 
 class ChatList extends React.Component {
   constructor(props) {
