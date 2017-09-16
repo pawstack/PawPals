@@ -53,10 +53,7 @@ class SignUpStart extends React.Component {
     if (this.state.stepIndex === 1 && this.state.walker) {
       this.handleWalkerSubmit();
     }
-    // this.setState({
-    //   stepIndex: stepIndex + 1,
-    //   finished: stepIndex >= 2,
-    // });
+
     if (this.state.stepIndex === 0) {
       this.setState({
         stepIndex: stepIndex + 1
@@ -86,7 +83,6 @@ class SignUpStart extends React.Component {
 
 
   handleEntriesChanged(valueType, value) {
-    console.log('**inside of handleEntries with type ', valueType, ' ', value);
     this.setState({
       [valueType]: value
     }, () => {
@@ -106,9 +102,12 @@ class SignUpStart extends React.Component {
   }
 
   handleOwnerSubmit() {
-    if (!this.validateFormData('phone', 'address', 'dogName', 'dogAge', 'dogBreed', 'dogWeight', 'dogPicURL', 'dogAboutMe')) {
+    if (!this.validateFormData('phone', 'address', 'dogName', 'dogAge', 'dogBreed', 'dogWeight', 'dogAboutMe')) {
       alert('please complete profile');
     } else {
+      this.setState({
+        stepIndex: this.state.stepIndex + 1
+      });
       $.ajax({
         url: '/api/signup/owner',
         type: 'POST',
@@ -136,14 +135,12 @@ class SignUpStart extends React.Component {
 
 
   handleWalkerSubmit() {
-    console.log('BEFORE step Index is ', this.state.stepIndex);
     if (!this.validateFormData('phone', 'address', 'walkerAboutMe')) {
       alert('please complete profile');
     } else {
       this.setState({
         stepIndex: this.state.stepIndex + 1
       });
-      console.log(this.state);
       $.ajax({
         url: '/api/signup/walker',
         type: 'POST',
@@ -227,36 +224,24 @@ class SignUpStart extends React.Component {
             </Step>
           </Stepper>
           <div style={contentStyle}>
-            {finished ? (
-              <p>
-                <a
-                  href="#"
-                  onClick={(event) => {
-                    event.preventDefault();
-                    this.setState({stepIndex: 0, finished: false});
-                  }}
-                >
-                Click here
-                </a> to reset the example.
-              </p>
-            ) : (
-              <div>
-                <div>{this.getStepContent(stepIndex)}</div>
-                <div style={{marginTop: 12}}>
-                  <FlatButton
-                    label="Back"
-                    disabled={stepIndex === 0}
-                    onClick={this.handlePrev.bind(this)}
-                    style={{marginRight: 12}}
-                  />
+            <div>
+              <div>{this.getStepContent(stepIndex)}</div>
+              <div style={{marginTop: 12}}>
+                <FlatButton
+                  label="Back"
+                  disabled={stepIndex === 0}
+                  onClick={this.handlePrev}
+                  style={{marginRight: 12}}
+                />
+                {stepIndex < 2 ? (
                   <RaisedButton
-                    label={stepIndex === 2 ? 'Finish' : 'Next'}
-                    primary={true}
-                    onClick={this.handleNext.bind(this)}
+                    label = 'Next'
+                    primary = {true}
+                    onClick = {this.handleNext}
                   />
-                </div>
+                ) : (<div></div>)}
               </div>
-            )}
+            </div>
           </div>
         </div>
       </MuiThemeProvider>
