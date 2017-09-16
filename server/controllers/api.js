@@ -183,9 +183,10 @@ module.exports.saveDog = (req, res) => {
 
 module.exports.saveWalker = function(req, res) {
   knex('profiles').where('id', req.user.id).update({
-    about_me: req.body.extras,
+    about_me: req.body.walkerAboutMe,
+    owner: false,
     walker: true,
-    profile_pic: req.body.profile_pic,
+    profile_pic: req.body.walkerPicURL,
     phone: req.body.phone,
     address: req.body.address
   })
