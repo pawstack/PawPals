@@ -48,7 +48,7 @@ class SignUpDataEntry extends React.Component {
       <div>
         <RadioButtonGroup
           name="shipSpeed"
-          defaultSelected="Owner"
+          defaultSelected={this.props.owner ? "Owner" : "Walker"}
         >
           <RadioButton
             value="Owner"
