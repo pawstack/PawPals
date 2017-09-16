@@ -31,7 +31,8 @@ class SignUpStart extends React.Component {
       dogWeight: 0,
       dogPicURL: '',
       dogAboutMe: '',
-
+      walkerAboutMe: '',
+      walkerPicURL: ''
     };
     this.handleNext = this.handleNext.bind(this);
     this.handlePrev = this.handlePrev.bind(this);
@@ -39,12 +40,17 @@ class SignUpStart extends React.Component {
     this.updateUserType = this.updateUserType.bind(this);
     this.getStepContent = this.getStepContent.bind(this);
     this.handleOwnerSubmit = this.handleOwnerSubmit.bind(this);
+    this.handleWalkerSubmit = this.handleWalkerSubmit.bind(this);
   }
 
   handleNext() {
     const {stepIndex} = this.state;
     if (this.state.stepIndex === 1 && this.state.owner) {
       this.handleOwnerSubmit();
+    }
+
+    if (this.state.stepIndex === 1 && this.state.walker) {
+      this.handleWalkerSubmit();
     }
     this.setState({
       stepIndex: stepIndex + 1,
@@ -71,10 +77,9 @@ class SignUpStart extends React.Component {
     });
   }
 
-
   updateUserType(type) {
     console.log('the type is ', type);
-    this.setState({ //initially set the owner and the walker to be false.
+    this.setState({
       owner: false,
       walker: false
     }, () => {
@@ -84,17 +89,6 @@ class SignUpStart extends React.Component {
   }
 
   handleOwnerSubmit() {
-    console.log("**SIDE OF SIGNUP PARENT - OWNER SUBMIT");
-    console.log("**DOG NAME ", this.state.dogName);
-    console.log("**DOG BREED ", this.state.dogBreed);
-    console.log("**DOG ABOUT ME ", this.state.dogAboutMe);
-    console.log("**PHONE NUMBER ", this.state.phone);
-    console.log("**ADDRESS ", this.state.address);
-    //if (checkEmptyEntry(this.state.dogName)) { // fix later
-      //console.log(this.state);
-      //alert('please complete profile');
-  //  } else {
-    //  console.log(this.state);
     $.ajax({
       url: '/api/signup/owner',
       type: 'POST',
@@ -119,6 +113,37 @@ class SignUpStart extends React.Component {
     });
   }
 
+
+  handleWalkerSubmit() {
+    console.log('**handle walker submit button clicked');
+    console.log('profile pic URL is ', this.state.walkerPicURL);
+    console.log('walker about me is ', this.state.walkerAboutMe);
+    console.log('phone is ', this.state.phone);
+    console.log('address is ', this.state.address);
+
+    // if (checkEmptyEntry(this.state)) {
+    //   console.log('phone number is', this.props.phoneInfo);
+    //   alert('please complete profile');
+    // } else {
+    console.log(this.state);
+    $.ajax({
+      url: '/api/signup/walker',
+      type: 'POST',
+      data: {
+        walkerPicURL: this.state.walkerPicURL,
+        walkerAboutMe: this.state.walkerAboutMe,
+        phone: this.state.phone,
+        address: this.state.address
+      },
+      success: (res) => {
+        console.log('data sent');
+      },
+      error: function(data) {
+      }
+    });
+    // }
+  }
+
   getStepContent(stepIndex) {
     switch (stepIndex) {
     case 0:
@@ -135,7 +160,6 @@ class SignUpStart extends React.Component {
           <OwnerRegister
             phoneInfo = {this.state.phone}
             address = {this.state.address}
-            handleOwnerSubmit = {this.handleOwnerSubmit}
             entriesChanged = {this.handleEntriesChanged}
             dogAge = {this.state.dogAge}
             dogWeight = {this.state.dogWeight}
@@ -148,6 +172,8 @@ class SignUpStart extends React.Component {
             phoneInfo = {this.state.phone}
             address = {this.state.address}
             entriesChanged = {this.handleEntriesChanged}
+            handleWalkerSubmit = {this.handleWalkerSubmit}
+            walkerPicURL = {this.state.walkerPicURL}
           />);
       }
     default:
