@@ -5,49 +5,47 @@ import Subheader from 'material-ui/Subheader';
 import Divider from 'material-ui/Divider';
 import CommunicationChatBubble from 'material-ui/svg-icons/communication/chat-bubble';
 import ChatWindow from './ChatWindow';
+import openSocket from 'socket.io-client';
 
 class ChatList extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      type: null,
+      owner: null,
       conversations: {},
       user_id: null,
-      messages: [],
-      selectedConversation: [],
+      selectedConversation: null,
+      chat: [],
     }
     this.fetchMessages = this.fetchMessages.bind(this);
+    this.createConversations = this.createConversations.bind(this);
+    this.socket = openSocket();
   }
 
   componentWillMount() {
-    console.log('owner is',this.props.location.state.ownerid);
-    console.log('walker is',this.props.location.state.walkerid);
-
-    this.fetchMessages()
-    .then(() => {
-      lastConvo = this.state.messages[this.state.messages.length - 1];
-      if (lastConvo.owner_id === user_id) {
-        var latest_convo_replier_id = lastConvo.walker_id;
-      } else {
-        var latest_convo_replier_id = lastConvo.user_id;
-      }
-      this.createConversation(latest_convo_replier_id);
+    this.fetchMessages(() => {
+      var roomname = this.state.selectedConversation[0].owner_id.toString() + this.state.selectedConversation[0].walker_id.toString();
+      this.socket.emit('join', {roomname})
     })
   }
 
-  createConversations() {
-    // var conversation = [];
-    // for (var i = 0; i < this.state.messages.length; i++) {
-    //   var message = this.state.messages[i];
-    //   if (message.owner_id === replier_id || message.walker_id === replier_id) {
-    //     conversation.push(message);
-    //   }
-    // }
-    // this.setState({conversation});
+  createConversations(callback) {
+    var conversations = {};
+    for (var i = 0; i < this.state.messages.length; i++) {
+      var message = this.state.messages[i];
+      if (this.state.owner) {
+        conversations[message.walker_id] = conversations[message.walker_id] || [];
+        conversations[message.walker_id].push(message);
+      } else {
+        conversations[message.owner_id] = conversations[message.owner_id] || [];
+        conversations[message.owner_id].push(message);
+      }
+    }
+    this.setState({conversations, selectedConversation: conversations[Object.keys(conversations)[0]]}, callback)
   }
 
-  fetchMessages() {
-   return fetch('/api/messages/fetch', {
+  fetchMessages(callback) {
+   return fetch('/api/messages/fetch',{
       method: 'GET',
       credentials: 'include',
       headers: {
@@ -60,25 +58,37 @@ class ChatList extends React.Component {
         this.setState({
           user_id: responsejson.user_id,
           messages: responsejson.messages,
-        })
+          owner: responsejson.owner,
+        },() => {this.createConversations(callback)})
       })
   }
 
   render() {
+    if (this.state.owner) {
+      var other_person = 'walker';
+    } else {
+      var other_person = 'owner';
+    }
     return (
       <div>
         <List>
           <Subheader>Chats</Subheader>
-          {this.state.messages.map(messages => (
+          {Object.values(this.state.conversations).map(conversation => (
             <ListItem
-              primaryText={conversation.name}
-              leftAvatar={<Avatar src= {conversation.url} />}
+              primaryText={conversation[0][other_person].first + ' ' + conversation[0][other_person].last}
+              leftAvatar={<Avatar src= {conversation[0][other_person].profile_pic} />}
               rightIcon={<CommunicationChatBubble />}
-              onClick={() => {console.log('hello')}}
+              value={conversation[0][other_person].id}
+              onClick={() => {console.log(conversation)}}
             />
           ))}
         </List>
-        <ChatWindow selectedChat={this.state.selectedChat} user_id={this.state.user_id} />
+        <ChatWindow
+          selectedConversation={this.state.selectedConversation}
+          user_id={this.state.user_id}
+          owner={this.state.owner}
+          socket={this.socket}
+        />
       </div>
     );
   }

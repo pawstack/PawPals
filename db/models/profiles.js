@@ -13,6 +13,15 @@ const Profile = db.Model.extend({
   },
   owner: function() {
     return this.hasMany('Walk', 'owner_id');
+  },
+  message_walker: function() {
+    return this.hasMany('Message', 'walker_id');
+  },
+  message_owner: function() {
+    return this.hasMany('Message', 'owner_id');
+  },
+  sender: function() {
+    return this.hasMany('Message', 'sender_id');
   }
 });
 
