@@ -27,7 +27,6 @@ class WalkHistory extends React.Component {
       url: '/api/walkhistory/upcoming',
       type: 'GET',
       success: (res) => {
-        // console.log('upcoming WALKS', res);
         this.setState({
           upcomingwalks: res
         });
