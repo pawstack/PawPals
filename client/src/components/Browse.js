@@ -23,7 +23,7 @@ class Browse extends React.Component {
       pickupAddress: '',
       totalPrice: 0,
       snackBarOpen: false,
-      filterOpen: false,
+      filterOpen: true,
       start_owner: null,
       end_owner: null,
       backButton: false,
@@ -207,17 +207,17 @@ class Browse extends React.Component {
     });
   }
 
-  componentDidMount() {
-    const todayJS = moment().startOf('day').toDate();
-    this.getWalks({
-      minDate: todayJS,
-      startDate: null,
-      duration: null,
-      pickupTime: null,
-      price: 100,
-      selectedSort: 'price',
-    });
-  }
+  // componentDidMount() {
+    // const todayJS = moment().startOf('day').toDate();
+    // this.getWalks({
+    //   minDate: todayJS,
+    //   startDate: null,
+    //   duration: null,
+    //   pickupTime: null,
+    //   price: 100,
+    //   selectedSort: 'price',
+    // });
+  // }
 
   handleSnackBarClose() {
     this.setState({
