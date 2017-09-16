@@ -51,7 +51,6 @@ export default class EventDialog extends React.Component {
   }
 
   render() {
-    console.log(this.props.selectedEvent.walker_id, 'not undefined');
     const trackActions = [
       /*
       start walk button will be disabled:
@@ -92,7 +91,7 @@ export default class EventDialog extends React.Component {
       <FlatButton
         label="Cancel Walk"
         primary={false}
-        disabled = {(Date.now() > this.props.selectedEvent.start) ? true : false}
+        disabled = {(this.props.selectedEvent.owner_id !== null && Date.now() > this.props.selectedEvent.start) ? true : false}
         onClick={this.props.handleCancel}
       />,
       <FlatButton
