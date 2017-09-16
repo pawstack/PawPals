@@ -101,8 +101,6 @@ router.route('/messages/fetch')
   .get(ApiController.fetchMessages);
 
 router.route('/messages/write')
-  .get(ApiController.writeMessages);
+  .post(ApiController.writeMessages);
 
-router.route('/messages/fetch')
-  .get(ApiController.fetchMessages);
 module.exports = router;

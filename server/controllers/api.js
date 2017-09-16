@@ -692,6 +692,7 @@ module.exports.writeMessages = function(req, res) {
     walker_id: req.body.walker_id,
     sender_id: req.user.id,
     text: req.body.text,
+    createdAt: new Date(),
   })
     .then(res.sendStatus(200));
 };
@@ -706,11 +707,18 @@ module.exports.fetchMessages = function(req, res) {
     .orderBy('createdAt')
     .fetchAll({withRelated: ['walker', 'owner', 'sender']})
     .then((collection) => {
-      var response = {
-        messages: collection,
-        user_id: req.user.id,
-      }
-      console.log(collection, 'collection')
-      res.status(200).send(response);
+      models.Profile
+        .query((qb) => {
+          qb.where('id', '=', req.user.id)
+        })
+        .fetch()
+        .then((model) => {
+          var response = {
+            messages: collection,
+            owner: model.attributes.owner,
+            user_id: req.user.id,
+          }
+          res.status(200).send(response);
+        })
     })
 };

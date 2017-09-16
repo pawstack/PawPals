@@ -36,14 +36,13 @@ app.use('/api', routes.api);
 app.use('/api/profiles', routes.profiles);
 app.use('/*', routes.auth);
 
-
-
 io.on('connection', (socket) => {
-  socket.on('startChat', (data) => {
-    socket.join(data.room);
-    io.in(data.room).emit('message', data.message);
-    console.log('DATA IS', data);
+  socket.on('join', (data) => {
+    socket.join(data.roomname);
   });
+  socket.on('new message', (data) => {
+    socket.to(data.roomname).emit('new message', {message: data.message});
+  })
 });
 
 
