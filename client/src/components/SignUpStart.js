@@ -53,10 +53,15 @@ class SignUpStart extends React.Component {
     if (this.state.stepIndex === 1 && this.state.walker) {
       this.handleWalkerSubmit();
     }
-    this.setState({
-      stepIndex: stepIndex + 1,
-      finished: stepIndex >= 2,
-    });
+    // this.setState({
+    //   stepIndex: stepIndex + 1,
+    //   finished: stepIndex >= 2,
+    // });
+    if (this.state.stepIndex === 0) {
+      this.setState({
+        stepIndex: stepIndex + 1
+      });
+    }
   }
 
   handlePrev() {
@@ -69,22 +74,13 @@ class SignUpStart extends React.Component {
   }
 
   validateFormData() {
-    console.log('this is ', this);
-    console.log('BEFORE - the arguments are ', arguments);
     var args = Array.prototype.slice.call(arguments);
-    console.log('AFTER - the arguments are ', arguments);
-    console.log('the args are ', args);
     var completed = true;
-    console.log('BEFORE - the state is ', this.state);
     args.forEach((item) => {
-      console.log('INSIDE - the state is ', this.state);
-      console.log('item is ', item);
-      console.log('state is ', this.state[item]);
       if (this.state[item] === '' || this.state[item] === null || this.state[item] === undefined) {
         completed = false;
       }
     });
-    console.log('completed is ', completed);
     return completed;
   }
 
@@ -112,36 +108,41 @@ class SignUpStart extends React.Component {
   handleOwnerSubmit() {
     if (!this.validateFormData('phone', 'address', 'dogName', 'dogAge', 'dogBreed', 'dogWeight', 'dogPicURL', 'dogAboutMe')) {
       alert('please complete profile');
+    } else {
+      $.ajax({
+        url: '/api/signup/owner',
+        type: 'POST',
+        data: {
+          owner: this.state.owner,
+          walker: this.state.walker,
+          dogName: this.state.dogName,
+          dogAge: this.state.dogAge,
+          dogBreed: this.state.dogBreed,
+          dogWeight: this.state.dogWeight,
+          dogPicURL: this.state.dogPicURL,
+          dogAboutMe: this.state.dogAboutMe,
+          phone: this.state.phone,
+          address: this.state.address
+        },
+        success: (data) => {
+          console.log('data sent ', data);
+        },
+        error: function(err) {
+          console.log('error sending data to db ', err);
+        }
+      });
     }
-    $.ajax({
-      url: '/api/signup/owner',
-      type: 'POST',
-      data: {
-        owner: this.state.owner,
-        walker: this.state.walker,
-        dogName: this.state.dogName,
-        dogAge: this.state.dogAge,
-        dogBreed: this.state.dogBreed,
-        dogWeight: this.state.dogWeight,
-        dogPicURL: this.state.dogPicURL,
-        dogAboutMe: this.state.dogAboutMe,
-        phone: this.state.phone,
-        address: this.state.address
-      },
-      success: (data) => {
-        console.log('data sent ', data);
-      },
-      error: function(err) {
-        console.log('error sending data to db ', err);
-      }
-    });
   }
 
 
   handleWalkerSubmit() {
+    console.log('BEFORE step Index is ', this.state.stepIndex);
     if (!this.validateFormData('phone', 'address', 'walkerAboutMe')) {
       alert('please complete profile');
     } else {
+      this.setState({
+        stepIndex: this.state.stepIndex + 1
+      });
       console.log(this.state);
       $.ajax({
         url: '/api/signup/walker',
@@ -169,6 +170,7 @@ class SignUpStart extends React.Component {
           address={this.state.address}
           updateUserType = {this.updateUserType}
           entriesChanged = {this.handleEntriesChanged}
+          owner = {this.state.owner}
         />
       );
     case 1:
