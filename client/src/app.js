@@ -78,9 +78,9 @@ class App extends React.Component {
     // console.log('the state inside of render is ', this.state.userInfo.display);
 
 
-    console.log('the state inside of render is ', this.state.userInfo.display);
+    console.log('the state inside of render is ', this.state);
 
-    if (!this.state.owner && ! this.state.walker) {
+    if (!this.state.owner && ! this.state.walker || !this.state.userInfo.customer_id_cc_Token) {
       return (
         <div>
           <Router>
@@ -194,6 +194,3 @@ ReactDOM.render(<App />, document.getElementById('root'));
 </Router>
 
 */
-
-
-
