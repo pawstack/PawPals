@@ -80,7 +80,7 @@ router.route('/auth/google/callback')
         res.sendStatus(500);
       } else {
         req.logIn(user, function(err) {
-          if (!user.owner && !user.walker) {
+          if (!user.owner && !user.walker || !user.customer_id_cc_Token) {
             return res.redirect('/signup/start');
           } else if (user.owner && !user.walker) {
             return res.redirect('/browse');
