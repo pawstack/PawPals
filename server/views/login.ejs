@@ -5,9 +5,10 @@
         <% if (message.length) { %>
         <div class="alert alert-danger"><%= message %></div>
         <% } %>
-
-        <center><a style="margin-left:15px;margin-right:15px" href="/auth/google"><img style="width:250px" src="/assets/google-logo.png" /></a></center>
+        <div id='login-root'></div>        
 
     </div>
+
+    <script src="/dist/login.bundle.js"></script>    
 
 <% include foot.ejs%>
