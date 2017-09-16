@@ -34,7 +34,9 @@ class WalkerRegister extends React.Component {
   uploadImage(result) {
     var url = result.filesUploaded[0].url;
     console.log('URL IS', url);
-    this.props.entriesChanged('walkerPicURL', url);
+    if (url !== '') {
+      this.props.entriesChanged('userGooglePic', url);
+    }
   }
 
   render() {
