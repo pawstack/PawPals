@@ -502,7 +502,7 @@ module.exports.saveWalkGeolocation = (req, res) => {
 
 module.exports.fetchGeolocations = (req, res) => {
   var walkId = Number(req.query.walkId);
-  models.Geolocation.where('walk_id', walkId)
+  models.Geolocation.where('walk_id', walkId).orderBy('timestamp', 'ASC')
     .fetchAll()
     .then(geolocations => {
       res.status(200).send(geolocations);
