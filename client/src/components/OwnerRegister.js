@@ -12,16 +12,6 @@ import Snackbar from 'material-ui/Snackbar';
 import PlacesAutocomplete from './PlacesAutocomplete';
 
 
-var checkEmptyEntry = function(obj) {
-  for (let key in obj) {
-    if (obj[key] === '' || obj[key] === null) {
-      return true;
-    }
-  }
-  return false;
-};
-
-
 class OwnerRegister extends React.Component {
 
   constructor(props) {
@@ -82,7 +72,7 @@ class OwnerRegister extends React.Component {
         </div>
         <TextField
           id="phone-info"
-          hintText="e.g. (949)878-6181"
+          hintText="e.g. (949) 878-6181"
           floatingLabelText="Phone #"
           name="phone"
           onChange={this.updatePhone}

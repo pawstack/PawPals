@@ -41,6 +41,7 @@ class SignUpStart extends React.Component {
     this.getStepContent = this.getStepContent.bind(this);
     this.handleOwnerSubmit = this.handleOwnerSubmit.bind(this);
     this.handleWalkerSubmit = this.handleWalkerSubmit.bind(this);
+    this.validateFormData = this.validateFormData.bind(this);
   }
 
   handleNext() {
@@ -67,6 +68,26 @@ class SignUpStart extends React.Component {
     }
   }
 
+  validateFormData() {
+    console.log('this is ', this);
+    console.log('BEFORE - the arguments are ', arguments);
+    var args = Array.prototype.slice.call(arguments);
+    console.log('AFTER - the arguments are ', arguments);
+    console.log('the args are ', args);
+    var completed = true;
+    console.log('BEFORE - the state is ', this.state);
+    args.forEach((item) => {
+      console.log('INSIDE - the state is ', this.state);
+      console.log('item is ', item);
+      console.log('state is ', this.state[item]);
+      if (this.state[item] === '' || this.state[item] === null || this.state[item] === undefined) {
+        completed = false;
+      }
+    });
+    console.log('completed is ', completed);
+    return completed;
+  }
+
 
   handleEntriesChanged(valueType, value) {
     console.log('**inside of handleEntries with type ', valueType, ' ', value);
@@ -89,6 +110,9 @@ class SignUpStart extends React.Component {
   }
 
   handleOwnerSubmit() {
+    if (!this.validateFormData('phone', 'address', 'dogName', 'dogAge', 'dogBreed', 'dogWeight', 'dogPicURL', 'dogAboutMe')) {
+      alert('please complete profile');
+    }
     $.ajax({
       url: '/api/signup/owner',
       type: 'POST',
@@ -115,33 +139,26 @@ class SignUpStart extends React.Component {
 
 
   handleWalkerSubmit() {
-    console.log('**handle walker submit button clicked');
-    console.log('profile pic URL is ', this.state.walkerPicURL);
-    console.log('walker about me is ', this.state.walkerAboutMe);
-    console.log('phone is ', this.state.phone);
-    console.log('address is ', this.state.address);
-
-    // if (checkEmptyEntry(this.state)) {
-    //   console.log('phone number is', this.props.phoneInfo);
-    //   alert('please complete profile');
-    // } else {
-    console.log(this.state);
-    $.ajax({
-      url: '/api/signup/walker',
-      type: 'POST',
-      data: {
-        walkerPicURL: this.state.walkerPicURL,
-        walkerAboutMe: this.state.walkerAboutMe,
-        phone: this.state.phone,
-        address: this.state.address
-      },
-      success: (res) => {
-        console.log('data sent');
-      },
-      error: function(data) {
-      }
-    });
-    // }
+    if (!this.validateFormData('phone', 'address', 'walkerAboutMe')) {
+      alert('please complete profile');
+    } else {
+      console.log(this.state);
+      $.ajax({
+        url: '/api/signup/walker',
+        type: 'POST',
+        data: {
+          walkerPicURL: this.state.walkerPicURL,
+          walkerAboutMe: this.state.walkerAboutMe,
+          phone: this.state.phone,
+          address: this.state.address
+        },
+        success: (res) => {
+          console.log('data sent');
+        },
+        error: function(data) {
+        }
+      });
+    }
   }
 
   getStepContent(stepIndex) {

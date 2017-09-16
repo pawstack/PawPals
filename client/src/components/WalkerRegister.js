@@ -8,23 +8,10 @@ import Snackbar from 'material-ui/Snackbar';
 import PlacesAutocomplete from './PlacesAutocomplete';
 
 
-var checkEmptyEntry = function(obj) {
-  for (let key in obj) {
-    if (obj[key] === '' || obj[key] === null) {
-      return true;
-    }
-  }
-  return false;
-};
-
 class WalkerRegister extends React.Component {
 
   constructor(props) {
     super(props);
-    // this.state = {
-    //   url: '',
-    //   extras: ''
-    // };
 
     this.updateWalkerInfo = this.updateWalkerInfo.bind(this);
     this.uploadImage = this.uploadImage.bind(this);
@@ -44,44 +31,15 @@ class WalkerRegister extends React.Component {
 
   updateWalkerInfo(event) {
     this.props.entriesChanged(event.target.name, event.target.value);
-    // this.setState({
-    //   extras: e.target.value
-    // });
   }
 
   uploadImage(result) {
     var url = result.filesUploaded[0].url;
     console.log('URL IS', url);
     this.props.entriesChanged('walkerPicURL', url);
-    // this.setState({
-    //   url: url
-    // });
   }
 
-  // handleSubmit() {
-  //   if (checkEmptyEntry(this.state)) {
-  //     console.log('phone number is', this.props.phoneInfo);
-  //     alert('please complete profile');
-  //   } else {
-  //     console.log(this.state);
-  //     $.ajax({
-  //       url: '/api/signup/walker',
-  //       type: 'POST',
-  //       data: {
-  //         profile_pic: this.state.url,
-  //         extras: this.state.extras,
-  //         phone: this.props.phoneInfo,
-  //         address: this.props.addressInfo
-  //       },
-  //       success: (res) => {
-  //         console.log('data sent');
-  //       },
-  //       error: function(data) {
-  //       }
-  //     });
-  //   }
-  //
-  // }
+
 
 
   render() {
