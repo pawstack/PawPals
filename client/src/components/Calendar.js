@@ -298,8 +298,8 @@ class Calendar extends React.Component {
           handleClose={this.handleFormClose}
           handleOpen={this.handleFormOpen}
           handleSubmit={this.handleSubmit}
-          start={this.state.start_walker}
-          end={this.state.end_walker}
+          start={this.state.start}
+          end={this.state.end}
           price={this.state.price}
           location={this.state.location}/>
         <EventDialog
