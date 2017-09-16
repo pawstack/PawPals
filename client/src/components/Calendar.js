@@ -8,6 +8,7 @@ import $ from 'jquery';
 import RaisedButton from 'material-ui/RaisedButton';
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import SnackBarCom from './SnackBar';
+import _ from 'lodash';
 
 BigCalendar.momentLocalizer(moment);
 require('style-loader!css-loader!react-big-calendar/lib/css/react-big-calendar.css');
@@ -194,10 +195,10 @@ class Calendar extends React.Component {
         })
           .then((response) => response.json())
           .then((data) => {
-            console.log(data)
+            // console.log(data);
             var events = parseEvents(data);
             this.setState({events, formOpen: false}, () => {
-              console.log(this.state.events)
+              // console.log(this.state.events);
             });
           })
           .catch((error) => {
@@ -208,7 +209,7 @@ class Calendar extends React.Component {
 
   componentDidMount () {
     this.getEvents((states) => {
-      console.log(states, 'states')
+      // console.log(states, 'states');
       this.setState(states);
     });
   }
@@ -233,9 +234,6 @@ class Calendar extends React.Component {
 
     console.log(`SUCCESS latitude:${position.coords.latitude}, longitutde:${position.coords.longitude}, accuracy:${position.coords.accuracy}, timestamp:${new Date(position.timestamp)}`); // TODO remove
     this.postGeolocation(geolocation);
-    // this.setState({
-    //   geolocations: this.state.geolocations.concat(geolocation)
-    // });
   }
 
   handleGeoError(error) {
@@ -243,7 +241,10 @@ class Calendar extends React.Component {
   }
 
   startWatch(walkId) {
-    var watchId = navigator.geolocation.watchPosition(this.processGeoResult.bind(this, walkId), this.handleGeoError, {
+    // TODO add check for HTML5 geolocation active, notify user if permission has not been given
+    var throttledProcessGeoResult = _.throttle(this.processGeoResult.bind(this, walkId), 30000);
+
+    var watchId = window.navigator.geolocation.watchPosition(throttledProcessGeoResult, this.handleGeoError, {
       maximumAge: this.state.tracking.maximumAge,
       timeout: this.state.tracking.timeout,
       enableHighAccuracy: this.state.tracking.enableHighAccuracy
@@ -257,7 +258,7 @@ class Calendar extends React.Component {
   }
 
   stopWatch() {
-    navigator.geolocation.clearWatch(this.state.watchId);
+    window.navigator.geolocation.clearWatch(this.state.watchId);
     this.setState((prevState) => {
       var newState = Object.assign({}, prevState);
       newState.tracking.watchId = null;
@@ -269,7 +270,7 @@ class Calendar extends React.Component {
   postGeolocation(geolocation) {
     $.post('/api/walks/track', geolocation)
       .then((data) => {
-        console.log('SUCCESS sending geolocation ', data);
+        // console.log('SUCCESS sending geolocation ', data);
       })
       .fail((err) => {
         console.log('ERROR sending geolocation ', err);
