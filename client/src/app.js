@@ -23,13 +23,13 @@ import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
 import FlatButton from 'material-ui/FlatButton';
+import Avatar from 'material-ui/Avatar';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 
 import NavBarOwnerLoggedIn from './components/NavBarOwnerLoggedIn.jsx';
 import NavBarWalkerLoggedIn from './components/NavBarWalkerLoggedIn.jsx';
 import NavBarNewUserLoggedIn from './components/NavBarNewUserLoggedIn.jsx';
-
 import Message from './components/Message';
 
 
@@ -74,12 +74,6 @@ class App extends React.Component {
   }
 
   render() {
-
-    // console.log('the state inside of render is ', this.state.userInfo.display);
-
-
-    console.log('the state inside of render is ', this.state);
-
     if (!this.state.owner && ! this.state.walker || !this.state.userInfo.customer_id_cc_Token) {
       return (
         <div>
@@ -87,8 +81,9 @@ class App extends React.Component {
             <MuiThemeProvider>
               <div>
                 <AppBar
-                  title={this.state.userInfo.display}
+                  title="PawPals"
                   iconElementRight = {<NavBarNewUserLoggedIn />}
+                  showMenuIconButton={false}
                 />
                 <Route exact path="/signup/start" component={SignUpStart}/>
               </div>
@@ -105,8 +100,14 @@ class App extends React.Component {
             <MuiThemeProvider>
               <div>
                 <AppBar
-                  title={this.state.userInfo.display}
-                  iconElementRight = {this.state.owner ? <NavBarOwnerLoggedIn /> : <NavBarWalkerLoggedIn />}
+                  title="PawPals"
+                  iconElementLeft={
+                      <Avatar 
+                        src={this.state.userInfo.profile_pic}
+                        style={{marginBottom: 4}} />
+                  }
+                  iconStyleLeft={{display: 'flex', flexDirection: 'column', justifyContent: 'center'}}
+                  iconElementRight={this.state.owner ? <NavBarOwnerLoggedIn /> : <NavBarWalkerLoggedIn />}
                 />
                 <Route exact path="/signup/start" component={SignUpStart}/>
                 <Route exact path="/browse" component={Browse}/>
@@ -164,33 +165,3 @@ class App extends React.Component {
 }
 
 ReactDOM.render(<App />, document.getElementById('root'));
-
-
-
-
-/*
-
-<Router>
-  <div>
-    <h3>test2</h3>
-    <ul>
-      <li><Link to="/home">Home</Link></li>
-      <li><Link to='/signup/start'>Signup</Link></li>
-      <li><Link to='/browse'>Browse Walks</Link></li>
-      <li><Link to='/walker'>Walker</Link></li>
-      <li><Link to='/profilepage/owner'>Owner Profile Page</Link></li>
-      <li><Link to='/profilepage/walker'>Walker Profile Page</Link></li>
-    </ul>
-
-    <Route exact path="/home" render={() => (
-      <h1>Hello World from React</h1>
-    )}/>
-    <Route exact path="/signup/start" component={SignUpStart}/>
-    <Route exact path="/browse" component={Browse}/>
-    <Route exact path="/walker" component={Calendar}/>
-    <Route exact path="/profilepage/owner" component={ProfileOwner}/>
-    <Route exact path="/profilepage/walker" component={ProfileWalker}/>
-  </div>
-</Router>
-
-*/
