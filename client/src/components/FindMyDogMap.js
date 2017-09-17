@@ -98,7 +98,6 @@ export default class FindMyDogMap extends React.Component {
               }
             });
           }, 25);
-
         });
       })
       .fail((err) => {
