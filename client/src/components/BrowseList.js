@@ -7,13 +7,19 @@ class BrowseList extends React.Component {
     super(props);
   }
   render() {
-    var title = {
-      'false': 'Open the filter to start searching for walks!',
-      'true': 'Search Results'
-    };
+    var title;
+    if (!!this.props.start_owner) {
+      if (this.props.walks.length > 0) {
+        title = 'Search Results';
+      } else {
+        title = 'No walks found, try changing your filter options';
+      }
+    } else {
+      title = 'Open the filter to start searching for walks!';
+    }
     return (
        <div>
-         <h2>{title[!!this.props.start_owner]}</h2>
+         <h2>{title}</h2>
         {this.props.walks.map((walk, index) => (
           <BrowseListItem key={`walk-${walk.id}`} start_owner={this.props.start_owner} end_owner={this.props.end_owner} walk={walk} index={index} selectWalk={this.props.selectWalk} />))}
         </div>
