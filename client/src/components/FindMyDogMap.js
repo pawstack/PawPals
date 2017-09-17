@@ -98,12 +98,12 @@ export default class FindMyDogMap extends React.Component {
               }
             });
           }, 25);
-          animate();
         });
       })
       .fail((err) => {
         console.log('ERROR getting geolocation ', err);
       });
+
   }
 
 
