@@ -16,9 +16,11 @@ class StaticPastWalkMap extends React.Component {
     this.state = {
       markers: [],
       center: {lat: 0, lng: 0},
-      polyLineData: [],
-      zoom: 16,
-      staticData: []
+      //polyLineData: [],
+      //zoom: 16,
+      staticData: [],
+      startLocation: {},
+      endLocation: {}
     };
     this.getGeolocations = this.getGeolocations.bind(this);
   }
@@ -42,7 +44,12 @@ class StaticPastWalkMap extends React.Component {
             return `${item.latitude},${item.longitude}`;
           });
           this.setState({
-            staticData: staticData.join('|')
+            startLocation: staticData[0],
+            endLocation: staticData[staticData.length - 1]
+          }, function() {
+            this.setState({
+              staticData: staticData.join('|')
+            });
           });
         });
       })
@@ -57,12 +64,23 @@ class StaticPastWalkMap extends React.Component {
     return (
       <div >
         <img
-          style={{width: '600px', height: '400px'}}
+          style={{width: '100%', height: '400px'}}
           onClick ={this.props.updateAnimateState}
-          src = {`https://maps.googleapis.com/maps/api/staticmap?center=${this.state.center}&zoom=16&path=${this.state.staticData}&scale=2&size=600x400&key=AIzaSyBvEUHNc1BSG-h4ZTcTxGZuBKjtFTrI9_8`}/>
+          src = {`https://maps.googleapis.com/maps/api/staticmap?&zoom=16&path=color:black%7Cweight:5%7C${this.state.staticData}&markers=size:mid%7Ccolor:green%7Clabel:S%7C${this.state.startLocation}&markers=size:mid%7Ccolor:red%7Clabel:E%7C${this.state.endLocation}&scale=2&size=640x225&key=AIzaSyBvEUHNc1BSG-h4ZTcTxGZuBKjtFTrI9_8`}/>
       </div>
     );
   }
 }
 
 export default StaticPastWalkMap;
+
+
+/*
+
+<div >
+  <img
+    style={{width: '100%', height: '400px'}}
+    onClick ={this.props.updateAnimateState}
+    src = {`https://maps.googleapis.com/maps/api/staticmap?center=${this.state.center}&zoom=16&path=${this.state.staticData}&scale=2&size=640x225&key=AIzaSyBvEUHNc1BSG-h4ZTcTxGZuBKjtFTrI9_8`}/>
+</div>
+*/
