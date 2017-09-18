@@ -38,10 +38,19 @@ app.use('/*', routes.auth);
 
 io.on('connection', (socket) => {
   socket.on('join', (data) => {
-    socket.join(data.roomname);
+    for (var prop in data.names) {
+      if (data.owner) {
+        var owner = data.user_id;
+        var walker = prop;
+      } else {
+        var owner = prop;
+        var walker = data.user_id;
+      }
+      socket.join(owner.toString() + walker.toString());
+    }
   });
   socket.on('new message', (data) => {
-    socket.to(data.roomname).emit('new message', {message: data.message});
+    socket.to(data.roomname).emit('new message', data);
   })
 });
 

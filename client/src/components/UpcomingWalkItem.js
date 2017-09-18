@@ -12,7 +12,6 @@ import RaisedButton from 'material-ui/RaisedButton';
 import moment from 'moment';
 import Snackbar from 'material-ui/Snackbar';
 import FindMyDogMap from './FindMyDogMap';
-import Message from './Message';
 import Messages from './Messages';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';

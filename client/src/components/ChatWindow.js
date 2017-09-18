@@ -1,12 +1,13 @@
 import React from 'react';
 import { Widget, addResponseMessage, addLinkSnippet, addUserMessage } from 'react-chat-widget';
+import $ from 'jQuery';
 
 const widgetStyles = {
   header: {
     backgroundColor: '#334588'
   },
   launcher: {
-    backgroundColor: '#334588'
+    backgroundColor: '#334588',
   },
   message: {
     backgroundColor: '#cdd8ec'
@@ -25,19 +26,37 @@ class ChatWindow extends React.Component {
     }
     this.handleNewUserMessage = this.handleNewUserMessage.bind(this);
     this.createConversation = this.createConversation.bind(this);
-    this.props.socket.on('new message', (data)=>{
-      addResponseMessage(data.message);
+    this.props.socket.on('new message', (data) => {
+      if (data.own_id === this.props.selectedConversation[0].walker_id || data.own_id === this.props.selectedConversation[0].owner_id) {
+        addResponseMessage(data.message);
+      }
+    })
+    $(document).on("click",".launcher",function(e){
+      $('.launcher').hide();
     });
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.selectedConversation !== nextProps.selectedConversation) {
+    if (JSON.stringify(this.props.selectedConversation) !== JSON.stringify(nextProps.selectedConversation)) {
       this.createConversation(nextProps);
+    }
+  }
+
+  componentDidUpdate() {
+    if ($('img').hasClass('close-launcher')){
+      $('.launcher').hide();
     }
   }
 
   handleNewUserMessage(message) {
     var roomname = this.props.selectedConversation[0].owner_id.toString() + this.props.selectedConversation[0].walker_id.toString();
+    if (this.props.owner) {
+      var other_person = this.props.selectedConversation[0].walker.first;
+      var own_id = this.props.selectedConversation[0].owner_id;
+    } else {
+      var other_person = this.props.selectedConversation[0].owner.first;
+      var own_id = this.props.selectedConversation[0].walker_id;
+    }
     fetch('/api/messages/write', {
       method: 'POST',
       credentials: 'include',
@@ -52,11 +71,12 @@ class ChatWindow extends React.Component {
       })
     })
       .then(() => {
-        this.props.socket.emit('new message', {roomname, message})
+        this.props.socket.emit('new message', {roomname, message, other_person, own_id})
       })
   }
 
   createConversation(nextProps) {
+    $('.message').remove();
     for (var i = 0; i < nextProps.selectedConversation.length; i++) {
       var message = nextProps.selectedConversation[i];
       if (message.sender_id === nextProps.user_id) {
@@ -73,7 +93,7 @@ class ChatWindow extends React.Component {
     } else {
       var other_person = 'owner';
     }
-    if (this.props.selectedConversation && this.props.selectedConversation.length > 0) {
+    if (this.props.selectedConversation && this.props.selectedConversation.length > 0){
       return (
         <div className="App">
           <Widget
@@ -85,9 +105,19 @@ class ChatWindow extends React.Component {
           />
         </div>
       );
-    }
-    else{
-      return(<div></div>)
+    } else {
+      $('.message').remove();
+      return (
+        <div className="App">
+          <Widget
+            handleNewUserMessage={this.handleNewUserMessage}
+            stylesInjected={widgetStyles}
+            profileAvatar={null}
+            title= {"Pick a conversation to start chatting!"}
+            subtitle=''
+          />
+        </div>
+      );
     }
   }
 }

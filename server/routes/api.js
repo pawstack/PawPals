@@ -98,9 +98,12 @@ router.route('/twilio/token')
   .get(ApiController.getTwiliotoken);
 
 router.route('/messages/fetch')
-  .get(ApiController.fetchMessages);
+  .post(ApiController.fetchMessages);
 
 router.route('/messages/write')
   .post(ApiController.writeMessages);
+
+router.route('/messages/senders')
+  .get(ApiController.fetchChatDetails);
 
 module.exports = router;
