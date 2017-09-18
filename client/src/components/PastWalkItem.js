@@ -4,12 +4,24 @@ import RaisedButton from 'material-ui/RaisedButton';
 import ShowPastWalkDetails from './ShowPastWalkDetails';
 import FindMyDogMap from './FindMyDogMap';
 import StarRating from './StarRating.jsx';
+import StaticPastWalkMap from './StaticPastWalkMap.jsx';
 
 class PastWalkItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      animate: false
     };
+    this.updateAnimateState = this.updateAnimateState.bind(this);
+  }
+
+  updateAnimateState() {
+    console.log('BEFORE - update animate state clicked is ', this.state.animate);
+    this.setState({
+      animate: !this.state.animate
+    }, function() {
+      console.log('AFTER - update animate state clicked is ', this.state.animate);
+    });
   }
 
   render() {
@@ -21,7 +33,11 @@ class PastWalkItem extends React.Component {
           title={this.props.walk.walker.display}
         />
         <CardText>
-          <FindMyDogMap walkId={this.props.walk.id} />
+          {
+            this.state.animate ?
+            <FindMyDogMap walkId={this.props.walk.id} updateAnimateState = {this.updateAnimateState}/> :
+            <StaticPastWalkMap walkId = {this.props.walk.id} updateAnimateState = {this.updateAnimateState}/>
+          }
         </CardText>
         <CardText>
           <div style = {{display: 'inline-block', float: 'left', paddingRight: '10px', paddingTop: '6px', fontSize: '15px'}}>
