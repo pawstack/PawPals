@@ -4,17 +4,17 @@ import $ from 'jQuery';
 
 const widgetStyles = {
   header: {
-    backgroundColor: '#334588'
+    backgroundColor: '#66BB6A'
   },
   launcher: {
-    backgroundColor: '#334588',
+    backgroundColor: '#66BB6A',
   },
   message: {
-    backgroundColor: '#cdd8ec'
+    backgroundColor: '#C8E6C9'
   },
   snippet: {
     info: {
-      borderLeft: '2px solid #cdd8ec'
+      borderLeft: '2px solid #66BB6A'
     }
   }
 }
