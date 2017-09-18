@@ -61,8 +61,6 @@ export default class FindMyDogMap extends React.Component {
 
   getGeolocations() {
     var context = this;
-    console.log('the walk id is ', this.props.walkId);
-
     $.get('/api/walks/track', {walkId: this.props.walkId})
       .then((data) => {
         var midpoint = Math.floor(data.length / 2);
@@ -71,11 +69,9 @@ export default class FindMyDogMap extends React.Component {
           center: data.length > 0 ? {lat: Number(data[midpoint].latitude), lng: Number(data[midpoint].longitude)} : {lat: 0, lng: 0},
           startLocation: {lat: Number(data[0].latitude), lng: Number(data[0].longitude)},
         }, function() {
-          console.log('the start location is ', this.state.startLocation);
           var polydata = data.map(function(item, index) {
             return {lat: Number(item.latitude), lng: Number(item.longitude)};
           });
-
           var animatedPolyData = [];
           var animate = window.setInterval(function() {
             animatedPolyData = animatedPolyData.concat(polydata.splice(0, 1));

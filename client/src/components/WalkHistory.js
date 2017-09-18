@@ -61,7 +61,7 @@ class WalkHistory extends React.Component {
       url: '/api/walkhistory/past',
       type: 'GET',
       success: (res) => {
-        console.log('PAST WALKS', res);
+        //console.log('PAST WALKS', res);
         this.setState({
           pastwalks: res
         });
