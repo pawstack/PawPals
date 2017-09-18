@@ -694,18 +694,26 @@ module.exports.writeMessages = function(req, res) {
     text: req.body.text,
     createdAt: new Date(),
   })
-    .then(res.sendStatus(200));
+    .then(() => {
+      models.Message
+        .query((qb) => {
+          qb.where('walker_id', '=', req.body.walker_id).andWhere('owner_id', '=', req.body.owner_id)
+        })
+        .orderBy('createdAt')
+        .fetchAll({withRelated: ['walker', 'owner', 'sender']})
+        .then((collection) => {
+          res.status(201).send(collection.models);
+        })
+    })
 };
 
-module.exports.fetchMessages = function(req, res) {
-  console.log('hello')
-  console.log(req.user.id)
+module.exports.fetchChatDetails = function(req, res) {
   models.Message
     .query((qb) => {
       qb.where('walker_id', '=', req.user.id).orWhere('owner_id', '=', req.user.id)
     })
     .orderBy('createdAt')
-    .fetchAll({withRelated: ['walker', 'owner', 'sender']})
+    .fetchAll({withRelated: ['walker', 'owner', 'sender'], columns: ['walker_id', 'owner_id', 'sender_id']})
     .then((collection) => {
       models.Profile
         .query((qb) => {
@@ -714,11 +722,29 @@ module.exports.fetchMessages = function(req, res) {
         .fetch()
         .then((model) => {
           var response = {
-            messages: collection,
+            details: collection,
             owner: model.attributes.owner,
-            user_id: req.user.id,
+            user_id: req.user.id
           }
           res.status(200).send(response);
         })
+    })
+}
+module.exports.fetchMessages = function(req, res) {
+  if (req.body.owner) {
+    var owner_id = req.user.id;
+    var walker_id = req.body.other_person_id;
+  } else {
+    var owner_id = req.body.other_person_id;
+    var walker_id = req.user.id;
+  }
+  models.Message
+    .query((qb) => {
+      qb.where('walker_id', '=', walker_id).andWhere('owner_id', '=', owner_id)
+    })
+    .orderBy('createdAt')
+    .fetchAll({withRelated: ['walker', 'owner', 'sender']})
+    .then((collection) => {
+      res.status(201).send(collection.models);
     })
 };

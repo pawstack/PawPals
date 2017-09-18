@@ -74,6 +74,7 @@
     "react-stars": "^2.2.3",
     "react-stripe-checkout": "^2.6.3",
     "react-tap-event-plugin": "^2.0.1",
+    "react-web-notification": "^0.2.4",
     "redis": "^2.7.1",
     "scriptjs": "^2.5.8",
     "socket.io": "^2.0.3",

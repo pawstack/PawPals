@@ -37,14 +37,13 @@ class NavBarOwnerLoggedIn extends React.Component {
             anchorOrigin={{horizontal: 'right', vertical: 'top'}}
           >
             <MenuItem
-              primaryText="My Profile"
-              onTouchTap = {() => console.log('touch1') }
-              containerElement={<Link to="/profilepage/owner" />}
-            />
-            <MenuItem
               primaryText="Browse Walks"
               onTouchTap = {() => console.log('touch2') }
               containerElement={<Link to="/browse" />}
+            />
+            <MenuItem
+              primaryText="My Walks"
+              containerElement={<Link to='/walkhistory' />}
             />
               <MenuItem
                 primaryText="My Messages"
@@ -52,16 +51,13 @@ class NavBarOwnerLoggedIn extends React.Component {
                 containerElement={<Link to="/messages" />}
               />
             <MenuItem
+              primaryText="My Profile"
+              onTouchTap = {() => console.log('touch1') }
+              containerElement={<Link to="/profilepage/owner" />}
+            />
+            <MenuItem
               primaryText="Find My Dog"
               containerElement={<Link to='/findmydog' />}
-            />
-            <MenuItem
-              primaryText="My Walks"
-              containerElement={<Link to='/walkhistory' />}
-            />
-            <MenuItem
-              primaryText="Message"
-              containerElement={<Link to="/message" />}
             />
             <MenuItem
               primaryText="Sign out"
