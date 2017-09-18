@@ -1,13 +1,5 @@
 import React from 'react';
 import $ from 'jquery';
-import {
-  withGoogleMap,
-  GoogleMap,
-  Marker,
-  Polyline,
-  LatLngBounds,
-  LatLng
-} from 'react-google-maps';
 
 class StaticPastWalkMap extends React.Component {
   constructor(props) {
