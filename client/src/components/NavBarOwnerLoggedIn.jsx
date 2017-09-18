@@ -1,3 +1,4 @@
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {
@@ -63,10 +64,6 @@ class NavBarOwnerLoggedIn extends React.Component {
             <MenuItem
               primaryText="Find My Dog"
               containerElement={<Link to='/findmydog' />}
-            />
-            <MenuItem
-              primaryText="Landing Page"
-              containerElement={<Link to="/landingpage" />}
             />
             <MenuItem
               primaryText="Sign out"
