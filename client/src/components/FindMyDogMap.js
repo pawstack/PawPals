@@ -112,7 +112,7 @@ export default class FindMyDogMap extends React.Component {
               if (polydata.length === 0) {
                 window.clearInterval(animate);
                 this.fitExampleBounds();
-                this.props.updateAnimateState();
+                //this.props.updateAnimateState();
               }
             });
           }, 20);
@@ -130,16 +130,17 @@ export default class FindMyDogMap extends React.Component {
       <div style={{height: 400}}>
         <GoogleMapWrapper
           containerElement={
-            <div style={{ height: '100%' }} />
+            <div style={{ height: '100%', width: '100%' }} />
           }
           mapElement={
-            <div style={{ height: '100%' }} />
+            <div style={{ height: '100%', width: '100%' }} />
           }
           onMapLoad={this.handleMapLoad}
           markers={this.state.markers}
           center={this.state.center}
           zoom = {this.state.zoom}
           polyLineData = {this.state.polyLineData}
+          onClick = {this.props.updateAnimateState}
         />
 
 
