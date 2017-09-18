@@ -16,11 +16,8 @@ class PastWalkItem extends React.Component {
   }
 
   updateAnimateState() {
-    console.log('BEFORE - update animate state clicked is ', this.state.animate);
     this.setState({
       animate: !this.state.animate
-    }, function() {
-      console.log('AFTER - update animate state clicked is ', this.state.animate);
     });
   }
 
@@ -35,8 +32,8 @@ class PastWalkItem extends React.Component {
         <CardText>
           {
             this.state.animate ?
-            <FindMyDogMap walkId={this.props.walk.id} updateAnimateState = {this.updateAnimateState}/> :
-            <StaticPastWalkMap walkId = {this.props.walk.id} updateAnimateState = {this.updateAnimateState}/>
+              <FindMyDogMap walkId={this.props.walk.id} updateAnimateState = {this.updateAnimateState}/> :
+              <StaticPastWalkMap walkId = {this.props.walk.id} updateAnimateState = {this.updateAnimateState}/>
           }
         </CardText>
         <CardText>
