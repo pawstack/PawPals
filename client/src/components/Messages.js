@@ -76,21 +76,14 @@ class ChatList extends React.Component {
 
   checkNewConversation(callback) {
     if (this.props.location.state) {
-      console.log('place 1')
       if (this.state.owner && !this.state.conversationNames[this.props.location.state.walkerid]) {
-        console.log('place2')
         this.instantiateConversation(this.props.location.state.ownerid, this.props.location.state.walkerid, callback);
       } else if (!this.state.owner && !this.state.conversationNames[this.props.location.state.ownerid]) {
-        console.log('place3')
         this.instantiateConversation(this.props.location.state.ownerid, this.props.location.state.walkerid, callback);
       } else {
-        //this.setState({
-          //chat: {},
-        //})
         callback();
       }
     } else {
-      console.log('place5')
       callback();
     }
   }
