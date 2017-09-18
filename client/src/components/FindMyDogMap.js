@@ -37,7 +37,8 @@ export default class FindMyDogMap extends React.Component {
       markers: [],
       center: {lat: 0, lng: 0},
       polyLineData: [],
-      zoom: 16
+      zoom: 16,
+      staticData: []
     };
     this.handleMapLoad = this.handleMapLoad.bind(this);
     this.getGeolocations = this.getGeolocations.bind(this);
@@ -71,6 +72,8 @@ export default class FindMyDogMap extends React.Component {
 
   getGeolocations() {
     var context = this;
+    console.log('the walk id is ', this.props.walkId);
+
     $.get('/api/walks/track', {walkId: this.props.walkId})
       .then((data) => {
         var midpoint = Math.floor(data.length / 2);
@@ -83,6 +86,20 @@ export default class FindMyDogMap extends React.Component {
             return {lat: Number(item.latitude), lng: Number(item.longitude)};
           });
 
+          // this.setState({
+          //   staticData: polydata
+          // });
+
+          var staticData = data.map(function(item, index) {
+            return `${item.latitude},${item.longitude}`;
+          });
+
+          console.log('static data is for ', this.props.walkId, ' is ', staticData.join('|'));
+          console.log('the center is ', this.state.center);
+
+          this.setState({
+            staticData: staticData.join('|')
+          });
           var animatedPolyData = [];
           // console.log('poly data is ', polydata.shift());
           var animate = window.setInterval(function() {
@@ -95,9 +112,10 @@ export default class FindMyDogMap extends React.Component {
               if (polydata.length === 0) {
                 window.clearInterval(animate);
                 this.fitExampleBounds();
+                this.props.updateAnimateState();
               }
             });
-          }, 25);
+          }, 20);
         });
       })
       .fail((err) => {
@@ -123,7 +141,10 @@ export default class FindMyDogMap extends React.Component {
           zoom = {this.state.zoom}
           polyLineData = {this.state.polyLineData}
         />
-      </div>
+
+
+
+    </div>
     );
   }
 }
