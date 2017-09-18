@@ -130,9 +130,3 @@ class UpcomingWalkItem extends React.Component {
 export default UpcomingWalkItem;
 
 
-
-//onClick={this.handleChatOpen}
-//state: {ownerid: this.props.walk.owner_id}
-
-
-
