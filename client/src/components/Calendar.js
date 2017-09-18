@@ -1,5 +1,4 @@
 import React from 'react';
-import { render } from 'react-dom';
 import moment from 'moment';
 import BigCalendar from 'react-big-calendar';
 import DialogForm from './DialogForm';
@@ -195,10 +194,8 @@ class Calendar extends React.Component {
         })
           .then((response) => response.json())
           .then((data) => {
-            // console.log(data);
             var events = parseEvents(data);
             this.setState({events, formOpen: false}, () => {
-              // console.log(this.state.events);
             });
           })
           .catch((error) => {
@@ -209,7 +206,6 @@ class Calendar extends React.Component {
 
   componentDidMount () {
     this.getEvents((states) => {
-      // console.log(states, 'states');
       this.setState(states);
     });
   }
@@ -232,7 +228,7 @@ class Calendar extends React.Component {
       walk_id: walkId
     };
 
-    console.log(`SUCCESS latitude:${position.coords.latitude}, longitutde:${position.coords.longitude}, accuracy:${position.coords.accuracy}, timestamp:${new Date(position.timestamp)}`); // TODO remove
+    // console.log(`SUCCESS latitude:${position.coords.latitude}, longitutde:${position.coords.longitude}, accuracy:${position.coords.accuracy}, timestamp:${new Date(position.timestamp)}`); // TODO remove
     this.postGeolocation(geolocation);
   }
 
@@ -287,6 +283,8 @@ class Calendar extends React.Component {
           defaultView='week'
           scrollToTime={new Date(1970, 1, 1, 6)}
           defaultDate={new Date()}
+          step={30}
+          timeslots={2}
           onSelectEvent={event => { this.setState({selectedEvent: event, eventOpen: true}); }}
           onSelectSlot={(slotInfo) => {
             this.handleFormOpen(slotInfo.start, slotInfo.end);
