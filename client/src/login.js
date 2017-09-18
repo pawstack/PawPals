@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
+import LandingPage from './landing_components/LandingPage';
 
 class Login extends React.Component {
   constructor(props) {
@@ -14,7 +15,8 @@ class Login extends React.Component {
     return (
       <MuiThemeProvider>
           <div>
-            <center><a style={{marginLeft: 15, marginRight: 15}} href="/auth/google"><img style={{width: 250}} src="/assets/google-logo.png" /></a></center>
+            <LandingPage/>
+
           </div>
       </MuiThemeProvider>
     );
@@ -23,3 +25,6 @@ class Login extends React.Component {
 }
 
 ReactDOM.render(<Login />, document.getElementById('login-root'));
+
+/*<center><a style={{marginLeft: 15, marginRight: 15}} href="/auth/google"><img style={{width: 250}} src="/assets/google-logo.png" /></a></center>*/
+
