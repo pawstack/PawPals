@@ -22,7 +22,7 @@ class BrowseFilter extends React.Component {
     this.state = {
       disableFilter: true,
       minDate: todayJS,
-      startDate: null,
+      startDate: todayJS,
       duration: null,
       pickupTime: null,
       price: 100,
@@ -34,10 +34,7 @@ class BrowseFilter extends React.Component {
     this.handleClearFilter = this.handleClearFilter.bind(this);
   }
 
-  componentDidMount() {
-  }
-
-  shouldComponentUpdate(nextProps, nextState){
+  shouldComponentUpdate(nextProps, nextState) {
     return !nextProps.backButton;
   }
 
@@ -57,7 +54,7 @@ class BrowseFilter extends React.Component {
 
   handleUpdateState() {
     if (this.state.duration && this.state.pickupTime) {
-      this.setState({['disableFilter']: false})
+      this.setState({['disableFilter']: false});
     } else {
       this.setState({['disableFilter']: true});
     }
@@ -74,14 +71,11 @@ class BrowseFilter extends React.Component {
     this.setState({
       disableFilter: true,
       minDate: todayJS,
-      startDate: null,
+      startDate: todayJS,
       duration: null,
       pickupTime: null,
       price: 100
-    }, () => {
-      console.log(this.state, 'state before sending call')
-      this.props.getWalks.call(this, this.state)
-    });
+    }, this.props.emptyWalks);
   }
 
   render() {
@@ -156,7 +150,7 @@ class BrowseFilter extends React.Component {
             <RaisedButton label="Apply Filter" disabled={this.state.disableFilter} primary={true} onClick={this.props.getWalks.bind(this, this.state)} />
           </MenuItem>
           <MenuItem>
-            <RaisedButton label="Clear Filter"  primary={true} onClick={this.handleClearFilter} />
+            <RaisedButton label="Clear Filter" primary={true} onClick={this.handleClearFilter} />
           </MenuItem>
         </Drawer>
       </div>

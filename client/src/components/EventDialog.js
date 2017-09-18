@@ -79,7 +79,6 @@ export default class EventDialog extends React.Component {
           this.setState({
             walkStarted: true
           });
-          console.log('SELECTED WALK', this.props.selectedEvent);
           this.props.handleStartWalk(this.props.selectedEvent.id);
         }}/>,
       <FlatButton
@@ -130,7 +129,6 @@ export default class EventDialog extends React.Component {
     ];
     const start = moment(this.props.selectedEvent.start, 'YYYY-MM-DD hh:mm:ss').format('llll');
     const end = moment(this.props.selectedEvent.end, 'YYYY-MM-DD hh:mm:ss').format('LT');
-    console.log(this.props.selectedEvent);
 
     const chatActions = [
       <FlatButton
