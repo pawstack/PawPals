@@ -29,8 +29,7 @@ class Message extends React.Component {
 
       this.setState({
         display: newdisplay
-      },
-      function() { console.log('Ownerid,', this.props.ownerid); }
+      }
       );
     });
 
@@ -44,7 +43,6 @@ class Message extends React.Component {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
       })
       .catch((err) => {
         console.log('error:', err);
