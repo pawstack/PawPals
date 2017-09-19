@@ -25,8 +25,6 @@ class StarRating extends React.Component {
   }
 
   updateRatingDB (event) {
-    console.log('**the rating is for ', this.props.ratingFor);
-    console.log('**the walkID is ', this.props.walk.id);
     $.ajax({
       method: 'POST',
       url: '/api/walks/rating',
@@ -52,7 +50,6 @@ class StarRating extends React.Component {
   }
 
   getRatingDB() {
-    console.log('about to get rating from db');
     $.ajax({
       method: 'GET',
       url: '/api/walks/rating',
@@ -62,7 +59,7 @@ class StarRating extends React.Component {
       },
       context: this,
       success: function(data) {
-        console.log('**successfully retrieved rating from db ', data);
+        console.log('successfully retrieved rating from db ', data);
         this.setState({
           starRating: data['rating_' + this.props.ratingFor]
         });
@@ -83,28 +80,24 @@ class StarRating extends React.Component {
       },
       context: this,
       success: function(data) {
-        console.log('&&&successfully updated walkers average rating ', data);
+        console.log('successfully updated walkers average rating in DB', data);
       },
       error: function(err) {
-        console.log('successfully updated walkers average rating ', err);
+        console.log('error updating average rating in DB', err);
       }
     });
   }
 
 
   render() {
-    console.log('the edit rating value is ', this.state.editRating);
     return (
       <div style = {{paddingLeft: '2%', paddingBottom: '1%'}}>
-
-
         <ReactStars
           count={5}
           size={24}
           onChange = {this.updateRatingDB}
-          value = {this.state.starRating}
+          value = {Number(this.state.starRating)}
           color2={'#ffd700'}
-
         />
       </div>
     );
