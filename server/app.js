@@ -38,7 +38,6 @@ app.use('/*', routes.auth);
 
 io.on('connection', (socket) => {
   socket.on('join', (data) => {
-    console.log('joined room again')
     for (var prop in data.names) {
       if (data.owner) {
         var owner = data.user_id;

@@ -16,7 +16,7 @@ class ChatList extends React.Component {
       owner: null,
       conversationNames: {},
       user_id: null,
-      chat: [],
+      chat: [] ,
       ignore: true,
       title: ''
     }
