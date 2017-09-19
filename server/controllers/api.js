@@ -660,10 +660,9 @@ module.exports.calculateAverageRating = function(req, res) {
     .then(result => {
       var sum = 0;
       result.forEach(function(rating) {
-        sum += rating['rating_' + req.body.ratingFor]; // rating_walker
+        sum += Number(rating['rating_' + req.body.ratingFor]); // rating_walker
       });
       var average = sum / result.length;
-      console.log(' the average is ', average);
       return average;
     })
     .then(average => {
@@ -697,27 +696,27 @@ module.exports.writeMessages = function(req, res) {
     .then(() => {
       models.Message
         .query((qb) => {
-          qb.where('walker_id', '=', req.body.walker_id).andWhere('owner_id', '=', req.body.owner_id)
+          qb.where('walker_id', '=', req.body.walker_id).andWhere('owner_id', '=', req.body.owner_id);
         })
         .orderBy('createdAt')
         .fetchAll({withRelated: ['walker', 'owner', 'sender']})
         .then((collection) => {
           res.status(201).send(collection.models);
-        })
-    })
+        });
+    });
 };
 
 module.exports.fetchChatDetails = function(req, res) {
   models.Message
     .query((qb) => {
-      qb.where('walker_id', '=', req.user.id).orWhere('owner_id', '=', req.user.id)
+      qb.where('walker_id', '=', req.user.id).orWhere('owner_id', '=', req.user.id);
     })
     .orderBy('createdAt')
     .fetchAll({withRelated: ['walker', 'owner', 'sender'], columns: ['walker_id', 'owner_id', 'sender_id']})
     .then((collection) => {
       models.Profile
         .query((qb) => {
-          qb.where('id', '=', req.user.id)
+          qb.where('id', '=', req.user.id);
         })
         .fetch()
         .then((model) => {
@@ -725,11 +724,11 @@ module.exports.fetchChatDetails = function(req, res) {
             details: collection,
             owner: model.attributes.owner,
             user_id: req.user.id
-          }
+          };
           res.status(200).send(response);
-        })
-    })
-}
+        });
+    });
+};
 module.exports.fetchMessages = function(req, res) {
   if (req.body.owner) {
     var owner_id = req.user.id;
@@ -740,11 +739,11 @@ module.exports.fetchMessages = function(req, res) {
   }
   models.Message
     .query((qb) => {
-      qb.where('walker_id', '=', walker_id).andWhere('owner_id', '=', owner_id)
+      qb.where('walker_id', '=', walker_id).andWhere('owner_id', '=', owner_id);
     })
     .orderBy('createdAt')
     .fetchAll({withRelated: ['walker', 'owner', 'sender']})
     .then((collection) => {
       res.status(201).send(collection.models);
-    })
+    });
 };
