@@ -8,6 +8,9 @@ const controllers = require('./');
 const Moment = require('moment');
 const twilio = require('twilio');
 const credentials = require('./credentials.json');
+const accountSid = 'AC8368487b7babfa53759231bbe104b4fd';
+const authToken = 'd36bb8b7188d0a89fbc82a4d23e562aa';
+const client = require('twilio')(accountSid, authToken);
 const device = require('express-device');
 
 const walkBuffer = 15;
@@ -90,7 +93,7 @@ module.exports.createWalk = (req, res) => {
     session_start_walker: req.body.session_start,
     session_end_walker: req.body.session_end,
     session_start: req.body.session_start,
-    session_end: req.body.session_end,    
+    session_end: req.body.session_end,
     walk_zone_pt: req.body.walk_zone_pt,
     price: req.body.price,
     walker_id: req.user.id,
@@ -504,7 +507,7 @@ module.exports.getUpcomingWalks = function(req, res) {
     .where('session_end', '>', new Date())
     .orderBy('session_start', 'DESC')
     .fetchAll({
-      withRelated: ['walker']
+      withRelated: ['walker','owner']
     })
     .then(walks => {
       res.status(200).send(walks);
@@ -690,7 +693,11 @@ module.exports.fetchChatDetails = function(req, res) {
         });
     });
 };
+
 module.exports.fetchMessages = function(req, res) {
+  models.Message
+    .query((qb) => {
+      qb.where('walker_id', '=', req.user.id).orWhere('owner_id', '=', req.user.id)
   if (req.body.owner) {
     var owner_id = req.user.id;
     var walker_id = req.body.other_person_id;
@@ -705,6 +712,25 @@ module.exports.fetchMessages = function(req, res) {
     .orderBy('createdAt')
     .fetchAll({withRelated: ['walker', 'owner', 'sender']})
     .then((collection) => {
-      res.status(201).send(collection.models);
-    });
+      var response = {
+        messages: collection,
+        user_id: req.user.id,
+      }
+      console.log(collection, 'collection')
+      res.status(200).send(response);
+    })
+  })
 };
+
+
+module.exports.sendCancelSMS = function(req, res) {
+  client.messages.create({
+    to: '+19493312296',
+    from: '+15622739453',
+    body: req.body.text
+  })
+  .then((message) => console.log(message.sid));
+
+  res.status(201).send(collection.models);
+};
+

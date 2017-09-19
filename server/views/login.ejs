@@ -1,14 +1,14 @@
 <% include head.ejs%>
 
-    <div class="col-sm-6 col-sm-offset-3">
+    <div>
 
         <% if (message.length) { %>
         <div class="alert alert-danger"><%= message %></div>
         <% } %>
-        <div id='login-root'></div>        
+        <div id='login-root'></div>
 
     </div>
 
-    <script src="/dist/login.bundle.js"></script>    
+    <script src="/dist/login.bundle.js"></script>
 
 <% include foot.ejs%>

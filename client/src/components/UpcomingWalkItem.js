@@ -12,23 +12,24 @@ import RaisedButton from 'material-ui/RaisedButton';
 import moment from 'moment';
 import Snackbar from 'material-ui/Snackbar';
 import FindMyDogMap from './FindMyDogMap';
+import Message from './Message';
 import Messages from './Messages';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
+import $ from 'jquery';
 
 class UpcomingWalkItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false,
-      openchat: false,
-      poppedOut: false
+      open: false
     };
 
     this.convertDate = this.convertDate.bind(this);
     this.handleTouchTap = this.handleTouchTap.bind(this);
     this.handleRequestClose = this.handleRequestClose.bind(this);
     this.click = this.click.bind(this);
+    this.sendCancelSMS = this.sendCancelSMS.bind(this);
     this.handleChatOpen = this.handleChatOpen.bind(this);
     this.handleChatClose = this.handleChatClose.bind(this);
     this.handleMessageLink = this.handleMessageLink.bind(this);
@@ -52,18 +53,32 @@ class UpcomingWalkItem extends React.Component {
     });
   }
 
+  sendCancelSMS(){
+    console.log(typeof this.props.walk.owner.phone);
+    let time = this.convertDate(this.props.walk.session_start, this.props.walk.session_end);
+
+    $.ajax({
+      url: '/api/sms/cancel',
+      type: 'POST',
+      data: {
+        text: 'Your dog walk From ' + time[0]+' to '+time[1] + ' is canceled',
+        toOwner: '+1'+this.props.walk.owner.phone,
+        toWalker: '+1'+this.props.walk.walker.phone
+      },
+      success: (res) => {
+        console.log('msg sent!')
+      },
+      error: function(data) {
+      }
+    })
+  }
+
   click() {
     this.handleTouchTap();
+    this.sendCancelSMS();
     setTimeout(()=>this.props.cancelWalk(this.props.walk), 1000);
   }
 
-  handleChatOpen() {
-    this.setState({openchat: true});
-  }
-
-  handleChatClose() {
-    this.setState({openchat: false});
-  }
 
   handleMessageLink(){
     window.location = 'http://localhost:3000/messages';
@@ -128,5 +143,4 @@ class UpcomingWalkItem extends React.Component {
 }
 
 export default UpcomingWalkItem;
-
 

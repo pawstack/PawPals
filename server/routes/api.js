@@ -94,8 +94,8 @@ router.route('/walks/rating')
 router.route('/walks/averagerating')
   .post(ApiController.calculateAverageRating);
 
-router.route('/twilio/token')
-  .get(ApiController.getTwiliotoken);
+router.route('/sms/cancel')
+  .post(ApiController.sendCancelSMS);
 
 router.route('/messages/fetch')
   .post(ApiController.fetchMessages);
@@ -106,4 +106,7 @@ router.route('/messages/write')
 router.route('/messages/senders')
   .get(ApiController.fetchChatDetails);
 
+
+router.route('/messages/fetch')
+  .get(ApiController.fetchMessages);
 module.exports = router;

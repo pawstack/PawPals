@@ -169,12 +169,12 @@ export default class EventDialog extends React.Component {
               </tbody>
             </table>
             <div>
-              <Link to= {{pathname: '/messages',
-                state: {ownerid: this.props.selectedEvent.owner_id,
-                  walkerid: this.props.selectedEvent.walker_id}
-              }}
+              <Link to= {{pathname:'/messages',
+                          state: {ownerid: this.props.selectedEvent.owner_id,
+                          walkerid: this.props.selectedEvent.walker_id}
+                        }}
               >
-                <FlatButton label="Message Owner" primary={true} style={{'marginLeft': '3px'}}/>
+              <FlatButton label="Message Owner" primary={true}  style={{'marginLeft': '3px'}}/>
               </Link>
             </div>
           </Dialog>

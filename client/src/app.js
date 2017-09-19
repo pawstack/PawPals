@@ -40,6 +40,7 @@ const muiTheme = getMuiTheme({
   },
 });
 
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -105,7 +106,7 @@ class App extends React.Component {
                 <AppBar
                   title="PawPals"
                   iconElementLeft={
-                      <Avatar 
+                      <Avatar
                         src={this.state.userInfo.profile_pic}
                         style={{marginBottom: 4}} />
                   }
@@ -156,7 +157,7 @@ class App extends React.Component {
             <Route exact path="/findmydog" component={FindMyDog}/>
             <Route exact path="/trackwalk" component={TrackWalk}/>
             <Route exact path="/walkhistory" component={WalkHistory}/>
-
+            <Route exact path="/messages" component={Messages}/>
             <Route exact path="/messages" component={Messages}/>
           </div>
         </Router>
