@@ -25,7 +25,7 @@ class ChatList extends React.Component {
     this.getConversationDetails = this.getConversationDetails.bind(this);
     this.generateConversationNames = this.generateConversationNames.bind(this);
     this.checkNewConversation = this.checkNewConversation.bind(this);
-    this.socket = openSocket('http://localhost:3000');
+    this.socket = openSocket();
     this.socket.on('new message', (data) => {
       this.handleNewMessage.call(this, data);
     })
