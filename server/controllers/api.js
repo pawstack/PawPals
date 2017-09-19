@@ -93,7 +93,7 @@ module.exports.createWalk = (req, res) => {
     session_start_walker: req.body.session_start,
     session_end_walker: req.body.session_end,
     session_start: req.body.session_start,
-    session_end: req.body.session_end,    
+    session_end: req.body.session_end,
     walk_zone_pt: req.body.walk_zone_pt,
     price: req.body.price,
     walker_id: req.user.id,
@@ -719,6 +719,7 @@ module.exports.fetchMessages = function(req, res) {
       console.log(collection, 'collection')
       res.status(200).send(response);
     })
+  })
 };
 
 
@@ -730,7 +731,6 @@ module.exports.sendCancelSMS = function(req, res) {
   })
   .then((message) => console.log(message.sid));
 
-      res.status(201).send(collection.models);
-    });
-
+  res.status(201).send(collection.models);
 };
+

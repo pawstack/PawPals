@@ -226,5 +226,4 @@ export default class EventDialog extends React.Component {
       );
     }
   }
-
->>>>>>> 011618665f923c50358956f9a06ae52d40f466b6
+}
