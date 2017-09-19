@@ -13,77 +13,61 @@ const authToken = 'd36bb8b7188d0a89fbc82a4d23e562aa';
 const client = require('twilio')(accountSid, authToken);
 const device = require('express-device');
 
+const walkBuffer = 15;
+
 db.plugin('registry');
 
 module.exports.getFilteredWalks = (req, res) => {
   // implement as if walkers don't make "walk slots" but rather general
   // availability periods, and owners can book as long as their need is in that
   // period.
-  if (req.body.pickupTime !== '' && req.body.startDate !== '') {
-    // show all walks in period of given day and given time
+  if (req.body.pickupTime === '' || req.body.startDate === '') {
+    res.status(500).send('Pickup time and start date must be filled out');
+  } else {
+  // show all walks in period of given day and given time
     var startDate = Moment(new Date(req.body.startDate)).startOf('day');
     var pickupTime = Moment(new Date(req.body.pickupTime));
     var hour = pickupTime.get('hour');
     var minute = pickupTime.get('minute');
     var start = startDate.clone().add(hour, 'h').add(minute, 'm');
     var finish = startDate.clone().add(hour, 'h').add(minute, 'm').add(Number(req.body.duration), 'm');
-    var walker_start = start.clone().subtract(15, 'm');
-    var walker_finish = finish.clone().add(15, 'm');
-  } else if (req.body.startDate === '' && req.body.pickupTime !== '') {
-    // see all walks available today at given time
-    var start = Moment(new Date(req.body.pickupTime));
-    var finish = start.clone().add(Number(req.body.duration), 'm');
-    var walker_start = start.clone().subtract(15, 'm');
-    var walker_finish = finish.clone().add(15, 'm');
-  } else {
-    // see all walks available today
-    var walker_start = Moment(new Date()).endOf('day');
-    var walker_finish = Moment(new Date());
-    var start = null;
-    var finish = null;
+
+    // define sort order
+    var criteria, withRelatedParams;
+    var order = 'ASC';
+    if (req.body.selectedSort === 'avg_walker_rating') {
+      criteria = 'profiles.avg_walker_rating';
+      order = 'DESC';
+    } else {
+      criteria = `walks.${req.body.selectedSort}`;
+    }
+
+    models.Walk
+      .query((qb) => {
+        qb.where('price', '<=', req.body.price)
+          .where('session_start_walker', '<=', new Date(start.clone().endOf('minute').toDate()))
+          .where('session_end_walker', '>=', new Date(finish.clone().startOf('minute').toDate()))
+          .innerJoin('profiles', 'walks.walker_id', 'profiles.id')
+          .orderBy(criteria, order)
+          .limit(20);
+      })
+      .fetchAll({
+        withRelated: ['walker']
+      })
+      .then(walks => {
+        var response = {};
+        response['walks'] = walks;
+        if (start && finish) {
+          response['start'] = start.toDate();
+          response['end'] = finish.toDate();
+        }
+        res.status(200).send(response);
+      })
+      .catch(err => {
+        console.log('ERROR getting filtered walks ', err);
+        res.status(503).send(err);
+      });
   }
-  console.log(start, 'start');
-  console.log(walker_start, 'start walker');
-  console.log(finish, 'finish');
-  console.log(walker_finish, 'finish walker');
-
-  // define sort order
-  var criteria, withRelatedParams;
-  var order = 'ASC';
-  if (req.body.selectedSort === 'avg_walker_rating') {
-    criteria = 'profiles.avg_walker_rating';
-    order = 'DESC';
-  } else {
-    criteria = `walks.${req.body.selectedSort}`;
-  }
-
-  console.log(req.body, 'request body');
-
-  models.Walk
-    .query((qb) => {
-      qb.where('price', '<=', req.body.price)
-        .where('session_start_walker', '<=', new Date(walker_start.endOf('minute').toDate()))
-        .where('session_end_walker', '>=', new Date(walker_finish.startOf('minute').toDate()))
-        .innerJoin('profiles', 'walks.walker_id', 'profiles.id')
-        .orderBy(criteria, order)
-        .limit(20);
-    })
-    .fetchAll({
-      withRelated: ['walker']
-    })
-    .then(walks => {
-      var response = {};
-      response['walks'] = walks;
-      if (start && finish) {
-        response['start'] = start.toDate();
-        response['end'] = finish.toDate();
-      }
-      res.status(200).send(response);
-    })
-    .catch(err => {
-      console.log('ERROR getting filtered walks ', err);
-      res.status(503).send(err);
-    });
 };
 
 module.exports.getWalkersWalks = (req, res) => {
@@ -93,9 +77,10 @@ module.exports.getWalkersWalks = (req, res) => {
     })
     .fetchAll({withRelated: ['dog', 'owner']})
     .then((collection) => {
-      var response = {};
-      response['walks'] = collection.models;
-      response['location'] = req.user.address;
+      var response = {
+        walks: collection.models,
+        location: req.user.address
+      };
       res.status(200).send(response);
     })
     .catch(err => {
@@ -107,6 +92,8 @@ module.exports.createWalk = (req, res) => {
   models.Walk.forge({
     session_start_walker: req.body.session_start,
     session_end_walker: req.body.session_end,
+    session_start: req.body.session_start,
+    session_end: req.body.session_end,    
     walk_zone_pt: req.body.walk_zone_pt,
     price: req.body.price,
     walker_id: req.user.id,
@@ -115,21 +102,7 @@ module.exports.createWalk = (req, res) => {
   })
     .save()
     .then(() => {
-      models.Walk
-        .query((qb) => {
-          qb.where('walker_id', '=', req.user.id);
-        })
-        .fetchAll({withRelated: ['dog', 'owner']})
-        .then((collection) => {
-          var response = {};
-          response['walks'] = collection.models;
-          response['location'] = req.user.address;
-          console.log(response);
-          res.status(200).send(response);
-        })
-        .catch(err => {
-          res.status(503).send(err);
-        });
+      module.exports.getWalkersWalks(req, res);
     });
 };
 
@@ -137,20 +110,7 @@ module.exports.destroyWalk = (req, res) => {
   new models.Walk({id: req.body.walk_id})
     .destroy()
     .then(() => {
-      models.Walk
-        .query((qb) => {
-          qb.where('walker_id', '=', req.user.id);
-        })
-        .fetchAll({withRelated: ['dog', 'owner']})
-        .then((collection) => {
-          var response = {};
-          response['walks'] = collection.models;
-          response['location'] = req.user.address;
-          res.status(200).send(response);
-        })
-        .catch(err => {
-          res.status(503).send(err);
-        });
+      module.exports.getWalkersWalks(req, res);
     });
 };
 
@@ -308,7 +268,8 @@ module.exports.processPayment = (req, res) => {
             });
         })
         .catch(error => {
-          console.log(error, 'stripe error');
+          console.log('ERROR processing stripe payment ', error);
+          res.status(500).send('Error processing payment');
         });
     });
 };
@@ -368,10 +329,8 @@ var saveChargeTransactionToDB = (walkID, transactionNumber, ownerID, dogID, pick
 
 var updateExistingWalk = (start_owner, end_owner, transactionNumber, walkID, ownerID, dogID, pickup_address, callback) => {
   // update existing walk with booked time
-  var start_walker = Moment(start_owner).subtract(15, 'm').toDate();
-  var end_walker = Moment(end_owner).add(15, 'm').toDate();
-  console.log(start_owner, 'start owner');
-  console.log(end_owner, 'end_owner');
+  var start_walker = Moment(start_owner).subtract(walkBuffer, 'm').toDate();
+  var end_walker = Moment(end_owner).add(walkBuffer, 'm').toDate();
   return knex('walks')
     .where({id: walkID, paid: false})
     .update({
@@ -382,50 +341,52 @@ var updateExistingWalk = (start_owner, end_owner, transactionNumber, walkID, own
       pickup_address: pickup_address,
       session_start: start_owner,
       session_end: end_owner,
-      session_end_walker: end_walker,
-      session_start_walker: start_walker,
+      session_start_walker: start_owner,
+      session_end_walker: end_owner
     })
     .then(callback)
     .catch(error => console.log(error, 'error database'));
 };
 
 var createSplitWalks = (start_owner, end_owner, walkID) => {
-  var start_walker = Moment(start_owner).subtract(15, 'm').toDate();
-  var end_walker = Moment(end_owner).add(15, 'm').toDate();
+  start_owner = new Date(start_owner);
+  end_owner = new Date(end_owner);
+  var start_walker = Moment(start_owner).subtract(walkBuffer, 'm').toDate();
+  var end_walker = Moment(end_owner).add(walkBuffer, 'm').toDate();
+
   return models.Walk.where('id', walkID)
     .fetch()
     .then((model) => {
-      // create walk before booked walk
-      models.Walk.forge({
-        session_start_walker: model.attributes.session_start_walker,
-        session_end_walker: start_walker,
-        walk_zone_pt: model.attributes.walk_zone_pt,
-        price: model.attributes.price,
-        walker_id: model.attributes.walker_id,
-        longitude: model.attributes.longitude,
-        latitude: model.attributes.latitude
-      })
-        .save()
-        .catch(err => {
-          console.log(err, 'before booked walk');
-        })
-        .then(() => {
-          // create walk after booked walk
-          models.Walk.forge({
-            session_start_walker: end_walker,
-            session_end_walker: model.attributes.session_end_walker,
-            walk_zone_pt: model.attributes.walk_zone_pt,
-            price: model.attributes.price,
-            walker_id: model.attributes.walker_id,
-            longitude: model.attributes.longitude,
-            latitude: model.attributes.latitude,
-          })
-            .save()
-            .catch(err => {
-              console.log(err, 'after booked walk');
-            });
-        });
+      // create an unbooked walk before and/or after, if enough leftover time
+      var startEndTimes = [];
+      if (start_owner - new Date(model.attributes.session_start_walker) >= 45 * 60 * 1000) {
+        startEndTimes.push({start: model.attributes.session_start_walker, end: start_walker});
+      }
+      if (new Date(model.attributes.session_end_walker) - end_owner >= 45 * 60 * 1000) {
+        startEndTimes.push({start: end_walker, end: model.attributes.session_end_walker});
+      }
+      Promise.all(
+        startEndTimes.map(time => createNewSplitWalk(model, time.start, time.end))
+      ).catch(err => {
+        console.log('ERROR creating a split walk', err);
+      });
+    })
+    .catch(err => {
+      console.log('ERROR fetching and splitting walk');
     });
+};
+
+const createNewSplitWalk = (walk, start, end) => {
+  return models.Walk.forge({
+    session_start_walker: start,
+    session_end_walker: end,
+    walk_zone_pt: walk.attributes.walk_zone_pt,
+    price: walk.attributes.price,
+    walker_id: walk.attributes.walker_id,
+    longitude: walk.attributes.longitude,
+    latitude: walk.attributes.latitude
+  })
+    .save();
 };
 
 var getTransactionID = (walkID) => {

@@ -56,15 +56,12 @@ class App extends React.Component {
   retrieveUserInfo() {
     $.get('/api/walks/getOwnerInfo')
       .done((data) => {
-        console.log('SUCCESS - the owner info is ', data);
         if (data.walker) {
-          //console.log('the user is a walker ', data.walker);
           this.setState({
             userInfo: data,
             walker: true
           });
         } else if (data.owner) {
-          //console.log('the user is a owner ', data.owner);
           this.setState({
             userInfo: data,
             owner: true

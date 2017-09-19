@@ -27,7 +27,6 @@ class Confirmation extends React.Component {
   }
 
   calculateTotalPrice() {
-    console.log(this.props.start_owner, this.props.end_owner)
     if (this.props.start_owner && this.props.end_owner) {
       var start = moment(this.props.start_owner);
       var end = moment(this.props.end_owner);
@@ -52,7 +51,7 @@ class Confirmation extends React.Component {
         <MuiThemeProvider>
           <div>
 
-            <Card style={{"marginTop":"10%"}}>
+            <Card style={{marginTop: '10%'}}>
 
               <CardMedia
                 overlay={<CardTitle title="Confirm your selection"/>}

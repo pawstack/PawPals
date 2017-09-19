@@ -38,6 +38,7 @@ class Browse extends React.Component {
     this.handleSnackBarClose = this.handleSnackBarClose.bind(this);
     this.updateTotalPrice = this.updateTotalPrice.bind(this);
     this.toggleFilter = this.toggleFilter.bind(this);
+    this.emptyWalks = this.emptyWalks.bind(this);
   }
 
   getWalks(filters) {
@@ -51,7 +52,7 @@ class Browse extends React.Component {
           ['end_owner']: data.end
         });
       }).fail((err) => {
-        console.log('ERROR getWalks in Browse ', error);
+        console.log('ERROR getWalks in Browse ', err);
       });
   }
 
@@ -134,17 +135,17 @@ class Browse extends React.Component {
   }
 
   getDogInfo(callback) {
-    var context = this;
     $.ajax({
       method: 'GET',
       url: '/api/walks/getDogInfo',
       data: {
-        ownerID: context.state.ownerInfo.id
+        ownerID: this.state.ownerInfo.id
       },
+      context: this,
       success(data) {
-        context.setState({
+        this.setState({
           dogInfo: data
-        }, () => { callback(); });
+        }, callback);
       },
       error(err) {
         console.log('ERROR retrieving dogInfo ', err);
@@ -155,6 +156,7 @@ class Browse extends React.Component {
   resetSelectedState() {
     this.setState({
       selectedWalk: {},
+      selectedWalkIndex: null,
       backButton: true
     });
   }
@@ -166,8 +168,6 @@ class Browse extends React.Component {
   }
 
   processPayment() {
-    // console.log(this.state.start_owner, this.state.end_owner);
-    // console.log(this.state, 'states');
     $.ajax({
       type: 'POST',
       url: '/api/walks/payment',
@@ -188,8 +188,7 @@ class Browse extends React.Component {
         this.setState((prevState) => (
           {
             snackBarOpen: true,
-            walks: prevState.walks.slice(0, prevState.selectedWalkIndex).concat(prevState.walks.slice(prevState.selectedWalkIndex + 1)),
-            selectedWalkIndex: null
+            walks: prevState.walks.slice(0, prevState.selectedWalkIndex).concat(prevState.walks.slice(prevState.selectedWalkIndex + 1))
           }
         ), function() {
           this.resetSelectedState();
@@ -231,6 +230,10 @@ class Browse extends React.Component {
     }));
   }
 
+  emptyWalks() {
+    this.setState({walks: []});
+  }
+
   render() {
     if (!this.state.selectedWalk.walker) {
       return (
@@ -249,12 +252,12 @@ class Browse extends React.Component {
             <BrowseFilter
               pickupAddress={this.state.pickupAddress}
               setPickupAddress = {this.setPickupAddress}
-              pickupAddress = {this.state.pickupAddress}
               getWalks={this.getWalks}
               start_owner={this.state.start_owner}
               end_owner={this.state.end_owner}
               filterOpen={this.state.filterOpen}
-              toggleFilter={this.toggleFilter} />
+              toggleFilter={this.toggleFilter} 
+              emptyWalks={this.emptyWalks}/>
           </div>
           <BrowseList
             walks={this.state.walks}
