@@ -34,12 +34,16 @@ class LandingPage extends React.Component {
             <span>
 
 
+
               <img src="https://i.imgur.com/ptBHSFz.png" style={{"width":"5vw","marginLeft":"225px","marginTop":"-2%"}}></img>
 
               <img src="https://i.imgur.com/6WR6arG.png" style={{"width":"100px","marginLeft":"210px","marginTop":"-5%"}}></img>
 
 
               <img src="https://i.imgur.com/ptBHSFz.png" style={{"width":"100px","marginLeft":"225px","marginTop":"-2%"}}></img>
+
+
+              <img src="https://i.imgur.com/ptBHSFz.png" style={{"width":"5vw","marginLeft":"225px","marginTop":"-2%"}}></img>
 
             </span>
             <span className="title">
