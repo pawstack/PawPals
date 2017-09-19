@@ -77,7 +77,7 @@ class App extends React.Component {
 
   componentDidMount() {
     this.retrieveUserInfo();
-    $('h1').css("font-family", "'Carter One', cursive");
+    $('.container').find('h1').css("font-family", "'Carter One', cursive");
   }
 
   render() {
