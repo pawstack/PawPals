@@ -10,7 +10,6 @@ import openSocket from 'socket.io-client';
 import Notification  from 'react-web-notification';
 import $ from 'jquery';
 
-
 class ChatList extends React.Component {
   constructor(props) {
     super(props)

@@ -228,7 +228,4 @@ export default class EventDialog extends React.Component {
     }
   }
 }
-<<<<<<< HEAD
-=======
 
->>>>>>> add redirect from walker's booked walks to messages
