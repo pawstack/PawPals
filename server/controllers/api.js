@@ -723,6 +723,7 @@ module.exports.fetchMessages = function(req, res) {
       console.log(collection, 'collection')
       res.status(200).send(response);
     })
+  })
 };
 
 
@@ -751,6 +752,9 @@ module.exports.sendCancelSMS = function(req, res) {
   // .catch(e => {
   //   console.log(e);
   // });
+
+
+  res.status(201).send(collection.models);
 
 };
 
