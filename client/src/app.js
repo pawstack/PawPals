@@ -9,6 +9,7 @@ import {
 } from 'react-router-dom';
 import $ from 'jquery';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import SignUpStart from './components/SignUpStart';
 import Browse from './components/Browse';
 import Calendar from './components/Calendar';
@@ -33,6 +34,14 @@ import NavBarWalkerLoggedIn from './components/NavBarWalkerLoggedIn.jsx';
 import NavBarNewUserLoggedIn from './components/NavBarNewUserLoggedIn.jsx';
 import Message from './components/Message';
 
+const muiTheme = getMuiTheme({
+  palette: {
+    primary1Color: '#66BB6A',
+  },
+  appBar: {
+    height: 50,
+  },
+});
 
 class App extends React.Component {
   constructor(props) {
@@ -71,6 +80,7 @@ class App extends React.Component {
 
   componentDidMount() {
     this.retrieveUserInfo();
+    $('h1').css("font-family", "'Carter One', cursive");
   }
 
   render() {
@@ -78,7 +88,7 @@ class App extends React.Component {
       return (
         <div>
           <Router>
-            <MuiThemeProvider>
+            <MuiThemeProvider muiTheme={muiTheme}>
               <div>
                 <AppBar
                   title="PawPals"
@@ -96,8 +106,7 @@ class App extends React.Component {
       return (
         <div>
           <Router>
-
-            <MuiThemeProvider>
+            <MuiThemeProvider muiTheme={muiTheme}>
               <div>
                 <AppBar
                   title="PawPals"
@@ -128,7 +137,7 @@ class App extends React.Component {
     }
 
     return (
-      <MuiThemeProvider>
+      <MuiThemeProvider muiTheme={muiTheme}>
         <Router>
           <div>
             <li><Link to="/home">Home</Link></li>
