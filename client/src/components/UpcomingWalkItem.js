@@ -29,7 +29,7 @@ class UpcomingWalkItem extends React.Component {
     this.handleTouchTap = this.handleTouchTap.bind(this);
     this.handleRequestClose = this.handleRequestClose.bind(this);
     this.click = this.click.bind(this);
-    this.sendCancelSMS = this.sendCancelSMS.bind(this);
+
   }
 
   convertDate(start, end) {
@@ -50,30 +50,9 @@ class UpcomingWalkItem extends React.Component {
     });
   }
 
-  sendCancelSMS(){
-    console.log(typeof this.props.walk.owner.phone);
-    let time = this.convertDate(this.props.walk.session_start, this.props.walk.session_end);
-
-    $.ajax({
-      url: '/api/sms/cancel',
-      type: 'POST',
-      data: {
-        text: 'Your dog walk From ' + time[0]+' to '+time[1] + ' is canceled',
-        toOwner: '+1'+this.props.walk.owner.phone,
-        toWalker: '+1'+this.props.walk.walker.phone
-      },
-      success: (res) => {
-        console.log('msg sent!')
-      },
-      error: function(data) {
-      }
-    })
-  }
 
   click() {
     this.handleTouchTap();
-    this.sendCancelSMS();
-    setTimeout(()=>this.props.cancelWalk(this.props.walk), 1000);
   }
 
 

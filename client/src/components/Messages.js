@@ -4,7 +4,6 @@ import {List, ListItem} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import Divider from 'material-ui/Divider';
 import CommunicationChatBubble from 'material-ui/svg-icons/communication/chat-bubble';
-
 import ChatWindow from './ChatWindow';
 import openSocket from 'socket.io-client';
 import Notification  from 'react-web-notification';
@@ -17,13 +16,9 @@ class ChatList extends React.Component {
       owner: null,
       conversationNames: {},
       user_id: null,
-
       chat: [],
       ignore: true,
       title: ''
-
-      messages: [],
-      selectedConversation: [],
     }
     this.fetchMessages = this.fetchMessages.bind(this);
     this.instantiateConversation = this.instantiateConversation.bind(this);
@@ -37,7 +32,6 @@ class ChatList extends React.Component {
   }
 
   componentWillMount() {
-
     this.getConversationDetails((conversationDetails) => {
       this.generateConversationNames(conversationDetails, () => {
         this.checkNewConversation(() => {
@@ -73,15 +67,6 @@ class ChatList extends React.Component {
       var conversationDetail = conversationDetails.details[i];
       if (this.state.owner) {
         conversationNames[conversationDetail.walker_id] = conversationDetail.walker;
-    console.log('owner is',this.props.location.state.ownerid);
-    console.log('walker is',this.props.location.state.walkerid);
-
-    this.fetchMessages()
-    .then(() => {
-      lastConvo = this.state.messages[this.state.messages.length - 1];
-      if (lastConvo.owner_id === user_id) {
-        var latest_convo_replier_id = lastConvo.walker_id;
-
       } else {
         conversationNames[conversationDetail.owner_id] = conversationDetail.owner;
       }
@@ -101,17 +86,6 @@ class ChatList extends React.Component {
     } else {
       callback();
     }
-
-  createConversations() {
-    // var conversation = [];
-    // for (var i = 0; i < this.state.messages.length; i++) {
-    //   var message = this.state.messages[i];
-    //   if (message.owner_id === replier_id || message.walker_id === replier_id) {
-    //     conversation.push(message);
-    //   }
-    // }
-    // this.setState({conversation});
-
   }
 
   instantiateConversation(owner_id, walker_id, callback) {
