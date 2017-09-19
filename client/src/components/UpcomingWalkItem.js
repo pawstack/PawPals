@@ -163,3 +163,4 @@ class UpcomingWalkItem extends React.Component {
 }
 
 export default UpcomingWalkItem;
+
