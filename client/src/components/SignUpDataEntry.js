@@ -19,39 +19,24 @@ class SignUpDataEntry extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      owner: false,
-      walker: true
-    };
+
+    this.updatePhone = this.updatePhone.bind(this);
+    this.updateAddress = this.updateAddress.bind(this);
+    this.handleUserType = this.handleUserType.bind(this);
   }
 
   updatePhone(e) {
     const phone = e.target.value;
-    this.props.entriesChanged( this, 'phone', phone );
+    this.props.entriesChanged('phone', phone );
   }
 
   updateAddress(e) {
-    this.props.entriesChanged( this, 'address', e);
+    this.props.entriesChanged( 'address', e);
   }
 
-  getOwnerValue(e, value) {
-    //console.log('Owner is', value.returnValue);
-    this.setState({
-      owner: true,
-      walker: false
-    }, ()=>{
-      this.props.updateRoleState(this);
-    });
-  }
-
-  getWalkerValue(e, value) {
-    //console.log('Walker is', value.returnValue);
-    this.setState({
-      owner: false,
-      walker: true
-    }, ()=>{
-      this.props.updateRoleState(this);
-    });
+  handleUserType(event) {
+    console.log('the user type is ', event.target.value);
+    this.props.updateUserType(event.target.value);
   }
 
   render() {
@@ -61,30 +46,23 @@ class SignUpDataEntry extends React.Component {
     };
     return (
       <div>
-        <RadioButtonGroup name="shipSpeed" defaultSelected="not_light">
+        <RadioButtonGroup
+          name="shipSpeed"
+          defaultSelected={this.props.owner ? "Owner" : "Walker"}
+        >
           <RadioButton
-            value="light"
-            label="Owner"
+            value="Owner"
+            label="Dog Owner"
             style={styles.radioButton}
-            onClick = {this.getOwnerValue.bind(this)}
+            onClick = {this.handleUserType}
           />
           <RadioButton
-            value="not_light"
-            label="Walker"
+            value="Walker"
+            label="Dog Walker"
             style={styles.radioButton}
-            onClick = {this.getWalkerValue.bind(this)}
+            onClick = {this.handleUserType}
           />
         </RadioButtonGroup>
-        <TextField
-          id="phone-info"
-          hintText="e.g. 9498786181"
-          floatingLabelText="Phone #"
-          name="phone"
-          onChange={this.updatePhone.bind(this)}
-          fullWidth={true}/>
-        <div>
-          <PlacesAutocomplete inputProps={inputProps} label={'Address'}/>
-        </div>
       </div>
     );
   }

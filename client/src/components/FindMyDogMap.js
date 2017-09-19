@@ -22,9 +22,15 @@ const GoogleMapWrapper = withGoogleMap(props => (
         geodesic= {true}
         options = {{
           strokeColor: '#26194C',
-          strokeOpacity: 1,
+          strokeOpacity: 0.5,
           strokeWeight: 5
         }}
+      />
+    </div>
+    <div>
+      <Marker
+        position = {props.endLocation}
+        icon={{scaledSize: new google.maps.Size(50, 53), url: 'https://cdn1.iconfinder.com/data/icons/supericon-animals-1/512/Dog_SC.png'}}
       />
     </div>
   </GoogleMap>
@@ -34,14 +40,15 @@ export default class FindMyDogMap extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      markers: [],
       center: {lat: 0, lng: 0},
       polyLineData: [],
-      zoom: 16
+      zoom: 16,
+      staticData: [],
+      startLocation: {},
+      endLocation: {}
     };
     this.handleMapLoad = this.handleMapLoad.bind(this);
     this.getGeolocations = this.getGeolocations.bind(this);
-    this.fitExampleBounds = this.fitExampleBounds.bind(this);
   }
 
   componentDidMount() {
@@ -49,24 +56,7 @@ export default class FindMyDogMap extends React.Component {
   }
 
   handleMapLoad(map) {
-    // console.log('map is ', map);
     this._mapComponent = map;
-  }
-
-  fitExampleBounds() {
-    // console.log('**INSIDE OF fitExampleBounds');
-    const overallBounds = this._mapComponent.getBounds();
-    const center = this._mapComponent.getCenter();
-    // console.log('overallBounds is ', bounds2);
-    // console.log('center is ', center);
-    //this._mapComponent.fitBounds(overallBounds);
-    // var newZoom = this._mapComponent.getZoom();
-    // console.log('zoom is ', newZoom);
-
-    this.setState({
-      center: center,
-      //zoom: newZoom + 2
-    });
   }
 
   getGeolocations() {
@@ -77,33 +67,31 @@ export default class FindMyDogMap extends React.Component {
         this.setState({
           markers: data,
           center: data.length > 0 ? {lat: Number(data[midpoint].latitude), lng: Number(data[midpoint].longitude)} : {lat: 0, lng: 0},
+          startLocation: {lat: Number(data[0].latitude), lng: Number(data[0].longitude)},
         }, function() {
-
           var polydata = data.map(function(item, index) {
             return {lat: Number(item.latitude), lng: Number(item.longitude)};
           });
-
           var animatedPolyData = [];
-          // console.log('poly data is ', polydata.shift());
           var animate = window.setInterval(function() {
-            // console.log('the poly data length is ', polydata.length);
             animatedPolyData = animatedPolyData.concat(polydata.splice(0, 1));
-            // console.log(animatedPolyData);
             context.setState({
               polyLineData: animatedPolyData
             }, function() {
               if (polydata.length === 0) {
                 window.clearInterval(animate);
-                this.fitExampleBounds();
+                this.setState({
+                  endLocation: {lat: Number(data[data.length - 1].latitude), lng: Number(data[data.length - 1].longitude)}
+                });
               }
             });
-          }, 25);
-          animate();
+          }, 20);
         });
       })
       .fail((err) => {
         console.log('ERROR getting geolocation ', err);
       });
+
   }
 
 
@@ -112,16 +100,18 @@ export default class FindMyDogMap extends React.Component {
       <div style={{height: 400}}>
         <GoogleMapWrapper
           containerElement={
-            <div style={{ height: '100%' }} />
+            <div style={{ height: '100%', width: '100%' }} />
           }
           mapElement={
-            <div style={{ height: '100%' }} />
+            <div style={{ height: '100%', width: '100%' }} />
           }
           onMapLoad={this.handleMapLoad}
-          markers={this.state.markers}
           center={this.state.center}
           zoom = {this.state.zoom}
           polyLineData = {this.state.polyLineData}
+          onClick = {this.props.updateAnimateState}
+          startLocation = {this.state.startLocation}
+          endLocation = {this.state.endLocation}
         />
       </div>
     );

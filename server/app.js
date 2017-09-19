@@ -36,14 +36,22 @@ app.use('/api', routes.api);
 app.use('/api/profiles', routes.profiles);
 app.use('/*', routes.auth);
 
-
-
 io.on('connection', (socket) => {
-  socket.on('startChat', (data) => {
-    socket.join(data.room);
-    io.in(data.room).emit('message', data.message);
-    console.log('DATA IS', data);
+  socket.on('join', (data) => {
+    for (var prop in data.names) {
+      if (data.owner) {
+        var owner = data.user_id;
+        var walker = prop;
+      } else {
+        var owner = prop;
+        var walker = data.user_id;
+      }
+      socket.join(owner.toString() + walker.toString());
+    }
   });
+  socket.on('new message', (data) => {
+    socket.to(data.roomname).emit('new message', data);
+  })
 });
 
 

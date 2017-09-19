@@ -98,10 +98,14 @@ router.route('/sms/cancel')
   .post(ApiController.sendCancelSMS);
 
 router.route('/messages/fetch')
-  .get(ApiController.fetchMessages);
+  .post(ApiController.fetchMessages);
 
 router.route('/messages/write')
-  .get(ApiController.writeMessages);
+  .post(ApiController.writeMessages);
+
+router.route('/messages/senders')
+  .get(ApiController.fetchChatDetails);
+
 
 router.route('/messages/fetch')
   .get(ApiController.fetchMessages);

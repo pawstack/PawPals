@@ -58,7 +58,6 @@ export default class EventDialog extends React.Component {
   }
 
   render() {
-    console.log(this.props.selectedEvent.walker_id, 'not undefined');
     const trackActions = [
       /*
       start walk button will be disabled:
@@ -99,7 +98,7 @@ export default class EventDialog extends React.Component {
       <FlatButton
         label="Cancel Walk"
         primary={false}
-        disabled = {(Date.now() > this.props.selectedEvent.start) ? true : false}
+        disabled = {(this.props.selectedEvent.owner_id !== null && Date.now() > this.props.selectedEvent.start) ? true : false}
         onClick={this.props.handleCancel}
       />,
       <FlatButton
@@ -142,7 +141,6 @@ export default class EventDialog extends React.Component {
     ];
 
     if (!this.state.walkCompleted && Date.now() < this.props.selectedEvent.end) {
-    // if (!this.state.walkCompleted) {
       return (
         <div>
           <Dialog
@@ -206,16 +204,21 @@ export default class EventDialog extends React.Component {
                       style={{'borderRadius': '10px'}}/>
                   </td>
                   <td>
-                    <div style = {{paddingLeft: '10%'}}>
-                      Please rate this walk!
-                    </div>
-                    <div style = {{paddingLeft: '10%'}}>
-                      <StarRating
-                        ratingFor = {'dog'}
-                        walk = {this.props.selectedEvent}
-                        ratingForID = {this.props.selectedEvent['dog_id']}
-                      />
-                    </div>
+                    {(this.props.selectedEvent.owner_id === null ?
+                      <div>This walk was not booked</div> :
+                      <div>
+                        <div style = {{paddingLeft: '10%'}}>
+                          Please rate this walk!
+                        </div>
+                        <div style = {{paddingLeft: '10%'}}>
+                          <StarRating
+                            ratingFor = {'dog'}
+                            walk = {this.props.selectedEvent}
+                            ratingForID = {this.props.selectedEvent['dog_id']}
+                          />
+                        </div>
+                      </div>
+                    )}
                   </td>
                 </tr>
               </tbody>
@@ -224,7 +227,6 @@ export default class EventDialog extends React.Component {
         </div>
       );
     }
-
   }
-}
 
+>>>>>>> 011618665f923c50358956f9a06ae52d40f466b6

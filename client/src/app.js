@@ -9,6 +9,7 @@ import {
 } from 'react-router-dom';
 import $ from 'jquery';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import SignUpStart from './components/SignUpStart';
 import Browse from './components/Browse';
 import Calendar from './components/Calendar';
@@ -24,15 +25,20 @@ import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
 import FlatButton from 'material-ui/FlatButton';
+import Avatar from 'material-ui/Avatar';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 
 import NavBarOwnerLoggedIn from './components/NavBarOwnerLoggedIn.jsx';
 import NavBarWalkerLoggedIn from './components/NavBarWalkerLoggedIn.jsx';
 import NavBarNewUserLoggedIn from './components/NavBarNewUserLoggedIn.jsx';
-
 import Message from './components/Message';
 
+const muiTheme = getMuiTheme({
+  palette: {
+    primary1Color: '#66BB6A',
+  },
+});
 
 
 class App extends React.Component {
@@ -72,24 +78,20 @@ class App extends React.Component {
 
   componentDidMount() {
     this.retrieveUserInfo();
+    $('.container').find('h1').css("font-family", "'Carter One', cursive");
   }
 
   render() {
-
-    // console.log('the state inside of render is ', this.state.userInfo.display);
-
-
-    console.log('the state inside of render is ', this.state.userInfo.display);
-
-    if (!this.state.owner && ! this.state.walker) {
+    if (!this.state.owner && ! this.state.walker || !this.state.userInfo.customer_id_cc_Token) {
       return (
         <div>
           <Router>
-            <MuiThemeProvider>
+            <MuiThemeProvider muiTheme={muiTheme}>
               <div>
                 <AppBar
-                  title={this.state.userInfo.display}
+                  title="PawPals"
                   iconElementRight = {<NavBarNewUserLoggedIn />}
+                  showMenuIconButton={false}
                 />
                 <Route exact path="/signup/start" component={SignUpStart}/>
               </div>
@@ -102,12 +104,17 @@ class App extends React.Component {
       return (
         <div>
           <Router>
-
-            <MuiThemeProvider>
+            <MuiThemeProvider muiTheme={muiTheme}>
               <div>
                 <AppBar
-                  title={this.state.userInfo.display}
-                  iconElementRight = {this.state.owner ? <NavBarOwnerLoggedIn /> : <NavBarWalkerLoggedIn />}
+                  title="PawPals"
+                  iconElementLeft={
+                      <Avatar
+                        src={this.state.userInfo.profile_pic}
+                        style={{marginBottom: 4}} />
+                  }
+                  iconStyleLeft={{display: 'flex', flexDirection: 'column', justifyContent: 'center'}}
+                  iconElementRight={this.state.owner ? <NavBarOwnerLoggedIn /> : <NavBarWalkerLoggedIn />}
                 />
                 <Route exact path="/signup/start" component={SignUpStart}/>
                 <Route exact path="/browse" component={Browse}/>
@@ -118,7 +125,6 @@ class App extends React.Component {
                 <Route exact path="/trackwalk" component={TrackWalk}/>
                 <Route exact path="/walkhistory" component={WalkHistory}/>
                 <Route exact path="/messages" component={Messages}/>
-
               </div>
             </MuiThemeProvider>
 
@@ -129,7 +135,7 @@ class App extends React.Component {
     }
 
     return (
-      <MuiThemeProvider>
+      <MuiThemeProvider muiTheme={muiTheme}>
         <Router>
           <div>
             <li><Link to="/home">Home</Link></li>
@@ -142,6 +148,10 @@ class App extends React.Component {
             <li><Link to='/trackwalk'>Track Walk</Link></li>
             <li><Link to='/walkhistory'>Current & Past Walks</Link></li>
             <li><Link to='/messages'>Messages</Link></li>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 011618665f923c50358956f9a06ae52d40f466b6
             <Route exact path="/home" render={() => (
               <h1>Hello World from React</h1>
             )}/>
@@ -155,6 +165,10 @@ class App extends React.Component {
             <Route exact path="/walkhistory" component={WalkHistory}/>
             <Route exact path="/messages" component={Messages}/>
 
+<<<<<<< HEAD
+=======
+            <Route exact path="/messages" component={Messages}/>
+>>>>>>> 011618665f923c50358956f9a06ae52d40f466b6
           </div>
         </Router>
       </MuiThemeProvider>
@@ -164,36 +178,3 @@ class App extends React.Component {
 }
 
 ReactDOM.render(<App />, document.getElementById('root'));
-
-
-
-
-/*
-
-<Router>
-  <div>
-    <h3>test2</h3>
-    <ul>
-      <li><Link to="/home">Home</Link></li>
-      <li><Link to='/signup/start'>Signup</Link></li>
-      <li><Link to='/browse'>Browse Walks</Link></li>
-      <li><Link to='/walker'>Walker</Link></li>
-      <li><Link to='/profilepage/owner'>Owner Profile Page</Link></li>
-      <li><Link to='/profilepage/walker'>Walker Profile Page</Link></li>
-    </ul>
-
-    <Route exact path="/home" render={() => (
-      <h1>Hello World from React</h1>
-    )}/>
-    <Route exact path="/signup/start" component={SignUpStart}/>
-    <Route exact path="/browse" component={Browse}/>
-    <Route exact path="/walker" component={Calendar}/>
-    <Route exact path="/profilepage/owner" component={ProfileOwner}/>
-    <Route exact path="/profilepage/walker" component={ProfileWalker}/>
-  </div>
-</Router>
-
-*/
-
-
-

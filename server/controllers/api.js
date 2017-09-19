@@ -155,43 +155,41 @@ module.exports.destroyWalk = (req, res) => {
 };
 
 module.exports.saveDog = (req, res) => {
-  var dogToDB = new Promise(
-    (resolve, reject) => {
-      knex('dogs').insert({
-        name: req.body.name,
-        age: req.body.age,
-        weight: req.body.weight,
-        profile_pic: req.body.profile_pic,
-        breed: req.body.breed,
-        extras: req.body.extras,
-        owner_id: req.user.id})
-        .then(resolve());
-    }
-  );
+  var dogToDB = knex('dogs')
+    .insert({
+      name: req.body.dogName,
+      age: req.body.dogAge,
+      weight: req.body.dogWeight,
+      profile_pic: req.body.dogPicURL,
+      breed: req.body.dogBreed,
+      extras: req.body.dogAboutMe,
+      owner_id: req.user.id
+    });
 
-  var ownerToDB = new Promise(
-    (resolve, reject) => {
-      knex('profiles').where('id', req.user.id).update({ owner: true,
-        phone: req.body.phone,
-        address: req.body.address
-      })
-        .then(resolve());
-    }
-  );
+  var ownerToDB = knex('profiles')
+    .where('id', req.user.id)
+    .update({
+      owner: req.body.owner,
+      walker: req.body.walker,
+      phone: req.body.phone,
+      address: req.body.address
+    });
 
   Promise.all([dogToDB, ownerToDB]).then(responses => {
     res.sendStatus(200);
   })
     .catch(e => {
+      console.log('error resolving promise');
       console.log(e);
     });
 };
 
 module.exports.saveWalker = function(req, res) {
   knex('profiles').where('id', req.user.id).update({
-    about_me: req.body.extras,
+    about_me: req.body.walkerAboutMe,
+    owner: false,
     walker: true,
-    profile_pic: req.body.profile_pic,
+    profile_pic: req.body.userGooglePic,
     phone: req.body.phone,
     address: req.body.address
   })
@@ -507,7 +505,7 @@ module.exports.saveWalkGeolocation = (req, res) => {
 
 module.exports.fetchGeolocations = (req, res) => {
   var walkId = Number(req.query.walkId);
-  models.Geolocation.where('walk_id', walkId)
+  models.Geolocation.where('walk_id', walkId).orderBy('timestamp', 'ASC')
     .fetchAll()
     .then(geolocations => {
       res.status(200).send(geolocations);
@@ -665,10 +663,9 @@ module.exports.calculateAverageRating = function(req, res) {
     .then(result => {
       var sum = 0;
       result.forEach(function(rating) {
-        sum += rating['rating_' + req.body.ratingFor]; // rating_walker
+        sum += Number(rating['rating_' + req.body.ratingFor]); // rating_walker
       });
       var average = sum / result.length;
-      console.log(' the average is ', average);
       return average;
     })
     .then(average => {
@@ -697,16 +694,59 @@ module.exports.writeMessages = function(req, res) {
     walker_id: req.body.walker_id,
     sender_id: req.user.id,
     text: req.body.text,
+    createdAt: new Date(),
   })
-    .then(res.sendStatus(200));
+    .then(() => {
+      models.Message
+        .query((qb) => {
+          qb.where('walker_id', '=', req.body.walker_id).andWhere('owner_id', '=', req.body.owner_id);
+        })
+        .orderBy('createdAt')
+        .fetchAll({withRelated: ['walker', 'owner', 'sender']})
+        .then((collection) => {
+          res.status(201).send(collection.models);
+        });
+    });
+};
+
+module.exports.fetchChatDetails = function(req, res) {
+  models.Message
+    .query((qb) => {
+      qb.where('walker_id', '=', req.user.id).orWhere('owner_id', '=', req.user.id);
+    })
+    .orderBy('createdAt')
+    .fetchAll({withRelated: ['walker', 'owner', 'sender'], columns: ['walker_id', 'owner_id', 'sender_id']})
+    .then((collection) => {
+      models.Profile
+        .query((qb) => {
+          qb.where('id', '=', req.user.id);
+        })
+        .fetch()
+        .then((model) => {
+          var response = {
+            details: collection,
+            owner: model.attributes.owner,
+            user_id: req.user.id
+          };
+          res.status(200).send(response);
+        });
+    });
 };
 
 module.exports.fetchMessages = function(req, res) {
-  console.log('hello')
-  console.log(req.user.id)
   models.Message
     .query((qb) => {
       qb.where('walker_id', '=', req.user.id).orWhere('owner_id', '=', req.user.id)
+  if (req.body.owner) {
+    var owner_id = req.user.id;
+    var walker_id = req.body.other_person_id;
+  } else {
+    var owner_id = req.body.other_person_id;
+    var walker_id = req.user.id;
+  }
+  models.Message
+    .query((qb) => {
+      qb.where('walker_id', '=', walker_id).andWhere('owner_id', '=', owner_id);
     })
     .orderBy('createdAt')
     .fetchAll({withRelated: ['walker', 'owner', 'sender']})
@@ -722,9 +762,6 @@ module.exports.fetchMessages = function(req, res) {
 
 
 module.exports.sendCancelSMS = function(req, res) {
-  console.log('SMS is',req.body.text);
-  console.log('owner phone is', req.body.toOwner);
-
   client.messages.create({
     to: '+19493312296',
     from: '+15622739453',
@@ -732,19 +769,7 @@ module.exports.sendCancelSMS = function(req, res) {
   })
   .then((message) => console.log(message.sid));
 
-  // var sendCancelToWalker = client.messages.create({
-  //   to: '+19498786181',
-  //   from: '+15622739453',
-  //   body: req.body.text
-  // })
-  // .then((message) => console.log(message.sid));
-
-  // Promise.all([sendCancelToOwner, sendCancelToWalker]).then(responses => {
-  //   res.send(200);
-  // })
-  // .catch(e => {
-  //   console.log(e);
-  // });
+      res.status(201).send(collection.models);
+    });
 
 };
-

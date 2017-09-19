@@ -37,22 +37,17 @@ class WalkHistory extends React.Component {
   }
 
   cancelWalk(e) {
-
-    // console.log('WALK CANCELED ID ', e.id);
     $.ajax({
       url: '/api/walkhistory/cancel',
       type: 'POST',
       data: {walkID: e.id},
       context: this,
       success: (res) => {
-        // console.log('request sent');
         this.getUpcomingWalks();
       },
       error: function(err) {
       }
     });
-
-    // console.log('This walk is canceled');
   }
 
   getPastWalk() {
@@ -60,7 +55,6 @@ class WalkHistory extends React.Component {
       url: '/api/walkhistory/past',
       type: 'GET',
       success: (res) => {
-        // console.log('PAST WALKS', res);
         this.setState({
           pastwalks: res
         });

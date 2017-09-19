@@ -30,6 +30,9 @@ class UpcomingWalkItem extends React.Component {
     this.handleRequestClose = this.handleRequestClose.bind(this);
     this.click = this.click.bind(this);
     this.sendCancelSMS = this.sendCancelSMS.bind(this);
+    this.handleChatOpen = this.handleChatOpen.bind(this);
+    this.handleChatClose = this.handleChatClose.bind(this);
+    this.handleMessageLink = this.handleMessageLink.bind(this);
   }
 
   convertDate(start, end) {
@@ -77,6 +80,11 @@ class UpcomingWalkItem extends React.Component {
   }
 
 
+  handleMessageLink(){
+    window.location = 'http://localhost:3000/messages';
+  }
+
+
   render() {
     let time = this.convertDate(this.props.walk.session_start, this.props.walk.session_end);
 
@@ -88,6 +96,10 @@ class UpcomingWalkItem extends React.Component {
       />,
 
     ];
+
+    const msgProps = { walkerid: this.props.walk.walker_id,
+                       ownerid: this.props.walk.owner_id
+                      }
 
     return (
 
@@ -133,8 +145,4 @@ class UpcomingWalkItem extends React.Component {
 export default UpcomingWalkItem;
 
 
-//onClick={this.handleChatOpen}
-//state: {ownerid: this.props.walk.owner_id}
-
-
-
+>>>>>>> 011618665f923c50358956f9a06ae52d40f466b6
