@@ -78,11 +78,11 @@ class LandingHome extends React.Component {
         <div className='demo-container-blue'>
             <div className='demo-text col-sm-6'>
               <div className ='demo-title'>
-                Demo Number One
+                Simple Scheduling
               </div>
               <div><br></br></div>
               <div className='demo-para'>
-                You can't always predict a crazy day at work, but you can anticipate your dog's needs. Instead of rushing home at lunch, book a dog walker to give your dog a 30-minute dog walk.
+                Our calendar interface lets you create shifts in just a few clicks. We’ll fill them up with walks in your neighbourhood in no time.
               </div>
             </div>
             <div className='col-sm-6'>GIF DEMO</div>
@@ -92,11 +92,11 @@ class LandingHome extends React.Component {
           <div className='col-sm-6'>GIF DEMO</div>
           <div className='demo-text col-sm-6'>
               <div className ='demo-title'>
-                Demo Number Two
+                I forgot to tell you!
               </div>
               <div><br></br></div>
               <div className='demo-para'>
-                You can't always predict a crazy day at work, but you can anticipate your dog's needs. Instead of rushing home at lunch, book a dog walker to give your dog a 30-minute dog walk.
+                No worries, instant messaging between walkers and owners means you can get in touch anytime.
               </div>
             </div>
         </div>
@@ -104,11 +104,11 @@ class LandingHome extends React.Component {
         <div className='demo-container-blue'>
           <div className='demo-text col-sm-6'>
               <div className ='demo-title'>
-                Demo Number Three
+                Where’s my dog?
               </div>
               <div><br></br></div>
               <div className='demo-para'>
-                You can't always predict a crazy day at work, but you can anticipate your dog's needs. Instead of rushing home at lunch, book a dog walker to give your dog a 30-minute dog walk.
+                Rest easy, you’ll always know where your dog is with our real-time tracking. And if you want to check which lampposts they sniffed after the walk, we store all historical walk paths for you.
               </div>
           </div>
           <div className='col-sm-6'>GIF DEMO</div>
@@ -118,11 +118,11 @@ class LandingHome extends React.Component {
           <div className='col-sm-6'>GIF DEMO</div>
           <div className='demo-text col-sm-6'>
               <div className ='demo-title'>
-                Demo Number Four
+                Filter and InstaBook
               </div>
               <div><br></br></div>
               <div className='demo-para'>
-                You can't always predict a crazy day at work, but you can anticipate your dog's needs. Instead of rushing home at lunch, book a dog walker to give your dog a 30-minute dog walk.
+                Find a walker that fits all your criteria and book instantly. Even better, you can choose anywhere between 30 minutes to 2 hours for your dog’s next adventure.
               </div>
             </div>
         </div>
