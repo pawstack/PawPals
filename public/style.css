@@ -6,8 +6,11 @@
   font-size: 3.5em;
   color:#66BB6A;
   float: right;
+<<<<<<< HEAD
   padding-left: -30%
 
+=======
+>>>>>>> modified styling for landing page
 }
 
 .landingsubtitle {
@@ -55,7 +58,7 @@
 }
 
 .slogan {
-  margin-top: 100px;
+  margin-top: 130px;
   margin-left:230px;
   font-family: 'Pontano Sans', sans-serif;
   font-size: 40px;
@@ -110,7 +113,8 @@
 }
 
 .landing-icon {
-  width: 90px;
+  width: 80px;
+  border-radius: 50%;
 }
 
 .icon-title {
@@ -132,7 +136,7 @@
 }
 
 .team-main-container {
-  padding-top: 70px;
+  padding-top: 40px;
 }
 
 .contact-icon-span{
@@ -141,6 +145,11 @@
 
 .contact-icon-img {
   width:40px;
+}
+
+.team-icon {
+  width: 200px;
+  border-radius: 50%;
 }
 
 
