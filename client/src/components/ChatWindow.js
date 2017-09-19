@@ -1,6 +1,6 @@
 import React from 'react';
 import { Widget, addResponseMessage, addLinkSnippet, addUserMessage } from 'react-chat-widget';
-import $ from 'jQuery';
+import $ from 'jquery';
 
 const widgetStyles = {
   header: {
