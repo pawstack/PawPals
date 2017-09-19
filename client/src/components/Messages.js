@@ -67,8 +67,14 @@ class ChatList extends React.Component {
       var conversationDetail = conversationDetails.details[i];
       if (this.state.owner) {
         conversationNames[conversationDetail.walker_id] = conversationDetail.walker;
+        if (conversationDetail.owner_read) {
+          conversationNames[conversationDetail.walker_id]['read'] = true;
+        }
       } else {
         conversationNames[conversationDetail.owner_id] = conversationDetail.owner;
+        if (conversationDetail.walker_read) {
+          conversationNames[conversationDetail.owner_id]['read'] = true;
+        }
       }
     }
     this.setState({conversationNames}, callback);
@@ -118,7 +124,10 @@ class ChatList extends React.Component {
   }
 
   fetchMessages(other_person_id) {
-    return fetch('/api/messages/fetch',{
+    var conversationNames = this.state.conversationNames;
+    conversationNames[other_person_id].read = true;
+    this.setState({conversationNames});
+    return fetch('/api/messages/fetch', {
       method: 'POST',
       credentials: 'include',
       headers: {
@@ -163,11 +172,21 @@ class ChatList extends React.Component {
         body: body,
         lang: 'en',
       }
+      var conversationNames = this.state.conversationNames;
+      if (this.state.chat.owner_id !== data.own_id && this.state.chat.walker_id !== data.own_id) {
+        conversationNames[data.own_id].read = false;
+      }
       this.setState({
         title: title,
-        options: options
+        options: options,
+        conversationNames
       });
-
+    } else {
+      var conversationNames = this.state.conversationNames;
+      if (this.state.chat.owner_id !== data.own_id && this.state.chat.walker_id !== data.own_id) {
+        conversationNames[data.own_id].read = false;
+        this.setState({conversationNames});
+      }
     }
   }
 
@@ -183,6 +202,7 @@ class ChatList extends React.Component {
          <Subheader>Chats</Subheader>
          {(Object.keys(this.state.conversationNames)).map(key => (
            <ListItem
+             style={{"fontWeight": this.state.conversationNames[key].read? "normal": "bold"}}
              primaryText={this.state.conversationNames[key].first + ' ' + this.state.conversationNames[key].last}
              leftAvatar={<Avatar src= {this.state.conversationNames[key].profile_pic} />}
              rightIcon={<CommunicationChatBubble />}

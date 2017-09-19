@@ -38,6 +38,7 @@ import NavBarNewUserLoggedIn from './components/NavBarNewUserLoggedIn.jsx';
 const muiTheme = getMuiTheme({
   palette: {
     primary1Color: '#66BB6A',
+    pickerHeaderColor: '#66BB6A',
   },
 });
 

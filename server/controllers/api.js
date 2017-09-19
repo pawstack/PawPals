@@ -625,6 +625,8 @@ module.exports.writeMessages = function(req, res) {
     walker_id: req.body.walker_id,
     sender_id: req.user.id,
     text: req.body.text,
+    owner_read: req.body.owner,
+    walker_read: !req.body.owner,
     createdAt: new Date(),
   })
     .then(() => {
@@ -646,7 +648,7 @@ module.exports.fetchChatDetails = function(req, res) {
       qb.where('walker_id', '=', req.user.id).orWhere('owner_id', '=', req.user.id);
     })
     .orderBy('createdAt')
-    .fetchAll({withRelated: ['walker', 'owner', 'sender'], columns: ['walker_id', 'owner_id', 'sender_id']})
+    .fetchAll({withRelated: ['walker', 'owner', 'sender'], columns: ['walker_id', 'owner_id', 'sender_id', 'owner_read', 'walker_read']})
     .then((collection) => {
       models.Profile
         .query((qb) => {
@@ -678,9 +680,20 @@ module.exports.fetchMessages = function(req, res) {
     })
     .orderBy('createdAt')
     .fetchAll({withRelated: ['walker', 'owner', 'sender']})
-    .then((collection) => {
+    .tap((collection) => {
       res.status(201).send(collection.models);
-    });
+    })
+    .then((collection) => {
+      if (req.body.owner) {
+        collection.models.forEach((model) => {
+          model.save({owner_read: true});
+        })
+      } else {
+        collection.models.forEach((model) => {
+          model.save({walker_read: true});
+        })
+      }
+    })
 };
 
 
