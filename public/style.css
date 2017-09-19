@@ -3,7 +3,7 @@
 .title {
   font-family: 'Carter One', cursive;
   position: relative;
-  font-size: 3.5em;
+  font-size: 3vw;
   color:#66BB6A;
   float: right;
 <<<<<<< HEAD
@@ -58,10 +58,10 @@
 }
 
 .slogan {
-  margin-top: 130px;
+  margin-top: 150px;
   margin-left:230px;
   font-family: 'Pontano Sans', sans-serif;
-  font-size: 40px;
+  font-size: 2vw;
   color: grey;
 }
 
