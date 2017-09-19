@@ -705,56 +705,13 @@ module.exports.fetchMessages = function(req, res) {
   models.Message
     .query((qb) => {
       qb.where('walker_id', '=', walker_id).andWhere('owner_id', '=', owner_id);
-  console.log('hello')
-  console.log(req.user.id)
-  models.Message
-    .query((qb) => {
-      qb.where('walker_id', '=', req.user.id).orWhere('owner_id', '=', req.user.id)
     })
     .orderBy('createdAt')
     .fetchAll({withRelated: ['walker', 'owner', 'sender']})
     .then((collection) => {
       res.status(201).send(collection.models);
     });
-      var response = {
-        messages: collection,
-        user_id: req.user.id,
-      }
-      console.log(collection, 'collection')
-      res.status(200).send(response);
-    })
-  })
 };
 
 
-
-module.exports.sendCancelSMS = function(req, res) {
-  console.log('SMS is',req.body.text);
-  console.log('owner phone is', req.body.toOwner);
-
-  client.messages.create({
-    to: '+19493312296',
-    from: '+15622739453',
-    body: req.body.text
-  })
-  .then((message) => console.log(message.sid));
-
-  // var sendCancelToWalker = client.messages.create({
-  //   to: '+19498786181',
-  //   from: '+15622739453',
-  //   body: req.body.text
-  // })
-  // .then((message) => console.log(message.sid));
-
-  // Promise.all([sendCancelToOwner, sendCancelToWalker]).then(responses => {
-  //   res.send(200);
-  // })
-  // .catch(e => {
-  //   console.log(e);
-  // });
-
-
-  res.status(201).send(collection.models);
-
-};
 
