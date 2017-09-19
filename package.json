@@ -5,8 +5,8 @@
   },
   "scripts": {
     "start": "nodemon server",
-    "test": "NODE_ENV=test nyc grunt test",
-    "travis-test": "NODE_ENV=travis-test nyc grunt test --timeout 30000",
+    "test": "NODE_ENV=test grunt test",
+    "travis-test": "NODE_ENV=travis-test grunt test --timeout 30000",
     "build": "webpack --watch",
     "heroku-postbuild": "webpack -p"
   },
