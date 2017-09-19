@@ -13,8 +13,8 @@ exports.up = function(knex, Promise) {
     t.integer('sender_id').notNullable();
     t.foreign('sender_id').references('profiles.id').onDelete('CASCADE');
 
-    t.boolean('owner_read').defaultTo(true);
-    t.boolean('walker_read').defaultTo(true);
+    t.boolean('owner_read').defaultTo(false);
+    t.boolean('walker_read').defaultTo(false);
 
     });
 };

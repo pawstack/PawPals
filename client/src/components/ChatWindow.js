@@ -1,6 +1,7 @@
 import React from 'react';
 import { Widget, addResponseMessage, addLinkSnippet, addUserMessage } from 'react-chat-widget';
 import $ from 'jquery';
+import equals from 'deep-equal';
 
 const widgetStyles = {
   header: {
@@ -27,8 +28,10 @@ class ChatWindow extends React.Component {
     this.handleNewUserMessage = this.handleNewUserMessage.bind(this);
     this.createConversation = this.createConversation.bind(this);
     this.props.socket.on('new message', (data) => {
-      if (data.own_id === this.props.selectedConversation[0].walker_id || data.own_id === this.props.selectedConversation[0].owner_id) {
-        addResponseMessage(data.message);
+      if (this.props.selectedConversation[0]){
+        if (data.own_id === this.props.selectedConversation[0].walker_id || data.own_id === this.props.selectedConversation[0].owner_id) {
+          addResponseMessage(data.message);
+        }
       }
     })
     $(document).on("click",".launcher",function(e){
@@ -37,7 +40,7 @@ class ChatWindow extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (JSON.stringify(this.props.selectedConversation) !== JSON.stringify(nextProps.selectedConversation)) {
+    if (!equals(this.props.selectedConversation, nextProps.selectedConversation)) {
       this.createConversation(nextProps);
     }
   }
@@ -68,6 +71,7 @@ class ChatWindow extends React.Component {
         text: message,
         owner_id: this.props.selectedConversation[0].owner_id,
         walker_id: this.props.selectedConversation[0].walker_id,
+        owner: this.props.owner,
       })
     })
       .then(() => {
