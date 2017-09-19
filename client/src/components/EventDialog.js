@@ -141,7 +141,6 @@ export default class EventDialog extends React.Component {
     ];
 
     if (!this.state.walkCompleted && Date.now() < this.props.selectedEvent.end) {
-    // if (!this.state.walkCompleted) {
       return (
         <div>
           <Dialog
@@ -172,12 +171,12 @@ export default class EventDialog extends React.Component {
               </tbody>
             </table>
             <div>
-              <Link to= {{pathname:'/messages',
-                          state: {ownerid: this.props.selectedEvent.owner_id,
-                          walkerid: this.props.selectedEvent.walker_id}
-                        }}
+              <Link to= {{pathname: '/messages',
+                state: {ownerid: this.props.selectedEvent.owner_id,
+                  walkerid: this.props.selectedEvent.walker_id}
+              }}
               >
-              <FlatButton label="Message Owner" primary={true}  style={{'marginLeft': '3px'}}/>
+                <FlatButton label="Message Owner" primary={true} style={{'marginLeft': '3px'}}/>
               </Link>
             </div>
           </Dialog>
@@ -205,16 +204,21 @@ export default class EventDialog extends React.Component {
                       style={{'borderRadius': '10px'}}/>
                   </td>
                   <td>
-                    <div style = {{paddingLeft: '10%'}}>
-                      Please rate this walk!
-                    </div>
-                    <div style = {{paddingLeft: '10%'}}>
-                      <StarRating
-                        ratingFor = {'dog'}
-                        walk = {this.props.selectedEvent}
-                        ratingForID = {this.props.selectedEvent['dog_id']}
-                      />
-                    </div>
+                    {(this.props.selectedEvent.owner_id === null ?
+                      <div>This walk was not booked</div> :
+                      <div>
+                        <div style = {{paddingLeft: '10%'}}>
+                          Please rate this walk!
+                        </div>
+                        <div style = {{paddingLeft: '10%'}}>
+                          <StarRating
+                            ratingFor = {'dog'}
+                            walk = {this.props.selectedEvent}
+                            ratingForID = {this.props.selectedEvent['dog_id']}
+                          />
+                        </div>
+                      </div>
+                    )}
                   </td>
                 </tr>
               </tbody>
@@ -223,7 +227,5 @@ export default class EventDialog extends React.Component {
         </div>
       );
     }
-
   }
 }
-
