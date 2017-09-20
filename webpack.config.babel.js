@@ -4,7 +4,8 @@ import path from 'path';
 const config = {
   entry: {
     app: './client/src/app',
-    login: './client/src/login'
+    login: './client/src/login',
+    stripe: './client/src/stripe.jsx'
   },
   output: {
     path: path.join(__dirname, 'public/dist'),

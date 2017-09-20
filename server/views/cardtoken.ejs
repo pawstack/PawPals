@@ -1,16 +1,31 @@
 <% include head.ejs%>
 
+<div>
 
-<form action="/api/signup/payment/savecardtoken" method="POST">
-  <script
-    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-    data-key="pk_test_Z3xCgscbhBJLWc5Vt7Zks12h"
-    data-name="PawPals"
-    data-description=""
-    data-panel-label="Save Card Details"
-    data-label="Save Card Details"
-    data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
-    data-locale="auto">
-  </script>
-</form>
+  <div id='stripe-root'></div>
+  <script src="/dist/stripe.bundle.js"></script>
+  <div style = "text-align: center; display: block; position: relative; color: blue; margin-bottom: 50%">
+    <div>
+      <div>
+        Thank you for signing up with Stripe. <br />
+        Please save your card details here so you can checkout faster later!
+        <br />
+      </div>
+    </div>
+    <form action="/api/signup/payment/savecardtoken" method="POST">
+      <script
+        src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+        data-key="pk_test_Z3xCgscbhBJLWc5Vt7Zks12h"
+        data-name="PawPals"
+        data-description=""
+        data-panel-label="Save Card Details"
+        data-label="Save Card Details"
+        data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+        data-locale="auto">
+      </script>
+    </form>
+  </div>
+</div>
+
+
 <% include foot.ejs%>
