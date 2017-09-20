@@ -15,7 +15,7 @@ import {BottomNavigation, BottomNavigationItem} from 'material-ui/BottomNavigati
 import $ from 'jquery';
 import LandingHome from './LandingHome';
 import LandingTeam from './LandingTeam';
-import '../../../public/landing.css';
+import '../../../public/componentCSS/landing.css';
 
 
 class LandingPage extends React.Component {
