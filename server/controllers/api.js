@@ -38,8 +38,8 @@ module.exports.getFilteredWalks = (req, res) => {
     models.Walk
       .query((qb) => {
         qb.where('price', '<=', req.body.price)
-          .where('session_start_walker', '<=', new Date(start.clone().endOf('minute').toDate()))
-          .where('session_end_walker', '>=', new Date(finish.clone().startOf('minute').toDate()))
+          .where('session_start', '<=', new Date(start.clone().endOf('minute').toDate()))
+          .where('session_end', '>=', new Date(finish.clone().startOf('minute').toDate()))
           .innerJoin('profiles', 'walks.walker_id', 'profiles.id')
           .orderBy(criteria, order)
           .limit(20);
@@ -336,9 +336,7 @@ var updateExistingWalk = (start_owner, end_owner, transactionNumber, walkID, own
       dog_id: dogID,
       pickup_address: pickup_address,
       session_start: start_owner,
-      session_end: end_owner,
-      session_start_walker: start_owner,
-      session_end_walker: end_owner
+      session_end: end_owner
     })
     .then(callback)
     .catch(error => console.log(error, 'error database'));
@@ -355,11 +353,11 @@ var createSplitWalks = (start_owner, end_owner, walkID) => {
     .then((model) => {
       // create an unbooked walk before and/or after, if enough leftover time
       var startEndTimes = [];
-      if (start_owner - new Date(model.attributes.session_start_walker) >= 45 * 60 * 1000) {
-        startEndTimes.push({start: model.attributes.session_start_walker, end: start_walker});
+      if (start_owner - new Date(model.attributes.session_start) >= 45 * 60 * 1000) {
+        startEndTimes.push({start: model.attributes.session_start, end: start_walker});
       }
-      if (new Date(model.attributes.session_end_walker) - end_owner >= 45 * 60 * 1000) {
-        startEndTimes.push({start: end_walker, end: model.attributes.session_end_walker});
+      if (new Date(model.attributes.session_end) - end_owner >= 45 * 60 * 1000) {
+        startEndTimes.push({start: end_walker, end: model.attributes.session_end});
       }
       Promise.all(
         startEndTimes.map(time => createNewSplitWalk(model, time.start, time.end))
@@ -374,8 +372,10 @@ var createSplitWalks = (start_owner, end_owner, walkID) => {
 
 const createNewSplitWalk = (walk, start, end) => {
   return models.Walk.forge({
-    session_start_walker: start,
-    session_end_walker: end,
+    session_start_walker: walk.attributes.session_start_walker,
+    session_end_walker: walk.attributes.session_end_walker,
+    session_start: start,
+    session_end: end,
     walk_zone_pt: walk.attributes.walk_zone_pt,
     price: walk.attributes.price,
     walker_id: walk.attributes.walker_id,

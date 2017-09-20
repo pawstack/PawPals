@@ -27,9 +27,9 @@ let parseEvents = (data) => {
     } else {
       event['title'] = 'Unbooked Walk';
     }
-    event['start'] = new Date(data.walks[i].session_start_walker);
+    event['start'] = new Date(data.walks[i].session_start);
     event['paid'] = data.walks[i].paid;
-    event['end'] = new Date(data.walks[i].session_end_walker);
+    event['end'] = new Date(data.walks[i].session_end);
     event['price'] = data.walks[i].price;
     event['id'] = data.walks[i].id;
     event['owner_id'] = data.walks[i].owner_id;
