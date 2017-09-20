@@ -8,6 +8,7 @@ import {
   LatLngBounds,
   LatLng
 } from 'react-google-maps';
+import moment from 'moment';
 
 const GoogleMapWrapper = withGoogleMap(props => (
   <GoogleMap
@@ -43,12 +44,13 @@ export default class FindMyDogMap extends React.Component {
       center: {lat: 0, lng: 0},
       polyLineData: [],
       zoom: 16,
-      staticData: [],
       startLocation: {},
-      endLocation: {}
+      endLocation: {},
+      dataSoFar: []
     };
     this.handleMapLoad = this.handleMapLoad.bind(this);
     this.getGeolocations = this.getGeolocations.bind(this);
+    this.getLatestGeolocations = this.getLatestGeolocations.bind(this);
   }
 
   componentDidMount() {
@@ -59,15 +61,15 @@ export default class FindMyDogMap extends React.Component {
     this._mapComponent = map;
   }
 
-  getGeolocations() {
+  getGeolocations() { // gets all geolocation for this walk
     var context = this;
     $.get('/api/walks/track', {walkId: this.props.walkId})
       .then((data) => {
         var midpoint = Math.floor(data.length / 2);
         this.setState({
-          markers: data,
           center: data.length > 0 ? {lat: Number(data[midpoint].latitude), lng: Number(data[midpoint].longitude)} : {lat: 0, lng: 0},
           startLocation: {lat: Number(data[0].latitude), lng: Number(data[0].longitude)},
+          dataSoFar: [].concat(data[data.length - 1]) // set the dataSoFar to be the last data point of geo location
         }, function() {
           var polydata = data.map(function(item, index) {
             return {lat: Number(item.latitude), lng: Number(item.longitude)};
@@ -76,22 +78,69 @@ export default class FindMyDogMap extends React.Component {
           var animate = window.setInterval(function() {
             animatedPolyData = animatedPolyData.concat(polydata.splice(0, 1));
             context.setState({
-              polyLineData: animatedPolyData
+              polyLineData: animatedPolyData,
+              endLocation: {lat: Number(animatedPolyData[animatedPolyData.length - 1].lat), lng: Number(animatedPolyData[animatedPolyData.length - 1].lng)}
             }, function() {
               if (polydata.length === 0) {
                 window.clearInterval(animate);
-                this.setState({
-                  endLocation: {lat: Number(data[data.length - 1].latitude), lng: Number(data[data.length - 1].longitude)}
-                });
+                //if this is a walk that is happening now -- retrieve new data every 30 seconds
+                if (this.props.walk && moment(Date.now()) > moment(this.props.walk.session_start) && moment(Date.now()) < moment(this.props.walk.session_end)) {
+                  var getLiveGeolocations = window.setInterval(function() {
+                    context.getLatestGeolocations();
+                    if (!context.props.walk || moment(Date.now()) > moment(context.props.walk.session_end)) {
+                      window.clearInterval(getLiveGeolocations);
+                    }
+                  }, 30000);
+                }
               }
             });
-          }, 20);
+          }, 210);
         });
       })
       .fail((err) => {
-        console.log('ERROR getting geolocation ', err);
+        console.log('Error retrieving geolocation data for this walk', err);
       });
+  }
 
+  getLatestGeolocations() {
+    var latestTimeStamp = '';
+
+    //if the dataSoFar is empty, set the last time stamp to be when the walk started.
+    if (this.state.dataSoFar.length === 0) {
+      latestTimeStamp = this.props.walk.session_start;
+    } else {
+      latestTimeStamp = this.state.dataSoFar[this.state.dataSoFar.length - 1].timestamp;
+    }
+
+    //retrieve all walks later than the latest time stamp.
+    $.ajax({
+      method: 'GET',
+      url: '/api/walks/trackRealTime',
+      data: {
+        walkId: this.props.walkId,
+        latestTimeStamp: this.state.dataSoFar[this.state.dataSoFar.length - 1].timestamp
+      },
+      context: this,
+      success(data) {
+        this.setState({
+          dataSoFar: this.state.dataSoFar.concat(data)
+        }, function() {
+          //convert the latest retreived data to polydata format.
+          if (data.length > 0) {
+            var latestPolyData = data.map(function(item, index) {
+              return {lat: Number(item.latitude), lng: Number(item.longitude)};
+            });
+            this.setState({
+              polyLineData: this.state.polyLineData.concat(latestPolyData),
+              endLocation: {lat: Number(data[data.length - 1].latitude), lng: Number(data[data.length - 1].longitude)}
+            });
+          }
+        });
+      },
+      error(err) {
+        console.log('Error retrieving latest live Geo Data ', err);
+      }
+    });
   }
 
 
