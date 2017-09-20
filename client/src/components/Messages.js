@@ -5,7 +5,6 @@ import Subheader from 'material-ui/Subheader';
 import Divider from 'material-ui/Divider';
 import CommunicationChatBubble from 'material-ui/svg-icons/communication/chat-bubble';
 import ChatWindow from './ChatWindow';
-import openSocket from 'socket.io-client';
 import Notification  from 'react-web-notification';
 import $ from 'jquery';
 
@@ -25,17 +24,17 @@ class ChatList extends React.Component {
     this.getConversationDetails = this.getConversationDetails.bind(this);
     this.generateConversationNames = this.generateConversationNames.bind(this);
     this.checkNewConversation = this.checkNewConversation.bind(this);
-    this.socket = openSocket();
-    this.socket.on('new message', (data) => {
-      this.handleNewMessage.call(this, data);
-    })
   }
 
-  componentWillMount() {
+  componentDidMount() {
+    this.props.socket.on('new message', (data) => {
+      console.log('new message heard')
+      this.handleNewMessage.call(this, data);
+    })
     this.getConversationDetails((conversationDetails) => {
       this.generateConversationNames(conversationDetails, () => {
         this.checkNewConversation(() => {
-          this.socket.emit('join', {
+          this.props.socket.emit('join', {
             owner: this.state.owner,
             user_id: this.state.user_id,
             names: this.state.conversationNames,
@@ -81,6 +80,7 @@ class ChatList extends React.Component {
   }
 
   checkNewConversation(callback) {
+    console.log(this.props.location)
     if (this.props.location.state) {
       if (this.state.owner && !this.state.conversationNames[this.props.location.state.walkerid]) {
         this.instantiateConversation(this.props.location.state.ownerid, this.props.location.state.walkerid, callback);
@@ -214,7 +214,7 @@ class ChatList extends React.Component {
          selectedConversation={this.state.chat}
          user_id={this.state.user_id}
          owner={this.state.owner}
-         socket={this.socket}
+         socket={this.props.socket}
        />
        <Notification
          ignore={this.state.ignore && this.state.title !== ''}

@@ -273,6 +273,16 @@ class Calendar extends React.Component {
       });
   }
 
+  eventStyleGetter(event, start, end, isSelected) {
+    var backgroundColor = '#66BB6A';
+    var style = {
+      backgroundColor: backgroundColor,
+      borderColor: '#529655',
+    };
+    return {
+      style: style
+    };
+  }
 
   render () {
     return (
@@ -289,6 +299,8 @@ class Calendar extends React.Component {
           onSelectSlot={(slotInfo) => {
             this.handleFormOpen(slotInfo.start, slotInfo.end);
           }}
+          eventPropGetter={(this.eventStyleGetter)}
+          views={['week', 'day']}
         />
         <DialogForm
           handleTextInputChange={this.handleTextInputChange}

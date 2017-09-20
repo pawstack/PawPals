@@ -38,6 +38,7 @@ app.use('/*', routes.auth);
 
 io.on('connection', (socket) => {
   socket.on('join', (data) => {
+    console.log('socket id', socket.id)
     for (var prop in data.names) {
       if (data.owner) {
         var owner = data.user_id;
@@ -46,7 +47,9 @@ io.on('connection', (socket) => {
         var owner = prop;
         var walker = data.user_id;
       }
-      socket.join(owner.toString() + walker.toString());
+      socket.join(owner.toString() + walker.toString(), () => {
+        console.log(socket.rooms, 'rooms of socket')
+      });
     }
   });
   socket.on('new message', (data) => {

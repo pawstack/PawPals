@@ -4,15 +4,15 @@ const express = require('express');
 const expect = require('chai').expect;
 const app = require('../app.js');
 
-describe('basic server', function() {
-  it('sends back hello world', function(done) {
-    request(app)
-      .get('/api')
-      .expect(200)
-      .expect(function(res) {
-        expect(res.text).to.equal('Hello World!');
-      })
-      .end(done);
+describe('getWalkersWalks', function() {
+  //it('should fetch collection', function(done) {
+    //request(app)
+      //.get('/api/walks/fetch')
+      //.expect(200)
+      //.expect(function(res) {
+        //expect(res.walks).to.exist;
+      //})
+      //.end(done);
   });
 
   it('accepts POST request', function(done) {
