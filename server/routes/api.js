@@ -106,4 +106,7 @@ router.route('/messages/write')
 router.route('/messages/senders')
   .get(ApiController.fetchChatDetails);
 
+router.route('/walks/trackRealTime')
+  .get(ApiController.fetchLatestGeolocations);
+
 module.exports = router;
