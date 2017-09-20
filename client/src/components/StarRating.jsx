@@ -35,7 +35,6 @@ class StarRating extends React.Component {
       },
       context: this,
       success: function(data) {
-        console.log('successfully updated rating to the db ', data);
         this.updateAverageRating();
         this.getRatingDB();
       },
@@ -59,7 +58,6 @@ class StarRating extends React.Component {
       },
       context: this,
       success: function(data) {
-        console.log('successfully retrieved rating from db ', data);
         this.setState({
           starRating: data['rating_' + this.props.ratingFor]
         });
@@ -80,7 +78,6 @@ class StarRating extends React.Component {
       },
       context: this,
       success: function(data) {
-        console.log('successfully updated walkers average rating in DB', data);
       },
       error: function(err) {
         console.log('error updating average rating in DB', err);

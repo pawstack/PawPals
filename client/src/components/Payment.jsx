@@ -21,7 +21,7 @@ class Payment extends React.Component {
   }
 
   processPayment() {
-    console.log('client - /api/walks/payment create a destination charge button clicked');
+
     $.ajax({
       type: 'POST',
       url: '/api/walks/payment',
@@ -33,7 +33,7 @@ class Payment extends React.Component {
         percentRetainedByPlatform: 10
       },
       success: function() {
-        console.log('client - successful destination charge post request completed');
+
       },
       error: function() {
         console.log('client - error destination charge post request completed');
@@ -42,7 +42,7 @@ class Payment extends React.Component {
   }
 
   requestRefundForCancellation() {
-    console.log('button clicked to request a refund for cancellation');
+
     $.ajax({
       type: 'POST',
       url: '/api/walks/refund',
@@ -50,7 +50,7 @@ class Payment extends React.Component {
         walkID: 1, //TBD WHEN BOOKED.
       },
       success: function() {
-        console.log('client - successful cancellation refund completed');
+
       },
       error: function() {
         console.log('client - successful cancellation refund completed');
