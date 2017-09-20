@@ -37,13 +37,15 @@ class LandingHome extends React.Component {
           </div>
         </div>
 
-        <div className="paw-logo-container">
-          <img src="http://media.socastsrm.com/wordpress/wp-content/blogs.dir/51/files/2017/08/Walking-Dogs-event.jpg"></img>
+        <div className="dog-walking-container">
+          <img src="http://media.socastsrm.com/wordpress/wp-content/blogs.dir/51/files/2017/08/Walking-Dogs-event.jpg" className="dog-walking-img"></img>
         </div>
 
-        <div className="container icon-container">
+        <div className="circular-icon-container">
           <div className="row">
-            <div className="col-sm-3"><img src="https://cdn0.iconfinder.com/data/icons/time-icons-rounded/110/Calendar-Time-512.png" className='landing-icon'></img>
+            <div className="col-sm-3">
+              <img src="https://cdn0.iconfinder.com/data/icons/time-icons-rounded/110/Calendar-Time-512.png" className='landing-icon'>
+              </img>
               <div className='icon-title'>Schedule</div>
               <div className='icon-text'>
                 Calender system to easily schedule and book walks.
