@@ -1,16 +1,11 @@
 
-
-.title {
+.landing-title {
   font-family: 'Carter One', cursive;
   position: relative;
   font-size: 3vw;
   color:#66BB6A;
   float: right;
-<<<<<<< HEAD
   padding-left: -30%
-
-=======
->>>>>>> modified styling for landing page
 }
 
 .landingsubtitle {
@@ -19,7 +14,7 @@
 
 .container {
   margin: auto
-  width: 100%
+  width: 80%
 }
 
 #root {

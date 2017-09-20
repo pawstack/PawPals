@@ -36,7 +36,7 @@ class LandingPage extends React.Component {
               <img src="https://i.imgur.com/ptBHSFz.png" style={{"width":"5vw","marginLeft":"225px","marginTop":"-2%"}}></img>
 
             </span>
-            <span className="title">
+            <span className="landing-title">
             PawPals
             </span>
           </div>

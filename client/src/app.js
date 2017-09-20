@@ -32,7 +32,7 @@ injectTapEventPlugin();
 import NavBarOwnerLoggedIn from './components/NavBarOwnerLoggedIn.jsx';
 import NavBarWalkerLoggedIn from './components/NavBarWalkerLoggedIn.jsx';
 import NavBarNewUserLoggedIn from './components/NavBarNewUserLoggedIn.jsx';
-import Message from './components/Message';
+
 
 
 const muiTheme = getMuiTheme({
@@ -147,8 +147,6 @@ class App extends React.Component {
             <li><Link to='/walkhistory'>Current & Past Walks</Link></li>
             <li><Link to='/messages'>Messages</Link></li>
             <li><Link to='/landingpage'>Landing</Link></li>
-            <li><Link to='/messages'>Messages</Link></li>
-
             <Route exact path="/home" render={() => (
               <h1>Hello World from React</h1>
             )}/>
