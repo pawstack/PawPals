@@ -54,7 +54,8 @@ class Calendar extends React.Component {
       selectedEvent: {
         walk_zone_pt: null,
         start: null,
-        end: null
+        end: null,
+        paid: false
       },
       tracking: {
         geolocations: [],
@@ -87,7 +88,15 @@ class Calendar extends React.Component {
   }
 
   handleEventClose() {
-    this.setState({eventOpen: false});
+    this.setState({
+      eventOpen: false,
+      selectedEvent: {
+        walk_zone_pt: null,
+        start: null,
+        end: null,
+        paid: false
+      }
+    });
   }
 
   handleFormOpen(start, end) {
@@ -130,26 +139,28 @@ class Calendar extends React.Component {
   handleCancel() {
     if (this.state.selectedEvent.paid) {
       this.requestRefundForCancellation(this.state.selectedEvent.id);
+    } else {
+      fetch('/api/walks/destroy', {
+        method: 'DELETE',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+          'walk_id': this.state.selectedEvent.id
+        })
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          var events = parseEvents(data);
+          this.setState({events});
+          this.handleEventClose();
+        })
+        .catch((err) => {
+          console.log('error:', err);
+        });
     }
-    fetch('/api/walks/destroy', {
-      method: 'DELETE',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      credentials: 'include',
-      body: JSON.stringify({
-        'walk_id': this.state.selectedEvent.id
-      })
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        var events = parseEvents(data);
-        this.setState({events, ['eventOpen']: false});
-      })
-      .catch((err) => {
-        console.log('error:', err);
-      });
   }
 
   requestRefundForCancellation(walk_id) {
@@ -163,6 +174,10 @@ class Calendar extends React.Component {
     })
       .then(() => {
         this.setState({['snackBarOpen']: true});
+        this.handleEventClose();
+        this.getEvents((states) => {
+          this.setState(states);
+        });
       })
       .catch((err) => {
         console.log('refund failed');

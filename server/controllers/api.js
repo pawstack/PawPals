@@ -285,24 +285,18 @@ module.exports.getWalkerProfile = function(req, res) {
     .then(data => { res.status(201).send(data); });
 };
 
-module.exports.refundPayment = (req, res) => {
+var refundPayment = (req, res) => {
   return getTransactionID(req.body.walkID)
     .then((transactionID) => {
       console.log('transactionID is ', transactionID);
-      stripe.refunds.create({
+      return stripe.refunds.create({
         charge: transactionID,
         reverse_transfer: true
-      })
-        .then(function(refund) {
-          console.log('refund completed ', refund);
-          reverseChargeTransctionInDB(req.body.walkID);
-        });
+      });
     })
-    .then(() => {
-      res.sendStatus(200);
-    })
-    .catch(() => {
-      res.sendStatus(503);
+    .then((refund) => {
+      console.log('refund completed ', refund);
+      return reverseChargeTransctionInDB(req.body.walkID);
     });
 };
 
@@ -515,7 +509,7 @@ module.exports.getUpcomingWalks = function(req, res) {
     .where('session_end', '>', new Date())
     .orderBy('session_start', 'DESC')
     .fetchAll({
-      withRelated: ['walker','owner']
+      withRelated: ['walker', 'owner']
     })
     .then(walks => {
       res.status(200).send(walks);
@@ -547,23 +541,26 @@ module.exports.getPastWalk = function(req, res) {
 };
 
 
-module.exports.ownerCancelWalk = function(req, res) {
-  module.exports.refundPayment(req, res)
+module.exports.cancelBookedWalk = function(req, res) {
+  refundPayment(req, res)
+    .catch(err => {
+      console.log('ERROR refunding payment ', err);
+    })
     .then(() => {
-      knex('walks').where('id', req.body.walkID).update({
-        owner_id: null,
-        dog_id: null,
-        paid: false,
-        session_start: null,
-        session_end: null,
-        pickup_address: null,
-      })
-        .catch(err => {
-          console.log(error, 'error updating walks');
+      return knex('walks')
+        .where('id', req.body.walkID)
+        .update({
+          owner_id: null,
+          dog_id: null,
+          pickup_address: null,
         });
     })
-    .catch(e => {
-      console.log(e, 'error refunding payment');
+    .then(() => {
+      res.sendStatus(200);
+    })
+    .catch(err => {
+      console.log('ERROR updating walk to unbooked ', err);
+      res.sendStatus(503);
     });
 };
 
