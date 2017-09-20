@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Alfa+Slab+One|Handlee|Lato|Shrikhand|Pontano+Sans|Carter+One');
+
 
 .landing-title {
   font-family: 'Carter One', cursive;
@@ -5,20 +7,20 @@
   font-size: 3vw;
   color:#66BB6A;
   float: right;
-  padding-left: -30%
+  padding-left: -30%;
 }
 
 .landingsubtitle {
-  font-family: 'Handlee', cursive
+  font-family: 'Handlee', cursive;
 }
 
 .container {
-  margin: auto
-  width: 80%
+  margin: auto;
+  width: 100%;
 }
 
 #root {
-  width: 100%
+  width: 100%;
 }
 
 .landing-nav{
@@ -62,7 +64,8 @@
 
 .icon-container {
   margin-bottom: 50px;
-  margin-top: 50px
+  margin-top: 50px;
+  width: 80%
 }
 
 .demo-text {
@@ -89,7 +92,7 @@
 }
 
 .demo-container-white {
-  background-color':#f9fafc;
+  background-color: #f9fafc;
   color:grey;
   height:50vh;
 }
@@ -114,7 +117,7 @@
 
 .icon-title {
   padding-top:20px;
-  font-family: 'Pontano Sans', sans-serif;
+  font-family: 'Pontano Sans',sans-serif;
   font-size: 30px;
   font-weight: bold;
 }
@@ -146,5 +149,6 @@
   width: 200px;
   border-radius: 50%;
 }
+
 
 

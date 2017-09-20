@@ -49,10 +49,7 @@ class NavBarOwnerLoggedIn extends React.Component {
               primaryText="My Walks"
               containerElement={<Link to='/walkhistory' />}
             />
-              <MenuItem
-                primaryText="My Messages"
-                containerElement={<Link to="/messages" />}
-              />
+
             <MenuItem
               primaryText="My Profile"
               containerElement={<Link to="/profilepage/owner" />}
