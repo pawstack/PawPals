@@ -51,6 +51,10 @@ class ChatWindow extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    this.props.socket.removeAllListeners();
+  }
+
   handleNewUserMessage(message) {
     var roomname = this.props.selectedConversation[0].owner_id.toString() + this.props.selectedConversation[0].walker_id.toString();
     if (this.props.owner) {
