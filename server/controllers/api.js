@@ -474,6 +474,18 @@ module.exports.fetchGeolocations = (req, res) => {
     });
 };
 
+module.exports.fetchLatestGeolocations = (req, res) => {
+  var walkId = Number(req.query.walkId);
+  var latestTimeStamp = (new Date(req.query.latestTimeStamp));
+  return knex('geolocations')
+    .where({walk_id: walkId})
+    .andWhere('timestamp', '>', latestTimeStamp)
+    .orderBy('timestamp', 'ASC')
+    .then((result) => {
+      res.send(result);
+    });
+};
+
 module.exports.getCurrentWalk = function(req, res) {
   models.Walk
     .query((qb) => {
