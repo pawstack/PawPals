@@ -44,6 +44,7 @@ class UpcomingWalkItem extends React.Component {
   }
 
   handleRequestClose() {
+    this.props.cancelWalk(this.props.walk);
     this.setState({
       open: false,
     });
@@ -52,6 +53,7 @@ class UpcomingWalkItem extends React.Component {
 
   click() {
     this.handleTouchTap();
+
   }
 
 
@@ -87,7 +89,7 @@ class UpcomingWalkItem extends React.Component {
           <Snackbar
             open={this.state.open}
             message="Walk has been canceled"
-            autoHideDuration={4000}
+            autoHideDuration={1000}
             onRequestClose={this.handleRequestClose}
           />
         </CardActions>
