@@ -60,8 +60,7 @@ router.route('/walks/payment')
   .post(ApiController.processPayment);
 
 router.route('/walks/refund')
-  .post(ApiController.refundPayment);
-
+  .post(ApiController.cancelBookedWalk);
 
 router.route('/walks/getOwnerInfo')
   .get((req, res) => {
@@ -78,7 +77,7 @@ router.route('/walkhistory/past')
   .get(ApiController.getPastWalk);
 
 router.route('/walkhistory/cancel')
-  .post(ApiController.ownerCancelWalk);
+  .post(ApiController.cancelBookedWalk);
 
 router.route('/walks/getDogInfo')
   .get(ApiController.getDogInfo);

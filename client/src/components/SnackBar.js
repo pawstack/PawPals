@@ -14,8 +14,8 @@ export default class SnackbarSimple extends React.Component {
         <Snackbar
           open={this.props.open}
           message={this.props.message}
-          autoHideDuration={4000}
-          onRequestClose={this.handleSnackBarClose}
+          autoHideDuration={2000}
+          onRequestClose={this.props.handleSnackBarClose}
         />
       </div>
     );
