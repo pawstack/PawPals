@@ -33,7 +33,6 @@ class ProfileWalker extends React.Component {
       url: '/api/profile/walker',
       type: 'GET',
       success: (res) => {
-        console.log('WALKER PROFILE', res[0]);
         this.setState({
           walkername: res[0].display,
           url: res[0].profile_pic,
@@ -63,9 +62,7 @@ class ProfileWalker extends React.Component {
   }
 
   uploadImage(result) {
-    console.log('RESULT IS ', result);
     var url = result.filesUploaded[0].url;
-    console.log('URL IS', url);
     this.setState({
       url: url
     });
@@ -82,7 +79,6 @@ class ProfileWalker extends React.Component {
         about_me: this.state.about_me
       },
       success: (res) => {
-        console.log('data sent');
       },
       error: function(data) {
       }

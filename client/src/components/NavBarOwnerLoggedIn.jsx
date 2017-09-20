@@ -39,12 +39,10 @@ class NavBarOwnerLoggedIn extends React.Component {
           >
             <MenuItem
               primaryText="Browse Walks"
-              onTouchTap = {() => console.log('touch2') }
               containerElement={<Link to="/browse" />}
             />
               <MenuItem
                 primaryText="My Messages"
-                onTouchTap = {() => console.log('touch3') }
                 containerElement={<Link to="/messages" />}
               />
             <MenuItem
@@ -53,12 +51,10 @@ class NavBarOwnerLoggedIn extends React.Component {
             />
               <MenuItem
                 primaryText="My Messages"
-                onTouchTap = {() => console.log('touch3') }
                 containerElement={<Link to="/messages" />}
               />
             <MenuItem
               primaryText="My Profile"
-              onTouchTap = {() => console.log('touch1') }
               containerElement={<Link to="/profilepage/owner" />}
             />
             <MenuItem
