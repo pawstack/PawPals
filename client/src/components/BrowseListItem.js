@@ -23,8 +23,6 @@ class BrowseListItem extends React.Component {
   render() {
     if (this.props.start_owner && this.props.end_owner) {
       var time = this.convertDate(this.props.start_owner, this.props.end_owner);
-    } else {
-      var time = this.convertDate(this.props.walk.session_start_walker, this.props.walk.session_end_walker);
     }
     return (
       <Card>
