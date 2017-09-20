@@ -10,7 +10,7 @@ import SnackBarCom from './SnackBar';
 import _ from 'lodash';
 
 BigCalendar.momentLocalizer(moment);
-require('style-loader!css-loader!react-big-calendar/lib/css/react-big-calendar.css');
+require('react-big-calendar/lib/css/react-big-calendar.css');
 
 let parseEvents = (data) => {
   var events = [];

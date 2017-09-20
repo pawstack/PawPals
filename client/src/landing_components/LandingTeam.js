@@ -14,6 +14,7 @@ import FlatButton from 'material-ui/FlatButton';
 import {BottomNavigation, BottomNavigationItem} from 'material-ui/BottomNavigation';
 import Paper from 'material-ui/Paper';
 import $ from 'jquery';
+import '../../../public/landing.css';
 
 
 class LandingTeam extends React.Component {
