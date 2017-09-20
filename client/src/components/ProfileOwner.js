@@ -181,7 +181,7 @@ class ProfileOwner extends React.Component {
           />
         </div>
         <div style={{'float': 'right', 'marginRight': '320px', 'marginTop': '-260px'}}>
-          <table>
+          <table style={{height:"auto", valign:"center"}}>
             <tbody>
               <tr>
                 <td><CardHeader title="Dog's Name:"/></td>
@@ -225,14 +225,14 @@ class ProfileOwner extends React.Component {
               </tr>
               <tr>
                 <td><CardHeader title="Dog's Info:"/></td>
-                <td>
+                <td style={{"height":"200px"}}>
                   <TextField
                     name = "extras"
                     hintText={this.state.extras_old}
                     onChange={this.handleChange}
                     multiLine={true}
                     rows={1}
-                    rowsMax={8}
+                    rowsMax={10}
                   />
                 </td>
               </tr>

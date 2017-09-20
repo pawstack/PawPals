@@ -6,10 +6,6 @@ const config = require('config')['stripe'];
 const stripe = require('stripe')(config.secretKey);
 const controllers = require('./');
 const Moment = require('moment');
-const twilio = require('twilio');
-const credentials = require('./credentials.json');
-const device = require('express-device');
-
 const walkBuffer = 15;
 
 db.plugin('registry');
@@ -90,7 +86,7 @@ module.exports.createWalk = (req, res) => {
     session_start_walker: req.body.session_start,
     session_end_walker: req.body.session_end,
     session_start: req.body.session_start,
-    session_end: req.body.session_end,    
+    session_end: req.body.session_end,
     walk_zone_pt: req.body.walk_zone_pt,
     price: req.body.price,
     walker_id: req.user.id,
@@ -504,7 +500,7 @@ module.exports.getUpcomingWalks = function(req, res) {
     .where('session_end', '>', new Date())
     .orderBy('session_start', 'DESC')
     .fetchAll({
-      withRelated: ['walker']
+      withRelated: ['walker','owner']
     })
     .then(walks => {
       res.status(200).send(walks);
@@ -556,40 +552,6 @@ module.exports.ownerCancelWalk = function(req, res) {
     });
 };
 
-//twilio request here
-
-module.exports.getTwiliotoken = function(req, res) {
-  var appName = 'Pawpals';
-  var identity = req.user.id.toString();
-  console.log('user id', identity);
-
-  var deviceId = req.device.type;
-  console.log('device id', deviceId);
-
-  var endpointId = appName + ':' + identity + ':' + deviceId;
-
-  const ipmGrant = new IpMessagingGrant({
-    serviceSid: 'ISb0aa6c59d5ae4bd48c8613679dbfcfda',
-    endpointId: endpointId
-  });
-
-
-  const token = new AccessToken(
-    'ACcbfdbacef3969bbf70ebbddd67c142ec',
-    'SK5c1547820e6e7bab64f1d48de43fc506',
-    'mudLoZ8C9hPiNpJXF8WkessLrvvHxwOU'
-  );
-
-  token.addGrant(ipmGrant);
-  token.identity = identity;
-
-  console.log(token, 'token');
-  res.send({
-    identity: identity,
-    token: token.toJwt(),
-  });
-};
-
 
 module.exports.addRating = function(req, res) {
   knex('walks').where('id', req.body.walkID).update({
@@ -638,7 +600,6 @@ module.exports.calculateAverageRating = function(req, res) {
       }
     })
     .then((result) => {
-      console.log('succssfully saved average to the db');
       res.sendStatus(200);
     })
     .catch(() => {
@@ -690,6 +651,7 @@ module.exports.fetchChatDetails = function(req, res) {
         });
     });
 };
+
 module.exports.fetchMessages = function(req, res) {
   if (req.body.owner) {
     var owner_id = req.user.id;
@@ -708,3 +670,6 @@ module.exports.fetchMessages = function(req, res) {
       res.status(201).send(collection.models);
     });
 };
+
+
+

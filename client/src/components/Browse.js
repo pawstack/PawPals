@@ -45,7 +45,6 @@ class Browse extends React.Component {
     this.setState({backButton: false});
     $.post('/api/walks/search', filters)
       .done((data) => {
-        console.log('SUCCESS getWalks in Browse ', data);
         this.filterLocation(data.walks);
         this.setState({
           ['start_owner']: data.start,
@@ -256,7 +255,7 @@ class Browse extends React.Component {
               start_owner={this.state.start_owner}
               end_owner={this.state.end_owner}
               filterOpen={this.state.filterOpen}
-              toggleFilter={this.toggleFilter} 
+              toggleFilter={this.toggleFilter}
               emptyWalks={this.emptyWalks}/>
           </div>
           <BrowseList

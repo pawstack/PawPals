@@ -175,6 +175,7 @@ export default class EventDialog extends React.Component {
               }}
               >
                 <FlatButton label="Message Owner" primary={true} style={{'marginLeft': '3px'}}/>
+
               </Link>
             </div>
           </Dialog>
@@ -227,3 +228,4 @@ export default class EventDialog extends React.Component {
     }
   }
 }
+

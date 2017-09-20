@@ -12,26 +12,24 @@ import RaisedButton from 'material-ui/RaisedButton';
 import moment from 'moment';
 import Snackbar from 'material-ui/Snackbar';
 import FindMyDogMap from './FindMyDogMap';
+import Message from './Message';
 import Messages from './Messages';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
+import $ from 'jquery';
 
 class UpcomingWalkItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false,
-      openchat: false,
-      poppedOut: false
+      open: false
     };
 
     this.convertDate = this.convertDate.bind(this);
     this.handleTouchTap = this.handleTouchTap.bind(this);
     this.handleRequestClose = this.handleRequestClose.bind(this);
     this.click = this.click.bind(this);
-    this.handleChatOpen = this.handleChatOpen.bind(this);
-    this.handleChatClose = this.handleChatClose.bind(this);
-    this.handleMessageLink = this.handleMessageLink.bind(this);
+
   }
 
   convertDate(start, end) {
@@ -52,21 +50,9 @@ class UpcomingWalkItem extends React.Component {
     });
   }
 
+
   click() {
     this.handleTouchTap();
-    setTimeout(()=>this.props.cancelWalk(this.props.walk), 1000);
-  }
-
-  handleChatOpen() {
-    this.setState({openchat: true});
-  }
-
-  handleChatClose() {
-    this.setState({openchat: false});
-  }
-
-  handleMessageLink(){
-    window.location = 'http://localhost:3000/messages';
   }
 
 
@@ -82,10 +68,6 @@ class UpcomingWalkItem extends React.Component {
 
     ];
 
-    const msgProps = { walkerid: this.props.walk.walker_id,
-                       ownerid: this.props.walk.owner_id
-                      }
-
     return (
 
       <Card>
@@ -94,16 +76,6 @@ class UpcomingWalkItem extends React.Component {
           avatar={this.props.walk.walker.profile_pic}
           title={this.props.walk.walker.display}
         />
-
-        <div>
-          <Link to= {{pathname:'/messages',
-                      state: {ownerid: this.props.walk.owner_id,
-                              walkerid: this.props.walk.walker_id}
-                    }}
-          >
-          <FlatButton label="Message Walker" primary={true}  style={{'marginLeft': 'px'}}/>
-          </Link>
-        </div>
 
         <CardText style={{'font': '14px'}}>
         From {time[0]} to {time[1]}  Near {this.props.walk.walk_zone_pt}
@@ -120,6 +92,15 @@ class UpcomingWalkItem extends React.Component {
             onRequestClose={this.handleRequestClose}
           />
         </CardActions>
+        <div>
+          <Link to= {{pathname:'/messages',
+                      state: {ownerid: this.props.walk.owner_id,
+                              walkerid: this.props.walk.walker_id}
+                    }}
+          >
+          <FlatButton label="Message Walker" primary={true} />
+          </Link>
+        </div>
         <div><br></br></div>
       </Card>
 
@@ -128,5 +109,4 @@ class UpcomingWalkItem extends React.Component {
 }
 
 export default UpcomingWalkItem;
-
 

@@ -57,11 +57,11 @@ class TrackWalk extends React.Component {
   handleStart() {
     this.startWatch();
   }
-  
+
   handleFinish() {
     this.stopWatch();
   }
-  
+
   processGeolocationResult(position) {
     var geolocation = {
       latitude: position.coords.latitude,
@@ -70,7 +70,7 @@ class TrackWalk extends React.Component {
       accuracy: position.coords.accuracy,
       walk_id: this.state.walk.id
     };
-    
+
     console.log(`SUCCESS latitude:${position.coords.latitude}, longitutde:${position.coords.longitude}, accuracy:${position.coords.accuracy}, timestamp:${new Date(position.timestamp)}`);
     this.postGeolocation(geolocation);
     this.setState({
@@ -85,10 +85,10 @@ class TrackWalk extends React.Component {
   startWatch() {
     var watchId = navigator.geolocation.watchPosition(this.processGeolocationResult, this.handleGeoError, {
       maximumAge: this.state.maximumAge,
-      timeout: this.state.timeout, 
+      timeout: this.state.timeout,
       enableHighAccuracy: this.state.enableHighAccuracy
     });
-    
+
     this.setState({
       watchId: watchId
     });
@@ -139,11 +139,11 @@ class TrackWalk extends React.Component {
         <div>
           <List>
             {this.state.geolocations.map((geolocation) => (
-              <ListItem 
+              <ListItem
                 key={geolocation.timestamp}
-                primaryText={`latitude:${geolocation.latitude}, longitutde:${geolocation.longitude}`} 
-                secondaryText={`accuracy:${geolocation.accuracy}, timestamp:${geolocation.timestamp}`} 
-                secondaryTextLines={2} 
+                primaryText={`latitude:${geolocation.latitude}, longitutde:${geolocation.longitude}`}
+                secondaryText={`accuracy:${geolocation.accuracy}, timestamp:${geolocation.timestamp}`}
+                secondaryTextLines={2}
               />
             ))}
           </List>
