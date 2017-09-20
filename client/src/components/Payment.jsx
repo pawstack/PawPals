@@ -8,7 +8,7 @@ import {
 import $ from 'jquery';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
-
+import '../../../public/componentCSS/payment.css';
 
 
 class Payment extends React.Component {
@@ -65,8 +65,8 @@ class Payment extends React.Component {
     return (
       <div>
         <MuiThemeProvider>
-          <div>
-            <h4>Please connect with our payment system in Stripe</h4>
+          <div className = 'buttonCenter'>
+
             <div>
               <a href = {`https://connect.stripe.com/express/oauth/authorize?redirect_uri=${callbackUrl}/&client_id=ca_BKKqX6IKWv2zjuHsLKdReiYfTfnaNPIE&state=${state}`}>
                 <RaisedButton label="Connect with Stripe" primary={true}/>

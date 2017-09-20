@@ -15,6 +15,7 @@ import NavBarNewUserLoggedIn from '../src/components/NavBarNewUserLoggedIn.jsx';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 import '../../public/componentCSS/stripe.css';
+import $ from 'jquery';
 
 const muiTheme = getMuiTheme({
   palette: {
@@ -29,28 +30,35 @@ class Stripe extends React.Component {
 
     };
   }
+  componentDidMount() {
+    $('.container').find('h1').css("font-family", "'Carter One', cursive");
+  }
   render() {
     return (
-        <div>
-          <Router>
-            <MuiThemeProvider muiTheme={muiTheme}>
-              <div>
+      <div>
+        <Router>
+          <MuiThemeProvider muiTheme={muiTheme}>
+            <div>
+              <div className = 'appBar'>
                 <AppBar
                   title="PawPals"
                   iconElementRight = {<NavBarNewUserLoggedIn />}
                   showMenuIconButton={false}
                 />
-              <div><br></br><br></br></div>
-                <div className = 'descriptionText'>
-                  Thank you for signing up with Stripe. <br /> <br></br>
-                Please save your card details here to book instantly later!
-                  <br />
-                </div>
-                <Route exact path="/signup/start" component={SignUpStart}/>
               </div>
-            </MuiThemeProvider>
-          </Router>
-        </div>
+
+              <div><br></br><br></br></div>
+              <div className = 'descriptionText'>
+                PawPals thanks you for signing up with Stripe.
+                <br /> <br /> 
+                Please save your card details here to book / schedule instantly later!
+                <br />
+              </div>
+              <Route exact path="/signup/start" component={SignUpStart}/>
+            </div>
+          </MuiThemeProvider>
+        </Router>
+      </div>
     );
   }
 }
