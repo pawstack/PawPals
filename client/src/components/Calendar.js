@@ -13,7 +13,6 @@ BigCalendar.momentLocalizer(moment);
 require('react-big-calendar/lib/css/react-big-calendar.css');
 
 let parseEvents = (data) => {
-  console.log(data, 'data')
   var events = [];
   for (var i = 0; i < data.walks.length; i++) {
     var event = {};
