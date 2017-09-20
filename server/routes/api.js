@@ -94,9 +94,6 @@ router.route('/walks/rating')
 router.route('/walks/averagerating')
   .post(ApiController.calculateAverageRating);
 
-router.route('/messages/fetch')
-  .post(ApiController.fetchMessages);
-
 router.route('/messages/write')
   .post(ApiController.writeMessages);
 
