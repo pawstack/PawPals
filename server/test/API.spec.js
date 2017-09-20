@@ -3,24 +3,24 @@ const request = require('supertest');
 const express = require('express');
 const expect = require('chai').expect;
 const app = require('../app.js');
+const moment = require('moment');
 
-describe('getWalkersWalks', function() {
-  //it('should fetch collection', function(done) {
-  //request(app)
-  //.get('/api/walks/fetch')
-  //.expect(200)
-  //.expect(function(res) {
-  //expect(res.walks).to.exist;
-  //})
-  //.end(done);
-
-  it('accepts POST request', function(done) {
+describe('createWalk', function() {
+  it ('should create walks in database', function(done) {
     request(app)
-      .post('/api')
-      .expect(201)
-      .expect(function(res) {
-        expect(res.body.data).to.equal('Posted!');
+      .post('/api/walks/create')
+      .send({
+        session_start: new Date(),
+        session_end: moment(new Date()).add(10, 'hours').toDate(),
+        walk_zone_pt: '944 Market Street, San Francisco,  CA 94102',
+        price: 20,
+        longitude: '-122.431',
+        latitude: '37.773'
       })
-      .end(done);
-  });
-});
+      .expect(200)
+      .then((response) => {
+        console.log(response, 'response');
+        done();
+      })
+  })
+})
