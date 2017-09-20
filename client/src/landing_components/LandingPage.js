@@ -34,7 +34,7 @@ class LandingPage extends React.Component {
           <div className="col-sm-4">
             <span>
 
-              <img src="https://i.imgur.com/ptBHSFz.png" style={{"width":"5vw","marginLeft":"225px","marginTop":"-2%"}}></img>
+              <img src="https://i.imgur.com/ptBHSFz.png" className="paw-logo"></img>
 
             </span>
             <span className="landing-title">

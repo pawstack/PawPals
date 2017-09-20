@@ -14,18 +14,19 @@
   font-family: 'Handlee', cursive;
 }
 
+.paw-logo {
+  width: 5vw;
+  margin-left: 35%
+}
+
+
 .container {
   margin: auto;
   width: 100%;
 }
 
-.paw-logo-container {
-  margin-left: 10%;
-  margin-top: 4%;
-}
-
-.paw-logo-img {
-  width: 80vw;
+#root {
+  width: 100%;
 }
 
 .landing-nav{
@@ -60,11 +61,19 @@
 }
 
 .slogan {
-  margin-top: 150px;
+  margin-top: 120px;
   margin-left:230px;
+  margin-bottom:80px;
   font-family: 'Pontano Sans', sans-serif;
   font-size: 2vw;
-  color: grey;
+  color: #5c5d5e;
+}
+
+.dog-walking-container{
+  text-align: center;
+}
+.dog-walking-img{
+  width: 80%
 }
 
 .icon-container {
@@ -98,7 +107,7 @@
 
 .demo-container-white {
   background-color: #f9fafc;
-  color:grey;
+  color:#5c5d5e;
   height:50vh;
 }
 
@@ -110,9 +119,12 @@
   font-size:20px;
 }
 
-.icon-container {
+.circular-icon-container {
   margin-top: 70px;
+  margin-bottom: 50px;
+  margin-left: 10%;
   text-align: center;
+  width: 80%;
 }
 
 .landing-icon {
@@ -154,6 +166,3 @@
   width: 200px;
   border-radius: 50%;
 }
-
-
-
