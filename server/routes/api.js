@@ -105,6 +105,6 @@ router.route('/walks/trackRealTime')
 
 
 router.route('/messages/fetch')
-  .get(ApiController.fetchMessages);
+  .post(ApiController.fetchMessages);
 
 module.exports = router;
