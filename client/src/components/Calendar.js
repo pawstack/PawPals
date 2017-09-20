@@ -15,6 +15,7 @@ require('react-big-calendar/lib/css/react-big-calendar.css');
 let parseEvents = (data) => {
   var events = [];
   for (var i = 0; i < data.walks.length; i++) {
+    console.log(data.walks[i]);
     var event = {};
     if (!!data.walks[i].dog) {
       event['title'] = 'Walk with ' + data.walks[i].dog.name;
