@@ -17,7 +17,6 @@ describe('Profile model tests', function () {
     Profile.fetchAll()
       .then(function (results) {
         expect(results.length).to.equal(200);
-        expect(results.at(0).get('id')).to.equal(1);
         done();
       })
       .catch(function (err) {

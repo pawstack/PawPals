@@ -4,7 +4,7 @@
     "connection": {
       "database": "thesis",
       "user": "postgres",
-      "password": "postgres",
+      "password": "",
       "host": "localhost",
       "port": 5432
     },
@@ -26,7 +26,7 @@
     "Facebook": {},
     "Twitter": {}
   },
-  
+
   "redis": {
     "host": "localhost",
     "port": 6379,

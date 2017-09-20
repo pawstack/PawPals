@@ -96,7 +96,10 @@ module.exports.createWalk = (req, res) => {
     .save()
     .then(() => {
       module.exports.getWalkersWalks(req, res);
-    });
+    })
+    .catch(err => {
+      console.log(err, 'err')
+    })
 };
 
 module.exports.destroyWalk = (req, res) => {
