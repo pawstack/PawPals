@@ -7,12 +7,20 @@ import {
 } from 'react-router-dom';
 import $ from 'jquery';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 import Snackbar from 'material-ui/Snackbar';
 import TextField from 'material-ui/TextField';
 import moment from 'moment';
+
+const muiTheme = getMuiTheme({
+  palette: {
+    primary1Color: '#66BB6A',
+    pickerHeaderColor: '#66BB6A',
+  },
+});
 
 class Confirmation extends React.Component {
 
@@ -48,7 +56,7 @@ class Confirmation extends React.Component {
     }
     return (
       <div>
-        <MuiThemeProvider>
+        <MuiThemeProvider muiTheme={muiTheme}>
           <div>
 
             <Card style={{marginTop: '10%'}}>
