@@ -13,7 +13,7 @@ class FindMyDog extends React.Component {
       walk: null
     };
     this.getCurrentWalk = this.getCurrentWalk.bind(this);
-    this.convertDate = this.convertDate.bind(this);    
+    this.convertDate = this.convertDate.bind(this);
   }
 
   componentDidMount() {
@@ -48,10 +48,10 @@ class FindMyDog extends React.Component {
     } else if (!this.state.walk.id) {
       return <p>No active walk at this time. <Link to="/browse" >Browse for walks here!</Link></p>;
     } else {
-      let time = this.convertDate(this.state.walk.session_start, this.state.walk.session_end);      
+      let time = this.convertDate(this.state.walk.session_start, this.state.walk.session_end);
       return (
         <div>
-          <h2>Find My Dog</h2>  
+          <h2>Find My Dog</h2>
           <Card>
             <CardHeader
               subtitle={`Rating: ${this.state.walk.walker.avg_walker_rating}`}
@@ -62,10 +62,10 @@ class FindMyDog extends React.Component {
               <p>Walk happening around {this.state.walk.walk_zone_pt}</p>
               <p>From {time[0]} to {time[1]}, Near {this.state.walk.walk_zone_pt}</p>
               <p>Call {this.state.walk.walker.first}: {this.state.walk.walker.phone}</p>
-              <FindMyDogMap walkId={this.state.walk.id} />
+              <FindMyDogMap walkId={this.state.walk.id} walk = {this.state.walk}/>
             </CardText>
           </Card>
-        </div>    
+        </div>
       );
     }
   }
