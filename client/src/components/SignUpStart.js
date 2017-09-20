@@ -89,18 +89,15 @@ class SignUpStart extends React.Component {
   handleEntriesChanged(valueType, value) {
     this.setState({
       [valueType]: value
-    }, () => {
-      console.log(this.state[valueType]);
     });
   }
 
   updateUserType(type) {
-    console.log('the type is ', type);
+
     this.setState({
       owner: false,
       walker: false
     }, () => {
-      console.log('set owner and walker to ', this.state.owner, this.state.walker);
       (type === 'Owner' ? this.setState({owner: true}) : this.setState({walker: true}));
     });
   }
@@ -128,7 +125,6 @@ class SignUpStart extends React.Component {
           address: this.state.address
         },
         success: (data) => {
-          console.log('data sent ', data);
         },
         error: function(err) {
           console.log('error sending data to db ', err);
@@ -155,7 +151,6 @@ class SignUpStart extends React.Component {
           address: this.state.address
         },
         success: (res) => {
-          console.log('data sent');
         },
         error: function(data) {
         }
@@ -169,13 +164,10 @@ class SignUpStart extends React.Component {
       url: '/api/profile/owner',
       context: this,
       success(data) {
-        console.log('succesfully retrieved user info ', data);
         this.setState({
           userFullName: data[0].display,
           userEmail: data[0].email,
           userGooglePic: data[0].profile_pic
-        }, () => {
-          console.log('the user full name is ', this.state.userFullName);
         });
       },
       error(err) {

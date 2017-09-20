@@ -35,7 +35,6 @@ class SignUpDataEntry extends React.Component {
   }
 
   handleUserType(event) {
-    console.log('the user type is ', event.target.value);
     this.props.updateUserType(event.target.value);
   }
 
