@@ -13,27 +13,26 @@ BigCalendar.momentLocalizer(moment);
 require('react-big-calendar/lib/css/react-big-calendar.css');
 
 let parseEvents = (data) => {
+  console.log(data, 'data')
   var events = [];
   for (var i = 0; i < data.walks.length; i++) {
     var event = {};
-    if (!!data.walks[i].dog.name) {
+    if (!!data.walks[i].dog) {
       event['title'] = 'Walk with ' + data.walks[i].dog.name;
+      event['dog_profile_pic'] = data.walks[i].dog.profile_pic;
+      event['dog_id'] = data.walks[i].dog.id;
+      event['dog_extras'] = data.walks[i].dog.extras;
+      event['owner_name'] = data.walks[i].owner.first;
+      event['owner_phone'] = data.walks[i].owner.phone;
+      event['pickup_address'] = data.walks[i].pickup_address || data.walks[i].owner.address;
     } else {
       event['title'] = 'Unbooked Walk';
     }
     event['start'] = new Date(data.walks[i].session_start_walker);
     event['paid'] = data.walks[i].paid;
-    event['owner_name'] = data.walks[i].owner.first;
-    event['dog_id'] = data.walks[i].dog.id;
-    event['owner_phone'] = data.walks[i].owner.phone;
-    event['dog_profile_pic'] = data.walks[i].dog.profile_pic;
-    event['dog_extras'] = data.walks[i].dog.extras;
     event['end'] = new Date(data.walks[i].session_end_walker);
     event['price'] = data.walks[i].price;
-    event['pickup_address'] = data.walks[i].pickup_address || data.walks[i].owner.address;
     event['id'] = data.walks[i].id;
-    event['dog_avg_rating'] = data.walks[i].dog.avg_rating;
-    event['dog_name'] = data.walks[i].dog.name;
     event['owner_id'] = data.walks[i].owner_id;
     event['walker_id'] = data.walks[i].walker_id;
     events.push(event);
