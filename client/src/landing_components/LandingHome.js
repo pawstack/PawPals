@@ -14,7 +14,7 @@ import FlatButton from 'material-ui/FlatButton';
 import {BottomNavigation, BottomNavigationItem} from 'material-ui/BottomNavigation';
 import Paper from 'material-ui/Paper';
 import $ from 'jquery';
-import '../../../public/landing.css';
+import '../../../public/componentCSS/landing.css';
 
 
 class LandingHome extends React.Component {
@@ -37,8 +37,8 @@ class LandingHome extends React.Component {
           </div>
         </div>
 
-        <div style={{marginLeft:"10%", marginTop:"5%"}}>
-          <img src="http://media.socastsrm.com/wordpress/wp-content/blogs.dir/51/files/2017/08/Walking-Dogs-event.jpg" style={{'marginTop':'-5px','width':'80vw'}}></img>
+        <div className="paw-logo-container">
+          <img src="http://media.socastsrm.com/wordpress/wp-content/blogs.dir/51/files/2017/08/Walking-Dogs-event.jpg"></img>
         </div>
 
         <div className="container icon-container">

@@ -19,8 +19,13 @@
   width: 100%;
 }
 
-#root {
-  width: 100%;
+.paw-logo-container {
+  margin-left: 10%;
+  margin-top: 4%;
+}
+
+.paw-logo-img {
+  width: 80vw;
 }
 
 .landing-nav{
