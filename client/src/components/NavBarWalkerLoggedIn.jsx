@@ -34,10 +34,6 @@ class NavBarWalkerLoggedIn extends React.Component {
               anchorOrigin={{horizontal: 'right', vertical: 'top'}}
             >
               <MenuItem
-                primaryText="My Profile"
-                containerElement={<Link to="/profilepage/walker" />}
-              />
-              <MenuItem
                 primaryText="My Calendar"
                 containerElement={<Link to="/walker" />}
               />

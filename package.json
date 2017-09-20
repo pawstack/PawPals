@@ -86,8 +86,8 @@
     "travis": "^0.1.1",
     "twilio": "^3.6.6",
     "twilio-chat": "^1.1.2",
-    "webpack": "^3.5.6",
-    "url-loader": "^0.5.9"
+    "url-loader": "^0.5.9",
+    "webpack": "^3.5.6"
   },
   "devDependencies": {
     "chai": "^3.5.0",
