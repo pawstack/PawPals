@@ -1,4 +1,9 @@
-@import url('https://fonts.googleapis.com/css?family=Pontano+Sans');
+@import url('https://fonts.googleapis.com/css?family=Pontano+Sans|Carter+One');
+
+.appBar {
+  font-family: 'Carter One';
+  color: blue;
+}
 
 .descriptionText {
   text-align: center;
