@@ -4,14 +4,8 @@
 
   <div id='stripe-root'></div>
   <script src="/dist/stripe.bundle.js"></script>
-  <div style = "text-align: center; display: block; position: relative; color: blue; margin-bottom: 50%">
-    <div>
-      <div>
-        Thank you for signing up with Stripe. <br />
-        Please save your card details here so you can checkout faster later!
-        <br />
-      </div>
-    </div>
+  <div style = "text-align: center; position: relative;">
+
     <form action="/api/signup/payment/savecardtoken" method="POST">
       <script
         src="https://checkout.stripe.com/checkout.js" class="stripe-button"

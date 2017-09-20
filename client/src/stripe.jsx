@@ -14,6 +14,7 @@ import SignUpStart from './components/SignUpStart';
 import NavBarNewUserLoggedIn from '../src/components/NavBarNewUserLoggedIn.jsx';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
+import '../../public/componentCSS/stripe.css';
 
 const muiTheme = getMuiTheme({
   palette: {
@@ -40,6 +41,11 @@ class Stripe extends React.Component {
                   showMenuIconButton={false}
                 />
               <div><br></br><br></br></div>
+                <div className = 'descriptionText'>
+                  Thank you for signing up with Stripe. <br /> <br></br>
+                Please save your card details here to book instantly later!
+                  <br />
+                </div>
                 <Route exact path="/signup/start" component={SignUpStart}/>
               </div>
             </MuiThemeProvider>
