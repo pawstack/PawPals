@@ -86,7 +86,7 @@ class LandingHome extends React.Component {
               </div>
               <div><br></br></div>
               <div className='demo-para'>
-                As a walker, our calendar interface lets you create shifts in just a few clicks. We’ll fill them up with walks in your neighbourhood in no time.
+                As a dog walker, our calendar interface lets you create shifts in just a few clicks. We’ll fill them up with walks in your neighbourhood in no time.
               </div>
           </div>
           <div className='col-sm-6'>GIF DEMO</div>
