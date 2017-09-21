@@ -26,8 +26,8 @@ class LandingHome extends React.Component {
 
   render() {
 
-    return(
-    <div>
+    return (
+      <div>
         <div className="slogan">
           <div>
            Don't put your life on PAWse
@@ -48,21 +48,21 @@ class LandingHome extends React.Component {
               </img>
               <div className='icon-title'>Schedule</div>
               <div className='icon-text'>
-                Calender system to easily schedule and book walks.
+                Easily schedule and book walks in our calendar.
               </div>
             </div>
 
             <div className="col-sm-3"><img src="https://image.flaticon.com/icons/svg/237/237066.svg" className='landing-icon'></img>
               <div className='icon-title'>Pay</div>
               <div className='icon-text'>
-                Make and receive payment securely through the app.
+                Securely make payments through the app.
               </div>
             </div>
 
             <div className="col-sm-3"><img src="https://image.flaticon.com/icons/svg/235/235861.svg" className='landing-icon'></img>
               <div className='icon-title'>Track</div>
               <div className='icon-text'>
-                Real time tracking of dog during the walk.
+                Real time tracking of your dog during the walk.
               </div>
             </div>
 
@@ -71,7 +71,7 @@ class LandingHome extends React.Component {
               </img>
               <div className='icon-title'>Chat</div>
               <div className='icon-text'>
-                Instant chat in app for users for smooth communication.
+                Instantly chat in app with your dog walker.
               </div>
             </div>
 
@@ -79,61 +79,58 @@ class LandingHome extends React.Component {
         </div>
 
         <div className='demo-container-blue'>
-            <div className='demo-text col-sm-6'>
-              <div className ='demo-title'>
+          <div className='demo-text col-sm-6'>
+            <div className ='demo-title'>
                 Simple Scheduling
-              </div>
-              <div><br></br></div>
-              <div className='demo-para'>
-                Our calendar interface lets you create shifts in just a few clicks. We’ll fill them up with walks in your neighbourhood in no time.
-              </div>
-
             </div>
-            <div className='col-sm-6'>GIF DEMO</div>
+            <div><br></br></div>
+            <div className='demo-para'>
+              Our calendar interface lets you create shifts in just a few clicks. We’ll fill them up with walks in your neighbourhood in no time.
+            </div>
+
+          </div>
+          <div className='col-sm-6'>GIF DEMO</div>
         </div>
 
         <div className='demo-container-white'>
           <div className='col-sm-6'>GIF DEMO</div>
           <div className='demo-text col-sm-6'>
-              <div className ='demo-title'>
-                I forgot to tell you!
-              </div>
-              <div><br></br></div>
-              <div className='demo-para'>
-                No worries, instant messaging between walkers and owners means you can get in touch anytime.
-
-              </div>
-
+            <div className ='demo-title'>
+              I forgot to tell you!
             </div>
+            <div><br></br></div>
+            <div className='demo-para'>
+                No worries, instant messaging between walkers and owners means you can get in touch anytime.
+            </div>
+          </div>
         </div>
 
         <div className='demo-container-blue'>
           <div className='demo-text col-sm-6'>
-              <div className ='demo-title'>
-                Where’s my dog?
-              </div>
-              <div><br></br></div>
-              <div className='demo-para'>
-                Rest easy, you’ll always know where your dog is with our real-time tracking. And if you want to check which lampposts they sniffed after the walk, we store all historical walk paths for you.
-              </div>
+            <div className ='demo-title'>
+              Where’s my dog?
+            </div>
+            <div><br></br></div>
+            <div className='demo-para'>
+              Rest easy, you’ll always know where your dog is with our real-time tracking. And if you want to check which lampposts they sniffed after the walk, we store all historical walk paths for you.
+            </div>
           </div>
         </div>
 
         <div className='demo-container-white'>
           <div className='col-sm-6'>GIF DEMO</div>
           <div className='demo-text col-sm-6'>
-              <div className ='demo-title'>
-                Filter and InstaBook
-              </div>
-              <div><br></br></div>
-              <div className='demo-para'>
-                Find a walker that fits all your criteria and book instantly. Even better, you can choose anywhere between 30 minutes to 2 hours for your dog’s next adventure.
-              </div>
+            <div className ='demo-title'>
+              Filter and InstaBook
             </div>
+            <div><br></br></div>
+            <div className='demo-para'>
+              Find a walker that fits all your criteria and book instantly. Even better, you can choose anywhere between 30 minutes to 2 hours for your dog’s next adventure.
+            </div>
+          </div>
         </div>
-
-    </div>
-  )
+      </div>
+    );
   }
 
 }
