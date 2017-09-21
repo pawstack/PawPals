@@ -86,7 +86,7 @@ class LandingHome extends React.Component {
               </div>
               <div><br></br></div>
               <div className='demo-para'>
-                As a dog walker, our calendar interface lets you create shifts in just a few clicks. We’ll fill them up with walks in your neighbourhood in no time.
+                As a dog walker, our calendar interface lets you create shifts in just a few clicks. We’ll match you with dogs in your neighborhood in no time.
               </div>
           </div>
           <div className='col-sm-6'>GIF DEMO</div>
@@ -101,7 +101,7 @@ class LandingHome extends React.Component {
             </div>
             <div><br></br></div>
             <div className='demo-para'>
-              As a dog owner, you can find a walker that fits all your criteria. Book and pay instantly. Even better, you can choose anywhere between 30 minutes to 2 hours for your dog’s next adventure.
+              As a dog owner, you can find a dog walker that fits all your criteria. Book and pay instantly. Even better, you can choose walks between 30 minutes and 2 hour for your dog’s next adventure.
             </div>
           </div>
         </div>
@@ -114,7 +114,7 @@ class LandingHome extends React.Component {
             </div>
             <div><br></br></div>
             <div className='demo-para'>
-              Rest easy, you’ll always know where your dog is with our real-time tracking. And if you want to check which lampposts they sniffed after the walk, we store all historical walk paths for you.
+             Rest easy, you’ll always know where your dog is with our real-time tracking. If you want to check which lampposts they sniffed after the walk, we store all historical walk paths for you.
             </div>
           </div>
           <div className='col-sm-6'>GIF DEMO</div>
@@ -130,7 +130,7 @@ class LandingHome extends React.Component {
               </div>
               <div><br></br></div>
               <div className='demo-para'>
-                No worries, instant messaging between walkers and owners means you can get in touch anytime.
+                No worries, instant messaging between dog owners and dog walkers means you can get in touch anytime.
               </div>
             </div>
           </div>
