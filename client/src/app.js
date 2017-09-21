@@ -84,7 +84,7 @@ class App extends React.Component {
   }
 
   render() {
-    if (!this.state.owner && ! this.state.walker || !this.state.userInfo.customer_id_cc_Token) {
+    if (!this.state.owner && !this.state.walker || !this.state.userInfo.customer_id_cc_Token) {
       return (
         <div>
           <Router>
@@ -118,7 +118,6 @@ class App extends React.Component {
                   iconStyleLeft={{display: 'flex', flexDirection: 'column', justifyContent: 'center'}}
                   iconElementRight={this.state.owner ? <NavBarOwnerLoggedIn /> : <NavBarWalkerLoggedIn />}
                 />
-                <Route exact path="/signup/start" component={SignUpStart}/>
                 <Route exact path="/browse" component={Browse}/>
                 <Route exact path="/walker" component={Calendar}/>
                 <Route exact path="/profilepage/owner" component={ProfileOwner}/>
@@ -140,4 +139,8 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('root'));
+if (module.parent) {
+  module.exports = App;
+} else {
+  ReactDOM.render(<App />, document.getElementById('root'));
+}

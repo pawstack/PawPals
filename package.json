@@ -6,6 +6,7 @@
   "scripts": {
     "start": "nodemon server",
     "test": "NODE_ENV=test grunt test",
+    "test-client": "jest ./client",
     "travis-test": "NODE_ENV=travis-test grunt test --timeout 30000",
     "build": "webpack --watch",
     "heroku-postbuild": "webpack -p"
@@ -91,12 +92,17 @@
     "webpack": "^3.5.6"
   },
   "devDependencies": {
+    "babel-jest": "^21.0.2",
     "chai": "^3.5.0",
+    "enzyme": "^2.9.1",
     "grunt": "~0.4.5",
     "grunt-eslint": "^19.0.0",
     "grunt-mocha-test": "^0.13.2",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^21.1.0",
     "mocha": "^3.2.0",
     "node-mocks-http": "^1.6.1",
+    "react-test-renderer": "^15.6.1",
     "supertest": "^3.0.0",
     "webpack-dev-server": "^2.4.2"
   },
@@ -108,5 +114,10 @@
       "react",
       "env"
     ]
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(css)$": "identity-obj-proxy"
+    }
   }
 }

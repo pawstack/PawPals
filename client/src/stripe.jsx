@@ -63,4 +63,8 @@ class Stripe extends React.Component {
   }
 }
 
-ReactDOM.render(<Stripe />, document.getElementById('stripe-root'));
+if (module.parent) {
+  module.exports = Stripe;
+} else {
+  ReactDOM.render(<Stripe />, document.getElementById('stripe-root'));
+}

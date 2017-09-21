@@ -23,7 +23,8 @@ class Login extends React.Component {
   }
 }
 
-ReactDOM.render(<Login />, document.getElementById('login-root'));
-
-/*<center><a style={{marginLeft: 15, marginRight: 15}} href="/auth/google"><img style={{width: 250}} src="/assets/google-logo.png" /></a></center>*/
-
+if (module.parent) {
+  module.exports = Login;
+} else {
+  ReactDOM.render(<Login />, document.getElementById('login-root'));
+}
