@@ -76,7 +76,7 @@ class UpcomingWalkItem extends React.Component {
           title={this.props.walk.walker.display}
         />
 
-        <CardText style={{'font': '14px'}}>
+        <CardText>
         From {time[0]} to {time[1]}  Near {this.props.walk.walk_zone_pt}
         </CardText>
 

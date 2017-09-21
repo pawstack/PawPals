@@ -1,0 +1,28 @@
+.walker-photo-img {
+  width:220px;
+  border-radius: 10px;
+  margin-left: 20px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.walker-photo-upload {
+  border-radius: 10px;
+  margin-left: 20px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.table {
+  width: 100%;
+}
+
+.walker-info-td {
+  height:200px;
+  vertical-align: middle;
+}
+
+.update-btn {
+  margin-top: 30px;
+  margin-left: 20px;
+}

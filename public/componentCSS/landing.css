@@ -65,7 +65,7 @@
   margin-left:230px;
   margin-bottom:80px;
   font-family: 'Pontano Sans', sans-serif;
-  font-size: 2vw;
+  font-size: 2.2vw;
   color: #5c5d5e;
 }
 
@@ -112,11 +112,11 @@
 }
 
 .demo-title {
-  font-size: 30px;
+  font-size: 2vw;
 }
 
 .demo-para {
-  font-size:20px;
+  font-size:1.3vw;
 }
 
 .circular-icon-container {
@@ -135,19 +135,20 @@
 .icon-title {
   padding-top:20px;
   font-family: 'Pontano Sans',sans-serif;
-  font-size: 30px;
+  font-size: 2vw;
   font-weight: bold;
 }
 
 .icon-text {
   padding:8px 10px 25px 25px;
   font-family: 'Pontano Sans', sans-serif;
-  font-size: 22px;
+  font-size: 1.4vw;
   color: grey;
 }
 
 .team-container {
   margin-top: 100px;
+  text-align: center;
 }
 
 .team-main-container {

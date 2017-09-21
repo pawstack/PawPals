@@ -10,7 +10,7 @@ import {
 import $ from 'jquery';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import ReactStars from 'react-stars';
-
+import '../../../public/componentCSS/star-rating.css';
 
 class StarRating extends React.Component {
   constructor(props) {
@@ -88,7 +88,7 @@ class StarRating extends React.Component {
 
   render() {
     return (
-      <div style = {{paddingLeft: '2%', paddingBottom: '1%'}}>
+      <div className="starts">
         <ReactStars
           count={5}
           size={24}

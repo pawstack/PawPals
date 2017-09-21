@@ -1,0 +1,15 @@
+.confirmation-card {
+  margin-top: 10%;
+}
+
+.confirmation-text-field {
+  padding: 20px;
+  width: 160px;
+  font-size: 20px;
+}
+
+.confirmation-text-field-address {
+  padding: 20px;
+  width: 450px;
+  font-size: 20px;
+}

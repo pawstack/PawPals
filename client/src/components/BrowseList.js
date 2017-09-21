@@ -21,7 +21,12 @@ class BrowseList extends React.Component {
        <div>
          <h2>{title}</h2>
         {this.props.walks.map((walk, index) => (
-          <BrowseListItem key={`walk-${walk.id}`} start_owner={this.props.start_owner} end_owner={this.props.end_owner} walk={walk} index={index} selectWalk={this.props.selectWalk} />))}
+          <BrowseListItem
+            key={`walk-${walk.id}`}
+            start_owner={this.props.start_owner}end_owner={this.props.end_owner}
+            walk={walk}
+            index={index}
+            selectWalk={this.props.selectWalk} />))}
         </div>
     );
   }
