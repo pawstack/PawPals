@@ -540,20 +540,13 @@ module.exports.getPastWalk = function(req, res) {
     });
 };
 
-
 module.exports.cancelBookedWalk = function(req, res) {
   refundPayment(req, res)
     .catch(err => {
       console.log('ERROR refunding payment ', err);
     })
     .then(() => {
-      return knex('walks')
-        .where('id', req.body.walkID)
-        .update({
-          owner_id: null,
-          dog_id: null,
-          pickup_address: null,
-        });
+      return regenerateUnbookedWalk(req.body.walkID);
     })
     .then(() => {
       res.sendStatus(200);
@@ -564,6 +557,123 @@ module.exports.cancelBookedWalk = function(req, res) {
     });
 };
 
+var regenerateUnbookedWalk = function(id) {
+  return models.Walk
+    .where({id: id})
+    .fetch()
+    .then(currentWalk => {
+      const shiftStart = Moment(currentWalk.get('session_start_walker'));
+      const shiftEnd = Moment(currentWalk.get('session_end_walker'));
+      let currentStart = Moment(currentWalk.get('session_start'));
+      let currentEnd = Moment(currentWalk.get('session_end'));
+
+      models.Walk
+      .query(qb => {
+        qb.where('session_start_walker', '=', shiftStart)
+          .where('session_end_walker', '=', shiftEnd)
+          .where('session_end', '<', currentStart)
+          .orderBy('session_start', 'DESC')
+          .limit(1);
+      })
+      .fetch()
+      .then(prevWalk => {
+        if (!!prevWalk) {
+          let prevEnd = Moment(prevWalk.get('session_end'));
+        }
+        return models.Walk
+        .query(qb => {
+          qb.where('session_start_walker', '=', shiftStart)
+            .where('session_end_walker', '=', shiftEnd)
+            .where('session_start', '>', currentEnd)
+            .orderBy('session_start', 'ASC')
+            .limit(1);
+        })
+        .fetch()
+        .then(nextWalk => {
+          if (!!prevWalk) {
+            if (!!nextWalk) {
+              if (prevWalk.get('paid')) {
+                if (nextWalk.get('paid')) {
+                  currentEnd = Moment(nextWalk.get('session_start')).subtract(walkBuffer, 'm');
+                } else {
+                  currentEnd = Moment(nextWalk.get('session_end'));
+                  nextWalk.destroy();
+                }
+                currentStart = Moment(prevWalk.get('session_end')).add(walkBuffer, 'm');
+                return currentWalk.save({
+                  session_start: currentStart,
+                  session_end: currentEnd,
+                  owner_id: null,
+                  dog_id: null,
+                  pickup_address: null
+                });
+              } else {
+                if (nextWalk.get('paid')) {
+                  prevEnd = Moment(nextWalk.get('session_start')).subtract(walkBuffer, 'm');
+                } else {
+                  prevEnd = Moment(nextWalk.get('session_end'));
+                  nextWalk.destroy();
+                }
+                currentWalk.destroy();
+                return prevWalk.save({session_end: prevEnd});
+              }
+            } else {
+              if (prevWalk.get('paid')) {
+                currentStart = Moment(prevWalk.get('session_end')).add(walkBuffer, 'm');
+                currentEnd = shiftEnd;
+                return currentWalk.save({
+                  session_start: currentStart,
+                  session_end: currentEnd,
+                  owner_id: null,
+                  dog_id: null,
+                  pickup_address: null
+                });
+              } else {
+                prevEnd = shiftEnd;
+                currentWalk.destroy();
+                return prevWalk.save({session_end: prevEnd});
+              }
+            }
+          } else {
+            if (!!nextWalk) {
+              if (nextWalk.get('paid')) {
+                currentStart = shiftStart;
+                currentEnd = Moment(nextWalk.get('session_start')).subtract(walkBuffer, 'm');
+                return currentWalk.save({
+                  session_start: currentStart,
+                  session_end: currentEnd,
+                  owner_id: null,
+                  dog_id: null,
+                  pickup_address: null
+                });
+              } else {
+                currentStart = shiftStart;
+                currentEnd = Moment(nextWalk.get('session_end'));
+                nextWalk.destroy();
+                return currentWalk.save({
+                  session_start: currentStart,
+                  session_end: currentEnd,
+                  owner_id: null,
+                  dog_id: null,
+                  pickup_address: null
+                });
+              }
+            } else {
+              currentStart = shiftStart;
+              currentEnd = shiftEnd;
+              return currentWalk.save({
+                session_start: currentStart,
+                session_end: currentEnd,
+                owner_id: null,
+                dog_id: null,
+                pickup_address: null
+              });
+            }
+          }
+        });
+      });
+    });
+};
 
 module.exports.addRating = function(req, res) {
   knex('walks').where('id', req.body.walkID).update({
@@ -687,13 +797,13 @@ module.exports.fetchMessages = function(req, res) {
       if (req.body.owner) {
         collection.models.forEach((model) => {
           model.save({owner_read: true});
-        })
+        });
       } else {
         collection.models.forEach((model) => {
           model.save({walker_read: true});
-        })
+        });
       }
-    })
+    });
 };
 
 
