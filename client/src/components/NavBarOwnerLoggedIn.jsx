@@ -15,11 +15,6 @@ import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import MenuItem from 'material-ui/MenuItem';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import Browse from './Browse';
-import ProfileOwner from './ProfileOwner';
-import FindMyDog from './FindMyDog';
-import WalkHistory from './WalkHistory';
-import Messages from './Messages';
 
 
 class NavBarOwnerLoggedIn extends React.Component {

@@ -76,7 +76,10 @@ class Payment extends React.Component {
 
             <div>
               <a href = {`https://connect.stripe.com/express/oauth/authorize?redirect_uri=${callbackUrl}/&client_id=ca_BKKqX6IKWv2zjuHsLKdReiYfTfnaNPIE&state=${state}`}>
-                <RaisedButton label="Connect with Stripe" primary={true}/>
+                <RaisedButton
+                  label = "Connect with Stripe"
+                  primary={true}
+                />
               </a>
             </div>
           </div>

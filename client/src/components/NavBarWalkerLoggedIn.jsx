@@ -8,15 +8,11 @@ import {
   Redirect
 } from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-
 import IconMenu from 'material-ui/IconMenu';
 import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import MenuItem from 'material-ui/MenuItem';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import ProfileWalker from './ProfileWalker';
-import Calendar from './Calendar';
-import Messages from './Messages';
 
 class NavBarWalkerLoggedIn extends React.Component {
   constructor(props) {

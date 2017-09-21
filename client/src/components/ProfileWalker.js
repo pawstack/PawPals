@@ -104,7 +104,7 @@ class ProfileWalker extends React.Component {
           subtitle="Dog Walker"
           avatar={this.state.url}
           titleStyle={{'fontSize': '20px', 'fontFamily': '"Pontano Sans"'}}
-          subtitleStyle={{'fontSize':'16px', 'fontFamily': '"Pontano Sans"'}}
+          subtitleStyle={{'fontSize': '16px', 'fontFamily': '"Pontano Sans"'}}
         />
         <div>
           <img src={this.state.url} alt="" className="walker-photo-img"/>
