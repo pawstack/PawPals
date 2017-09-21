@@ -13,13 +13,32 @@
   width: 220px;
   border-radius: 10px;
   margin-left: 20px;
-  margin-top: 40px;
+  margin-top: 20px;
   margin-bottom: 20px;
 }
 
 .change-photo-btn {
-  margin-left: 20px;
   font-family: 'Pontano Sans'
+  margin-left: 60px;
+}
+
+.photoupload {
+  outline:none;
+  height: 40px;
+  text-align: center;
+  width: 130px;
+  border-radius:20px;
+  background: #fff;
+  border: 2px solid #66BB6A;
+  color:#66BB6A;
+  letter-spacing:1px;
+  text-shadow:0;
+  font-size:13px
+}
+
+.photoupload:hover{
+  color:white;
+  background: #66BB6A;
 }
 
 .dog-table {
@@ -43,6 +62,17 @@
 
 
 .update-btn {
-  margin-top: 30px;
-  margin-left: 20px;
+  color: white;
+  padding-left:18px;
+  padding-right: 18px;
+  outline: none;
+  background-color: #66BB6A;
+  height: 45px;
+  border: none;
+  border-radius:5px;
+  margin-left: 10px;
+}
+
+.update-btn:hover{
+  background-color: #2ecc71;
 }

@@ -187,7 +187,7 @@ class ProfileOwner extends React.Component {
         <div className="change-photo-btn">
           <ReactFilestack
             apikey="Ay45M83ltRnWSZq3qL6Zhz"
-            buttonText="Change Dog's Photo"
+            buttonText="Change Photo"
             buttonClass="photoupload"
             options={options}
             onSuccess={this.uploadImage}
@@ -284,7 +284,9 @@ class ProfileOwner extends React.Component {
               </tr>
               <tr>
                 <td>
-                  <RaisedButton label="Update Profile" onClick={this.handleUpdateProfile}/>
+                  <button className="update-btn" onClick={this.handleUpdateProfile}>
+                    Update Profile
+                  </button>
                 </td>
               </tr>
             </tbody>
