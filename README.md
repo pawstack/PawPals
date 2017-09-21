@@ -1,17 +1,18 @@
-# Project Name
+# PawPals
 
-The project description
+PawPals connects dog owners with dog walkers in their community that they can hire, with streamlined scheduling, purchasing, and real-time tracking of their dogs.
 
-## Team
+## The Pawstack Team
 
-- teamMember
-- teamMember
-- teamMember
-- teamMember
+- [Yang](https://github.com/youngyanglu)
+- [Tiffany](https://github.com/tiffanycchoy)
+- [Martin](https://github.com/mkchang)
+- [Nova](https://github.com/novyQ)
 
 ## Roadmap
 
-View the project roadmap [here](LINK_TO_DOC)
+View the project Trello Board [here](https://trello.com/b/FZuumD8M/pawpals).
+View the project roadmap [here](https://docs.google.com/document/d/1LWzn1SkVHaMaY1HimDusVBBAdVLWXDyRKjBlrPgLf8I/edit?usp=sharing).
 
 ## Contributing
 
@@ -27,14 +28,14 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
 
 ## Usage
 
-> Some usage instructions
+See more about the deployed app [here](https://paw-pals.herokuapp.com/).
 
 ## Requirements
 
-- Node 6.9.x
-- Redis 3.2.x
-- Postgresql 9.6.x
-- etc
+- Node 6.11.2
+- Redis 4.0.1
+- Postgresql 9.6.5, server 9.6.4
+- Yarn 1.x
 
 ## Development
 
@@ -96,6 +97,9 @@ To populate the database with seed data, run:
 `knex seed:run --env NODE_ENV`
 
 Note: `--env NODE_ENV` may be omitted for development. For example, `knex migrate:latest` will run all migrations in the development environment, while `knex migrate:latest --env test` will migrate in the test environment.
+
+If using Heroku to deploy, migrations can be run by prepending `heroku run` to all commands. For example, to migrate to latest, run:
+`heroku run knex migrate:latest`
 
 ## Running the App
 
