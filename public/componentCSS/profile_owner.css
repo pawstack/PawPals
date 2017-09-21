@@ -1,5 +1,5 @@
 .owner-table {
-  width: 70%;
+  width: 55%;
 }
 
 .dog-profile-pic {
@@ -19,13 +19,18 @@
 }
 
 .dog-table-container {
-  float: right;
-  margin-right: 320px;
-  margin-top: -200px;
+  margin-top: 30px;
+  height: auto;
+  max-height: 200px;
 }
 
 .dog-info-td {
-  height:200px;
-  vertical-align: middle;
+
+  vertical-align: top;
 }
 
+.update-btn {
+  margin-left: 20px;
+}
+
+/*  height:200px;*/

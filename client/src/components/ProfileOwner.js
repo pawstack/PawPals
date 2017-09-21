@@ -243,11 +243,8 @@ class ProfileOwner extends React.Component {
             </tbody>
           </table>
         </div>
-        <div>
-          <br></br>
-          <br></br>
-        </div>
-        <div style={{'marginLeft': '20px'}}>
+
+        <div className="update-btn">
           <RaisedButton label="Update Profile" onClick={this.handleUpdateProfile}/>
         </div>
       </div>);
