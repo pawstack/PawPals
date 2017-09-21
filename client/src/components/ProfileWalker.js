@@ -114,7 +114,7 @@ class ProfileWalker extends React.Component {
         >
           <ReactFilestack
             apikey="Ay45M83ltRnWSZq3qL6Zhz"
-            buttonText="Change Your Profile Photo"
+            buttonText="Change Photo"
             buttonClass="photoupload"
             options={options}
             onSuccess={this.uploadImage}
@@ -170,7 +170,9 @@ class ProfileWalker extends React.Component {
               </tr>
               <tr>
                 <td>
-                  <RaisedButton label="Update Profile" onClick={this.handleUpdateProfile}/>
+                  <button className="update-btn" onClick={this.handleUpdateProfile}>
+                    Update Profile
+                  </button>
                 </td>
               </tr>
             </tbody>
