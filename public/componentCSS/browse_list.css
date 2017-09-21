@@ -1,11 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Pontano+Sans');
 
-.upcoming-walks-header {
+.title {
+  margin-top: 5%;
   font-family: 'Pontano Sans';
-  font-weight: 900;
-}
-
-.no-upcomming-walks {
   font-size: 20px;
-  font-family: 'Pontano Sans';
 }

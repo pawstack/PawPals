@@ -25,20 +25,20 @@ class NavBarNewUserLoggedIn extends React.Component {
   render() {
     return (
       <div>
-          <div>
-            <IconMenu
-              iconButtonElement={
-                <IconButton><MoreVertIcon /></IconButton>
-              }
-              targetOrigin={{horizontal: 'right', vertical: 'top'}}
-              anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-            >
-              <MenuItem
-                primaryText="Sign out"
-                href = '/logout'
-              />
-            </IconMenu>
-          </div>
+        <div>
+          <IconMenu
+            iconButtonElement={
+              <IconButton><MoreVertIcon /></IconButton>
+            }
+            targetOrigin={{horizontal: 'right', vertical: 'top'}}
+            anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+          >
+            <MenuItem
+              primaryText="Sign Out"
+              href = '/logout'
+            />
+          </IconMenu>
+        </div>
       </div>
     );
   }

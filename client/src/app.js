@@ -33,14 +33,16 @@ injectTapEventPlugin();
 import NavBarOwnerLoggedIn from './components/NavBarOwnerLoggedIn.jsx';
 import NavBarWalkerLoggedIn from './components/NavBarWalkerLoggedIn.jsx';
 import NavBarNewUserLoggedIn from './components/NavBarNewUserLoggedIn.jsx';
-//import '../../public/componentCSS/app.css';
+import '../../public/componentCSS/app.css';
+
+const font = "'Pontano Sans', sans-serif";
 
 const muiTheme = getMuiTheme({
   palette: {
     primary1Color: '#66BB6A',
     pickerHeaderColor: '#66BB6A',
-    //fontFamily: 'Pontano Sans'
   },
+  fontFamily: font
 });
 
 class App extends React.Component {

@@ -1,6 +1,7 @@
 import React from 'react';
 import BrowseListItem from './BrowseListItem';
 import parser from 'parse-address';
+import '../../../public/componentCSS/browse_list.css';
 
 class BrowseList extends React.Component {
   constructor(props) {
@@ -18,8 +19,8 @@ class BrowseList extends React.Component {
       title = 'Open the filter to start searching for walks!';
     }
     return (
-       <div>
-         <h2>{title}</h2>
+      <div>
+        <div className = 'title'>{title}</div>
         {this.props.walks.map((walk, index) => (
           <BrowseListItem
             key={`walk-${walk.id}`}
@@ -27,7 +28,7 @@ class BrowseList extends React.Component {
             walk={walk}
             index={index}
             selectWalk={this.props.selectWalk} />))}
-        </div>
+      </div>
     );
   }
 }
