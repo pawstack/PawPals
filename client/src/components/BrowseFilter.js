@@ -165,7 +165,7 @@ class BrowseFilter extends React.Component {
               <RaisedButton label="Apply Filter" disabled={this.state.disableFilter} primary={true} onClick={this.props.getWalks.bind(this, this.state)} />
             </MenuItem>
             <MenuItem>
-              <RaisedButton label="Clear Filter"  primary={true} onClick={this.handleClearFilter} />
+              <RaisedButton label="Clear Filter" primary={true} onClick={this.handleClearFilter} />
             </MenuItem>
           </Drawer>
         </MuiThemeProvider>

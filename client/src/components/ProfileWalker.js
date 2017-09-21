@@ -101,17 +101,17 @@ class ProfileWalker extends React.Component {
       <div>
         <CardHeader
           title={this.state.walkername}
-          subtitle="Walker"
+          subtitle="Dog Walker"
           avatar={this.state.url}
-          titleStyle={{'fontSize': '20px'}}
-          subtitleStyle={{'fontSize':'16px'}}
+          titleStyle={{'fontSize': '20px', 'fontFamily': '"Pontano Sans"'}}
+          subtitleStyle={{'fontSize':'16px', 'fontFamily': '"Pontano Sans"'}}
         />
         <div>
           <img src={this.state.url} alt="" className="walker-photo-img"/>
         </div>
         <div
           className="walker-photo-upload"
-          >
+        >
           <ReactFilestack
             apikey="Ay45M83ltRnWSZq3qL6Zhz"
             buttonText="Change Your Profile Photo"
@@ -124,7 +124,12 @@ class ProfileWalker extends React.Component {
           <table>
             <tbody>
               <tr>
-                <td><CardHeader title="Phone: "/></td>
+                <td>
+                  <CardHeader
+                    title="Phone: "
+                    titleStyle={{'fontSize': '18px', 'font-weight': '900', 'fontFamily': '"Pontano Sans"'}}
+                  />
+                </td>
                 <td>
                   <TextField
                     name = "phone"
@@ -134,14 +139,22 @@ class ProfileWalker extends React.Component {
                 </td>
               </tr>
               <tr>
-                <td><CardHeader title="Address: "/></td>
+                <td>
+                  <CardHeader
+                    title="Address: "
+                    titleStyle={{'fontSize': '18px', 'font-weight': '900', 'fontFamily': '"Pontano Sans"'}}
+                  />
+                </td>
                 <td>
                   <PlacesAutocomplete inputProps={inputProps} hintText={this.state.address_old} />
                 </td>
               </tr>
               <tr>
                 <td className="walker-info-td">
-                  <CardHeader title="About me: "/>
+                  <CardHeader
+                    title="About me: "
+                    titleStyle={{'fontSize': '18px', 'font-weight': '900', 'fontFamily': '"Pontano Sans"'}}
+                  />
                 </td>
                 <td>
                   <TextField
