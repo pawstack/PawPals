@@ -8,8 +8,15 @@ import {
 import $ from 'jquery';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import '../../../public/componentCSS/payment.css';
 
+const muiTheme = getMuiTheme({
+  palette: {
+    primary1Color: '#66BB6A',
+    pickerHeaderColor: '#66BB6A'
+  },
+});
 
 class Payment extends React.Component {
 
@@ -64,7 +71,7 @@ class Payment extends React.Component {
     const state = Math.floor(Math.random() * 1000);
     return (
       <div>
-        <MuiThemeProvider>
+        <MuiThemeProvider muiTheme={muiTheme}>
           <div className = 'buttonCenter'>
 
             <div>
