@@ -33,13 +33,13 @@ injectTapEventPlugin();
 import NavBarOwnerLoggedIn from './components/NavBarOwnerLoggedIn.jsx';
 import NavBarWalkerLoggedIn from './components/NavBarWalkerLoggedIn.jsx';
 import NavBarNewUserLoggedIn from './components/NavBarNewUserLoggedIn.jsx';
-
-
+//import '../../public/componentCSS/app.css';
 
 const muiTheme = getMuiTheme({
   palette: {
     primary1Color: '#66BB6A',
     pickerHeaderColor: '#66BB6A',
+    //fontFamily: 'Pontano Sans'
   },
 });
 
@@ -109,9 +109,9 @@ class App extends React.Component {
                 <AppBar
                   title="PawPals"
                   iconElementLeft={
-                      <Avatar
-                        src={this.state.userInfo.profile_pic}
-                        style={{marginBottom: 4}} />
+                    <Avatar
+                      src={this.state.userInfo.profile_pic}
+                      style={{marginBottom: 4}} />
                   }
                   iconStyleLeft={{display: 'flex', flexDirection: 'column', justifyContent: 'center'}}
                   iconElementRight={this.state.owner ? <NavBarOwnerLoggedIn /> : <NavBarWalkerLoggedIn />}

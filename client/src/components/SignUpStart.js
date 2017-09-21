@@ -14,7 +14,16 @@ import SignUpDataEntry from './SignUpDataEntry';
 import OwnerRegister from './OwnerRegister';
 import WalkerRegister from './WalkerRegister';
 import Payment from './Payment.jsx';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import '../../../public/componentCSS/sign_up_start.css';
+
+
+const muiTheme = getMuiTheme({
+  palette: {
+    primary1Color: '#66BB6A',
+    pickerHeaderColor: '#66BB6A'
+  },
+});
 
 class SignUpStart extends React.Component {
 
@@ -237,7 +246,7 @@ class SignUpStart extends React.Component {
     const {finished, stepIndex} = this.state;
 
     return (
-      <MuiThemeProvider>
+      <MuiThemeProvider muiTheme={muiTheme}>
         <div className="stepper-container">
           <Stepper activeStep={stepIndex}>
             <Step>
