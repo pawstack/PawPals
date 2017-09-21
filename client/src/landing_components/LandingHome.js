@@ -82,28 +82,30 @@ class LandingHome extends React.Component {
           <div className='demo-text col-sm-6'>
             <div className ='demo-title'>
                 Simple Scheduling
-            </div>
-            <div><br></br></div>
-            <div className='demo-para'>
-              Our calendar interface lets you create shifts in just a few clicks. We’ll fill them up with walks in your neighbourhood in no time.
-            </div>
 
+              </div>
+              <div><br></br></div>
+              <div className='demo-para'>
+                As a walker, our calendar interface lets you create shifts in just a few clicks. We’ll fill them up with walks in your neighbourhood in no time.
+              </div>
           </div>
           <div className='col-sm-6'>GIF DEMO</div>
         </div>
+
 
         <div className='demo-container-white'>
           <div className='col-sm-6'>GIF DEMO</div>
           <div className='demo-text col-sm-6'>
             <div className ='demo-title'>
-              I forgot to tell you!
+              Filter, Book and Pay!
             </div>
             <div><br></br></div>
             <div className='demo-para'>
-                No worries, instant messaging between walkers and owners means you can get in touch anytime.
+              As a dog owner, you can find a walker that fits all your criteria. Book and pay instantly. Even better, you can choose anywhere between 30 minutes to 2 hours for your dog’s next adventure.
             </div>
           </div>
         </div>
+
 
         <div className='demo-container-blue'>
           <div className='demo-text col-sm-6'>
@@ -115,20 +117,24 @@ class LandingHome extends React.Component {
               Rest easy, you’ll always know where your dog is with our real-time tracking. And if you want to check which lampposts they sniffed after the walk, we store all historical walk paths for you.
             </div>
           </div>
+          <div className='col-sm-6'>GIF DEMO</div>
         </div>
+
 
         <div className='demo-container-white'>
           <div className='col-sm-6'>GIF DEMO</div>
           <div className='demo-text col-sm-6'>
-            <div className ='demo-title'>
-              Filter and InstaBook
-            </div>
-            <div><br></br></div>
-            <div className='demo-para'>
-              Find a walker that fits all your criteria and book instantly. Even better, you can choose anywhere between 30 minutes to 2 hours for your dog’s next adventure.
+
+              <div className ='demo-title'>
+                I forgot to tell you!
+              </div>
+              <div><br></br></div>
+              <div className='demo-para'>
+                No worries, instant messaging between walkers and owners means you can get in touch anytime.
+              </div>
             </div>
           </div>
-        </div>
+
       </div>
     );
   }
