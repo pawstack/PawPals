@@ -1,14 +1,19 @@
 @import url('https://fonts.googleapis.com/css?family=Pontano+Sans');
 
 .owner-table {
-  width: 55%;
+  width: 60%;
+  margin-bottom: 15px;
+}
+
+.address {
+  height: 100px;
 }
 
 .dog-profile-pic {
   width: 220px;
   border-radius: 10px;
   margin-left: 20px;
-  margin-top: 20px;
+  margin-top: 40px;
   margin-bottom: 20px;
 }
 
@@ -28,10 +33,16 @@
 }
 
 .dog-info-td {
-
-  vertical-align: top;
+  vertical-align: middle;
 }
 
+.dog-extras-td {
+  height:150px;
+  vertical-align: middle;
+}
+
+
 .update-btn {
+  margin-top: 30px;
   margin-left: 20px;
 }
