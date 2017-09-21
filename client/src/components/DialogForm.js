@@ -40,6 +40,7 @@ export default class DialogExampleScrollable extends React.Component {
           open={this.props.open}
           onRequestClose={this.props.handleClose}
           autoScrollBodyContent={true}
+          titleStyle={{'fontFamily': '"Pontano Sans"'}}
         >
           <WalkerConfirmationTextField price={this.props.price} handleTextInputChange={this.props.handleTextInputChange} handleAddressSelect={this.props.handleAddressSelect} location={this.props.location} end={end} start={start} />
         </Dialog>

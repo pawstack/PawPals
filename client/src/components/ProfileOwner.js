@@ -146,7 +146,7 @@ class ProfileOwner extends React.Component {
       <div>
         <CardHeader
           title={this.state.ownername}
-          subtitle="Owner"
+          subtitle="Dog Owner"
           titleStyle={{'fontSize': '20px', 'fontFamily': '"Pontano Sans"'}}
           subtitleStyle={{'fontSize': '16px', 'fontFamily': '"Pontano Sans"'}}
           avatar={this.state.owner_profile_pic}
