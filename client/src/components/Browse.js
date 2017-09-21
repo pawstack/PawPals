@@ -1,5 +1,6 @@
 import React from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import Snackbar from 'material-ui/Snackbar';
 import BrowseFilter from './BrowseFilter';
 import BrowseList from './BrowseList';
@@ -11,6 +12,16 @@ import FilterList from 'material-ui/svg-icons/content/filter-list';
 import RaisedButton from 'material-ui/RaisedButton';
 import moment from 'moment';
 import '../../../public/componentCSS/browse.css';
+
+const font = "'Pontano Sans', sans-serif";
+
+const muiTheme = getMuiTheme({
+  palette: {
+    primary1Color: '#66BB6A',
+    pickerHeaderColor: '#66BB6A'
+  },
+  fontFamily: font
+});
 
 class Browse extends React.Component {
   constructor(props) {
@@ -206,18 +217,6 @@ class Browse extends React.Component {
     });
   }
 
-  // componentDidMount() {
-    // const todayJS = moment().startOf('day').toDate();
-    // this.getWalks({
-    //   minDate: todayJS,
-    //   startDate: null,
-    //   duration: null,
-    //   pickupTime: null,
-    //   price: 100,
-    //   selectedSort: 'price',
-    // });
-  // }
-
   handleSnackBarClose() {
     this.setState({
       snackBarOpen: false
@@ -238,40 +237,43 @@ class Browse extends React.Component {
     if (!this.state.selectedWalk.walker) {
       return (
         <div>
-          <div>
-            <RaisedButton
-              label="Open Filter"
-              labelPosition="before"
-              primary={true}
-              icon={<FilterList />}
-              onClick={this.toggleFilter}
-              className="open-filter-btn"
-            />
-          </div>
-          <div>
-            <BrowseFilter
-              pickupAddress={this.state.pickupAddress}
-              setPickupAddress = {this.setPickupAddress}
-              getWalks={this.getWalks}
-              start_owner={this.state.start_owner}
-              end_owner={this.state.end_owner}
-              filterOpen={this.state.filterOpen}
-              toggleFilter={this.toggleFilter}
-              emptyWalks={this.emptyWalks}/>
-          </div>
-          <BrowseList
-            walks={this.state.walks}
-            ownerInfo = {this.state.ownerInfo}
-            start_owner={this.state.start_owner}
-            end_owner={this.state.end_owner}
-            selectWalk={this.selectWalk} />
-          <MuiThemeProvider>
-            <Snackbar
-              open={this.state.snackBarOpen}
-              message = {'Your booking is confirmed!'}
-              autoHideDuration= {6000}
-              onRequestClose={this.handleSnackBarClose}
-            />
+          <MuiThemeProvider muiTheme={muiTheme}>
+            <div>
+              <div>
+                <RaisedButton
+                  label="Open Filter"
+                  labelPosition="before"
+                  primary={true}
+                  icon={<FilterList />}
+                  onClick={this.toggleFilter}
+                  className="open-filter-btn"
+                  style={{'fontFamily': '"Pontano Sans"'}}
+                />
+              </div>
+              <div>
+                <BrowseFilter
+                  pickupAddress={this.state.pickupAddress}
+                  setPickupAddress = {this.setPickupAddress}
+                  getWalks={this.getWalks}
+                  start_owner={this.state.start_owner}
+                  end_owner={this.state.end_owner}
+                  filterOpen={this.state.filterOpen}
+                  toggleFilter={this.toggleFilter}
+                  emptyWalks={this.emptyWalks}/>
+              </div>
+              <BrowseList
+                walks={this.state.walks}
+                ownerInfo = {this.state.ownerInfo}
+                start_owner={this.state.start_owner}
+                end_owner={this.state.end_owner}
+                selectWalk={this.selectWalk} />
+              <Snackbar
+                open={this.state.snackBarOpen}
+                message = {'Your booking is confirmed!'}
+                autoHideDuration= {6000}
+                onRequestClose={this.handleSnackBarClose}
+              />
+            </div>
           </MuiThemeProvider>
         </div>
       );

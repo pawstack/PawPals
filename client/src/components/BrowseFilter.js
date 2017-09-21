@@ -16,13 +16,17 @@ import IconButton from 'material-ui/IconButton';
 import NavigationChevronLeft from 'material-ui/svg-icons/navigation/chevron-left';
 import PlacesAutocomplete from './PlacesAutocomplete';
 import moment from 'moment';
+import '../../../public/componentCSS/browse_filter.css';
+
+const font = "'Pontano Sans', sans-serif";
 
 const muiTheme = getMuiTheme({
   palette: {
     primary1Color: '#66BB6A',
     primary2Color: '#66BB6A',
-    pickerHeaderColor: '#66BB6A',
+    pickerHeaderColor: '#66BB6A'
   },
+  fontFamily: font
 });
 
 class BrowseFilter extends React.Component {
@@ -103,7 +107,7 @@ class BrowseFilter extends React.Component {
             overlayStyle={{ opacity: 0.3 }}
           >
             <AppBar
-              title="Filter"
+              title="FILTER"
               showMenuIconButton={false}
               iconElementRight={<IconButton><NavigationChevronLeft /></IconButton>}
               onRightIconButtonTouchTap={this.props.toggleFilter}/>
@@ -165,7 +169,7 @@ class BrowseFilter extends React.Component {
             </MenuItem>
           </Drawer>
         </MuiThemeProvider>
-        </div>
+      </div>
     );
   }
 }

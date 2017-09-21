@@ -147,14 +147,19 @@ class ProfileOwner extends React.Component {
         <CardHeader
           title={this.state.ownername}
           subtitle="Owner"
-          titleStyle={{'fontSize': '20px'}}
-          subtitleStyle={{'fontSize':'16px'}}
+          titleStyle={{'fontSize': '20px', 'fontFamily': '"Pontano Sans"'}}
+          subtitleStyle={{'fontSize': '16px', 'fontFamily': '"Pontano Sans"'}}
           avatar={this.state.owner_profile_pic}
         />
         <table className="owner-table">
           <tbody>
             <tr>
-              <td><CardHeader title="Phone: "/></td>
+              <td>
+                <CardHeader
+                  title="Phone: "
+                  titleStyle={{'fontSize': '18px', 'font-weight': '900', 'fontFamily': '"Pontano Sans"'}}
+                />
+              </td>
               <td>
                 <TextField
                   name = "phone"
@@ -164,7 +169,12 @@ class ProfileOwner extends React.Component {
               </td>
             </tr>
             <tr>
-              <td><CardHeader title="Address: "/></td>
+              <td>
+                <CardHeader
+                  title="Address: "
+                  titleStyle={{'fontSize': '18px', 'font-weight': '900', 'fontFamily': '"Pontano Sans"'}}
+                />
+              </td>
               <td>
                 <PlacesAutocomplete inputProps={inputProps} hintText={this.state.address_old} />
               </td>
@@ -187,7 +197,12 @@ class ProfileOwner extends React.Component {
           <table className="dog-table">
             <tbody>
               <tr>
-                <td><CardHeader title="Dog's Name:"/></td>
+                <td>
+                  <CardHeader
+                    title="Dog's Name:"
+                    titleStyle={{'fontSize': '18px', 'font-weight': '900', 'fontFamily': '"Pontano Sans"'}}
+                  />
+                </td>
                 <td>
                   <TextField
                     name = "name"
@@ -197,7 +212,13 @@ class ProfileOwner extends React.Component {
                 </td>
               </tr>
               <tr>
-                <td><CardHeader title="Dog's Breed:"/></td>
+                <td>
+                  <CardHeader
+                    title="Dog's Breed:"
+                    titleStyle={{'fontSize': '18px', 'font-weight': '900', 'fontFamily': '"Pontano Sans"'}}
+                  />
+
+                </td>
                 <td>
                   <TextField
                     name = "breed"
@@ -207,7 +228,12 @@ class ProfileOwner extends React.Component {
                 </td>
               </tr>
               <tr>
-                <td><CardHeader title="Dog's Age:"/></td>
+                <td>
+                  <CardHeader
+                    title="Dog's Age:"
+                    titleStyle={{'fontSize': '18px', 'font-weight': '900', 'fontFamily': '"Pontano Sans"'}}
+                  />
+                </td>
                 <td>
                   <TextField
                     name = "age"
@@ -217,7 +243,12 @@ class ProfileOwner extends React.Component {
                 </td>
               </tr>
               <tr>
-                <td><CardHeader title="Dog's Weight in lb:"/></td>
+                <td>
+                  <CardHeader
+                    title="Dog's Weight in lb:"
+                    titleStyle={{'fontSize': '18px', 'font-weight': '900', 'fontFamily': '"Pontano Sans"'}}
+                  />
+                </td>
                 <td>
                   <TextField
                     name = "weight"
@@ -228,7 +259,11 @@ class ProfileOwner extends React.Component {
               </tr>
               <tr>
                 <td className="dog-info-td">
-                  <CardHeader title="Dog's Info:"/></td>
+                  <CardHeader
+                    title="Dog's Info:"
+                    titleStyle={{'fontSize': '18px', 'font-weight': '900', 'fontFamily': '"Pontano Sans"'}}
+                  />
+                </td>
                 <td>
                   <TextField
                     name = "extras"

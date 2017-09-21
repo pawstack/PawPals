@@ -41,10 +41,10 @@ class NavBarOwnerLoggedIn extends React.Component {
               primaryText="Browse Walks"
               containerElement={<Link to="/browse" />}
             />
-              <MenuItem
-                primaryText="My Messages"
-                containerElement={<Link to="/messages" />}
-              />
+            <MenuItem
+              primaryText="My Messages"
+              containerElement={<Link to="/messages" />}
+            />
             <MenuItem
               primaryText="My Walks"
               containerElement={<Link to='/walkhistory' />}
@@ -59,7 +59,7 @@ class NavBarOwnerLoggedIn extends React.Component {
               containerElement={<Link to='/findmydog' />}
             />
             <MenuItem
-              primaryText="Sign out"
+              primaryText="Sign Out"
               href = '/logout'
             />
           </IconMenu>
