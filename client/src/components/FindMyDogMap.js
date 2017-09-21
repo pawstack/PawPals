@@ -66,7 +66,7 @@ export default class FindMyDogMap extends React.Component {
     var context = this;
     $.get('/api/walks/track', {walkId: this.props.walkId})
       .then((data) => {
-        var midpoint = Math.floor(data.length / 2);
+        var midpoint = Math.floor(data.length / 3);
         this.setState({
           center: data.length > 0 ? {lat: Number(data[midpoint].latitude), lng: Number(data[midpoint].longitude)} : {lat: 0, lng: 0},
           startLocation: {lat: Number(data[0].latitude), lng: Number(data[0].longitude)},

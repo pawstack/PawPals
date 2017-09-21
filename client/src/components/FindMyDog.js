@@ -5,6 +5,7 @@ import CenteredCircularProgress from './CenteredCircularProgress';
 import $ from 'jquery';
 import moment from 'moment';
 import {Link} from 'react-router-dom';
+import '../../../public/componentCSS/find_my_dog.css';
 
 class FindMyDog extends React.Component {
   constructor(props) {
@@ -46,7 +47,14 @@ class FindMyDog extends React.Component {
     if (!this.state.walk) {
       return <CenteredCircularProgress />;
     } else if (!this.state.walk.id) {
-      return <p>No active walk at this time. <Link to="/browse" >Browse for walks here!</Link></p>;
+      return (
+        <div className = 'no-active-walk'>
+          No active walk at this time.
+          <br></br>
+          <Link to="/browse" >Browse for walks here!
+          </Link>
+        </div>
+      );
     } else {
       let time = this.convertDate(this.state.walk.session_start, this.state.walk.session_end);
       return (
