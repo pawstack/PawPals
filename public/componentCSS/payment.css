@@ -1,7 +1,15 @@
 
+@import url('https://fonts.googleapis.com/css?family=Pontano+Sans');
+
+
 .buttonCenter {
   text-align: center;
   display: block;
   position: relative;
   margin: 3% 0px;
+}
+
+
+.connect-stripe-btn {
+  font-family: 'Pontano Sans';
 }

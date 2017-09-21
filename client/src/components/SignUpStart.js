@@ -17,12 +17,14 @@ import Payment from './Payment.jsx';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import '../../../public/componentCSS/sign_up_start.css';
 
+const font = "'Pontano Sans', sans-serif";
 
 const muiTheme = getMuiTheme({
   palette: {
     primary1Color: '#66BB6A',
     pickerHeaderColor: '#66BB6A'
   },
+  fontFamily: font
 });
 
 class SignUpStart extends React.Component {
