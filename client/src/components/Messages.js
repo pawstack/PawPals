@@ -7,6 +7,7 @@ import CommunicationChatBubble from 'material-ui/svg-icons/communication/chat-bu
 import ChatWindow from './ChatWindow';
 import Notification  from 'react-web-notification';
 import $ from 'jquery';
+import '../../../public/componentCSS/messages.css'
 
 class ChatList extends React.Component {
   constructor(props) {
@@ -199,7 +200,7 @@ class ChatList extends React.Component {
    return (
      <div>
        <List>
-         <Subheader>Chats</Subheader>
+         <div className = 'chat-header'>Chats</div>
          {(Object.keys(this.state.conversationNames)).map(key => (
            <ListItem
              style={{"fontWeight": this.state.conversationNames[key].read? "normal": "bold"}}

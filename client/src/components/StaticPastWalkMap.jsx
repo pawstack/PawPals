@@ -52,7 +52,7 @@ class StaticPastWalkMap extends React.Component {
         <img
           className="map-img"
           onClick ={this.props.updateAnimateState}
-          src = {`https://maps.googleapis.com/maps/api/staticmap?&zoom=16&path=color:black%7Cweight:5%7C${this.state.staticData}&markers=size:mid%7Ccolor:green%7Clabel:A%7C${this.state.startLocation}&markers=size:mid%7Ccolor:red%7Clabel:B%7C${this.state.endLocation}&scale=2&size=640x225&key=AIzaSyA700R5j4-OD48-58Du-q2J-FK9DE52r-s`}/>
+          src = {`https://maps.googleapis.com/maps/api/staticmap?&zoom=15&path=color:black%7Cweight:5%7C${this.state.staticData}&markers=size:mid%7Ccolor:green%7Clabel:A%7C${this.state.startLocation}&markers=size:mid%7Ccolor:red%7Clabel:B%7C${this.state.endLocation}&scale=2&size=640x225&key=AIzaSyA700R5j4-OD48-58Du-q2J-FK9DE52r-s`}/>
       </div>
     );
   }
