@@ -5,6 +5,7 @@ import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import moment from 'moment';
+import '../../../public/componentCSS/show_past_walk_details.css';
 
 export default class ShowPastWalkDetails extends React.Component {
 
@@ -49,7 +50,7 @@ export default class ShowPastWalkDetails extends React.Component {
         <RaisedButton
           onClick={this.handleTouchTap}
           label="Show Walk Details"
-          style={{'marginLeft': '10px'}}
+          className="show-details-btn"
         />
         <Popover
           open={this.state.open}

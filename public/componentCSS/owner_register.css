@@ -1,0 +1,12 @@
+.dog-info {
+  width: 600px
+}
+
+.dog-img-container {
+  margin-top: 20px;
+}
+
+.dog-img {
+  width:200px;
+  border-radius: 40px;
+}

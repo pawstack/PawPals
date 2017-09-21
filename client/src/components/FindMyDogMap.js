@@ -9,6 +9,7 @@ import {
   LatLng
 } from 'react-google-maps';
 import moment from 'moment';
+import '../../../public/componentCSS/find_my_dog_map.css';
 
 const GoogleMapWrapper = withGoogleMap(props => (
   <GoogleMap
@@ -146,13 +147,13 @@ export default class FindMyDogMap extends React.Component {
 
   render() {
     return (
-      <div style={{height: 400}}>
+      <div className="main-div">
         <GoogleMapWrapper
           containerElement={
-            <div style={{ height: '100%', width: '100%' }} />
+            <div className="element" />
           }
           mapElement={
-            <div style={{ height: '100%', width: '100%' }} />
+            <div className="element" />
           }
           onMapLoad={this.handleMapLoad}
           center={this.state.center}

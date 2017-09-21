@@ -11,6 +11,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import ReactFilestack from 'filestack-react';
 import Snackbar from 'material-ui/Snackbar';
 import PlacesAutocomplete from './PlacesAutocomplete';
+import '../../../public/componentCSS/owner_register.css';
 
 class OwnerRegister extends React.Component {
 
@@ -122,9 +123,7 @@ class OwnerRegister extends React.Component {
             multiLine={true}
             rows={2}
             rowsMax={5}
-            style={{
-              width: '600px'
-            }}
+            className="dog-info"
             onChange={this.updateDogInfo}
           />
         </div>
@@ -156,11 +155,10 @@ class OwnerRegister extends React.Component {
             options={options}
             onSuccess={this.uploadImage}
           />
-          <div style={{'marginTop': '20px'}}>
+          <div className="dog-img-container">
             <img
               src={this.props.dogPicURL}
-              width="200"
-              style={{'borderRadius': '40px'}}
+              className="dog-img"
             ></img>
           </div>
         </div>

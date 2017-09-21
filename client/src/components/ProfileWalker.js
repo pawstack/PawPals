@@ -6,6 +6,7 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 import RaisedButton from 'material-ui/RaisedButton';
 import ReactFilestack from 'filestack-react';
 import PlacesAutocomplete from './PlacesAutocomplete';
+import '../../../public/componentCSS/profile_walker.css';
 
 class ProfileWalker extends React.Component {
 
@@ -102,11 +103,15 @@ class ProfileWalker extends React.Component {
           title={this.state.walkername}
           subtitle="Walker"
           avatar={this.state.url}
+          titleStyle={{'fontSize': '20px'}}
+          subtitleStyle={{'fontSize':'16px'}}
         />
         <div>
-          <img src={this.state.url} alt="" width="220" style={{'borderRadius': '10px', 'marginLeft': '20px', 'marginTop': '20px', 'marginBottom': '10px'}}/>
+          <img src={this.state.url} alt="" className="walker-photo-img"/>
         </div>
-        <div style={{'borderRadius': '10px', 'marginLeft': '20px', 'marginTop': '10px', 'marginBottom': '20px'}}>
+        <div
+          className="walker-photo-upload"
+          >
           <ReactFilestack
             apikey="Ay45M83ltRnWSZq3qL6Zhz"
             buttonText="Change Your Profile Photo"
@@ -116,7 +121,7 @@ class ProfileWalker extends React.Component {
           />
         </div>
         <div>
-          <table style={{'width': '100%'}}>
+          <table>
             <tbody>
               <tr>
                 <td><CardHeader title="Phone: "/></td>
@@ -135,7 +140,9 @@ class ProfileWalker extends React.Component {
                 </td>
               </tr>
               <tr>
-                <td><CardHeader title="About me: "/></td>
+                <td className="walker-info-td">
+                  <CardHeader title="About me: "/>
+                </td>
                 <td>
                   <TextField
                     name = "about_me"
@@ -149,11 +156,8 @@ class ProfileWalker extends React.Component {
               </tr>
             </tbody>
           </table>
-          <div>
-            <br></br>
-            <br></br>
-          </div>
-          <div style={{'marginLeft': '20px'}}>
+
+          <div className="update-btn">
             <RaisedButton label="Update Profile" onClick={this.handleUpdateProfile}/>
           </div>
         </div>

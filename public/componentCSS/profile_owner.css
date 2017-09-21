@@ -1,0 +1,31 @@
+.owner-table {
+  width: 70%;
+}
+
+.dog-profile-pic {
+  width: 220px;
+  border-radius: 10px;
+  margin-left: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.change-photo-btn {
+  margin-left: 20px;
+}
+
+.dog-table {
+  height: auto;
+}
+
+.dog-table-container {
+  float: right;
+  margin-right: 320px;
+  margin-top: -200px;
+}
+
+.dog-info-td {
+  height:200px;
+  vertical-align: middle;
+}
+

@@ -14,6 +14,7 @@ import FlatButton from 'material-ui/FlatButton';
 import Snackbar from 'material-ui/Snackbar';
 import TextField from 'material-ui/TextField';
 import moment from 'moment';
+import '../../../public/componentCSS/confirmation.css';
 
 const muiTheme = getMuiTheme({
   palette: {
@@ -59,7 +60,7 @@ class Confirmation extends React.Component {
         <MuiThemeProvider muiTheme={muiTheme}>
           <div>
 
-            <Card style={{marginTop: '10%'}}>
+            <Card className="confirmation-card">
 
               <CardMedia
                 overlay={<CardTitle title="Confirm your selection"/>}
@@ -85,7 +86,7 @@ class Confirmation extends React.Component {
                   defaultValue={start}
                   floatingLabelText="Pick-Up Time"
                   disabled={true}
-                  style = {{padding: 20, width: 160, fontSize: 20}}
+                  className="confirmation-text-field"
                 />
               </div>
               <div>
@@ -93,7 +94,7 @@ class Confirmation extends React.Component {
                   defaultValue={end}
                   floatingLabelText="Drop-Off Time"
                   disabled={true}
-                  style = {{padding: 20, width: 160, fontSize: 20}}
+                  className="confirmation-text-field"
                 />
               </div>
               <div>
@@ -101,7 +102,7 @@ class Confirmation extends React.Component {
                   defaultValue={this.props.pickupAddress}
                   floatingLabelText="Pick-Up Location"
                   disabled={true}
-                  style = {{padding: 20, width: 450, fontSize: 20}}
+                  className="confirmation-text-field-address"
                 />
               </div>
 

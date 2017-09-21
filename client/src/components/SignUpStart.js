@@ -14,6 +14,7 @@ import SignUpDataEntry from './SignUpDataEntry';
 import OwnerRegister from './OwnerRegister';
 import WalkerRegister from './WalkerRegister';
 import Payment from './Payment.jsx';
+import '../../../public/componentCSS/sign_up_start.css';
 
 class SignUpStart extends React.Component {
 
@@ -234,31 +235,30 @@ class SignUpStart extends React.Component {
 
   render() {
     const {finished, stepIndex} = this.state;
-    const contentStyle = {margin: '0 16px'};
 
     return (
       <MuiThemeProvider>
-        <div style={{width: '100%', maxWidth: 700, margin: 'auto'}}>
+        <div className="stepper-container">
           <Stepper activeStep={stepIndex}>
             <Step>
-              <StepLabel>Select an owner or walker account</StepLabel>
+              <StepLabel style={{'fontSize':'20'}}>Select an owner or walker account</StepLabel>
             </Step>
             <Step>
-              <StepLabel>Complete your profile</StepLabel>
+              <StepLabel style={{'fontSize':'20'}}>Complete your profile</StepLabel>
             </Step>
             <Step>
-              <StepLabel>Setup Payment</StepLabel>
+              <StepLabel style={{'fontSize':'20'}}>Setup Payment</StepLabel>
             </Step>
           </Stepper>
-          <div style={contentStyle}>
+          <div className="btn-container-main">
             <div>
               <div>{this.getStepContent(stepIndex)}</div>
-              <div style={{marginTop: 12}}>
+              <div className="btn-container">
                 <FlatButton
                   label="Back"
                   disabled={stepIndex === 0}
                   onClick={this.handlePrev}
-                  style={{marginRight: 12}}
+                  className="back-btn"
                 />
                 {stepIndex < 2 ? (
                   <RaisedButton
@@ -277,3 +277,5 @@ class SignUpStart extends React.Component {
 }
 
 export default SignUpStart;
+//const contentStyle = {margin: '0 16px'};
+//style={contentStyle}

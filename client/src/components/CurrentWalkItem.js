@@ -4,6 +4,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import moment from 'moment';
 import Snackbar from 'material-ui/Snackbar';
 import Message from './Message';
+import '../../../public/componentCSS/current_walk_item.css';
 
 class CurrentWalkItem extends React.Component {
   constructor(props) {
@@ -51,7 +52,7 @@ class CurrentWalkItem extends React.Component {
           avatar={this.props.walk.walker.profile_pic}
           title={this.props.walk.walker.display}
         />
-        <CardText style={{'font': '14px'}}>
+        <CardText className="card-text">
         From {time[0]} to {time[1]}  Near {this.props.walk.walk_zone_pt}
         </CardText>
 

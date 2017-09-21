@@ -16,6 +16,7 @@ import moment from 'moment';
 import GpsFixed from 'material-ui/svg-icons/device/gps-fixed';
 import GpsOff from 'material-ui/svg-icons/device/gps-off';
 import StarRating from './StarRating.jsx';
+import '../../../public/componentCSS/event_dialog.css';
 
 
 const styles = {
@@ -152,7 +153,7 @@ export default class EventDialog extends React.Component {
               <tbody>
                 <tr>
                   <td>
-                    <img src={this.props.selectedEvent.dog_profile_pic} alt="" width="220" height="220" style={{'borderRadius': '10px'}}/>
+                    <img src={this.props.selectedEvent.dog_profile_pic} alt="" className="dog-pic"/>
                   </td>
                   <td>
                     <ul>
@@ -174,7 +175,7 @@ export default class EventDialog extends React.Component {
                   walkerid: this.props.selectedEvent.walker_id}
               }}
               >
-                <FlatButton label="Message Owner" primary={true} style={{'marginLeft': '3px'}}/>
+                <FlatButton label="Message Owner" primary={true} className="message-owner-btn"/>
 
               </Link>
             </div>
@@ -198,18 +199,16 @@ export default class EventDialog extends React.Component {
                     <img
                       src={this.props.selectedEvent.dog_profile_pic}
                       alt=""
-                      width="220"
-                      height="220"
-                      style={{'borderRadius': '10px'}}/>
+                      className="dog-pic"/>
                   </td>
                   <td>
                     {(this.props.selectedEvent.owner_id === null ?
                       <div>This walk was not booked</div> :
                       <div>
-                        <div style = {{paddingLeft: '10%'}}>
+                        <div className="rate-walk">
                           Please rate this walk!
                         </div>
-                        <div style = {{paddingLeft: '10%'}}>
+                        <div className="rate-walk">
                           <StarRating
                             ratingFor = {'dog'}
                             walk = {this.props.selectedEvent}

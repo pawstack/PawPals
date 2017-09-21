@@ -6,6 +6,7 @@ import ShowPastWalkDetails from './ShowPastWalkDetails';
 import FindMyDogMap from './FindMyDogMap';
 import StarRating from './StarRating.jsx';
 import StaticPastWalkMap from './StaticPastWalkMap.jsx';
+import '../../../public/componentCSS/past_walk_item.css';
 
 class PastWalkItem extends React.Component {
   constructor(props) {
@@ -38,14 +39,14 @@ class PastWalkItem extends React.Component {
           }
         </CardText>
         <CardText>
-          <div style = {{display: 'inline-block', float: 'left', paddingRight: '10px', paddingTop: '6px', fontSize: '15px'}}>
+          <div className="rate-walk-text">
             Rate this walk with {this.props.walk.walker.first}:
           </div>
           <StarRating
             ratingFor = {'walker'}
             walk= {this.props.walk}
             ratingForID = {this.props.walk['walker_id']}
-            style = {{display: 'inline-block', float: 'left', paddingLeft: '6px'}}
+            className = "star-rating"
           />
         </CardText>
         <ShowPastWalkDetails

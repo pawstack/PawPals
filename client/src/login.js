@@ -16,7 +16,6 @@ class Login extends React.Component {
       <MuiThemeProvider>
           <div>
             <LandingPage/>
-
           </div>
       </MuiThemeProvider>
     );

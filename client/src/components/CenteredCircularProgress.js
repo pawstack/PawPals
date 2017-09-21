@@ -1,12 +1,13 @@
 import React from 'react';
 import CircularProgress from 'material-ui/CircularProgress';
+import '../../../public/componentCSS/centered_circular_progress.css';
 
 const CenteredCircularProgress = () => (
-  <div style={{position: 'fixed', top: '50%', left: '50%', marginTop: -50, marginLeft: -50}} >
-    <CircularProgress 
+  <div className="centered-circular-progress">
+    <CircularProgress
       size={100}
       thickness={8}
-    />        
+    />
   </div>
 );
 

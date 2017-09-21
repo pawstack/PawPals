@@ -7,6 +7,7 @@ import Avatar from 'material-ui/Avatar';
 import ReactFilestack from 'filestack-react';
 import Snackbar from 'material-ui/Snackbar';
 import PlacesAutocomplete from './PlacesAutocomplete';
+import '../../../public/componentCSS/walker_register.css';
 
 class WalkerRegister extends React.Component {
 
@@ -99,9 +100,7 @@ class WalkerRegister extends React.Component {
               multiLine={true}
               rows={2}
               rowsMax={5}
-              style={{
-                width: '400px'
-              }}
+              className="walker-register"
               onChange={this.updateWalkerInfo}
             />
           </div>
@@ -113,11 +112,10 @@ class WalkerRegister extends React.Component {
             options={options}
             onSuccess={this.uploadImage}
           />
-          <div style={{'marginTop': '20px'}}>
+          <div className = "walker-img-container">
             <img
               src={this.props.walkerPicURL}
-              width="200"
-              style = {{'borderRadius': '40px'}}
+              className="walker-img"
             >
             </img>
           </div>

@@ -10,6 +10,7 @@ import geolib from 'geolib';
 import FilterList from 'material-ui/svg-icons/content/filter-list';
 import RaisedButton from 'material-ui/RaisedButton';
 import moment from 'moment';
+import '../../../public/componentCSS/browse.css';
 
 class Browse extends React.Component {
   constructor(props) {
@@ -244,7 +245,7 @@ class Browse extends React.Component {
               primary={true}
               icon={<FilterList />}
               onClick={this.toggleFilter}
-              style={{ 'margin': 12 }}
+              className="open-filter-btn"
             />
           </div>
           <div>

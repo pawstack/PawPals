@@ -6,6 +6,7 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 import RaisedButton from 'material-ui/RaisedButton';
 import ReactFilestack from 'filestack-react';
 import PlacesAutocomplete from './PlacesAutocomplete';
+import '../../../public/componentCSS/profile_owner.css';
 
 class ProfileOwner extends React.Component {
 
@@ -146,9 +147,11 @@ class ProfileOwner extends React.Component {
         <CardHeader
           title={this.state.ownername}
           subtitle="Owner"
+          titleStyle={{'fontSize': '20px'}}
+          subtitleStyle={{'fontSize':'16px'}}
           avatar={this.state.owner_profile_pic}
         />
-        <table style={{'width': '100%'}}>
+        <table className="owner-table">
           <tbody>
             <tr>
               <td><CardHeader title="Phone: "/></td>
@@ -169,9 +172,9 @@ class ProfileOwner extends React.Component {
           </tbody>
         </table>
         <div>
-          <img src={this.state.dog_profile_pic} alt="" width="220" height="220" style={{'borderRadius': '10px', 'marginLeft': '20px', 'marginTop': '20px', 'marginBottom': '20px'}}/>
+          <img src={this.state.dog_profile_pic} alt="" className="dog-profile-pic"/>
         </div>
-        <div style={{'marginLeft': '20px'}}>
+        <div className="change-photo-btn">
           <ReactFilestack
             apikey="Ay45M83ltRnWSZq3qL6Zhz"
             buttonText="Change Dog's Photo"
@@ -180,8 +183,8 @@ class ProfileOwner extends React.Component {
             onSuccess={this.uploadImage}
           />
         </div>
-        <div style={{'float': 'right', 'marginRight': '320px', 'marginTop': '-260px'}}>
-          <table style={{height:"auto", valign:"center"}}>
+        <div className="dog-table-container">
+          <table className="dog-table">
             <tbody>
               <tr>
                 <td><CardHeader title="Dog's Name:"/></td>
@@ -224,15 +227,16 @@ class ProfileOwner extends React.Component {
                 </td>
               </tr>
               <tr>
-                <td><CardHeader title="Dog's Info:"/></td>
-                <td style={{"height":"200px"}}>
+                <td className="dog-info-td">
+                  <CardHeader title="Dog's Info:"/></td>
+                <td>
                   <TextField
                     name = "extras"
                     hintText={this.state.extras_old}
                     onChange={this.handleChange}
                     multiLine={true}
                     rows={1}
-                    rowsMax={10}
+                    rowsMax={6}
                   />
                 </td>
               </tr>

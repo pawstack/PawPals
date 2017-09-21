@@ -5,6 +5,8 @@ import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import ActionFavorite from 'material-ui/svg-icons/action/favorite';
 import ActionFavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
 import PlacesAutocomplete from './PlacesAutocomplete';
+import '../../../public/componentCSS/sign_up_data_entry.css';
+
 
 const styles = {
   block: {
@@ -12,6 +14,7 @@ const styles = {
   },
   radioButton: {
     marginBottom: 16,
+    fontSize: 17
   },
 };
 
@@ -44,7 +47,7 @@ class SignUpDataEntry extends React.Component {
       onChange: (v) => { this.updateAddress(v); },
     };
     return (
-      <div>
+      <div className="radio-button-group">
         <RadioButtonGroup
           name="shipSpeed"
           defaultSelected={this.props.owner ? "Owner" : "Walker"}
