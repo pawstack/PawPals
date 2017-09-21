@@ -259,29 +259,39 @@ class ProfileOwner extends React.Component {
               </tr>
               <tr>
                 <td className="dog-info-td">
+<<<<<<< HEAD
                   <CardHeader
                     title="Dog's Info:"
                     titleStyle={{'fontSize': '18px', 'font-weight': '900', 'fontFamily': '"Pontano Sans"'}}
                   />
                 </td>
                 <td>
+=======
+                  <CardHeader title="Dog's Info:"/>
+                </td>
+                <td className="dog-extras-td">
+>>>>>>> Updated Profile Page
                   <TextField
                     name = "extras"
                     hintText={this.state.extras_old}
                     onChange={this.handleChange}
+                    style = {{width: '500px'}}
                     multiLine={true}
                     rows={1}
                     rowsMax={6}
                   />
                 </td>
               </tr>
+              <tr>
+                <td>
+                  <RaisedButton label="Update Profile" onClick={this.handleUpdateProfile}/>
+                </td>
+              </tr>
             </tbody>
           </table>
+
         </div>
 
-        <div className="update-btn">
-          <RaisedButton label="Update Profile" onClick={this.handleUpdateProfile}/>
-        </div>
       </div>);
   }
 }

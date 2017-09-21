@@ -156,10 +156,11 @@ class ProfileWalker extends React.Component {
                     titleStyle={{'fontSize': '18px', 'font-weight': '900', 'fontFamily': '"Pontano Sans"'}}
                   />
                 </td>
-                <td>
+                <td className="walker-info-td">
                   <TextField
                     name = "about_me"
                     multiLine={true}
+                    style={{width:"500px"}}
                     rows={1}
                     rowsMax={8}
                     hintText={this.state.about_me_old}
@@ -167,12 +168,13 @@ class ProfileWalker extends React.Component {
                   />
                 </td>
               </tr>
+              <tr>
+                <td>
+                  <RaisedButton label="Update Profile" onClick={this.handleUpdateProfile}/>
+                </td>
+              </tr>
             </tbody>
           </table>
-
-          <div className="update-btn">
-            <RaisedButton label="Update Profile" onClick={this.handleUpdateProfile}/>
-          </div>
         </div>
       </div>);
   }
