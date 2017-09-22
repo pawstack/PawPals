@@ -4,10 +4,10 @@ PawPals connects dog owners with dog walkers in their community that they can hi
 
 ## The Pawstack Team
 
-- [Yang](https://github.com/youngyanglu)
-- [Tiffany](https://github.com/tiffanycchoy)
-- [Martin](https://github.com/mkchang)
-- [Nova](https://github.com/novyQ)
+- [Yang Lu](https://github.com/youngyanglu)
+- [Tiffany Choy](https://github.com/tiffanycchoy)
+- [Martin Chang](https://github.com/mkchang)
+- [Nova Qiu](https://github.com/novyQ)
 
 ## Roadmap
 
@@ -28,7 +28,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
 
 ## Usage
 
-See more about the deployed app [here](https://paw-pals.herokuapp.com/).
+See the deployed app [here](https://paw-pals.herokuapp.com/).
 
 ## Requirements
 
@@ -47,12 +47,11 @@ brew install redis
 brew install postgresql
 ```
 
-Yarn is a replacement for npm. It's faster and *guarantees* consistency -- as you deploy your code in various environments, you won't run the risk of slight variations in what gets installed.
-
 ### Install Project Dependencies
 
 ```
 yarn global add grunt-cli knex eslint
+yarn install
 ```
 
 ## App Configuration

@@ -30,7 +30,7 @@ class LandingHome extends React.Component {
       <div>
         <div className="slogan">
           <div>
-           Don't put your life on PAWse
+            Don't put your life on <i> paws </i>
           </div>
           <div>
            Let us walk your dogs for you!
