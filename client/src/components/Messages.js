@@ -27,15 +27,11 @@ class ChatList extends React.Component {
     this.getConversationDetails = this.getConversationDetails.bind(this);
     this.generateConversationNames = this.generateConversationNames.bind(this);
     this.checkNewConversation = this.checkNewConversation.bind(this);
-    //this.fetchNewMessageCount = this.fetchNewMessageCount.bind(this);
   }
 
   componentDidMount() {
     this.props.socket.on('new message', (data) => {
-      console.log('new message heard')
-      console.log('$$$$$$$$$the data is', data);
       this.handleNewMessage.call(this, data);
-      //this.fetchNewMessageCount(data);
     })
     this.getConversationDetails((conversationDetails) => {
       this.generateConversationNames(conversationDetails, () => {
@@ -73,20 +69,20 @@ class ChatList extends React.Component {
       if (this.state.owner) {
         if (!conversationNames[conversationDetail.walker_id]) {
           conversationNames[conversationDetail.walker_id] = conversationDetail.walker;
-        }
-        if (conversationDetail.owner_read) {
           conversationNames[conversationDetail.walker_id]['read'] = true;
-        } else {
+        }
+        if (!conversationDetail.owner_read) {
+          conversationNames[conversationDetail.walker_id]['read'] = false;
           conversationNames[conversationDetail.walker_id]['count'] = conversationNames[conversationDetail.walker_id]['count'] || 0;
           conversationNames[conversationDetail.walker_id]['count']++;
         }
       } else {
         if (!conversationNames[conversationDetail.owner_id]) {
           conversationNames[conversationDetail.owner_id] = conversationDetail.owner;
-        }
-        if (conversationDetail.walker_read) {
           conversationNames[conversationDetail.owner_id]['read'] = true;
-        } else {
+        }
+        if (!conversationDetail.walker_read) {
+          conversationNames[conversationDetail.owner_id]['read'] = false;
           conversationNames[conversationDetail.owner_id]['count'] = conversationNames[conversationDetail.owner_id]['count'] || 0;
           conversationNames[conversationDetail.owner_id]['count']++;
         }
@@ -96,7 +92,6 @@ class ChatList extends React.Component {
   }
 
   checkNewConversation(callback) {
-    console.log(this.props.location)
     if (this.props.location.state) {
       if (this.state.owner && !this.state.conversationNames[this.props.location.state.walkerid]) {
         this.instantiateConversation(this.props.location.state.ownerid, this.props.location.state.walkerid, callback);
@@ -192,6 +187,8 @@ class ChatList extends React.Component {
       var conversationNames = this.state.conversationNames;
       if (this.state.chat.owner_id !== data.own_id && this.state.chat.walker_id !== data.own_id) {
         conversationNames[data.own_id].read = false;
+        conversationNames[data.own_id].count = conversationNames[data.own_id].count || 0;
+        conversationNames[data.own_id].count++;
       }
       this.setState({
         title: title,
@@ -207,56 +204,12 @@ class ChatList extends React.Component {
     }
   }
 
-  // fetchNewMessageCount () {
-  //   console.log('**** INSIDE OF FETCH MESSAGE COUNT');
-  //   var context = this;
-  //   $.ajax({
-  //     method: 'GET',
-  //     url: '/api/messages/fetchNewCount',
-  //     // data: {
-  //     //   walker_id:
-  //     //   owner_id: this.state.owner
-  //     // },
-  //
-  //     success(success_data) {
-  //       //console.log('the NEW MSG success_data fetched from db is ', success_data);
-  //       var receiver = '';
-  //       var count = 0;
-  //       console.log('data id is ', context.state.user_id);
-  //
-  //       var id = Number(Object.keys(context.state.conversationNames));
-  //       console.log('#####the id is ', id);
-  //
-  //       console.log('**conversation names is ', context.state.conversationNames[id].owner);
-  //       context.state.conversationNames.owner ? receiver = 'walker' : receiver = 'owner';
-  //       for (var i = 0; i < success_data.length; i++) {
-  //         console.log('success_data i is ', success_data[i]);
-  //         console.log('success_data identity read is ', success_data[i][receiver + '_read']);
-  //         if (success_data[i][receiver + '_read'] === false) {
-  //           //increase the new message count.
-  //           count += 1;
-  //         }
-  //       }
-  //       console.log('receiver is ', receiver);
-  //       console.log('*****the number of unread messages is ', count);
-  //       context.setState({
-  //         newMessageCount: count
-  //       });
-  //     },
-  //     error(err) {
-  //       console.log('ERROR - NEW MSG success_data fetched from db is ', err);
-  //     }
-  //   });
-  // }
-
   render() {
     if (this.state.owner) {
       var other_person = 'walker';
     } else {
       var other_person = 'owner';
     }
-    console.log('*****conversaion names is ', this.state.conversationNames);
-
 
    return (
      <div>
