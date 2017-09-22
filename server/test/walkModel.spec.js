@@ -14,7 +14,11 @@ describe('Walk Model', function () {
   });
 
   it('Should be able to retrieve data', function (done) {
-    model.Walk.fetchAll()
+    model.Walk
+      .query(function(qb) {
+        qb.orderBy('id', 'ASC');
+      })
+      .fetchAll()
       .then(function (results) {
         expect(results.length).to.equal(500);
         expect(results.at(0).get('id')).to.equal(1);
