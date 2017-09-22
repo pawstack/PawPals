@@ -103,7 +103,7 @@ class ProfileWalker extends React.Component {
           title={this.state.walkername}
           subtitle="Dog Walker"
           avatar={this.state.url}
-          titleStyle={{'fontSize': '20px', 'fontFamily': '"Pontano Sans"'}}
+          titleStyle={{'fontSize': '20px', 'fontFamily': '"Pontano Sans"', 'fontWeight':'bold'}}
           subtitleStyle={{'fontSize': '16px', 'fontFamily': '"Pontano Sans"'}}
         />
         <div>
@@ -127,7 +127,7 @@ class ProfileWalker extends React.Component {
                 <td>
                   <CardHeader
                     title="Phone: "
-                    titleStyle={{'fontSize': '18px', 'font-weight': '900', 'fontFamily': '"Pontano Sans"'}}
+                    titleStyle={{'fontSize': '18px', 'fontFamily': '"Pontano Sans"'}}
                   />
                 </td>
                 <td>
@@ -142,7 +142,7 @@ class ProfileWalker extends React.Component {
                 <td>
                   <CardHeader
                     title="Address: "
-                    titleStyle={{'fontSize': '18px', 'font-weight': '900', 'fontFamily': '"Pontano Sans"'}}
+                    titleStyle={{'fontSize': '18px', 'fontFamily': '"Pontano Sans"'}}
                   />
                 </td>
                 <td>
@@ -153,7 +153,7 @@ class ProfileWalker extends React.Component {
                 <td className="walker-info-td">
                   <CardHeader
                     title="About me: "
-                    titleStyle={{'fontSize': '18px', 'font-weight': '900', 'fontFamily': '"Pontano Sans"'}}
+                    titleStyle={{'fontSize': '18px', 'fontFamily': '"Pontano Sans"'}}
                   />
                 </td>
                 <td className="walker-info-td">

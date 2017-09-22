@@ -147,7 +147,7 @@ class ProfileOwner extends React.Component {
         <CardHeader
           title={this.state.ownername}
           subtitle="Dog Owner"
-          titleStyle={{'fontSize': '20px', 'fontFamily': '"Pontano Sans"'}}
+          titleStyle={{'fontSize': '20px', 'fontFamily': '"Pontano Sans"', 'fontWeight':'bold'}}
           subtitleStyle={{'fontSize': '16px', 'fontFamily': '"Pontano Sans"'}}
           avatar={this.state.owner_profile_pic}
         />
@@ -157,7 +157,7 @@ class ProfileOwner extends React.Component {
               <td>
                 <CardHeader
                   title="Phone: "
-                  titleStyle={{'fontSize': '18px', 'font-weight': '900', 'fontFamily': '"Pontano Sans"'}}
+                  titleStyle={{'fontSize': '18px', 'fontFamily': '"Pontano Sans"'}}
                 />
               </td>
               <td>
@@ -172,7 +172,7 @@ class ProfileOwner extends React.Component {
               <td>
                 <CardHeader
                   title="Address: "
-                  titleStyle={{'fontSize': '18px', 'font-weight': '900', 'fontFamily': '"Pontano Sans"'}}
+                  titleStyle={{'fontSize': '18px', 'fontFamily': '"Pontano Sans"'}}
                 />
               </td>
               <td>
@@ -200,7 +200,7 @@ class ProfileOwner extends React.Component {
                 <td>
                   <CardHeader
                     title="Dog's Name:"
-                    titleStyle={{'fontSize': '18px', 'font-weight': '900', 'fontFamily': '"Pontano Sans"'}}
+                    titleStyle={{'fontSize': '18px', 'fontFamily': '"Pontano Sans"'}}
                   />
                 </td>
                 <td>
@@ -215,7 +215,7 @@ class ProfileOwner extends React.Component {
                 <td>
                   <CardHeader
                     title="Dog's Breed:"
-                    titleStyle={{'fontSize': '18px', 'font-weight': '900', 'fontFamily': '"Pontano Sans"'}}
+                    titleStyle={{'fontSize': '18px', 'fontFamily': '"Pontano Sans"'}}
                   />
 
                 </td>
@@ -231,7 +231,7 @@ class ProfileOwner extends React.Component {
                 <td>
                   <CardHeader
                     title="Dog's Age:"
-                    titleStyle={{'fontSize': '18px', 'font-weight': '900', 'fontFamily': '"Pontano Sans"'}}
+                    titleStyle={{'fontSize': '18px', 'fontFamily': '"Pontano Sans"'}}
                   />
                 </td>
                 <td>
@@ -246,7 +246,7 @@ class ProfileOwner extends React.Component {
                 <td>
                   <CardHeader
                     title="Dog's Weight in lb:"
-                    titleStyle={{'fontSize': '18px', 'font-weight': '900', 'fontFamily': '"Pontano Sans"'}}
+                    titleStyle={{'fontSize': '18px', 'fontFamily': '"Pontano Sans"'}}
                   />
                 </td>
                 <td>
@@ -259,18 +259,13 @@ class ProfileOwner extends React.Component {
               </tr>
               <tr>
                 <td className="dog-info-td">
-<<<<<<< HEAD
                   <CardHeader
                     title="Dog's Info:"
-                    titleStyle={{'fontSize': '18px', 'font-weight': '900', 'fontFamily': '"Pontano Sans"'}}
+                    titleStyle={{'fontSize': '18px', 'fontFamily': '"Pontano Sans"'}}
                   />
                 </td>
-                <td>
-=======
-                  <CardHeader title="Dog's Info:"/>
-                </td>
                 <td className="dog-extras-td">
->>>>>>> Updated Profile Page
+
                   <TextField
                     name = "extras"
                     hintText={this.state.extras_old}
