@@ -13,19 +13,29 @@ module.exports.getAll = (req, res) => {
     });
 };
 
-// module.exports.create = (req, res) => {
-//   models.Profile.forge({ username: req.body.username, password: req.body.password })
-//     .save()
-//     .then(result => {
-//       res.status(201).send(result.omit('password'));
-//     })
-//     .catch(err => {
-//       if (err.constraint === 'users_username_unique') {
-//         return res.status(403);
-//       }
-//       res.status(500).send(err);
-//     });
-// };
+module.exports.create = (req, res) => {
+  models.Profile.forge({
+    first: req.body.first,
+    last: req.body.last,
+    email: req.body.email,
+    created_at: new Date(),
+    walker: !req.body.owner,
+    owner: req.body.owner,
+    address: req.body.address,
+    stripe_user_id: 'acct_1AyABMD48gWdlUmz',
+    customer_id_cc_Token: 'cus_BLyqC4sFNcLjBU',
+  })
+    .save()
+    .then(result => {
+      res.status(201).send(result);
+    })
+    .catch(err => {
+      if (err.constraint === 'users_username_unique') {
+        return res.status(403);
+      }
+      res.status(500).send(err);
+    });
+};
 
 module.exports.getOne = (req, res) => {
   models.Profile.where({ id: req.params.id }).fetch()

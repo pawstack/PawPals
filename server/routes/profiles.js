@@ -5,7 +5,7 @@ const ProfileController = require('../controllers').Profiles;
 
 router.route('/')
   .get(ProfileController.getAll)
-  // .post(ProfileController.create)
+  .post(ProfileController.create)
 ;
 
 router.route('/:id')

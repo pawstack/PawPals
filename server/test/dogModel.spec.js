@@ -21,8 +21,19 @@ describe('Dog Model', function () {
         done();
       })
       .catch(function (err) {
-        // If this expect statement is reached, there's an error.
         done(err);
       });
+  });
+
+  it('Should be able to find related owner', function(done) {
+    model.Dog.where({'id': 1}).fetch({withRelated: ['owner']})
+      .then((dog) => {
+        expect(dog.relations.owner).to.be.an('object');
+        expect(dog.relations.owner.id).to.have.equal(1);
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      })
   });
 });

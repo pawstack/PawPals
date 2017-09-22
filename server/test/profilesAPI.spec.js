@@ -52,25 +52,23 @@ describe('Profiles API', function () {
       .end(done);
   });
 
-  // it('accepts POST requests to /api/profiles', function (done) {
-  //   request(app)
-  //     .post('/api/profiles')
-  //     .send({
-  //       username: 'TestUser4',
-  //       password: 'happy'
-  //     })
-  //     .expect(res => {
-  //       res.body = {
-  //         username: res.body.username,
-  //         password: res.body.password
-  //       };
-  //     })
-  //     .expect(201, {
-  //       username: 'TestUser4',
-  //       password: undefined
-  //     })
-  //     .end(done);
-  // });
+   it('accepts POST requests to /api/profiles', function (done) {
+     request(app)
+       .post('/api/profiles')
+       .send({
+         first: 'TestUser4',
+         password: 'happy'
+       })
+       .expect(res => {
+         res.body = {
+           first: res.body.first,
+         };
+       })
+       .expect(201, {
+         first: 'TestUser4',
+       })
+       .end(done);
+    });
 
   it('accepts PUT requests to /api/profiles/:id', function () {
     let profile = {
