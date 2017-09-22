@@ -67,11 +67,11 @@ And https://github.com/lorenwest/node-config/wiki/Environment-Variables#custom-e
 
 Follow the instructions for [Passport's Google Strategy](https://github.com/jaredhanson/passport-google-oauth2), this will require making a new project and app in that project. Fill in the Client ID, secret, and callback URL into config files. You will also need to [enable the Google+ API](https://console.developers.google.com/apis/api/plus.googleapis.com) for your project.
 
-### Google API Keys
+### Google Maps API
 
 This project uses the [Google Places API Javascript Library](https://developers.google.com/maps/documentation/static-maps/) and the [Google Static Maps API](https://developers.google.com/maps/documentation/static-maps/). Set up requires enabling each API in your google project and including the key wherever the API is used.
 
-### FileStack 
+### FileStack API 
 
 This project uses [FileStack](https://www.filestack.com/features/file-uploader) for image uploading. To use FileStack, [register](https://dev.filestack.com/register/) for an API key. Free usage is limited to 250 photos per month.
 
