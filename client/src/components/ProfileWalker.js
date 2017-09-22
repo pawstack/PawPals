@@ -114,7 +114,7 @@ class ProfileWalker extends React.Component {
         >
           <ReactFilestack
             apikey="Ay45M83ltRnWSZq3qL6Zhz"
-            buttonText="Change Your Profile Photo"
+            buttonText="Change Photo"
             buttonClass="photoupload"
             options={options}
             onSuccess={this.uploadImage}
@@ -156,10 +156,11 @@ class ProfileWalker extends React.Component {
                     titleStyle={{'fontSize': '18px', 'font-weight': '900', 'fontFamily': '"Pontano Sans"'}}
                   />
                 </td>
-                <td>
+                <td className="walker-info-td">
                   <TextField
                     name = "about_me"
                     multiLine={true}
+                    style={{width:"500px"}}
                     rows={1}
                     rowsMax={8}
                     hintText={this.state.about_me_old}
@@ -167,12 +168,15 @@ class ProfileWalker extends React.Component {
                   />
                 </td>
               </tr>
+              <tr>
+                <td>
+                  <button className="update-btn" onClick={this.handleUpdateProfile}>
+                    Update Profile
+                  </button>
+                </td>
+              </tr>
             </tbody>
           </table>
-
-          <div className="update-btn">
-            <RaisedButton label="Update Profile" onClick={this.handleUpdateProfile}/>
-          </div>
         </div>
       </div>);
   }

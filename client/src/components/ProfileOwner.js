@@ -187,7 +187,7 @@ class ProfileOwner extends React.Component {
         <div className="change-photo-btn">
           <ReactFilestack
             apikey="Ay45M83ltRnWSZq3qL6Zhz"
-            buttonText="Change Dog's Photo"
+            buttonText="Change Photo"
             buttonClass="photoupload"
             options={options}
             onSuccess={this.uploadImage}
@@ -259,29 +259,41 @@ class ProfileOwner extends React.Component {
               </tr>
               <tr>
                 <td className="dog-info-td">
+<<<<<<< HEAD
                   <CardHeader
                     title="Dog's Info:"
                     titleStyle={{'fontSize': '18px', 'font-weight': '900', 'fontFamily': '"Pontano Sans"'}}
                   />
                 </td>
                 <td>
+=======
+                  <CardHeader title="Dog's Info:"/>
+                </td>
+                <td className="dog-extras-td">
+>>>>>>> Updated Profile Page
                   <TextField
                     name = "extras"
                     hintText={this.state.extras_old}
                     onChange={this.handleChange}
+                    style = {{width: '500px'}}
                     multiLine={true}
                     rows={1}
                     rowsMax={6}
                   />
                 </td>
               </tr>
+              <tr>
+                <td>
+                  <button className="update-btn" onClick={this.handleUpdateProfile}>
+                    Update Profile
+                  </button>
+                </td>
+              </tr>
             </tbody>
           </table>
+
         </div>
 
-        <div className="update-btn">
-          <RaisedButton label="Update Profile" onClick={this.handleUpdateProfile}/>
-        </div>
       </div>);
   }
 }
