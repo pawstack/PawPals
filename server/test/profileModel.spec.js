@@ -25,19 +25,6 @@ describe('Profile model tests', function () {
       });
   });
 
-  // it('Should verify that all usernames are unique', function (done) {
-  //   // Insert a user with a username that's already in existence
-  //   Profile.forge({ username: 'TestUser1', password: 'abc' }).save()
-  //     .then(function (result) {
-  //       done(new Error('was not supposed to succeed'))
-  //     })
-  //     .catch(function (err) {
-  //       expect(err).to.be.an('error');
-  //       expect(err).to.match(/duplicate key value violates unique constraint/);
-  //       done();
-  //     });
-  // });
-
   it('Should be able to update an already existing record', function (done) {
     Profile.where({ id: 1 }).fetch()
       .then(function (result) {
