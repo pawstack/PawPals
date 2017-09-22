@@ -38,7 +38,7 @@ describe('Walks API', function () {
 
     var response = httpMocks.createResponse();
 
-    controller.createWalk(request, response, );
+    //controller.createWalk(request, response, );
 
     //console.log(response.json, 'data');
     //expect(res).to.be.equal({ foo: request.body.foo })
