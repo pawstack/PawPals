@@ -7,7 +7,7 @@ let users = [];
 const millisecondsPerHour = 3600000;
 const today = new Date();
 today.setHours(0, 0, 0, 0);
-const sessionLengthOptions = [30, 60, 90, 120];
+const sessionLengthOptions = [60, 120, 240, 480];
 
 const generateSessionDateTime = function() {
   let times = {};
@@ -15,7 +15,7 @@ const generateSessionDateTime = function() {
   // randomize day in next month
   day.setDate(day.getDate() + faker.random.number(30));
   // randomize hour in day, between 8am-8pm
-  times.session_start = new Date(day.getTime() + ((8 + faker.random.number(11)) * millisecondsPerHour));
+  times.session_start = new Date(day.getTime() + ((6 + faker.random.number(16)) * millisecondsPerHour));
   // randomize start stop time
   times.session_end = new Date(times.session_start.getTime() + (sessionLengthOptions[faker.random.number(3)] * 1000 * 60));
 
