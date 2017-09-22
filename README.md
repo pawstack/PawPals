@@ -58,7 +58,7 @@ brew install redis
 brew install postgresql
 ```
 
-### Install Project Dependencies
+### Installing Project Dependencies
 
 ```
 yarn global add grunt-cli knex eslint
