@@ -25,6 +25,17 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
 1. [Development](#development)
     1. [Installing Dependencies](#installing-dependencies)
     1. [Tasks](#tasks)
+1. [App Configuration](#app-configuration)
+  1. [Passport Google OAuth Login](#passport-google-oauth-login)
+  1. [Google Maps API](#google-maps-api)
+  1. [FileStack API](#filestack-api)
+  1. [Stripe API](#stripe-api)
+  1. [Heroku](#heroku)
+  1. [Travis-CI](#travis-ci)
+1. [Database Initialization](#database-initialization)
+  1. [Database Creation](#database-creation)
+  1. [Run Migrations & Data Seeds](#run-migrations--data-seeds)
+1. [Running the App](#running-the-app)
 
 ## Usage
 
