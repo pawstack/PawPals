@@ -19,7 +19,7 @@ describe('Walks API', function () {
     dbUtils.rollback(done);
   });
 
-  it('should foo the bar', () => {
+  it('should foo the bar', (done) => {
     var request  = httpMocks.createRequest({
       method: 'POST',
       url: '/api/walks/create',
@@ -40,8 +40,8 @@ describe('Walks API', function () {
 
     controller.createWalk(request, response, );
 
-    console.log(response.json, 'data');
-    expect(res).to.be.equal({ foo: request.body.foo })
+    //console.log(response.json, 'data');
+    //expect(res).to.be.equal({ foo: request.body.foo })
     done();
   })
 
