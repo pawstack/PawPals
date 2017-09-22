@@ -73,7 +73,7 @@ This project uses the [Google Places API Javascript Library](https://developers.
 
 ### FileStack 
 
-This project uses the [FileStack](https://www.filestack.com/features/file-uploader) for image uploading. To use FileStack, [register](https://dev.filestack.com/register/) for an API key. Free usage is limited to 250 photos per month.
+This project uses [FileStack](https://www.filestack.com/features/file-uploader) for image uploading. To use FileStack, [register](https://dev.filestack.com/register/) for an API key. Free usage is limited to 250 photos per month.
 
 ### Stripe API  
 
