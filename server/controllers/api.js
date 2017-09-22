@@ -18,8 +18,9 @@ module.exports.getFilteredWalks = (req, res) => {
     res.status(500).send('Pickup time and start date must be filled out');
   } else {
   // show all walks in period of given day and given time
-    var startDate = Moment(new Date(req.body.startDate)).startOf('day');
-    var pickupTime = Moment(new Date(req.body.pickupTime));
+    var offset = Moment(new Date(req.body.startDate)).diff(Moment(new Date(req.body.startDate.slice(0, 25))), 'm');
+    var startDate = Moment(new Date(req.body.startDate)).startOf('hour');
+    var pickupTime = Moment(new Date(req.body.pickupTime)).subtract(offset, 'm');
     var hour = pickupTime.get('hour');
     var minute = pickupTime.get('minute');
     var start = startDate.clone().add(hour, 'h').add(minute, 'm');
@@ -98,8 +99,8 @@ module.exports.createWalk = (req, res) => {
       module.exports.getWalkersWalks(req, res);
     })
     .catch(err => {
-      console.log(err, 'err')
-    })
+      console.log(err, 'err');
+    });
 };
 
 module.exports.destroyWalk = (req, res) => {
