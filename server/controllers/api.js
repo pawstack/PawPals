@@ -8,7 +8,7 @@ const controllers = require('./');
 const Moment = require('moment');
 const walkBuffer = 15;
 
-//db.plugin('registry');
+db.plugin('registry');
 
 module.exports.getFilteredWalks = (req, res) => {
   // implement as if walkers don't make "walk slots" but rather general
@@ -82,7 +82,6 @@ module.exports.getWalkersWalks = (req, res) => {
 };
 
 module.exports.createWalk = (req, res) => {
-  console.log(req)
   models.Walk.forge({
     session_start_walker: req.body.session_start,
     session_end_walker: req.body.session_end,
