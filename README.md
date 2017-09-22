@@ -23,8 +23,19 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
 1. [Usage](#Usage)
 1. [Requirements](#requirements)
 1. [Development](#development)
-    1. [Installing Dependencies](#installing-dependencies)
-    1. [Tasks](#tasks)
+    1. [Installing System Dependencies](#installing-system-dependencies)
+    1. [Installing Project Dependencies](#installing-project-dependencies)
+1. [App Configuration](#app-configuration)
+    1. [Passport Google OAuth Login](#passport-google-oauth-login)
+    1. [Google Maps API](#google-maps-api)
+    1. [FileStack API](#filestack-api)
+    1. [Stripe API](#stripe-api)
+    1. [Heroku](#heroku)
+    1. [Travis-CI](#travis-ci)
+1. [Database Initialization](#database-initialization)
+    1. [Database Creation](#database-creation)
+    1. [Run Migrations & Data Seeds](#run-migrations--data-seeds)
+1. [Running the App](#running-the-app)
 
 ## Usage
 
@@ -63,9 +74,29 @@ For environments that require use of environment variables, you can supply varia
 See https://www.npmjs.com/package/config
 And https://github.com/lorenwest/node-config/wiki/Environment-Variables#custom-environment-variables
 
-### Passport OAuth Login
+### Passport Google OAuth Login
 
 Follow the instructions for [Passport's Google Strategy](https://github.com/jaredhanson/passport-google-oauth2), this will require making a new project and app in that project. Fill in the Client ID, secret, and callback URL into config files. You will also need to [enable the Google+ API](https://console.developers.google.com/apis/api/plus.googleapis.com) for your project.
+
+### Google Maps API
+
+This project uses the [Google Places API Javascript Library](https://developers.google.com/maps/documentation/static-maps/) and the [Google Static Maps API](https://developers.google.com/maps/documentation/static-maps/). Set up requires enabling each API in your google project and including the key wherever the API is used.
+
+### FileStack API 
+
+This project uses [FileStack](https://www.filestack.com/features/file-uploader) for image uploading. To use FileStack, [register](https://dev.filestack.com/register/) for an API key. Free usage is limited to 250 photos per month.
+
+### Stripe API  
+
+FILL ME IN
+
+### Heroku 
+
+FILL ME IN
+
+### Travis-CI  
+
+Follow the instructions for continuous integration with [Travis-CI](https://travis-ci.org/). To access config variables needed for tests, add them to your [Travis-CI environment](https://docs.travis-ci.com/user/environment-variables/). 
 
 ## Database Initialization
 
