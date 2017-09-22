@@ -21,6 +21,7 @@ let parseEvents = (data) => {
       event['dog_profile_pic'] = data.walks[i].dog.profile_pic;
       event['dog_id'] = data.walks[i].dog.id;
       event['dog_extras'] = data.walks[i].dog.extras;
+      event['dog_avg_rating'] = data.walks[i].dog.avg_rating;
       event['owner_name'] = data.walks[i].owner.first;
       event['owner_phone'] = data.walks[i].owner.phone;
       event['pickup_address'] = data.walks[i].pickup_address || data.walks[i].owner.address;
@@ -287,14 +288,23 @@ class Calendar extends React.Component {
   }
 
   eventStyleGetter(event, start, end, isSelected) {
-    var backgroundColor = '#66BB6A';
-    var style = {
-      backgroundColor: backgroundColor,
-      borderColor: '#529655',
-    };
-    return {
-      style: style
-    };
+    if (event.title === 'Unbooked Walk') {
+      var style = {
+        backgroundColor: '#a5a5a5',
+        borderColor: '#969494',
+      };
+      return {
+        style: style
+      };
+    } else {
+      var style = {
+        backgroundColor: '#63BC66',
+        borderColor: '#61b764',
+      };
+      return {
+        style: style
+      };
+    }
   }
 
   render () {
