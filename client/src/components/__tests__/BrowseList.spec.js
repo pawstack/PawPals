@@ -85,7 +85,7 @@ const setup = propOverrides => {
     wrapper,
     selectWalkSpy,
     button: wrapper.find('button'),
-    title: wrapper.find('h2').text()
+    title: wrapper.find('.title').text()
   };
 };
 
