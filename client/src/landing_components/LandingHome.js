@@ -89,12 +89,16 @@ class LandingHome extends React.Component {
               As a dog walker, our calendar interface lets you create shifts in just a few clicks. We’ll match you with dogs in your neighborhood in no time.
             </div>
           </div>
-          <div className='col-sm-6'>GIF DEMO</div>
+          <div className='col-sm-6 demo-gif'>
+            <iframe src="https://giphy.com/embed/kZZ6MV8Ho85LG" width="800vw" height="540vh" frameBorder="0"></iframe>
+          </div>
         </div>
 
 
         <div className='demo-container-white'>
-          <div className='col-sm-6'>GIF DEMO</div>
+          <div className='col-sm-6'>
+            <iframe src="https://giphy.com/embed/JSZigX2nvMVva" width="800vw" height="540vh" frameBorder="0" className="demo-gif"></iframe>
+          </div>
           <div className='demo-text col-sm-6'>
             <div className ='demo-title'>
               Filter, Book and Pay!
@@ -117,12 +121,16 @@ class LandingHome extends React.Component {
              Rest easy, you’ll always know where your dog is with our real-time tracking. If you want to check which lampposts they sniffed after the walk, we store all historical walk paths for you.
             </div>
           </div>
-          <div className='col-sm-6'>GIF DEMO</div>
+          <div className='col-sm-6 demo-gif'>
+            <iframe src="https://giphy.com/embed/Ke8qWkwx44aEE" width="800vw" height="540vh" frameBorder="0" class="giphy-embed"></iframe>
+          </div>
         </div>
 
 
         <div className='demo-container-white'>
-          <div className='col-sm-6'>GIF DEMO</div>
+          <div className='col-sm-6 demo-gif' >
+            <iframe src="https://giphy.com/embed/FUYBGfkVGGSLm" width="800vw" height="540vh" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+          </div>
           <div className='demo-text col-sm-6'>
 
             <div className ='demo-title'>

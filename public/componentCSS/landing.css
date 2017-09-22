@@ -161,6 +161,7 @@
   margin-left: 20px;
 }
 
+
 .contact-icon-img {
   width:40px;
 }
@@ -168,4 +169,8 @@
 .team-icon {
   width: 200px;
   border-radius: 50%;
+}
+
+.demo-gif {
+  padding-top: 30px;
 }
