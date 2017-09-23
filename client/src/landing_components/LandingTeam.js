@@ -39,7 +39,7 @@ class LandingTeam extends React.Component {
                 <span className='contact-icon-span'><a href="https://github.com/youngyanglu"><img src="https://mapbox.github.io/mapbox-gl-native/macos/0.5.0/img/github.svg" className="contact-icon-img" alt="github"></img></a></span>
               </div>
               <div className='icon-text'>
-                Calender system to easily schedule and book walks.
+
               </div>
             </div>
 
@@ -52,7 +52,7 @@ class LandingTeam extends React.Component {
                 <span className='contact-icon-span'><a href="https://github.com/tiffanycchoy"><img src="https://mapbox.github.io/mapbox-gl-native/macos/0.5.0/img/github.svg" className="contact-icon-img" alt="github"></img></a></span>
               </div>
               <div className='icon-text'>
-                Calender system to easily schedule and book walks.
+
               </div>
             </div>
 
@@ -69,7 +69,7 @@ class LandingTeam extends React.Component {
                 <span className='contact-icon-span'><a href="https://github.com/mkchang"><img src="https://mapbox.github.io/mapbox-gl-native/macos/0.5.0/img/github.svg" className="contact-icon-img" alt="github"></img></a></span>
               </div>
               <div className='icon-text'>
-                Calender system to easily schedule and book walks.
+
               </div>
             </div>
 
@@ -80,7 +80,7 @@ class LandingTeam extends React.Component {
                 <span className='contact-icon-span'><a href="https://github.com/novyQ"><img src="https://mapbox.github.io/mapbox-gl-native/macos/0.5.0/img/github.svg" className="contact-icon-img" alt="github"></img></a></span>
               </div>
               <div className='icon-text'>
-                Calender system to easily schedule and book walks.
+
               </div>
             </div>
           </div>

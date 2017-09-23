@@ -84,7 +84,7 @@
 
 .demo-text {
   position: relative;
-  padding-top:15vh;
+  padding-top:13vh;
   padding-left: 10vw;
   padding-right:10vw;
 }
@@ -102,13 +102,13 @@
 .demo-container-blue {
   background-color:#66BB6A;
   color:white;
-  height:50vh;
+  height:55vh;
 }
 
 .demo-container-white {
   background-color: #f9fafc;
   color:#5c5d5e;
-  height:50vh;
+  height:55vh;
 }
 
 .demo-title {
@@ -171,6 +171,34 @@
   border-radius: 50%;
 }
 
-.demo-gif {
-  padding-top: 30px;
+embed-responsive {
+  position: relative;
+  display: block;
+  height: 0;
+  padding: 0;
+  overflow: hidden;
+}
+.embed-responsive .embed-responsive-item,
+.embed-responsive iframe,
+.embed-responsive embed,
+.embed-responsive object,
+.embed-responsive video {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 1.5%;
+  width: 95%;
+  height: 95%;
+  border: 0;
+}
+.embed-responsive-16by9 {
+  padding-bottom: 56.25%;
+}
+.embed-responsive-4by3 {
+  padding-bottom: 75%;
+}
+
+.video-container {
+  margin-top: 2.5%;
+
 }

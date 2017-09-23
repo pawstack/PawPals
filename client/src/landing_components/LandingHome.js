@@ -78,70 +78,92 @@ class LandingHome extends React.Component {
           </div>
         </div>
 
-        <div className='demo-container-blue'>
-          <div className='demo-text col-sm-6'>
-            <div className ='demo-title'>
-                Simple Scheduling
+         <div className="container">
 
-            </div>
-            <div><br></br></div>
-            <div className='demo-para'>
-              As a dog walker, our calendar interface lets you create shifts in just a few clicks. We’ll match you with dogs in your neighborhood in no time.
-            </div>
-          </div>
-          <div className='col-sm-6 demo-gif'>
-            <iframe src="https://giphy.com/embed/kZZ6MV8Ho85LG" width="800vw" height="540vh" frameBorder="0"></iframe>
-          </div>
-        </div>
+          <div className='row demo-container-blue'>
 
+            <div className='col-md-6 col-sm-3 col-xs-12 pull-right video-container'>
+              <div className="embed-responsive embed-responsive-16by9">
+                <iframe className="embed-responsive-item" src="https://www.youtube.com/embed/RbWOvDQzF0s?autoplay=1&loop=1&playlist=RbWOvDQzF0s" allowFullScreen></iframe>
+              </div>
+            </div>
 
-        <div className='demo-container-white'>
-          <div className='col-sm-6'>
-            <iframe src="https://giphy.com/embed/JSZigX2nvMVva" width="800vw" height="540vh" frameBorder="0" className="demo-gif"></iframe>
-          </div>
-          <div className='demo-text col-sm-6'>
-            <div className ='demo-title'>
-              Filter, Book and Pay!
+            <div className='demo-text col-md-6 col-sm-9 col-xs-12 pull-left'>
+              <div className ='demo-title'>
+                  Simple Scheduling
+              </div>
+              <div><br></br></div>
+              <div className='demo-para'>
+                As a dog walker, our calendar interface lets you create shifts in just a few clicks. We’ll match you with dogs in your neighborhood in no time.
+              </div>
             </div>
-            <div><br></br></div>
-            <div className='demo-para'>
-              As a dog owner, you can find a dog walker that fits all your criteria. Book and pay instantly. Even better, you can choose walks between 30 minutes and 2 hours for your dog’s next adventure.
-            </div>
+
           </div>
-        </div>
 
 
-        <div className='demo-container-blue'>
-          <div className='demo-text col-sm-6'>
-            <div className ='demo-title'>
-              Where’s my dog?
+          <div className='row demo-container-white'>
+
+            <div className='col-md-6 col-sm-3 col-xs-12 pull-left video-container' >
+              <div className="embed-responsive embed-responsive-16by9">
+                <iframe className="embed-responsive-item" src="https://www.youtube.com/embed/tCxH4x5zbvQ?autoplay=1&loop=1&playlist=tCxH4x5zbvQ" allowFullScreen></iframe>
+              </div>
             </div>
-            <div><br></br></div>
-            <div className='demo-para'>
-             Rest easy, you’ll always know where your dog is with our real-time tracking. If you want to check which lampposts they sniffed after the walk, we store all historical walk paths for you.
+
+            <div className='demo-text col-md-6 col-sm-9 col-xs-12 pull-right'>
+              <div className ='demo-title'>
+                Filter, Book and Pay!
+              </div>
+              <div><br></br></div>
+              <div className='demo-para'>
+                As a dog owner, you can find a dog walker that fits all your criteria. Book and pay instantly. Even better, you can choose walks between 30 minutes and 2 hours for your dog’s next adventure.
+              </div>
             </div>
           </div>
-          <div className='col-sm-6 demo-gif'>
-            <iframe src="https://giphy.com/embed/Ke8qWkwx44aEE" width="800vw" height="540vh" frameBorder="0" class="giphy-embed"></iframe>
-          </div>
-        </div>
 
 
-        <div className='demo-container-white'>
-          <div className='col-sm-6 demo-gif' >
-            <iframe src="https://giphy.com/embed/FUYBGfkVGGSLm" width="800vw" height="540vh" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
-          </div>
-          <div className='demo-text col-sm-6'>
+          <div className="row demo-container-blue">
 
-            <div className ='demo-title'>
-              I forgot to tell you!
-            </div>
-            <div><br></br></div>
-            <div className='demo-para'>
-              No worries, instant messaging between dog owners and dog walkers means you can get in touch anytime.
-            </div>
+              <div className='col-md-6 col-sm-3 col-xs-12 pull-right video-container'>
+                <div className="embed-responsive embed-responsive-16by9">
+                  <iframe className="embed-responsive-item" src="https://www.youtube.com/embed/I0aVDuCb9pM?autoplay=1&loop=1&playlist=I0aVDuCb9pM" allowFullScreen></iframe>
+                </div>
+              </div>
+
+              <div className='demo-text col-md-6 col-sm-9 col-xs-12 pull-left'>
+                <div className ='demo-title'>
+                  Where’s my dog?
+                </div>
+                <div><br></br></div>
+                <div className='demo-para'>
+                 Rest easy, you’ll always know where your dog is with our real-time tracking. If you want to check which lampposts they sniffed after the walk, we store all historical walk paths for you.
+                </div>
+              </div>
+
           </div>
-        </div>
+
+
+
+          <div className='row demo-container-white'>
+
+            <div className='col-md-6 col-sm-3 col-xs-12 pull-left video-container'>
+              <div className="embed-responsive embed-responsive-16by9">
+                <iframe className="embed-responsive-item" src="https://www.youtube.com/embed/0VL0wstp2KM?autoplay=1&loop=1&playlist=0VL0wstp2KM" allowFullScreen></iframe>
+              </div>
+            </div>
+
+            <div className='demo-text col-md-6 col-sm-9 col-xs-12 pull-right'>
+              <div className ='demo-title'>
+                I forgot to tell you!
+              </div>
+              <div><br></br></div>
+              <div className='demo-para'>
+                No worries, instant messaging between dog owners and dog walkers means you can get in touch anytime.
+              </div>
+            </div>
+
+          </div>
+
+      </div>
 
       </div>
     );
@@ -150,3 +172,8 @@ class LandingHome extends React.Component {
 }
 
 export default LandingHome;
+
+ /*<div className="embed-responsive embed-responsive-16by9">
+              <iframe src="https://www.youtube.com/embed/zsTEy4RR1S4?ecver=2?autoplay=1&loop=1" className="embed-responsive-item" allowFullScreen>
+              </iframe>
+            </div>*/
