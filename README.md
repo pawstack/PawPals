@@ -80,7 +80,7 @@ Follow the instructions for [Passport's Google Strategy](https://github.com/jare
 
 ### Google Maps API
 
-This project uses the [Google Places API Javascript Library](https://developers.google.com/maps/documentation/static-maps/) and the [Google Static Maps API](https://developers.google.com/maps/documentation/static-maps/). Set up requires enabling each API in your google project and including the key wherever the API is used.
+This project uses the [Google Places API Javascript Library](https://developers.google.com/places/) and the [Google Static Maps API](https://developers.google.com/maps/documentation/static-maps/). Set up requires enabling each API in your google project and including the key wherever the API is used.
 
 ### FileStack API 
 
@@ -88,11 +88,11 @@ This project uses [FileStack](https://www.filestack.com/features/file-uploader) 
 
 ### Stripe API  
 
-FILL ME IN
+PawPals uses the [Stripe API](https://stripe.com/docs/api) and Stripe's Connect to facilitate payments. You will need both a publishable key and a secret key, found in your [developer dashboard](https://dashboard.stripe.com/account/apikeys). Set redirect URI's in [your dashboard](https://dashboard.stripe.com/account/applications/settings), you will need one for each URL you want to serve the app from (localhost, heroku staging, heroku produciton, etc.). Test card numbers are [provided by Stripe](https://stripe.com/docs/testing).
 
 ### Heroku 
 
-FILL ME IN
+Heroku requires all config variables listed in `custom-environment-variables.json` and in `app.json`. Most are API keys to be obtained from the other sections in this readme. The variables in `custom-environment-variables.json` will be check for in the environment by the `config` npm module, so match the names (e.g. `"DATABASE_URL"` will be replaced by `process.env.DATABASE_URL` if it exists). If you are using a [Heroku pipeline](https://devcenter.heroku.com/articles/pipelines), make sure to keep callback URLs must be hostname specific (https://app-name-staging.herokuapp.com/callback vs https://app-name.herokuapp.com/callback).
 
 ### Travis-CI  
 
