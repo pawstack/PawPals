@@ -72,6 +72,7 @@
     "react-google-maps": "next",
     "react-overlays": "^0.8.0",
     "react-places-autocomplete": "^5.4.3",
+    "react-player": "^0.24.5",
     "react-popup": "^0.8.0",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",

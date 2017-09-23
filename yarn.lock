@@ -2115,6 +2115,10 @@ deep-is@~0.1.3:
   version "0.1.3"
   resolved "https://registry.yarnpkg.com/deep-is/-/deep-is-0.1.3.tgz#b369d6fb5dbc13eecf524f91b070feedc357cf34"
 
+deepmerge@^1.5.1:
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/deepmerge/-/deepmerge-1.5.2.tgz#10499d868844cdad4fee0842df8c7f6f0c95a753"
+
 default-gateway@^2.2.2:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/default-gateway/-/default-gateway-2.5.0.tgz#78e24dbd2e1df7490c2b8050515b8e816bfa7da5"
@@ -4637,6 +4641,10 @@ load-json-file@^2.0.0:
     pify "^2.0.0"
     strip-bom "^3.0.0"
 
+load-script@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/load-script/-/load-script-1.0.0.tgz#0491939e0bee5643ee494a7e3da3d2bac70c6ca4"
+
 loader-runner@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/loader-runner/-/loader-runner-2.3.0.tgz#f482aea82d543e07921700d5a46ef26fdac6b8a2"
@@ -6502,6 +6510,14 @@ react-places-autocomplete@^5.4.3:
   dependencies:
     lodash.debounce "^4.0.8"
     prop-types "^15.5.8"
+
+react-player@^0.24.5:
+  version "0.24.5"
+  resolved "https://registry.yarnpkg.com/react-player/-/react-player-0.24.5.tgz#cd65dcdef1b131a0aa7f5ece407c4140aa13c176"
+  dependencies:
+    deepmerge "^1.5.1"
+    load-script "^1.0.0"
+    prop-types "^15.5.6"
 
 react-popup@^0.8.0:
   version "0.8.0"
