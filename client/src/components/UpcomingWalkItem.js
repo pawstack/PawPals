@@ -15,7 +15,6 @@ import FindMyDogMap from './FindMyDogMap';
 import Messages from './Messages';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
-import $ from 'jquery';
 
 class UpcomingWalkItem extends React.Component {
   constructor(props) {
@@ -94,11 +93,13 @@ class UpcomingWalkItem extends React.Component {
           />
         </CardActions>
         <div>
-          <Link to= {{pathname:'/messages',
-                      state: {ownerid: this.props.walk.owner_id,
-                              walkerid: this.props.walk.walker_id}
-                    }}
-          >
+          <Link to={{
+            pathname: '/messages',
+            state: {
+              ownerid: this.props.walk.owner_id,
+              walkerid: this.props.walk.walker_id
+            }
+          }}>
           <FlatButton label="Message Walker" primary={true} />
           </Link>
         </div>

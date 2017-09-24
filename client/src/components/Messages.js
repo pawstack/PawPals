@@ -6,7 +6,6 @@ import Divider from 'material-ui/Divider';
 import CommunicationChatBubble from 'material-ui/svg-icons/communication/chat-bubble';
 import ChatWindow from './ChatWindow';
 import Notification from 'react-web-notification';
-import $ from 'jquery';
 import Badge from 'material-ui/Badge';
 import '../../../public/componentCSS/messages.css';
 
