@@ -19,7 +19,6 @@ import ProfileOwner from './components/ProfileOwner';
 import ProfileWalker from './components/ProfileWalker';
 import Confirmation from './components/Confirmation.jsx';
 import FindMyDog from './components/FindMyDog';
-import TrackWalk from './components/TrackWalk';
 import WalkHistory from './components/WalkHistory';
 import Messages from './components/Messages';
 import AppBar from 'material-ui/AppBar';
@@ -123,7 +122,6 @@ class App extends React.Component {
                 <Route exact path="/profilepage/owner" component={ProfileOwner}/>
                 <Route exact path="/profilepage/walker" component={ProfileWalker}/>
                 <Route exact path="/findmydog" component={FindMyDog}/>
-                <Route exact path="/trackwalk" component={TrackWalk}/>
                 <Route exact path="/walkhistory" component={WalkHistory}/>
                 <Route exact path='/messages' render={(props) => (
                   <Messages socket={this.socket} {...props} />

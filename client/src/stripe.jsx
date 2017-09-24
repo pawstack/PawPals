@@ -3,9 +3,6 @@ import ReactDOM from 'react-dom';
 import {
   BrowserRouter as Router,
   Route,
-  Link,
-  Switch,
-  Redirect
 } from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -30,9 +27,11 @@ class Stripe extends React.Component {
 
     };
   }
+  
   componentDidMount() {
     $('.container').find('h1').css("font-family", "'Carter One', cursive");
   }
+
   render() {
     return (
       <div>

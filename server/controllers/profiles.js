@@ -8,7 +8,6 @@ module.exports.getAll = (req, res) => {
       res.status(200).send(profiles);
     })
     .catch(err => {
-      // This code indicates an outside service (the database) did not respond in time
       res.status(503).send(err);
     });
 };
@@ -77,7 +76,7 @@ module.exports.saveStripeUserID = function(userID, stripeUserID) {
     .where({email: userID})
     .update({stripe_user_id: stripeUserID})
     .then(function(result) {
-      if (result === 0) { //id does not exist.  no update made.
+      if (result === 0) { 
         throw result;
       }
     })
@@ -91,7 +90,7 @@ module.exports.saveTokenizedCC = function(userID, token) {
     .where({email: userID})
     .update({customer_id_cc_Token: token})
     .then(function(result) {
-      if (result === 0) { //id does not exist.  no update made.
+      if (result === 0) { 
         throw result;
       }
     })
@@ -119,24 +118,3 @@ module.exports.getCCToken = function(userID) {
       return result[0].customer_id_cc_Token;
     });
 };
-
-
-
-// module.exports.deleteOne = (req, res) => {
-//   models.Profile.where({ id: req.params.id }).fetch()
-//     .then(profile => {
-//       if (!profile) {
-//         throw profile;
-//       }
-//       return profile.destroy();
-//     })
-//     .then(() => {
-//       res.sendStatus(200);
-//     })
-//     .error(err => {
-//       res.status(503).send(err);
-//     })
-//     .catch(() => {
-//       res.sendStatus(404);
-//     });
-// };

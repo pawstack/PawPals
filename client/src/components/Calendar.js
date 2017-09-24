@@ -7,7 +7,7 @@ import $ from 'jquery';
 import RaisedButton from 'material-ui/RaisedButton';
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import SnackBarCom from './SnackBar';
-import _ from 'lodash';
+import { throttle } from 'lodash';
 
 BigCalendar.momentLocalizer(moment);
 require('react-big-calendar/lib/css/react-big-calendar.css');
@@ -252,7 +252,7 @@ class Calendar extends React.Component {
 
   startWatch(walkId) {
     // TODO add check for HTML5 geolocation active, notify user if permission has not been given
-    var throttledProcessGeoResult = _.throttle(this.processGeoResult.bind(this, walkId), 30000);
+    var throttledProcessGeoResult = throttle(this.processGeoResult.bind(this, walkId), 30000);
 
     var watchId = window.navigator.geolocation.watchPosition(throttledProcessGeoResult, this.handleGeoError, {
       maximumAge: this.state.tracking.maximumAge,
@@ -280,7 +280,6 @@ class Calendar extends React.Component {
   postGeolocation(geolocation) {
     $.post('/api/walks/track', geolocation)
       .then((data) => {
-        // console.log('SUCCESS sending geolocation ', data);
       })
       .fail((err) => {
         console.log('ERROR sending geolocation ', err);
