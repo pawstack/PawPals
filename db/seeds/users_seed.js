@@ -8,7 +8,7 @@ exports.seed = function (knex, Promise) {
     promises.push(createProfile(knex, profile));
   });
 
-  return Promise.all(promises);
+  return Promise.mapSeries(promises, (promise) => promise);
 };
 
 const createProfile = (knex, profile) => {
@@ -32,7 +32,6 @@ const createProfile = (knex, profile) => {
     .tap((userIds) => {
       return knex('auths')
         .insert({
-          id: userIds[0],
           type: 'google',
           oauth_id: userIds[0],
           profile_id: userIds[0]
@@ -42,7 +41,6 @@ const createProfile = (knex, profile) => {
       let dog = dogs[userIds[0]];
       return knex('dogs')
         .insert({
-          id: userIds[0],
           name: dog.name,
           age: dog.age,
           weight: dog.weight,
