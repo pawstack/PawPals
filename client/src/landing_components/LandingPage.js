@@ -1,18 +1,9 @@
 import React from 'react';
-import ReactDom from 'react-dom';
 import {
   BrowserRouter as Router,
   Route,
-  Link,
-  Switch,
-  Redirect
+  Link
 } from 'react-router-dom';
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
-import RaisedButton from 'material-ui/RaisedButton';
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
-import {BottomNavigation, BottomNavigationItem} from 'material-ui/BottomNavigation';
-import $ from 'jquery';
 import LandingHome from './LandingHome';
 import LandingTeam from './LandingTeam';
 import '../../../public/componentCSS/landing.css';
@@ -24,9 +15,7 @@ class LandingPage extends React.Component {
     super(props);
   }
 
-
   render() {
-
     return (
       <Router>
         <div className="row align-items-start justify-content-between landing-top">
@@ -57,7 +46,7 @@ class LandingPage extends React.Component {
           <Route exact path="/team" component={LandingTeam}/>
         </div>
       </Router>
-    )
+    );
   }
 }
 

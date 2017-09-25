@@ -1,21 +1,5 @@
 import React from 'react';
-import ReactDom from 'react-dom';
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  Switch,
-  Redirect
-} from 'react-router-dom';
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
-import RaisedButton from 'material-ui/RaisedButton';
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
-import {BottomNavigation, BottomNavigationItem} from 'material-ui/BottomNavigation';
-import Paper from 'material-ui/Paper';
-import $ from 'jquery';
 import '../../../public/componentCSS/landing.css';
-
 
 class LandingHome extends React.Component {
 
@@ -25,7 +9,6 @@ class LandingHome extends React.Component {
 
 
   render() {
-
     return (
       <div>
         <div className="slogan">

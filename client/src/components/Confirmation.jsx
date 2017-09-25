@@ -5,7 +5,6 @@ import {
   Route,
   Link
 } from 'react-router-dom';
-import $ from 'jquery';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import RaisedButton from 'material-ui/RaisedButton';

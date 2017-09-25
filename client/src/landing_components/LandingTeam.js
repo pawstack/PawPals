@@ -1,19 +1,4 @@
 import React from 'react';
-import ReactDom from 'react-dom';
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  Switch,
-  Redirect
-} from 'react-router-dom';
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
-import RaisedButton from 'material-ui/RaisedButton';
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
-import {BottomNavigation, BottomNavigationItem} from 'material-ui/BottomNavigation';
-import Paper from 'material-ui/Paper';
-import $ from 'jquery';
 import '../../../public/componentCSS/landing.css';
 
 
@@ -23,10 +8,8 @@ class LandingTeam extends React.Component {
     super(props);
   }
 
-
   render() {
-
-    return(
+    return (
       <div className="container icon-container team-main-container">
 
           <div className="row team-container">
@@ -86,7 +69,7 @@ class LandingTeam extends React.Component {
           </div>
 
         </div>
-  )
+    );
   }
 
 }

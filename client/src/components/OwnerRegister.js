@@ -1,6 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import $ from 'jquery';
 import Slider from 'material-ui/Slider';
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
