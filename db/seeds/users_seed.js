@@ -3,12 +3,9 @@ const profiles = require('./data/sample_users');
 const dogs = require('./data/sample_dogs');
 
 exports.seed = function (knex, Promise) {
-  let promises = [];
-  profiles.forEach((profile) => {
-    promises.push(createProfile(knex, profile));
+  return Promise.mapSeries(profiles, (profile) => {
+    return createProfile(knex, profile);
   });
-
-  return Promise.all(promises);
 };
 
 const createProfile = (knex, profile) => {
@@ -32,7 +29,6 @@ const createProfile = (knex, profile) => {
     .tap((userIds) => {
       return knex('auths')
         .insert({
-          id: userIds[0],
           type: 'google',
           oauth_id: userIds[0],
           profile_id: userIds[0]
@@ -42,7 +38,6 @@ const createProfile = (knex, profile) => {
       let dog = dogs[userIds[0]];
       return knex('dogs')
         .insert({
-          id: userIds[0],
           name: dog.name,
           age: dog.age,
           weight: dog.weight,
