@@ -92,7 +92,7 @@ PawPals uses the [Stripe API](https://stripe.com/docs/api) and Stripe's Connect 
 
 ### Heroku 
 
-Heroku requires all config variables listed in `custom-environment-variables.json` and in `app.json`. Most are API keys to be obtained from the other sections in this readme. The variables in `custom-environment-variables.json` will be check for in the environment by the `config` npm module, so match the names (e.g. `"DATABASE_URL"` will be replaced by `process.env.DATABASE_URL` if it exists). If you are using a [Heroku pipeline](https://devcenter.heroku.com/articles/pipelines), make sure to keep callback URLs must be hostname specific (https://app-name-staging.herokuapp.com/callback vs https://app-name.herokuapp.com/callback).
+Heroku requires all config variables listed in `custom-environment-variables.json` and in `app.json`. Most are API keys to be obtained from the other sections in this readme. The variables in `custom-environment-variables.json` will be checked for in the environment by the `config` npm module, so match the names (e.g. `"DATABASE_URL"` will be replaced by `process.env.DATABASE_URL` if it exists). If you are using a [Heroku pipeline](https://devcenter.heroku.com/articles/pipelines), make sure to keep callback URLs hostname specific (https://app-name-staging.herokuapp.com/callback vs https://app-name.herokuapp.com/callback).
 
 ### Travis-CI  
 
