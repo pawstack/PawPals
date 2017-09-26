@@ -171,6 +171,13 @@
   border-radius: 50%;
 }
 
+.team-text {
+  padding:8px 10px 60px 60px;
+  font-family: 'Pontano Sans', sans-serif;
+  font-size: 20px;
+  color: grey;
+}
+
 embed-responsive {
   position: relative;
   display: block;
